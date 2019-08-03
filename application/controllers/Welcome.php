@@ -23,7 +23,7 @@ class Welcome extends CI_Controller
 	{
 		$this->load->view('home');
 	}
-	public function about_us()
+	public function about()
 	{
 		$this->load->view('about_us');
 	}

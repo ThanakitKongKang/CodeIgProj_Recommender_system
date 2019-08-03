@@ -53,4 +53,12 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['welcome/about-us'] = 'welcome/about_us';
+$route['about'] = 'welcome/about';
+
+$route['contacts'] = 'contacts';
+$route['create'] = 'contacts/create';
+$route['store'] = 'contacts/store';
+$route['edit/:id'] = 'contacts/edit';
+$route['update/:id'] = 'contacts/update';
+$route['delete/:id'] = 'contacts/delete';
+$routes['users'] = 'welcome/users';
