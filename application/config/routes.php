@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'contacts';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -62,3 +62,9 @@ $route['edit/:id'] = 'contacts/edit';
 $route['update/:id'] = 'contacts/update';
 $route['delete/:id'] = 'contacts/delete';
 $routes['users'] = 'welcome/users';
+
+$route['ar'] = 'activerecordcontroller';
+$route['ar/insert'] = 'activerecordcontroller/store_order';
+$route['ar/update'] = 'activerecordcontroller/update_order';
+
+$route['authors/(:num)'] = 'authors';
