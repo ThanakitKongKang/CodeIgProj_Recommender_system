@@ -52,9 +52,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'contacts';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
+/*
+| -------------------------------------------------------------------------
+| ABOUT
+| -------------------------------------------------------------------------
+*/
 $route['about'] = 'welcome/about';
-
+/*
+| -------------------------------------------------------------------------
+| CONTACTS
+| -------------------------------------------------------------------------
+*/
 $route['contacts'] = 'contacts';
 $route['create'] = 'contacts/create';
 $route['store'] = 'contacts/store';
@@ -62,9 +70,41 @@ $route['edit/:id'] = 'contacts/edit';
 $route['update/:id'] = 'contacts/update';
 $route['delete/:id'] = 'contacts/delete';
 $routes['users'] = 'welcome/users';
-
+/*
+| -------------------------------------------------------------------------
+| ACTIVE RECORD
+| -------------------------------------------------------------------------
+*/
 $route['ar'] = 'activerecordcontroller';
 $route['ar/insert'] = 'activerecordcontroller/store_order';
 $route['ar/update'] = 'activerecordcontroller/update_order';
-
+/*
+| -------------------------------------------------------------------------
+| AUTHORS : Page Navigation
+| -------------------------------------------------------------------------
+*/
 $route['authors/(:num)'] = 'authors';
+/*
+| -------------------------------------------------------------------------
+| SESSION FLASH DATA
+| -------------------------------------------------------------------------
+*/
+$route['flash_index'] = 'sessioncontroller';
+$route['flash_message'] = 'sessioncontroller/flash_message';
+/*
+| -------------------------------------------------------------------------
+| STORING USER DATA in CI SESSIONS
+| -------------------------------------------------------------------------
+*/
+$route['login'] = 'sessioncontroller/login';
+$route['authenticate'] = 'sessioncontroller/authenticate';
+$route['settings'] = 'sessioncontroller/settings';
+$route['dashboard'] = 'sessioncontroller/dashboard';
+$route['logout'] = 'sessioncontroller/logout';
+/*
+| -------------------------------------------------------------------------
+| FILE UPLOAD
+| -------------------------------------------------------------------------
+*/
+$route['upload-image'] = 'imageuploadcontroller';
+$route['store-image'] = 'imageuploadcontroller/store';
