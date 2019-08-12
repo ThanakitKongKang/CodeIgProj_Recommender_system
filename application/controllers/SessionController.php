@@ -7,7 +7,8 @@ class SessionController extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->helper('url');
+        $this->load->helper('url', 'form');
+        $this->load->library('form_validation');
         $this->load->library('session');
     }
 
@@ -22,25 +23,49 @@ class SessionController extends CI_Controller
         $this->session->set_flashdata('msg', 'Welcome to CodeIgniter Flash Messages');
         redirect(base_url('flash_index'));
     }
-    
-    public function check_auth($page)
-    {
-        if (!$this->session->userdata('logged_in')) {
-            $this->session->set_flashdata('msg', "You need to be logged in to access the $page page.");
-            redirect('login');
-        }
-    }
 
     public function login()
     {
-        $this->load->view('sessions/login');
+        $header['title'] = "Login";
+        $this->load->view('sessions/login', $header);
     }
 
     public function authenticate()
     {
-        $this->session->set_userdata('username', 'John Doe');
-        $this->session->set_userdata('logged_in', TRUE);
-        redirect(base_url('dashboard'));
+        $rules = array(
+            array(
+                'field' => 'username',
+                'rules' => 'required', 
+                'errors' => array(
+                    'required' => 'You must provide a %s.',
+                ),
+            ),
+            array(
+                'field' => 'password',
+                'rules' => 'required',
+                'errors' => array(
+                    'required' => 'You must provide a %s.',
+                ),
+            )
+        );
+        $this->form_validation->set_rules($rules);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->model('books_model');
+            $header['title'] = "Login";
+
+            $this->load->view('sessions/login', $header);
+        } else {
+            $data = array(
+                'username' => $this->input->post('username'),
+                'password' => $this->input->post('password'),
+            );
+
+            $this->session->set_userdata('username', $data['username']);
+            $this->session->set_userdata('logged_in', TRUE);
+
+            redirect(base_url());
+        }
     }
 
     public function dashboard()
@@ -59,6 +84,6 @@ class SessionController extends CI_Controller
     {
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('logged_in');
-        redirect(base_url('login'));
+        redirect($_SERVER['HTTP_REFERER']); //redirect at previous page
     }
 }

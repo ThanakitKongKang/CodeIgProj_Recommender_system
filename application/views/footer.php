@@ -1,6 +1,4 @@
-              
-            </div>
-            </div>
-        </section>
+    
+       </div> <!-- end of content -->
     </body>
 </html>

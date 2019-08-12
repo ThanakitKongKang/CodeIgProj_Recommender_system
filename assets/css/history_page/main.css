@@ -1,0 +1,59 @@
+td,
+th {
+    white-space: nowrap !important;
+    word-wrap: break-word;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.paginate_active {
+    padding: 0.5rem;
+    background-color: #efefef;
+    text-decoration: none;
+    border-style: ridge;
+    border: 1px solid #dee2e6 !important;
+}
+
+.paginate_button {
+    padding: 0.5rem;
+    background-color: white;
+    text-decoration: none;
+    border-style: ridge;
+    border: 1px solid #dee2e6 !important;
+}
+
+.paginate_button:hover,
+.paginate_active:hover {
+    cursor: pointer;
+
+    text-decoration: none;
+
+}
+
+.ui-datepicker-trigger {
+    color: #fff !important;
+    background-color: #007bff;
+    border-color: #007bff;
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* background-color: transparent; */
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding-top: 2px;
+    padding-bottom: 6px;
+    border-top-width: 5px;
+
+}
