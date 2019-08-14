@@ -59,7 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <style>
         @font-face {
             font-family: 'Kanit';
-            src: url("assets/_etc/Kanit-Regular.ttf");
+            src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
         }
 
         body {
@@ -93,7 +93,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div>
-                <form class="form-inline">
+                <form class="form-inline" style="margin:0rem">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
@@ -101,7 +101,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <a class="nav-link" href="#">SIGN UP</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login">LOG IN</a>
+                        <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
                     </li>
                     <?php
                     } else { ?>

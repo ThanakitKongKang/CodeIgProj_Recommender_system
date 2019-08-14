@@ -10,6 +10,7 @@ class SessionController extends CI_Controller
         $this->load->helper('url', 'form');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->model('users_model');
     }
 
     public function index()
@@ -35,7 +36,7 @@ class SessionController extends CI_Controller
         $rules = array(
             array(
                 'field' => 'username',
-                'rules' => 'required', 
+                'rules' => 'required',
                 'errors' => array(
                     'required' => 'You must provide a %s.',
                 ),
@@ -56,15 +57,23 @@ class SessionController extends CI_Controller
 
             $this->load->view('sessions/login', $header);
         } else {
-            $data = array(
+            $post_data = array(
                 'username' => $this->input->post('username'),
                 'password' => $this->input->post('password'),
             );
+            $data = $this->users_model->login($post_data['username'], $post_data['password']);
 
-            $this->session->set_userdata('username', $data['username']);
-            $this->session->set_userdata('logged_in', TRUE);
+            if ($data != FALSE) {
+                $sessionArr = array(
+                    'id' =>$data[0]->id,
+                    'username' => $data[0]->username,
+                    'keywords' => $data[0]->keywords
+                );
+                $this->session->set_userdata('user', $sessionArr);
+                $this->session->set_userdata('logged_in', TRUE);
+            }
 
-            redirect(base_url());
+            // redirect(base_url());
         }
     }
 
@@ -82,7 +91,7 @@ class SessionController extends CI_Controller
 
     public function logout()
     {
-        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('user');
         $this->session->unset_userdata('logged_in');
         redirect($_SERVER['HTTP_REFERER']); //redirect at previous page
     }
