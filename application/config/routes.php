@@ -116,3 +116,5 @@ $route['store-image'] = 'imageuploadcontroller/store';
 */
 $route['books'] = 'bookscontroller';
 $route['books/(:num)'] = 'bookscontroller';
+
+$route['test'] = 'bookscontroller/recommend';

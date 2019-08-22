@@ -73,7 +73,7 @@ class SessionController extends CI_Controller
                 $this->session->set_userdata('logged_in', TRUE);
             }
 
-            // redirect(base_url());
+            redirect(base_url());
         }
     }
 

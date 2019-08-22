@@ -36,4 +36,12 @@ class BooksController extends CI_Controller
         $this->load->view('books/index', $data);
         $this->load->view('footer');
     }
+    public function recommend()
+    {
+
+        $header['title'] = 'Recommendation test';
+        $this->load->view('./header', $header);
+        $this->load->view('recommend_test');
+        $this->load->view('footer');
+    }
 }
