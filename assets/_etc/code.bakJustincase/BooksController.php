@@ -40,22 +40,79 @@ class BooksController extends CI_Controller
 
     public function recommend()
     {
-        $data['books'] = $this->rate_model->get_rate();
-        $data['books'] = $this->flip_array($data['books']);
-        $result = $this->transformPreferences($data['books']);
+        $data['test'] = $this->rate_model->get_rate();
+        $data['test'] = $this->flip_array($data['test']);
 
-        $data['recommend'] = [];
+        $data['books'] =  array(
+            "admin" => array(
+            "Certified Management Accountant (CMA), Part 2" => 4,
+            "Trading the Decentralization of the Financial Systems" => 4,
+            "High Performance Python (from Training at EuroPython 2011)" => 5,
+            "Red Tea Detox" => 5
+            ),
+
+            "phil" => array(
+                "my girl" => 2.5, "the god delusion" => 3.5,
+                "tweak" => 3, "the shack" => 4,
+                "the birds in my life" => 2.5,
+                "new moon" => 3.5
+            ),
+
+            "sameer" => array(
+                "the last lecture" => 2.5, "the god delusion" => 3.5,
+                "the noble wilds" => 3, "the shack" => 3.5,
+                "the birds in my life" => 2.5, "new moon" => 1
+            ),
+
+            "john" => array(
+                "a thousand splendid suns" => 5, "the secret" => 3.5,
+                "tweak" => 1
+            ),
+
+            "peter" => array("chaos" => 5, "php in action" => 3.5),
+
+            "jill" => array(
+                "the last lecture" => 1.5, "the secret" => 2.5,
+                "the noble wilds" => 4, "the host: a novel" => 3.5,
+                "the world without end" => 2.5, "new moon" => 3.5
+            ),
+
+            "bruce" => array(
+                "the last lecture" => 3, "the hollow" => 1.5,
+                "the noble wilds" => 3, "the shack" => 3.5,
+                "the appeal" => 2, "new moon" => 3
+            ),
+
+            "tom" => array("not" => 2.5, "B" => 3),
+            "cat" => array("should" => 2.5, "B" => 5),
+            "golf" => array("chaos" => 5, "new moon" => 4, "the last lecture" => 4, "B" => 5)
+        );
+
+        // $array_data = $re->getRecommendations($books, "jill");
+        $result = $this->transformPreferences($data['test']);
+
+
+        echo "<br><br><h2>data['test'] before</h2>";
+        print("<pre>" . print_r($data['test'], true) . "</pre>");
+        echo "<br><br><h2>data['test'] after</h2>";
+        print("<pre>" . print_r($result, true) . "</pre>");
+
+        // echo "<br><br><h2>data['books'] before</h2>";
+        // print("<pre>" . print_r($data['books'], true) . "</pre>");
+        // echo "<br><br><h2>data['books'] after</h2>";
+        // print("<pre>" . print_r($this->transformPreferences($data['books']), true) . "</pre>");
+
+        $data['array_data'] = [];
 
         //should be top rated by currently user
         $username = "golf";
-        $user_books = ['Certified Management Accountant (CMA), Part 1', 'Certified Management Accountant (CMA), Part 2', 'Trading the Decentralization of the Financial Systems', 'Red Tea Detox'];
+        $user_books = ['Certified Management Accountant (CMA), Part 2'];
 
         foreach ($user_books as $user_book) {
-            array_push($data['recommend'], $this->matchItems($result, $user_book));
+            // $data['array_data'][$user_book] = $this->matchItems($result, $user_book);
+            array_push($data['array_data'], $this->matchItems($result, $user_book));
         }
 
-        $data['recommend'] = $this->array_flatten($data['recommend']);
-        // $data['recommend'] = $this->array_average($data['recommend']);
 
         $header['title'] = 'Recommendation test';
 
@@ -124,10 +181,11 @@ class BooksController extends CI_Controller
     {
         $arr = array();
         $keys = array_keys($data);
+        $count = 0;
         $book_name = "";
         $username = "";
         for ($i = 0; $i < count($data); $i++) {
-
+            $count++;
             foreach ($data[$keys[$i]] as $key => $value) {
                 if ($key == "book_name") {
                     $book_name = $value;
@@ -139,28 +197,5 @@ class BooksController extends CI_Controller
             }
         }
         return $arr;
-    }
-
-    public function array_average($array)
-    {
-    
-
-   
-    }
-
-    public function array_flatten($array)
-    {
-        if (!is_array($array)) {
-            return FALSE;
-        }
-        $result = array();
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $result = array_merge($result, $this->array_flatten($value));
-            } else {
-                $result[$key] = $value;
-            }
-        }
-        return $result;
     }
 }

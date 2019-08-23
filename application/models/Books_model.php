@@ -1,9 +1,9 @@
 <?php
-
-class Books_model extends CI_Model
+require_once APPPATH.'/models/BaseModel.php';
+class Books_model extends BaseModel
 {
 
-    protected $table = 'paper';
+    protected $table = 'book';
 
     public function __construct()
     {

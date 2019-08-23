@@ -1,6 +1,6 @@
 <?php
-
-class Users_model extends CI_Model
+require_once APPPATH.'/models/BaseModel.php';
+class Users_model extends BaseModel
 {
 
     protected $table = 'user';
