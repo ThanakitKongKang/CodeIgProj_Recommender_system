@@ -38,24 +38,22 @@ class SessionController extends CI_Controller
                 'field' => 'username',
                 'rules' => 'required',
                 'errors' => array(
-                    'required' => 'You must provide a %s.',
+                    'required' => 'กรุณากรอกชื่อผู้ใช้.',
                 ),
             ),
             array(
                 'field' => 'password',
                 'rules' => 'required',
                 'errors' => array(
-                    'required' => 'You must provide a %s.',
+                    'required' => 'กรุณากรอกรหัสผ่าน.',
                 ),
             )
         );
         $this->form_validation->set_rules($rules);
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->model('books_model');
-            $header['title'] = "Login";
 
-            $this->load->view('sessions/login', $header);
+            $this->load->view('sessions/login');
         } else {
             $post_data = array(
                 'username' => $this->input->post('username'),
@@ -65,15 +63,17 @@ class SessionController extends CI_Controller
 
             if ($data != FALSE) {
                 $sessionArr = array(
-                    'id' =>$data[0]->id,
+                    'id' => $data[0]->id,
                     'username' => $data[0]->username,
                     'keywords' => $data[0]->keywords
                 );
                 $this->session->set_userdata('user', $sessionArr);
                 $this->session->set_userdata('logged_in', TRUE);
+                redirect(base_url("/test"));
+            } else if ($data == FALSE) {
+                $data["feedback"] = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
+                $this->load->view('sessions/login',$data);
             }
-
-            redirect(base_url());
         }
     }
 

@@ -40,22 +40,34 @@ class BooksController extends CI_Controller
 
     public function recommend()
     {
-        $data['books'] = $this->rate_model->get_rate();
-        $data['books'] = $this->flip_array($data['books']);
-        $result = $this->transformPreferences($data['books']);
-
-        $data['recommend'] = [];
+        $data['recommend_matched'] = array();
+        $data['recommend_averaged'] = array();
+        $data['recommend_flattened'] = array();
+        $data['recommend_list'] = array();
 
         //should be top rated by currently user
-        $username = "golf";
-        $user_books = ['Certified Management Accountant (CMA), Part 1', 'Certified Management Accountant (CMA), Part 2', 'Trading the Decentralization of the Financial Systems', 'Red Tea Detox'];
+        // $data['target_books'] = ['Certified Management Accountant (CMA), Part 2','Trading the Decentralization of the Financial Systems','High Performance Python (from Training at EuroPython 2011)','Red Tea Detox'];
+        $username = $this->session->userdata('user')['username'];
+        $data['raw_target_books'] = $this->rate_model->get_rate_by_username($username);
+        $data['target_books'] = array();
 
-        foreach ($user_books as $user_book) {
-            array_push($data['recommend'], $this->matchItems($result, $user_book));
+        foreach ($data['raw_target_books'] as $user_book) {
+            $data['target_books'][] = $user_book['book_name'];
         }
 
-        $data['recommend'] = $this->array_flatten($data['recommend']);
-        // $data['recommend'] = $this->array_average($data['recommend']);
+        $data['raw_books'] = $this->rate_model->get_rate();
+        $data['books'] = $this->flip_array($data['raw_books']);
+        $result = $this->transformPreferences($data['books']);
+        foreach ($data['target_books'] as $user_book) {
+            array_push($data['recommend_matched'], $this->matchItems($result, $user_book));
+        }
+
+        $data['recommend_averaged'] = $this->array_average($data['recommend_matched']);
+        $data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+        $data['target_books_flipped']  = array_flip($data['target_books']);
+        $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        
 
         $header['title'] = 'Recommendation test';
 
@@ -63,6 +75,8 @@ class BooksController extends CI_Controller
         $this->load->view('recommend_test', $data);
         $this->load->view('footer');
     }
+
+
 
     public function similarityDistance($preferences, $person1, $person2)
     {
@@ -141,11 +155,26 @@ class BooksController extends CI_Controller
         return $arr;
     }
 
-    public function array_average($array)
+    public function array_average($input)
     {
-    
-
-   
+        $sum = array();
+        $repeat = array();
+        $result = array();
+        foreach ($input as $array) {
+            foreach ($array as $key => $value) {
+                if (array_key_exists($key, $sum)) {
+                    $repeat[$key] = $repeat[$key] + 1;
+                    $sum[$key] = $sum[$key] + $value;
+                } else {
+                    $repeat[$key] = 1;
+                    $sum[$key] = $value;
+                }
+            }
+        }
+        foreach ($sum as $key => $value) {
+            $result[][$key] = $value / $repeat[$key];
+        }
+        return $result;
     }
 
     public function array_flatten($array)

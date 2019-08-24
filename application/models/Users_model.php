@@ -12,7 +12,7 @@ class Users_model extends BaseModel
 
     public function login($username, $password)
     {
-        $this->db->select(' id , username , password ,keywords ');
+        $this->db->select('*');
         $this->db->from($this->table);
         $this->db->where('Username', $username);
         $this->db->where('Password', $password);

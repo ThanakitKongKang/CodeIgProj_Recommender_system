@@ -25,4 +25,15 @@ class Rate_model extends BaseModel
         $array = json_decode(json_encode($query->result()), True);
         return $array;
     }
+
+    public function get_rate_by_username($username){
+        $this->db->select('book.book_name');
+        $this->db->from('rate');
+        $this->db->join('book', 'rate.book_id = book.book_id');
+        $this->db->where('username', $username);
+        $this->db->order_by('rate', 'DESC');
+        $query = $this->db->get();
+        $array = json_decode(json_encode($query->result()), True);
+        return $array;
+    }
 }
