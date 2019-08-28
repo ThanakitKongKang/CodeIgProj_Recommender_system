@@ -1,5 +1,5 @@
 <?php
-require_once APPPATH.'/models/BaseModel.php';
+require_once APPPATH . '/models/BaseModel.php';
 class Books_model extends BaseModel
 {
 
@@ -25,11 +25,19 @@ class Books_model extends BaseModel
     }
 
     //to be continued
-    public function get_by_id($name) {
+    public function get_by_id($name)
+    {
         $this->db->where('book_name', $name);
         $this->db->select('*');
         $this->db->from('book');
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function get_top_rated()
+    {
+        $this->db->order_by('b_rate', 'DESC');
+        return $this->db->get($this->table)
+            ->result();
     }
 }

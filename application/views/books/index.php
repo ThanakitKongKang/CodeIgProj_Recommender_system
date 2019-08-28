@@ -1,20 +1,37 @@
 <div class="container">
     <div id="top" class="row">
         <div class="col" id="col-1">
-            <?= $final_recommend_list[0]['book_name'] ?>
-            
+
+            <?php
+            if (!$final_recommend_list) echo "recommended list is empty";
+            else { ?>
+
+            <img id="img-col-1" src="<?= base_url() ?>assets/book_cover/<?= $final_recommend_list[0]['book_id'] ?>.png">
+            <a href="book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"></a>
+            <div id="text-col-1"></div>
+            <?php } ?>
+
             <!-- big image top recommended-->
         </div>
         <div class="col" id="col-2">
             <!-- another recommended list -->
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
+            <div><?php if (isset($final_recommend_list[1]['book_name'])) echo $final_recommend_list[1]['book_name'] ?>
+
+            </div>
+            <div><?php if (isset($final_recommend_list[2]['book_name'])) echo $final_recommend_list[2]['book_name'] ?>
+
+            </div>
+            <div><?php if (isset($final_recommend_list[3]['book_name'])) echo $final_recommend_list[3]['book_name'] ?>
+
+            </div>
+            <div><?php if (isset($final_recommend_list[4]['book_name'])) echo $final_recommend_list[4]['book_name'] ?>
+
+            </div>
         </div>
         <div class="col" id="col-3">
             <div>
                 <!-- top 2 -->
+                Total number of items in the recommended list array is : <?= sizeof($final_recommend_list); ?>
             </div>
         </div>
     </div>
@@ -42,38 +59,42 @@
             </div>
         </nav>
     </div>
+    <div id="mid-content" class="container">
+        <!-- Category -->
+        <div id="dropdown-category-menu" style="display: none;">
+            <div class="row">
+                <div class="col">
+                    <div><a class="nav-link text-primary">Main</a></div>
+                    <div><a class="nav-link">sub1</a></div>
+                    <div><a class="nav-link">sub2</a></div>
+                    <div><a class="nav-link">sub3</a></div>
 
-    <!-- Category -->
-    <div class="container" id="dropdown-category-menu" style="display: none;">
-        <div class="row">
-            <div class="col">
-                <div><a class="nav-link text-primary">Main</a></div>
-                <div><a class="nav-link">sub1</a></div>
-                <div><a class="nav-link">sub2</a></div>
-                <div><a class="nav-link">sub3</a></div>
-
-            </div>
-            <div class="col">
-                <div><a class="nav-link text-primary">Main</a></div>
-                <div><a class="nav-link">sub1</a></div>
-                <div><a class="nav-link">sub2</a></div>
-                <div><a class="nav-link">sub3</a></div>
-            </div>
-            <div class="col">
-                <div><a class="nav-link text-primary">Main</a></div>
-                <div><a class="nav-link">sub1</a></div>
-                <div><a class="nav-link">sub2</a></div>
-                <div><a class="nav-link">sub3</a></div>
-            </div>
-            <div class="col">
-                <div><a class="nav-link text-primary">Main</a></div>
-                <div><a class="nav-link">sub1</a></div>
-                <div><a class="nav-link">sub2</a></div>
-                <div><a class="nav-link">sub3</a></div>
+                </div>
+                <div class="col">
+                    <div><a class="nav-link text-primary">Main</a></div>
+                    <div><a class="nav-link">sub1</a></div>
+                    <div><a class="nav-link">sub2</a></div>
+                    <div><a class="nav-link">sub3</a></div>
+                </div>
+                <div class="col">
+                    <div><a class="nav-link text-primary">Main</a></div>
+                    <div><a class="nav-link">sub1</a></div>
+                    <div><a class="nav-link">sub2</a></div>
+                    <div><a class="nav-link">sub3</a></div>
+                </div>
+                <div class="col">
+                    <div><a class="nav-link text-primary">Main</a></div>
+                    <div><a class="nav-link">sub1</a></div>
+                    <div><a class="nav-link">sub2</a></div>
+                    <div><a class="nav-link">sub3</a></div>
+                </div>
             </div>
         </div>
+        <!-- Top rated -->
+        <div id="top-rated">
+                <div></div>
+        </div>
     </div>
-    <!-- Top rated -->
 </div>
 
 <script>

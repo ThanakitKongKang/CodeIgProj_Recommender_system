@@ -120,3 +120,4 @@ $route['books/pagination/(:num)'] = 'bookscontroller/pagination';
 
 
 $route['test'] = 'bookscontroller/recommend';
+$route['book/(:num)'] = 'bookscontroller/book';

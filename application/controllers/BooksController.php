@@ -15,6 +15,14 @@ class BooksController extends CI_Controller
         $this->load->library("pagination");
     }
 
+    public function book()
+    {
+        $bookid = $this->uri->segment(2);
+        $header["title"] = "book detail id : " . $bookid;
+        $this->load->view('./header', $header);
+        $this->load->view('books/detail');
+        $this->load->view('footer');
+    }
     public function index()
     {
         // array declaring
@@ -55,15 +63,19 @@ class BooksController extends CI_Controller
         foreach ($data['recommend_list_bookname'] as $row_recommend) {
             $data['recommend_list_detail'][] = $this->books_model->get_by_id($row_recommend);
         }
+        if (!empty($data['recommend_list_detail'])) {
+            $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
 
-        $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
-
-        // push match score into result array
-        $i = 0;
-        foreach ($data['recommend_list'] as $row_recommend) {
-            $data['final_recommend_list'][$i]["match"] = $row_recommend;
-            $i++;
+            // push match score into result array
+            $i = 0;
+            foreach ($data['recommend_list'] as $row_recommend) {
+                $data['final_recommend_list'][$i]["match"] = $row_recommend;
+                $i++;
+            }
+        } else {
+            $data['final_recommend_list'] = false;
         }
+        $data['top_rated'] = $this->books_model->get_top_rated();
         $header['title'] = 'Book Recommendation';
         $data['books'] = $this->books_model->get_all();
 
@@ -149,29 +161,7 @@ class BooksController extends CI_Controller
             $i++;
         }
 
-        // Decode image from base64
-        $image = base64_decode($imagedata);
 
-        // Create Imagick object
-        $im = new Imagick();
-
-        // Convert image into Imagick
-        $im->readimageblob($image);
-
-        // Create thumbnail max of 200x82
-        $im->thumbnailImage(200, 82, true);
-
-        // Add a subtle border
-        $color = new ImagickPixel();
-        $color->setColor("rgb(220,220,220)");
-        $im->borderImage($color, 1, 1);
-
-        // Output the image
-        $output = $im->getimageblob();
-        $outputtype = $im->getFormat();
-
-        header("Content-type: $outputtype");
-        echo $output;
 
         $header['title'] = 'Recommendation test';
         $header['test'] = "active";
