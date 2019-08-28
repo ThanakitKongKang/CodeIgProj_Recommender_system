@@ -24,18 +24,12 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
-    public function getPaper($paperID)
-    {
-        $this->db->select(' title ');
-        $this->db->from($this->table);
-        $this->db->where('ID', $paperID);
-        $this->db->limit(1);
-
-        $qry =  $this->db->get();
-        if ($qry->num_rows() == 1) {
-            return $qry->result();
-        } else {
-            return FALSE;
-        }
+    //to be continued
+    public function get_by_id($name) {
+        $this->db->where('book_name', $name);
+        $this->db->select('*');
+        $this->db->from('book');
+        $query = $this->db->get();
+        return $query->row();
     }
 }

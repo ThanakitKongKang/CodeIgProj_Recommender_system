@@ -52,8 +52,8 @@ class SessionController extends CI_Controller
         $this->form_validation->set_rules($rules);
 
         if ($this->form_validation->run() == FALSE) {
-
-            $this->load->view('sessions/login');
+            $header['title'] = "Login";
+            $this->load->view('sessions/login', $header);
         } else {
             $post_data = array(
                 'username' => $this->input->post('username'),
@@ -69,8 +69,10 @@ class SessionController extends CI_Controller
                 );
                 $this->session->set_userdata('user', $sessionArr);
                 $this->session->set_userdata('logged_in', TRUE);
+                $this->session->set_flashdata('flash_success', TRUE);
                 redirect(base_url("/test"));
             } else if ($data == FALSE) {
+                $header['title'] = "Login";
                 $data["feedback"] = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
                 $this->load->view('sessions/login',$data);
             }

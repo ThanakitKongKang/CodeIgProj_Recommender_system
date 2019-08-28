@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="<?= base_url() ?>/assets/_etc/herb.ico" type="image/x-icon">
+    <link rel="icon" href="<?= base_url() ?>/assets/_etc/library.png" type="image/x-icon">
     <title><?= $title ?></title>
 
     <!-- bootstrap -->
@@ -56,91 +56,82 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- cookie -->
     <script src="<?= base_url() ?>/assets/js/jquery.cookie.js"></script>
-    <style>
-        @font-face {
-            font-family: 'Kanit';
-            src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
-        }
 
-        body {
-            font-family: 'Kanit', sans-serif;
-            /* background-image: url("./assets/_etc/background.webp"); */
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-        }
-
-        #content {
-            position: relative;
-            top: 5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="<?= base_url() ?>/assets/_etc/herb.ico" width="30" height="30" class="d-inline-block align-top" alt="">
-                <span style="font-family:sans-serif;font-size:1.5rem">Book Recommendation</span>
+    <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top pb-0">
 
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div>
-                <form class="form-inline" style="margin:0rem">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown link
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <div class="col-4">
+                        <a class="navbar-brand" href="<?= base_url() ?>">
+                            <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                            <span style="font-family:sans-serif;font-size:1.5rem">Book Recommendation</span>
+
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <?php
-                    if (!$this->session->userdata('logged_in')) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">SIGN UP</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
-                    </li>
-                    <?php
-                    } else { ?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?=$this->session->userdata('user')['username'];?>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="logout">LOG OUT</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                   
-                    <?php
-                    }
-                    ?>
+                    </div>
+
+                    <div class="col-4">
+                        <form class="form-inline" style="margin:0rem">
+                            <input class="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search" id="input-search">
+                            <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
+                        </form>
+                    </div>
+                    <div class="col-4">
+                        <ul class="navbar-nav ml-auto nav-menu">
+                            <li class="nav-item <?php if(isset($home)) echo $home;?>">
+                                <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item <?php if(isset($test)) echo $test;?>">
+                                <a class="nav-link" href="<?= base_url() ?>/test">Test</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown link
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                            <?php
+                            if (!$this->session->userdata('logged_in')) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">SIGN UP</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
+                            </li>
+                            <?php
+                            } else { ?>
+                            <li class="nav-item dropdown ml-auto">
+                                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="logout">LOG OUT</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+
+                            <?php
+                            }
+                            ?>
 
 
-                </ul>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>
+
+        </nav>
+    </div>
     <div id="content">

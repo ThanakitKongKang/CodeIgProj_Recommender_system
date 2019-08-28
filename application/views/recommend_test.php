@@ -14,7 +14,15 @@
 // }
 
 http://localhost/CodeIgProj_Recommender_system/user_guide/database/results.html
-https://stackoverflow.com/questions/369602/deleting-an-element-from-an-array-in-php
+
+
+if($this->session->userdata('flash_success')){
+    ?>
+<div class="alert alert-success" role="alert">
+  A simple success alert—check it out!
+</div>
+<?php
+}
 
 echo "<div class='container'><h1>raw user rate</h1>";
 print("<pre>".print_r($raw_books,true)."</pre>");
@@ -35,4 +43,9 @@ echo "</div>";
 echo "<div class='container'><h1>Item-based (after avg&flatten)</h1>";
 print("<pre>".print_r($recommend_list,true)."</pre>");
 echo "</div>";
+
+echo "<div class='container'><h1>Recommended List - detail</h1>";
+print("<pre>".print_r($final_recommend_list,true)."</pre>");
+echo "</div>";
+
 ?>
