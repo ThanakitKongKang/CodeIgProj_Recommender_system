@@ -75,7 +75,9 @@ class BooksController extends CI_Controller
         } else {
             $data['final_recommend_list'] = false;
         }
+
         $data['top_rated'] = $this->books_model->get_top_rated();
+
         $header['title'] = 'Book Recommendation';
         $data['books'] = $this->books_model->get_all();
 

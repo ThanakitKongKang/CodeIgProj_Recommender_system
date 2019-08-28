@@ -85,13 +85,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
                     <div class="col-4">
                         <ul class="navbar-nav ml-auto nav-menu">
-                            <li class="nav-item <?php if(isset($home)) echo $home;?>">
+                            <li class="nav-item <?php if (isset($home)) echo $home; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item <?php if(isset($test)) echo $test;?>">
+                            <li class="nav-item <?php if (isset($test)) echo $test; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>/test">Test</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Dropdown link
                                 </a>
@@ -100,7 +100,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <a class="dropdown-item" href="#">Something else here</a>
                                 </div>
-                            </li>
+                            </li> -->
                             <?php
                             if (!$this->session->userdata('logged_in')) { ?>
                             <li class="nav-item">
@@ -134,4 +134,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         </nav>
     </div>
+
     <div id="content">
+
+        <?php
+        if ($this->session->userdata('flash_success')) {
+            ?>
+        <div class="alert alert-success" role="alert">
+            A simple success alert—check it out!
+        </div>
+        <?php
+        }
+        ?>
