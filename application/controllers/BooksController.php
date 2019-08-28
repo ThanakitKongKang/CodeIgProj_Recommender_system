@@ -17,7 +17,53 @@ class BooksController extends CI_Controller
 
     public function index()
     {
+        // array declaring
+        $data['recommend_matched'] = array();
+        $data['recommend_averaged'] = array();
+        $data['recommend_flattened'] = array();
+        $data['recommend_list'] = array();
+        $data['recommend_list_bookname'] = array();
+        $data['final_recommend_list'] = array();
+        $data['target_books'] = array();
 
+        //should be top rated by currently user
+        // $data['target_books'] = ['Certified Management Accountant (CMA), Part 2','Trading the Decentralization of the Financial Systems','High Performance Python (from Training at EuroPython 2011)','Red Tea Detox'];
+        $username = $this->session->userdata('user')['username'];
+        $data['raw_target_books'] = $this->rate_model->get_rate_by_username($username);
+
+        // get current user preferenced books
+        foreach ($data['raw_target_books'] as $user_book) {
+            $data['target_books'][] = $user_book['book_name'];
+        }
+
+        $data['raw_books'] = $this->rate_model->get_rate();
+        $data['books'] = $this->flip_array($data['raw_books']);
+        $result = $this->transformPreferences($data['books']);
+        foreach ($data['target_books'] as $user_book) {
+            array_push($data['recommend_matched'], $this->matchItems($result, $user_book));
+        }
+
+        $data['recommend_averaged'] = $this->array_average($data['recommend_matched']);
+        $data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+        $data['target_books_flipped']  = array_flip($data['target_books']);
+        // remove items that user given a rate
+        $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
+
+        // get item details from their name
+        foreach ($data['recommend_list_bookname'] as $row_recommend) {
+            $data['recommend_list_detail'][] = $this->books_model->get_by_id($row_recommend);
+        }
+
+        $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
+
+        // push match score into result array
+        $i = 0;
+        foreach ($data['recommend_list'] as $row_recommend) {
+            $data['final_recommend_list'][$i]["match"] = $row_recommend;
+            $i++;
+        }
         $header['title'] = 'Book Recommendation';
         $data['books'] = $this->books_model->get_all();
 
@@ -46,7 +92,7 @@ class BooksController extends CI_Controller
         $data['books'] = $this->books_model->get_books($config["per_page"], $page);
 
         $header['title'] = 'pagination';
-       
+
 
         $this->load->view('./header', $header);
         $this->load->view('books/pagination', $data);
@@ -103,8 +149,32 @@ class BooksController extends CI_Controller
             $i++;
         }
 
+        // Decode image from base64
+        $image = base64_decode($imagedata);
+
+        // Create Imagick object
+        $im = new Imagick();
+
+        // Convert image into Imagick
+        $im->readimageblob($image);
+
+        // Create thumbnail max of 200x82
+        $im->thumbnailImage(200, 82, true);
+
+        // Add a subtle border
+        $color = new ImagickPixel();
+        $color->setColor("rgb(220,220,220)");
+        $im->borderImage($color, 1, 1);
+
+        // Output the image
+        $output = $im->getimageblob();
+        $outputtype = $im->getFormat();
+
+        header("Content-type: $outputtype");
+        echo $output;
+
         $header['title'] = 'Recommendation test';
-        $header['test'] = "active"; 
+        $header['test'] = "active";
 
         $this->load->view('./header', $header);
         $this->load->view('recommend_test', $data);

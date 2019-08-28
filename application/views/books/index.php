@@ -1,7 +1,8 @@
 <div class="container">
     <div id="top" class="row">
         <div class="col" id="col-1">
-            1
+            <?= $final_recommend_list[0]['book_name'] ?>
+            
             <!-- big image top recommended-->
         </div>
         <div class="col" id="col-2">
@@ -43,35 +44,35 @@
     </div>
 
     <!-- Category -->
-        <div class="container" id="dropdown-category-menu" style="display: none;">
-            <div class="row">
-                <div class="col">
-                    <div><a class="nav-link text-primary">Main</a></div>
-                    <div><a class="nav-link">sub1</a></div>
-                    <div><a class="nav-link">sub2</a></div>
-                    <div><a class="nav-link">sub3</a></div>
+    <div class="container" id="dropdown-category-menu" style="display: none;">
+        <div class="row">
+            <div class="col">
+                <div><a class="nav-link text-primary">Main</a></div>
+                <div><a class="nav-link">sub1</a></div>
+                <div><a class="nav-link">sub2</a></div>
+                <div><a class="nav-link">sub3</a></div>
 
-                </div>
-                <div class="col">
-                    <div><a class="nav-link text-primary">Main</a></div>
-                    <div><a class="nav-link">sub1</a></div>
-                    <div><a class="nav-link">sub2</a></div>
-                    <div><a class="nav-link">sub3</a></div>
-                </div>
-                <div class="col">
-                    <div><a class="nav-link text-primary">Main</a></div>
-                    <div><a class="nav-link">sub1</a></div>
-                    <div><a class="nav-link">sub2</a></div>
-                    <div><a class="nav-link">sub3</a></div>
-                </div>
-                <div class="col">
-                    <div><a class="nav-link text-primary">Main</a></div>
-                    <div><a class="nav-link">sub1</a></div>
-                    <div><a class="nav-link">sub2</a></div>
-                    <div><a class="nav-link">sub3</a></div>
-                </div>
+            </div>
+            <div class="col">
+                <div><a class="nav-link text-primary">Main</a></div>
+                <div><a class="nav-link">sub1</a></div>
+                <div><a class="nav-link">sub2</a></div>
+                <div><a class="nav-link">sub3</a></div>
+            </div>
+            <div class="col">
+                <div><a class="nav-link text-primary">Main</a></div>
+                <div><a class="nav-link">sub1</a></div>
+                <div><a class="nav-link">sub2</a></div>
+                <div><a class="nav-link">sub3</a></div>
+            </div>
+            <div class="col">
+                <div><a class="nav-link text-primary">Main</a></div>
+                <div><a class="nav-link">sub1</a></div>
+                <div><a class="nav-link">sub2</a></div>
+                <div><a class="nav-link">sub3</a></div>
             </div>
         </div>
+    </div>
     <!-- Top rated -->
 </div>
 

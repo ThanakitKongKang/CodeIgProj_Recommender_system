@@ -89,13 +89,13 @@ body {
 #top .col {}
 
 #navbarNavDropdown-index>ul>li>a {
+    font-size:1.25rem;
 	cursor: pointer;
 }
 
 #navbarNavDropdown-index>ul>li {
 	padding: 0rem 5rem;
 }
-
 
 
 #dropdown-category-menu>div>div>div>a {
