@@ -37,7 +37,9 @@ class Books_model extends BaseModel
     public function get_top_rated()
     {
         $this->db->order_by('b_rate', 'DESC');
-        return $this->db->get($this->table)
-            ->result();
+        $this->db->limit(20);
+        $query = $this->db->get($this->table);
+        $array = json_decode(json_encode($query->result()), True);
+        return $array;
     }
 }
