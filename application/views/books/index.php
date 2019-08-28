@@ -6,9 +6,9 @@
             if (!$final_recommend_list) echo "recommended list is empty";
             else { ?>
 
-            <img class="" id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.png">
-            <a href="book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"></a>
-            <div id="text-col-1"></div>
+                <img class="" id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.png">
+                <a href="book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"></a>
+                <div id="text-col-1"></div>
             <?php } ?>
 
             <!-- big image top recommended-->
@@ -18,24 +18,24 @@
             <?php
             for ($i = 1; $i < 5; $i++) {
                 ?>
-            <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
-                <div class="row h-100">
-                    <div class="col-4">
-                        <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
-                        <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a>
-                    </div>
+                <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
+                        <div class="row h-100">
+                            <div class="col-4">
+                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
+                                <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a>
+                            </div>
 
-                    <div class="col-8 text-col-2">
-                        <a class="text-col-2-type ctg" href="#mid"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
-                        <div class="text-col-2-name"> <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
-                        <div class="text-col-2-author"><?= $final_recommend_list[$i]['author'] ?></div>
-                        <div class="text-col-2-date">dd/mm/yyyy</div>
-                    </div>
+                            <div class="col-8 text-col-2">
+                                <a class="text-col-2-type ctg" href="#mid"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
+                                <div class="text-col-2-name"> <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
+                                <div class="text-col-2-author"><?= $final_recommend_list[$i]['author'] ?></div>
+                                <div class="text-col-2-date">dd/mm/yyyy</div>
+                            </div>
+
+                        </div>
+                    <?php } ?>
 
                 </div>
-                <?php } ?>
-
-            </div>
             <?php
             }
             ?>
@@ -119,9 +119,20 @@
                     <?php
                     foreach ($top_rated as $top) {
                         ?>
-                    <div class="col-4 p-5">
-                        <?= $top["b_rate"] ?> : <?= $top["book_name"] ?>
-                    </div>
+                        <div class="col-4 p-5">
+                            <div>
+                                <span class="text-toprated-rate badge badge-primary"><?= number_format($top["b_rate"], 1); ?></span>
+                                <a href="book/<?= $top['book_id'] ?>" class=""><img class="img-toprated" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
+                                <span class="text-toprated"><?= $top["book_name"] ?></span></a>
+
+
+                            </div>
+                            <div class="position-relative">
+
+                            </div>
+
+
+                        </div>
                     <?php
                     }
                     ?>
