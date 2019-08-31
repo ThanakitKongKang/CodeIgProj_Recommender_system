@@ -42,26 +42,37 @@
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="100" height="100" class="d-inline-block align-top" alt="">
                         </div>
                         <!-- <h3 class="card-title text-center mt-2">Login</h3> -->
-                        <form method="post" class="form-signin" action="<?= site_url('login') ?>">
-                            <div class="form-label-group">
-                                <input type="text" class="form-control" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
-                                <!-- <label for="inputUsername">Username</label> -->
+                        <form method="post" class="form-signin" action="<?= site_url('signup') ?>">
+                            <div class="form-label-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control  <?php if (isset($feedback)) echo "border border-danger"; ?>" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
+                            </div>
+                            <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger"><?= $feedback ?></div> <?php } ?>
+
+                            <div class="form-label-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
                             </div>
 
-                            <div class="form-label-group">
-                                <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
-                                <!-- <label for="inputPassword">Password</label> -->
+                            <div class="form-label-group input-group">
+                                <input type="text" class="form-control" placeholder="ชื่อ" name="firstname" id="firstname" value="<?php echo set_value('firstname'); ?>">
+                                <input type="text" class="form-control" placeholder="นามสกุล" name="lastname" id="lastname" value="<?php echo set_value('lastname'); ?>">
                             </div>
 
                             <!-- <div class="custom-control custom-checkbox mb-3">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">Remember password</label>
-                                        </div> -->
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                            </div> -->
                             <?php echo validation_errors('<span class="errmsg text-center text-danger">', '</span><br>'); ?>
-                            <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger mb-3"><?= $feedback ?></div> <?php } ?>
-                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
-                            <div class="text-center mt-3">
-                                <a class="small" href="signup"  style="text-decoration:none">Create account</a></div>
+
+                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 mt-5" type="submit">Sign up</button>
+                            <div class="text-center small ">
+                                Already a member?
+                                <a href="login" style="text-decoration:none">Log in</a></div>
                         </form>
                     </div>
                 </div>

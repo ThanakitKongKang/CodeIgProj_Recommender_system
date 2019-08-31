@@ -24,10 +24,20 @@ class BooksController extends CI_Controller
         $this->load->view('footer');
     }
 
+    public function testmode()
+    {
+        $header["title"] = "Test mode";
+        $this->load->view('./header', $header);
+        $this->load->view('books/testmode');
+        $this->load->view('footer');
+    }
+
     public function getBooksByCategory()
     {
         echo json_encode($this->books_model->get_by_category());
     }
+
+
 
     public function index()
     {
@@ -122,6 +132,8 @@ class BooksController extends CI_Controller
 
     public function recommend()
     {
+        $this->check_auth('recommend');
+
         // array declaring
         $data['recommend_matched'] = array();
         $data['recommend_averaged'] = array();
@@ -161,14 +173,20 @@ class BooksController extends CI_Controller
             $data['recommend_list_detail'][] = $this->books_model->get_by_id($row_recommend);
         }
 
-        $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
-
         // push match score into result array
-        $i = 0;
-        foreach ($data['recommend_list'] as $row_recommend) {
-            $data['final_recommend_list'][$i]["match"] = $row_recommend;
-            $i++;
+        if (!empty($data['recommend_list_detail'])) {
+            $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
+
+            // push match score into result array
+            $i = 0;
+            foreach ($data['recommend_list'] as $row_recommend) {
+                $data['final_recommend_list'][$i]["match"] = $row_recommend;
+                $i++;
+            }
+        } else {
+            $data['final_recommend_list'] = false;
         }
+
         $header['title'] = 'Recommendation test';
         $header['test'] = "active";
 

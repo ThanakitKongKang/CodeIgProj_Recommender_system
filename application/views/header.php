@@ -57,6 +57,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- cookie -->
     <script src="<?= base_url() ?>/assets/js/jquery.cookie.js"></script>
 
+
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
 </head>
 
@@ -107,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php
                             if (!$this->session->userdata('logged_in')) { ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">SIGN UP</a>
+                                    <a class="nav-link" href="<?= base_url() ?>signup">SIGN UP</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
@@ -119,7 +120,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="logout">LOG OUT</a>
+                                        <a class="dropdown-item" href="<?= base_url() ?>logout">LOG OUT</a>
                                     </div>
                                 </li>
 
@@ -138,10 +139,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <div id="content">
 
-        <?php
-        if ($this->session->userdata('flash_success')) {
-            ?>
-            <script>
+
+        <script>
+            <?php
+            if ($this->session->userdata('flash_success')) {
+                ?>
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -154,7 +156,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     type: 'success',
                     confirmButtonText: 'ตกลง',
                 })
-            </script>
-        <?php
-        }
-        ?>
+            <?php
+            }
+            if ($this->session->userdata('register_success')) {
+                ?>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                Toast.fire({
+                    title: 'สมัครสมาชิกสำเร็จ !',
+                    type: 'success',
+                    confirmButtonText: 'ตกลง',
+                })
+            <?php } ?>
+        </script>

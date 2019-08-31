@@ -81,11 +81,13 @@ body {
 	height: 46px;
 
 }
-.hover{
-	transition-delay: 0ms!important;
-	-webkit-transition-delay: 0ms!important;
-	border-color: #007bff!important;
+
+.hover {
+	transition-delay: 0ms !important;
+	-webkit-transition-delay: 0ms !important;
+	border-color: #007bff !important;
 }
+
 .nav-menu>li>a:hover {
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;
@@ -254,12 +256,132 @@ body {
 
 .link {
 	cursor: pointer;
-	color:#535353;
+	color: #535353;
 
 }
 
 .link:hover {
-	color: #007bff!important;
+	color: #007bff !important;
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;
+}
+
+.overlay {
+	margin-left: 15px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 92%;
+	height: 77%;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.5s ease;
+}
+
+.hover_img:hover .overlay {
+	display: block;
+	background-color: rgba(0, 0, 0, .7);
+}
+
+.hover_img_button {
+	position: absolute;
+	/* width: 500px; */
+	left: 2rem;
+	top: 1rem;
+	opacity: 0;
+	transition: opacity .35s ease;
+}
+
+.hover_img_content {
+	position: absolute;
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	/* width: 500px; */
+	left: 3rem;
+	top: 5rem;
+	opacity: 0;
+	transition: opacity .35s ease;
+}
+
+.hover_img:hover .hover_img_button {
+	opacity: 1;
+}
+
+.hover_img:hover .hover_img_content {
+	opacity: 1;
+}
+
+
+.overlay_col2 {
+	margin-left: 15px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 76%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.5s ease;
+}
+
+.hover_img_col2:hover .overlay_col2 {
+	display: block;
+	background-color: rgba(0, 0, 0, .3);
+}
+
+.hover_img_button_col2 {
+	position: absolute;
+	/* width: 500px; */
+	left: 34%;
+	top: 35%;
+	opacity: 0;
+	transition: opacity .35s ease;
+}
+
+.hover_img_content_mid {
+	width: 12rem;
+	position: absolute;
+	font-size:0.85rem;
+	color: white;
+	text-shadow: 1px 1px 2px black;
+	/* width: 500px; */
+	left: 5rem;
+	top: 8rem;
+	opacity: 0;
+	transition: opacity .35s ease;
+}
+
+.hover_img_col2:hover .hover_img_button_col2 {
+	opacity: 1;
+}
+
+.overlay_mid {
+	margin-left: 3rem;
+	position: absolute;
+	top: 3rem;
+	left: 0;
+	width: 74%;
+	height: 79%;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.5s ease;
+}
+
+.hover_img_mid:hover .overlay_mid {
+	display: block;
+	background-color: rgba(0, 0, 0, .3);
+}
+
+.hover_img_button_mid {
+	position: absolute;
+	/* width: 500px; */
+	left: 5rem;
+	top: 4rem;
+	opacity: 0;
+	transition: opacity .35s ease;
+}
+
+.hover_img_mid:hover .hover_img_button_mid {
+	opacity: 1;
+}
+
+.hover_img_mid:hover .hover_img_content_mid {
+	opacity: 1;
 }

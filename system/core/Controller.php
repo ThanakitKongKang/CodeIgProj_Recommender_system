@@ -98,7 +98,6 @@ class CI_Controller
 	public function check_auth($page)
 	{
 		if (!$this->session->userdata('logged_in')) {
-			$this->session->set_flashdata('msg', "You need to be logged in to access the $page page.");
 			redirect('login');
 		}
 	}

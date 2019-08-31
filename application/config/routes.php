@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -91,16 +91,7 @@ $route['authors/(:num)'] = 'authors';
 */
 $route['flash_index'] = 'sessioncontroller';
 $route['flash_message'] = 'sessioncontroller/flash_message';
-/*
-| -------------------------------------------------------------------------
-| STORING USER DATA in CI SESSIONS
-| -------------------------------------------------------------------------
-*/
-$route['login'] = 'sessioncontroller/login';
-$route['authenticate'] = 'sessioncontroller/authenticate';
-$route['settings'] = 'sessioncontroller/settings';
-$route['dashboard'] = 'sessioncontroller/dashboard';
-$route['logout'] = 'sessioncontroller/logout';
+
 /*
 | -------------------------------------------------------------------------
 | FILE UPLOAD
@@ -108,7 +99,15 @@ $route['logout'] = 'sessioncontroller/logout';
 */
 $route['upload-image'] = 'imageuploadcontroller';
 $route['store-image'] = 'imageuploadcontroller/store';
-
+/*
+| -------------------------------------------------------------------------
+| STORING USER DATA in CI SESSIONS
+| -------------------------------------------------------------------------
+*/
+$route['login'] = 'sessioncontroller/login';
+$route['settings'] = 'sessioncontroller/settings';
+$route['dashboard'] = 'sessioncontroller/dashboard';
+$route['logout'] = 'sessioncontroller/logout';
 /*
 | -------------------------------------------------------------------------
 | START
@@ -118,8 +117,21 @@ $route['books/pagination'] = 'bookscontroller/pagination';
 $route['books/pagination/(:num)'] = 'bookscontroller/pagination';
 
 
-
+/*
+| -------------------------------------------------------------------------
+| INDEX
+| -------------------------------------------------------------------------
+*/
 $route['test'] = 'bookscontroller/recommend';
 $route['book/(:num)'] = 'bookscontroller/book';
 $route['books'] = 'bookscontroller';
 $route['books/getBooksByCategory'] = 'bookscontroller/getBooksByCategory';
+/*
+| -------------------------------------------------------------------------
+| ACCOUNT
+| -------------------------------------------------------------------------
+*/
+
+$route['signup'] = 'sessioncontroller/signup';
+
+$route['testmode'] = 'bookscontroller/testmode';

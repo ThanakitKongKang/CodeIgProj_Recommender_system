@@ -5,10 +5,26 @@
             <?php
             if (!$final_recommend_list) echo "recommended list is empty";
             else { ?>
+                <div class="hover_img">
 
-                <img class="" id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.png">
-                <a href="book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"></a>
-                <div id="text-col-1"></div>
+                    <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.png">
+
+                    <!-- <div id="text-col-1"></div> -->
+
+                    <div class="overlay"><a href="book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"> </a></div>
+
+                    <div class="hover_img_button">
+                        <a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a>
+
+                    </div>
+                    <div class="hover_img_content">
+                        <div class="py-2"><?= $final_recommend_list[0]['book_name'] ?></div>
+                        <div class="small py-2">field : <?= $final_recommend_list[0]['book_type'] ?></div>
+                        <div class="small py-2">author : <?= $final_recommend_list[0]['author'] ?></div>
+
+                        <div class="small"><?= $final_recommend_list[0]['b_rate'] ?>/5.0 rated by x users</div>
+                    </div>
+                </div>
             <?php } ?>
 
             <!-- big image top recommended-->
@@ -20,9 +36,14 @@
                 ?>
                 <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
                         <div class="row h-100">
-                            <div class="col-4">
+                            <div class="col-4 hover_img_col2">
+
                                 <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
-                                <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a>
+
+
+                                <div class="overlay_col2"><a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
+
+                                <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div>
                             </div>
 
                             <div class="col-8 text-col-2">
@@ -101,13 +122,25 @@
                     <?php
                     foreach ($top_rated as $top) {
                         ?>
-                        <div class="col-4 p-5">
-                            <div>
+                        <div class="col-4 p-5 ">
+                            <div class="hover_img_mid">
                                 <span class="text-img-rate badge badge-primary"><?= number_format($top["b_rate"], 1); ?></span>
-                                <a href="book/<?= $top['book_id'] ?>" class=""><img class="img-book" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
-                                    <span class="text-img"><?= $top["book_name"] ?></span></a>
-                            </div>
-                            <div class="position-relative">
+                                <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
+                                <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
+
+                                
+
+                                
+                                <div class="overlay_mid"><a href="book/<?= $top['book_id'] ?>" class="stretched-link"></a></div>
+
+                                <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div>
+                                <div class="hover_img_content_mid">
+                                    <div class="py-2"><?= $top['book_name'] ?></div>
+                                    <div class="small py-2">field : <?= $top['book_type'] ?></div>
+                                    <div class="small py-2">author : <?= $top['author'] ?></div>
+                                   
+                                    <div class="small"><?= $top['b_rate'] ?>/5.0 rated by x users</div>
+                                </div>
                             </div>
                         </div>
                     <?php
@@ -123,17 +156,22 @@
             <div>
                 <div class="row no-gutters">
                     <div class="col-4 p-5" v-for="book in books">
-                        <div>
+                        <div class="hover_img_mid">
                             <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
-                            <a v-bind:href="'book/'+book.book_id+''" class="">
-                                <img class="img-book" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.png'" />
-                                <span class="text-img"> {{ book.book_name }}</span></a>
+
+                            <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.png'" />
+                            <!-- <span class="text-img"> {{ book.book_name }}</span> -->
+
+                            <div class="overlay_mid"><a v-bind:href="'book/'+book.book_id+''" class="stretched-link"></a></div>
+                            <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div>
+                            <div class="hover_img_content_mid">
+                                <div class="py-2">{{ book.book_name }}</div>
+                                <div class="small py-2">field : {{ book.book_type }}</div>
+                                <div class="small py-2">author : {{ book.author }}</div>
+
+                                <div class="small">{{ book.b_rate }}/5.0 rated by x users</div>
+                            </div>
                         </div>
-
-                        <div class="position-relative">
-
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -152,7 +190,7 @@
 
         $('html').click(function() {
             $('#dropdown-category-menu').hide();
-            $('#dropdown-category').toggleClass("hover");
+            $('#dropdown-category').removeClass("hover");
         });
 
         $('#dropdown-category-toggle').click(function(e) {
@@ -194,9 +232,8 @@
                     category_content.books = JSON.parse(data);
                 }
             })
-
-
         });
+        
 
     });
 
@@ -229,10 +266,5 @@
         }
     });
 
-    var example1 = new Vue({
-        el: '#example-1',
-        data: {
-            books: []
-        }
-    })
+    $(".rating").rate();
 </script>
