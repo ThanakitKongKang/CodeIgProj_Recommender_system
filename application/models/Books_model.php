@@ -42,4 +42,22 @@ class Books_model extends BaseModel
         $array = json_decode(json_encode($query->result()), True);
         return $array;
     }
+
+    public function get_cateory_list()
+    {
+        $this->db->select('book_type');
+        $this->db->distinct();
+        $query = $this->db->get($this->table);
+        $array = json_decode(json_encode($query->result()), True);
+        return $array;
+    }
+
+    public function get_by_category()
+    {
+        $category = $this->input->post('category');
+        $this->db->where('book_type', $category);
+        $this->db->select('*');
+        $query = $this->db->get($this->table);
+        return $query->result();
+    }
 }

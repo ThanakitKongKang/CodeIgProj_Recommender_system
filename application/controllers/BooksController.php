@@ -23,6 +23,12 @@ class BooksController extends CI_Controller
         $this->load->view('books/detail');
         $this->load->view('footer');
     }
+
+    public function getBooksByCategory()
+    {
+        echo json_encode($this->books_model->get_by_category());
+    }
+
     public function index()
     {
         // array declaring
@@ -77,6 +83,7 @@ class BooksController extends CI_Controller
         }
 
         $data['top_rated'] = $this->books_model->get_top_rated();
+        $data['category_list'] = $this->books_model->get_cateory_list();
 
         $header['title'] = 'Book Recommendation';
         $data['books'] = $this->books_model->get_all();
@@ -162,9 +169,6 @@ class BooksController extends CI_Controller
             $data['final_recommend_list'][$i]["match"] = $row_recommend;
             $i++;
         }
-
-
-
         $header['title'] = 'Recommendation test';
         $header['test'] = "active";
 

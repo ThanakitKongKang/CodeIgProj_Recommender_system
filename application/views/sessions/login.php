@@ -41,7 +41,7 @@
                         <div class="justify-content-center d-flex">
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="100" height="100" class="d-inline-block align-top" alt="">
                         </div>
-                        <h3 class="card-title text-center mt-2">Login</h3>
+                        <!-- <h3 class="card-title text-center mt-2">Login</h3> -->
                         <form method="post" class="form-signin" action="<?= site_url('authenticate') ?>">
                             <div class="form-label-group">
                                 <input type="text" class="form-control" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
@@ -59,7 +59,7 @@
                                         </div> -->
                             <?php echo validation_errors('<span class="errmsg text-center text-danger">', '</span><br>'); ?>
                             <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger mb-3"><?= $feedback ?></div> <?php } ?>
-                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
                             <div class="text-center">
                                 <a class="small" href="#">Create account</a></div>
                         </form>

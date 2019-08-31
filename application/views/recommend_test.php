@@ -34,9 +34,11 @@ echo "</div>";
 
 echo "<div class='container'><h1>after matching </h1>";
 echo "<div class='container'><h3>target list </h3>";
+echo "<div class='text-primary'>";
 foreach ($target_books as $target_book) {
     echo $target_book . "<br>";
 }
+echo "</div>";
 print("<pre>" . print_r($recommend_flattened, true) . "</pre>");
 echo "</div>";
 

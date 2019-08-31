@@ -89,7 +89,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item <?php if (isset($test)) echo $test; ?>">
-                                <a class="nav-link" href="<?= base_url() ?>/test">Test</a>
+                                <a class="nav-link" href="<?= base_url() ?>test">How</a>
+                            </li>
+                            <li class="nav-item <?php if (isset($browse_all)) echo $browse_all; ?>">
+                                <a class="nav-link" href="<?= base_url() ?>browse">Browse All</a>
                             </li>
                             <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -103,24 +106,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </li> -->
                             <?php
                             if (!$this->session->userdata('logged_in')) { ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">SIGN UP</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">SIGN UP</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
+                                </li>
                             <?php
                             } else { ?>
-                            <li class="nav-item dropdown ml-auto">
-                                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="logout">LOG OUT</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
+                                <li class="nav-item dropdown ml-auto">
+                                    <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="logout">LOG OUT</a>
+                                    </div>
+                                </li>
 
                             <?php
                             }
@@ -140,9 +141,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php
         if ($this->session->userdata('flash_success')) {
             ?>
-        <div class="alert alert-success" role="alert">
-            A simple success alert—check it out!
-        </div>
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                Toast.fire({
+                    title: 'เข้าสู่ระบบสำเร็จ !',
+                    type: 'success',
+                    confirmButtonText: 'ตกลง',
+                })
+            </script>
         <?php
         }
         ?>

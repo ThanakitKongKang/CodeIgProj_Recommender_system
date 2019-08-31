@@ -42,8 +42,6 @@
         </div>
         <div class="col" id="col-3">
             <div>
-                <!-- top 2 -->
-                Total number of items in the recommended list array is : <?= sizeof($final_recommend_list); ?>
             </div>
         </div>
     </div>
@@ -73,34 +71,18 @@
     </div>
     <div id="mid-content" class="container">
         <!-- Category -->
-        <div class="position-relative">
+        <div class="position-relative text-center">
             <div id="dropdown-category-menu" style="display: none;">
-                <div class="row text-center">
-                    <div class="col">
-                        <div><a class="nav-link text-primary" id="ctg_1">Main</a></div>
-                        <div><a class="nav-link">sub1</a></div>
-                        <div><a class="nav-link">sub2</a></div>
-                        <div><a class="nav-link">sub3</a></div>
-
-                    </div>
-                    <div class="col">
-                        <div><a class="nav-link text-primary">Main</a></div>
-                        <div><a class="nav-link">sub1</a></div>
-                        <div><a class="nav-link">sub2</a></div>
-                        <div><a class="nav-link">sub3</a></div>
-                    </div>
-                    <div class="col">
-                        <div><a class="nav-link text-primary">Main</a></div>
-                        <div><a class="nav-link">sub1</a></div>
-                        <div><a class="nav-link">sub2</a></div>
-                        <div><a class="nav-link">sub3</a></div>
-                    </div>
-                    <div class="col">
-                        <div><a class="nav-link text-primary">Main</a></div>
-                        <div><a class="nav-link">sub1</a></div>
-                        <div><a class="nav-link">sub2</a></div>
-                        <div><a class="nav-link">sub3</a></div>
-                    </div>
+                <div class="row no-gutters">
+                    <?php
+                    foreach ($category_list as $category) {
+                        ?>
+                        <div class="col-3 category">
+                            <a class="nav-link link" href="#mid" data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -121,17 +103,12 @@
                         ?>
                         <div class="col-4 p-5">
                             <div>
-                                <span class="text-toprated-rate badge badge-primary"><?= number_format($top["b_rate"], 1); ?></span>
-                                <a href="book/<?= $top['book_id'] ?>" class=""><img class="img-toprated" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
-                                <span class="text-toprated"><?= $top["book_name"] ?></span></a>
-
-
+                                <span class="text-img-rate badge badge-primary"><?= number_format($top["b_rate"], 1); ?></span>
+                                <a href="book/<?= $top['book_id'] ?>" class=""><img class="img-book" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
+                                    <span class="text-img"><?= $top["book_name"] ?></span></a>
                             </div>
                             <div class="position-relative">
-
                             </div>
-
-
                         </div>
                     <?php
                     }
@@ -144,19 +121,39 @@
         <!-- items by category -->
         <template id="category_contents" v-if="category === 'category'">
             <div>
-                <h3 class="text-center font-alias">//Items by category</h3>
+                <div class="row no-gutters">
+                    <div class="col-4 p-5" v-for="book in books">
+                        <div>
+                            <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
+                            <a v-bind:href="'book/'+book.book_id+''" class="">
+                                <img class="img-book" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.png'" />
+                                <span class="text-img"> {{ book.book_name }}</span></a>
+                        </div>
 
+                        <div class="position-relative">
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </template>
-
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
+        $(document).on('click', 'a[href^="#"]', function(e) {
+            e.preventDefault();
+            $('html, body').stop().animate({
+                scrollTop: $($(this).attr('href')).offset().top
+            }, 500, 'linear');
+        });
+
         $('html').click(function() {
             $('#dropdown-category-menu').hide();
-        })
+            $('#dropdown-category').toggleClass("hover");
+        });
 
         $('#dropdown-category-toggle').click(function(e) {
             e.stopPropagation();
@@ -164,6 +161,7 @@
 
         $('#dropdown-category').click(function(e) {
             $('#dropdown-category-menu').toggle();
+            $(this).toggleClass("hover");
         });
 
         $('#top-rated').click(function(e) {
@@ -171,16 +169,35 @@
             toprated.category = "toprated";
             category_content.category = "";
         });
-        $('#ctg_1').click(function(e) {
-            mid_title.title = "Category 1";
-            toprated.category = false;
-            category_content.category = "category";
-        });
         $('.ctg').click(function(e) {
             mid_title.title = "Category 1";
             toprated.category = false;
             category_content.category = "category";
         });
+
+        $('.category').on("click", "a", function(event) {
+            var category = ($(this).data('ctg'));
+            // vue
+            mid_title.title = category;
+            toprated.category = false;
+            category_content.category = "category";
+
+            var data_category = {
+                'category': category,
+            };
+            // call bookscontroller to call model
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/getBooksByCategory/",
+                data: data_category,
+                success: function(data) {
+                    category_content.books = JSON.parse(data);
+                }
+            })
+
+
+        });
+
     });
 
     var mid_title = new Vue({
@@ -195,10 +212,27 @@
             category: 'toprated'
         }
     });
+
     var category_content = new Vue({
         el: '#category_contents',
         data: {
-            category: ''
+            category: '',
+            books: []
         }
     });
+
+
+    var category_content_body = new Vue({
+        el: '#category_content_body',
+        data: {
+            books: []
+        }
+    });
+
+    var example1 = new Vue({
+        el: '#example-1',
+        data: {
+            books: []
+        }
+    })
 </script>

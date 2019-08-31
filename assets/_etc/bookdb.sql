@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2019 at 10:38 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- Generation Time: Aug 31, 2019 at 09:41 AM
+-- Server version: 10.3.15-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,7 +33,7 @@ CREATE TABLE `book` (
   `author` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `book_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `book_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8_unicode_ci,
+  `content` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `b_rate` float DEFAULT NULL,
   `count_rate` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -43,31 +43,31 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b_rate`, `count_rate`) VALUES
-(1, 'William John Teahan', 'Artificial Intelligence – Agent Behaviour', 'Artificial Intelligence', NULL, 4.8, NULL),
-(2, 'William John Teahan', 'Artificial Intelligence – Agents and Environments', 'Artificial Intelligence', NULL, 4.8, NULL),
-(3, 'William John Teahan', 'Artificial Intelligence_ Exercises I', 'Artificial Intelligence', NULL, 4.9, NULL),
-(4, 'William John Teahan', 'Artificial Intelligence_ Exercises II', 'Artificial Intelligence', NULL, 4.6, NULL),
-(5, 'David Haskins', 'C Programming in Linux', 'Programming', NULL, 4.3, NULL),
-(6, 'Poul Klausen', 'C# 1', 'Programming', 'Introduction to programming and the C# language', 4.3, NULL),
-(7, 'Kjell Backman', 'Structured Programming with C++', 'Programming', '', 4.2, NULL),
+(1, 'William John Teahan', 'Artificial Intelligence – Agent Behaviour', 'Artificial Intelligence', NULL, 4.3, NULL),
+(2, 'William John Teahan', 'Artificial Intelligence – Agents and Environments', 'Artificial Intelligence', NULL, 4.3, NULL),
+(3, 'William John Teahan', 'Artificial Intelligence_ Exercises I', 'Artificial Intelligence', NULL, 5, NULL),
+(4, 'William John Teahan', 'Artificial Intelligence_ Exercises II', 'Artificial Intelligence', NULL, 4.2, NULL),
+(5, 'David Haskins', 'C Programming in Linux', 'Programming', NULL, 4.2, NULL),
+(6, 'Poul Klausen', 'C# 1', 'Programming', 'Introduction to programming and the C# language', 3.8, NULL),
+(7, 'Kjell Backman', 'Structured Programming with C++', 'Programming', '', 4.5, NULL),
 (8, 'Poul Klausen', 'Introduction to Web Services with Java', 'Java Programming', NULL, 4.2, NULL),
-(9, 'Poul Klausen', 'Java 1_ Basic syntax and semantics', 'Java Programming', NULL, 3.8, NULL),
-(10, 'Poul Klausen', 'Java 2_ Programs with a graphical user interface', 'Java Programming', NULL, 3.9, NULL),
+(9, 'Poul Klausen', 'Java 1_ Basic syntax and semantics', 'Java Programming', NULL, 4.8, NULL),
+(10, 'Poul Klausen', 'Java 2_ Programs with a graphical user interface', 'Java Programming', NULL, 4.1, NULL),
 (11, 'Poul Klausen', 'Java 3_ Object-oriented programming', 'Java Programming', NULL, 4.8, NULL),
-(12, 'Poul Klausen', 'Java 4_ Java’s type system and collection classes', 'Java Programming', NULL, 4.8, NULL),
-(13, 'Poul Klausen', 'Java 5_ Files and Java IO', 'Java Programming', NULL, 4.9, NULL),
-(14, 'Poul Klausen', 'Java 6_ JDBC and database applications', 'Java Programming', NULL, 5, NULL),
-(15, 'Poul Klausen', 'Java 7_ About system development', 'Java Programming', NULL, 5, NULL),
-(16, 'Poul Klausen', 'Java 8_ Multithreaded programs', 'Java Programming', NULL, 5, NULL),
-(17, 'Poul Klausen', 'Java 9_ Swing, Documents and printing', 'Java Programming', NULL, 4, NULL),
-(18, 'Poul Klausen', 'Java 10_ Java2D, Drawing of the window', 'Java Programming', NULL, 5, NULL),
-(19, 'Poul Klausen', 'Java 11_ Web applications and Java EE', 'Java Programming', NULL, 4, NULL),
-(20, 'Poul Klausen', 'Java 12_ WWW and development of the client part', 'Java Programming', NULL, 3.8, NULL),
-(21, 'Poul Klausen', 'Java 13_ Distributed programming and Java EE', 'Java Programming', NULL, 3.9, NULL),
-(22, 'Poul Klausen', 'Java 14_ Development of applications with JavaFX', 'Java Programming', NULL, 5, NULL),
-(23, 'Poul Klausen', 'Java 15_ More about JavaFX', 'Java Programming', NULL, 4, NULL),
-(24, 'Poul Klausen', 'Java 16_ Mobile phones and Android', 'Java Programming', NULL, NULL, NULL),
-(25, 'Poul Klausen', 'Java 17_ More about Java and Android', 'Java Programming', NULL, NULL, NULL),
+(12, 'Poul Klausen', 'Java 4_ Java’s type system and collection classes', 'Java Programming', NULL, 4.1, NULL),
+(13, 'Poul Klausen', 'Java 5_ Files and Java IO', 'Java Programming', NULL, 4.1, NULL),
+(14, 'Poul Klausen', 'Java 6_ JDBC and database applications', 'Java Programming', NULL, 4.9, NULL),
+(15, 'Poul Klausen', 'Java 7_ About system development', 'Java Programming', NULL, 4.9, NULL),
+(16, 'Poul Klausen', 'Java 8_ Multithreaded programs', 'Java Programming', NULL, 4.8, NULL),
+(17, 'Poul Klausen', 'Java 9_ Swing, Documents and printing', 'Java Programming', NULL, 4.6, NULL),
+(18, 'Poul Klausen', 'Java 10_ Java2D, Drawing of the window', 'Java Programming', NULL, 4.5, NULL),
+(19, 'Poul Klausen', 'Java 11_ Web applications and Java EE', 'Java Programming', NULL, 4.5, NULL),
+(20, 'Poul Klausen', 'Java 12_ WWW and development of the client part', 'Java Programming', NULL, 5, NULL),
+(21, 'Poul Klausen', 'Java 13_ Distributed programming and Java EE', 'Java Programming', NULL, 4.4, NULL),
+(22, 'Poul Klausen', 'Java 14_ Development of applications with JavaFX', 'Java Programming', NULL, 3.7, NULL),
+(23, 'Poul Klausen', 'Java 15_ More about JavaFX', 'Java Programming', NULL, 4.1, NULL),
+(24, 'Poul Klausen', 'Java 16_ Mobile phones and Android', 'Java Programming', NULL, 3.1, NULL),
+(25, 'Poul Klausen', 'Java 17_ More about Java and Android', 'Java Programming', NULL, 3.2, NULL),
 (26, 'Poul Klausen', 'Java 18_ Algorithms and data structures', 'Java Programming', NULL, NULL, NULL),
 (27, 'Poul Klausen', 'Java 19_ More algorithms and data structures', 'Java Programming', NULL, NULL, NULL),
 (28, 'Poul Klausen', 'Java 20_ About the system development process', 'Java Programming', NULL, NULL, NULL),
@@ -130,9 +130,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (85, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume X', 'Calculus', NULL, NULL, NULL),
 (86, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume XI', 'Calculus', NULL, NULL, NULL),
 (87, 'Leif Mejbro', 'Sequences and Power Series', 'Calculus', NULL, NULL, NULL),
-(88, 'Leif Mejbro', 'Spectral Theory', 'Calculus', NULL, NULL, NULL),
-(89, NULL, NULL, NULL, NULL, NULL, NULL),
-(90, NULL, NULL, '', NULL, NULL, NULL);
+(88, 'Leif Mejbro', 'Spectral Theory', 'Calculus', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -254,7 +252,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
