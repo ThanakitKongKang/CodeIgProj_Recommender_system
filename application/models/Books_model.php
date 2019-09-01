@@ -24,14 +24,23 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
-    //to be continued
-    public function get_by_id($name)
+    public function get_by_name($name)
     {
         $this->db->where('book_name', $name);
         $this->db->select('*');
         $this->db->from('book');
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function get_by_id($id)
+    {
+        $this->db->where('book_id', $id);
+        $this->db->select('*');
+        $this->db->from('book');
+        $query = $this->db->get();
+        $array = json_decode(json_encode($query->row()), True);
+        return $array;
     }
 
     public function get_top_rated()

@@ -18,9 +18,10 @@ class BooksController extends CI_Controller
     public function book()
     {
         $bookid = $this->uri->segment(2);
+        $data['book_detail'] = $this->books_model->get_by_id($bookid);
         $header["title"] = "book detail id : " . $bookid;
         $this->load->view('./header', $header);
-        $this->load->view('books/detail');
+        $this->load->view('books/detail',$data);
         $this->load->view('footer');
     }
 
@@ -77,7 +78,7 @@ class BooksController extends CI_Controller
 
         // get item details from their name
         foreach ($data['recommend_list_bookname'] as $row_recommend) {
-            $data['recommend_list_detail'][] = $this->books_model->get_by_id($row_recommend);
+            $data['recommend_list_detail'][] = $this->books_model->get_by_name($row_recommend);
         }
         if (!empty($data['recommend_list_detail'])) {
             $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);

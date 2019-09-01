@@ -57,6 +57,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- cookie -->
     <script src="<?= base_url() ?>/assets/js/jquery.cookie.js"></script>
 
+    <!-- star rating -->
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>/assets/css/star-rating.min.css">
+    <script src="<?= base_url() ?>/assets/js/star-rating.min.js"></script>
+
+
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
 </head>
