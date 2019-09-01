@@ -12,16 +12,23 @@ class BooksController extends CI_Controller
 
         $this->load->model('books_model');
         $this->load->model('rate_model');
+        $this->load->model('bookmark_model');
         $this->load->library("pagination");
     }
 
     public function book()
     {
+        $username = $this->session->userdata('user')['username'];
         $bookid = $this->uri->segment(2);
         $data['book_detail'] = $this->books_model->get_by_id($bookid);
-        $header["title"] = "book detail id : " . $bookid;
+
+        $data['user_rate'] = $this->rate_model->get_rate_user_book($this->session->userdata('user')['username'], $bookid);
+
+        $data['bookmark'] = $this->bookmark_model->get_if_user_bookmarked($bookid, $username);
+
+        $header["title"] = $data['book_detail']['book_name'];
         $this->load->view('./header', $header);
-        $this->load->view('books/detail',$data);
+        $this->load->view('books/detail', $data);
         $this->load->view('footer');
     }
 
@@ -36,6 +43,55 @@ class BooksController extends CI_Controller
     public function getBooksByCategory()
     {
         echo json_encode($this->books_model->get_by_category());
+    }
+
+    public function update_bookmark()
+    {
+        $bookid = $this->input->post('book_id');
+        $username = $this->session->userdata('user')['username'];
+        $isBookmarked = $this->bookmark_model->get_if_user_bookmarked($bookid, $username);
+        if ($username != null) {
+            if ($isBookmarked) {
+                // delete from table
+                $this->bookmark_model->removeBookmark($bookid, $username);
+                echo "removed";
+            } else {
+                //  insert to table
+                $post_data = array(
+                    'book_id' => $bookid,
+                    'username' => $username,
+                );
+                $this->bookmark_model->insert($post_data);
+
+                echo "inserted";
+            }
+        }
+        else {
+            echo "login";
+        }
+    }
+
+    public function rateBook()
+    {
+        $bookid = $this->input->post('book_id');
+        $rate = $this->input->post('rating');
+        $username = $this->session->userdata('user')['username'];
+        $rate_exists = $this->rate_model->get_rate_user_book($username, $bookid);
+        if ($rate_exists == FALSE) {
+            $rate_data = array(
+                'book_id' => $bookid,
+                'username' => $username,
+                'rate' =>  $rate,
+            );
+
+            $this->rate_model->insert($rate_data);
+            $rate_avg = $this->books_model->update_book_rate($bookid, $rate);
+        } else {
+            // update instead of create
+            $this->rate_model->update_rate($bookid, $username, $rate);
+            $rate_avg = $this->books_model->update_book_rate_exists($bookid);
+        }
+        echo number_format($rate_avg['avg'], 1);
     }
 
 

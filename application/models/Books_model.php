@@ -69,4 +69,39 @@ class Books_model extends BaseModel
         $query = $this->db->get($this->table);
         return $query->result();
     }
+
+    public function update_book_rate($book_id, $rate)
+    {
+        $sql = "SELECT ROUND(SUM(rate)/COUNT(book_id),2) as avg FROM rate WHERE book_id = ?";
+        $query = $this->db->query($sql, array($book_id));
+
+
+        if ($query->num_rows() == 1) {
+            $array = json_decode(json_encode($query->row()), True);
+            $this->db->where('book_id', $book_id);
+            $this->db->set('b_rate', $array['avg'], FALSE);
+        } else {
+            $this->db->where('book_id', $book_id);
+            $this->db->set('b_rate', $rate, FALSE);
+        }
+
+        $this->db->where('book_id', $book_id);
+        $this->db->set('count_rate', 'count_rate+1', FALSE);
+        $this->db->update($this->table);
+
+        return $array = json_decode(json_encode($query->row()), True);
+    }
+
+    public function update_book_rate_exists($book_id)
+    {
+        $sql = "SELECT ROUND(SUM(rate)/COUNT(book_id),2) as avg FROM rate WHERE book_id = ?";
+        $query = $this->db->query($sql, array($book_id));
+        $array = json_decode(json_encode($query->row()), True);
+        $this->db->where('book_id', $book_id);
+        $this->db->set('b_rate', $array['avg'], FALSE);
+
+        $this->db->update($this->table);
+
+        return $array = json_decode(json_encode($query->row()), True);
+    }
 }

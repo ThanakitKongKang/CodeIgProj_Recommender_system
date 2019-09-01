@@ -126,6 +126,8 @@ $route['test'] = 'bookscontroller/recommend';
 $route['book/(:num)'] = 'bookscontroller/book';
 $route['books'] = 'bookscontroller';
 $route['books/getBooksByCategory'] = 'bookscontroller/getBooksByCategory';
+$route['books/rateBook'] = 'bookscontroller/rateBook';
+$route['books/update_bookmark'] = 'bookscontroller/update_bookmark';
 /*
 | -------------------------------------------------------------------------
 | ACCOUNT
