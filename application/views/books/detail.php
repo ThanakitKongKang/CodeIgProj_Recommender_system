@@ -1,19 +1,18 @@
 <div class="container">
     <div class="row">
         <div class="d-inline-block col" style="height: 90vh!important;width:40vw!important">
-            <object data="<?= base_url() ?>assets/book_files/Certified-Management-Accountant-CMA-Part-1.pdf" type="application/pdf" width="100%" height="100%">
+            <object data="<?= base_url() ?>assets/book_files/Certified-Management-Accountant-CMA-Part-1.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
         </div>
         <div class="pl-5 col">
-            <div class="row">
-                <div class="col">
+            <div class="row" style="height:22rem">
+                <div class="col pt-3">
                     <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.png">
                 </div>
 
-                <div class="col bg-light pt-3" style="border-radius:1rem">
-                <!-- RATE section -->
-                    <div class="" style="top:1rem;">
-                        <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
+                <div class="col bg-light pt-3 book_detail_content" style="border-radius:1rem;">
+                    <!-- RATE section -->
+                    <div>
                         <div style="padding-left:2.5rem">
                             <?php if ($book_detail['count_rate'] != 0) { ?>
                                 <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
@@ -31,13 +30,15 @@
                                         </span>
                                         <span class="small">/5</span></span>
                                 </span>
-                                <span class="small text-secondary" id="span_rating_text">No ratings</span>
+                                <span class="small text-secondary" id="span_rating_text">Be the first who rate this!</span>
                             <?php } ?>
                         </div>
-
+                        <hr>
+                        <div class="font-arial text-center font-italic text-secondary small">Your rate</div>
+                        <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
                     </div>
                     <!-- BOOK detail section -->
-                    <div class="position-absolute pr-3" style="top:5rem">
+                    <div class="position-absolute pr-3" style="top:8rem">
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                         <div class="pb-2 font-arial font-weight-bolder"> <?= $book_detail['book_name'] ?></div>
@@ -46,9 +47,10 @@
                     </div>
 
                     <!-- bookmark trigger -->
-                    <div class="position-absolute pr-4 w-100" style="bottom:1rem">
+                    <div class="position-absolute pr-4 w-100" style="bottom:1rem;">
                         <hr class="mb-2">
-                        <button class="btn btn-primary bookmark_trigger"><?php if ($bookmark == TRUE) { ?><i class="fas fa-bookmark" id="bookmark_icon"></i><?php echo "<span class='save_text'> unsave book</span>";} else { ?><i class="far fa-bookmark" id="bookmark_icon"></i> <?php echo "<span class='save_text'> save book</span>"; } ?> </button>
+                        <button class="btn btn-primary bookmark_trigger"><?php if ($bookmark == TRUE) { ?><i class="fas fa-bookmark" id="bookmark_icon"></i><?php echo "<span class='save_text'> unsave book</span>";
+                        } else { ?><i class="far fa-bookmark" id="bookmark_icon"></i> <?php echo "<span class='save_text'> save book</span>"; } ?></button>
                     </div>
 
                 </div>
@@ -132,7 +134,7 @@
                         $('#bookmark_icon').removeClass("far");
                         $('#bookmark_icon').addClass("fas");
                         $('.save_text').html(" unsave book");
-                        
+
 
                     } else if (data == "removed") {
                         const Toast = Swal.mixin({

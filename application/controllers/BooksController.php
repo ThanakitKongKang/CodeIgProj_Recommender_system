@@ -32,6 +32,26 @@ class BooksController extends CI_Controller
         $this->load->view('footer');
     }
 
+    public function saved()
+    {
+
+        // $data['books'] = $this->bookmark_model->get_saved_list_dynamic(10, $page);
+
+        $username = $this->session->userdata('user')['username'];
+        if ($username != null) {
+            $data['saved_list'] = $this->bookmark_model->get_saved_list($username);
+            $header["title"] = "Saved items";
+            $this->load->view('./header', $header);
+            $this->load->view('books/saved', $data);
+            $this->load->view('footer');
+        } else {
+            $header["title"] = "Error";
+            $this->load->view('./header', $header);
+            $this->load->view('sessions/landing_error_login');
+            $this->load->view('footer');
+        }
+    }
+
     public function testmode()
     {
         $header["title"] = "Test mode";
@@ -65,8 +85,7 @@ class BooksController extends CI_Controller
 
                 echo "inserted";
             }
-        }
-        else {
+        } else {
             echo "login";
         }
     }

@@ -12,6 +12,11 @@
 	font-family: "Open Sans", Arial, sans-serif;
 }
 
+::selection {
+	background-color: #ff0000;
+	color: #ffffff;
+}
+
 body {
 	font-family: 'Kanit', sans-serif;
 	/* background-image: url("./assets/_etc/background.webp"); */
@@ -21,6 +26,7 @@ body {
 
 .navbar {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	transition: all 0.5s
 }
 
 .navbar-brand {
@@ -272,7 +278,7 @@ body {
 	top: 0;
 	left: 0;
 	width: 92%;
-	height: 77%;
+	height: 77.5%;
 	background-color: rgba(0, 0, 0, 0);
 	transition: background-color 0.5s ease;
 }
@@ -296,8 +302,9 @@ body {
 	color: white;
 	text-shadow: 1px 1px 2px black;
 	/* width: 500px; */
-	left: 6rem;
-	top: 4rem;
+	/* left: 6rem; */
+	padding: 3rem;
+	top: 1rem;
 	opacity: 0;
 	transition: opacity .35s ease;
 }
@@ -325,7 +332,7 @@ body {
 
 .hover_img_col2:hover .overlay_col2 {
 	display: block;
-	background-color: rgba(0, 0, 0, .3);
+	background-color: rgba(0, 0, 0, .7);
 }
 
 .hover_img_button_col2 {
@@ -345,7 +352,7 @@ body {
 	text-shadow: 1px 1px 2px black;
 	/* width: 500px; */
 	left: 5rem;
-	top: 8rem;
+	top: 7rem;
 	opacity: 0;
 	transition: opacity .35s ease;
 }
@@ -368,7 +375,7 @@ body {
 
 .hover_img_mid:hover .overlay_mid {
 	display: block;
-	background-color: rgba(0, 0, 0, .3);
+	background-color: rgba(0, 0, 0, .7);
 }
 
 .hover_img_button_mid {
@@ -387,4 +394,19 @@ body {
 
 .hover_img_mid:hover .hover_img_content_mid {
 	opacity: 1;
+}
+
+.book_detail_content {
+	border: 2px solid transparent;
+	-webkit-transition: box-shadow .1s;
+	transition: box-shadow .1s;
+	-webkit-transition-delay: .1s;
+	transition-delay: .1s;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0);
+}
+
+.book_detail_content:hover {
+	transition-delay: 0ms;
+	-webkit-transition-delay: 0ms;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }

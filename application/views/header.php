@@ -68,7 +68,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <body>
     <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top pb-0">
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top pb-0" id="navbar">
 
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,6 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="<?= base_url() ?>saved">Saved items</a>
                                         <a class="dropdown-item" href="<?= base_url() ?>logout">LOG OUT</a>
                                     </div>
                                 </li>
@@ -146,6 +147,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
         <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("navbar").style.top = "0";
+                } else {
+                    document.getElementById("navbar").style.top = "-75px";
+                }
+                prevScrollpos = currentScrollPos;
+            }
             <?php
             if ($this->session->userdata('flash_success')) {
                 ?>
@@ -177,5 +188,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     type: 'success',
                     confirmButtonText: 'ตกลง',
                 })
-            <?php } ?>
+            <?php }
+            if ($this->session->userdata('flash_logout')) { ?>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                Toast.fire({
+                    title: 'ออกจากระบบสำเร็จ !',
+                    type: 'success',
+                    confirmButtonText: 'ตกลง',
+                })
+            <?php
+            }
+            ?>
         </script>

@@ -89,6 +89,7 @@ class SessionController extends CI_Controller
     {
         $this->session->unset_userdata('user');
         $this->session->unset_userdata('logged_in');
+        $this->session->set_flashdata('flash_logout', TRUE);
         redirect($_SERVER['HTTP_REFERER']); //redirect at previous page
         // redirect(base_url('login'));
     }

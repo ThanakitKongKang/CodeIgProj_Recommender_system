@@ -137,3 +137,4 @@ $route['books/update_bookmark'] = 'bookscontroller/update_bookmark';
 $route['signup'] = 'sessioncontroller/signup';
 
 $route['testmode'] = 'bookscontroller/testmode';
+$route['saved'] = 'bookscontroller/saved';

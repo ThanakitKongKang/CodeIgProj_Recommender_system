@@ -21,11 +21,12 @@
                     <div class="hover_img_content text-center">
                         <div class="">
                             <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
-                            <div class="small"><?= number_format($final_recommend_list[0]['b_rate'],1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div>
+                            <div class="small"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div>
                         </div>
                         <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
                         <div class=""><?= $final_recommend_list[0]['book_name'] ?></div>
-                        <div class="small pt-4">field : <?= $final_recommend_list[0]['book_type'] ?></div>
+                        <div class="small mt-4 mb-2 badge badge-success">Match <?= number_format($final_recommend_list[0]['match'] * 100, 0) ?>%</div>
+                        <div class="small">field : <?= $final_recommend_list[0]['book_type'] ?></div>
                         <div class="small py-2">author : <?= $final_recommend_list[0]['author'] ?></div>
                     </div>
                 </div>
@@ -50,14 +51,14 @@
                                 <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                             </div>
 
-                            <div class="col-8 text-col-2 bg-light" style="border-radius:1rem;">
+                            <div class="col-8 text-col-2 bg-light book_detail_content" style="border-radius:1rem;">
                                 <a class="text-col-2-type ctg" href="#mid"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
                                 <div class="text-col-2-name"> <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
                                 <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
-                                <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'],1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
-
+                                <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
+                                <div class="small pl-1 badge badge-success">Match <?= number_format($final_recommend_list[$i]['match'] * 100, 0) ?>%</div>
                                 <div class="text-col-2-author font-italic text-secondary" style="float:right">By <?= $final_recommend_list[$i]['author'] ?></div>
-                              
+
                             </div>
 
                         </div>
@@ -117,7 +118,9 @@
         <!-- Current title -->
         <div id="app_mid_title">
             <template>
-                <h1 id="mid-title" class="display-4 font-arial text-center py-5">{{title}}</h1>
+                <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
+                <hr class="mb-2 w-25" style="border: 0;border-top: 3px solid #007bff;">
+
             </template>
         </div>
 
