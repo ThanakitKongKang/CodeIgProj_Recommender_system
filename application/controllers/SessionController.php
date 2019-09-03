@@ -61,6 +61,9 @@ class SessionController extends CI_Controller
                     'firstname' => $data[0]->first_name,
                     'lastname' => $data[0]->last_name
                 );
+                $this->load->model('bookmark_model');
+
+                $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($data[0]->username, "count"));
                 $this->session->set_userdata('user', $sessionArr);
                 $this->session->set_userdata('logged_in', TRUE);
                 $this->session->set_flashdata('flash_success', TRUE);
@@ -93,7 +96,6 @@ class SessionController extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']); //redirect at previous page
         // redirect(base_url('login'));
     }
-
     public function signup()
     {
         $rules = array(

@@ -15,7 +15,11 @@ class BooksController extends CI_Controller
         $this->load->model('bookmark_model');
         $this->load->library("pagination");
     }
-
+    /*
+    | -------------------------------------------------------------------------
+    | book detail page
+    | -------------------------------------------------------------------------
+    */
     public function book()
     {
         $username = $this->session->userdata('user')['username'];
@@ -31,16 +35,22 @@ class BooksController extends CI_Controller
         $this->load->view('books/detail', $data);
         $this->load->view('footer');
     }
-
+    /*
+    | -------------------------------------------------------------------------
+    | saved_items page
+    | -------------------------------------------------------------------------
+    */
     public function saved()
     {
-
         // $data['books'] = $this->bookmark_model->get_saved_list_dynamic(10, $page);
-
         $username = $this->session->userdata('user')['username'];
         if ($username != null) {
-            $data['saved_list'] = $this->bookmark_model->get_saved_list($username);
+            $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "rows");
+            $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count");
             $header["title"] = "Saved items";
+            $data['showheader'] = true;
+            $data['i'] = 0;
+            $data['round_count'] = 1;
             $this->load->view('./header', $header);
             $this->load->view('books/saved', $data);
             $this->load->view('footer');
@@ -52,6 +62,24 @@ class BooksController extends CI_Controller
         }
     }
 
+    function loadMoreData()
+    {
+        $data['showheader'] = false;
+        $data['round_count'] = ((int) $this->input->post('round_count')) + 1;
+        $start = (int) $this->input->post('start');
+        $data['i'] = (int) $this->input->post('i');
+        $username = $this->session->userdata('user')['username'];
+
+        $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start, "rows");
+        $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start, "count");
+
+        $this->load->view('books/saved', $data);
+    }
+    /*
+    | -------------------------------------------------------------------------
+    | test page
+    | -------------------------------------------------------------------------
+    */
     public function testmode()
     {
         $header["title"] = "Test mode";
@@ -64,7 +92,11 @@ class BooksController extends CI_Controller
     {
         echo json_encode($this->books_model->get_by_category());
     }
-
+    /*
+    | -------------------------------------------------------------------------
+    | bookmark
+    | -------------------------------------------------------------------------
+    */
     public function update_bookmark()
     {
         $bookid = $this->input->post('book_id');
@@ -75,21 +107,32 @@ class BooksController extends CI_Controller
                 // delete from table
                 $this->bookmark_model->removeBookmark($bookid, $username);
                 echo "removed";
+                $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($username, "count"));
             } else {
                 //  insert to table
+                date_default_timezone_set('Asia/Bangkok');
+                $date = date('Y/m/d H:i:s', time());
                 $post_data = array(
                     'book_id' => $bookid,
                     'username' => $username,
+                    'date' => $date,
                 );
+
                 $this->bookmark_model->insert($post_data);
 
+
                 echo "inserted";
+                $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($username, "count"));
             }
         } else {
             echo "login";
         }
     }
-
+    /*
+    | -------------------------------------------------------------------------
+    | rate
+    | -------------------------------------------------------------------------
+    */
     public function rateBook()
     {
         $bookid = $this->input->post('book_id');
@@ -112,9 +155,11 @@ class BooksController extends CI_Controller
         }
         echo number_format($rate_avg['avg'], 1);
     }
-
-
-
+    /*
+    | -------------------------------------------------------------------------
+    | index
+    | -------------------------------------------------------------------------
+    */
     public function index()
     {
         // array declaring
@@ -149,6 +194,9 @@ class BooksController extends CI_Controller
         $data['target_books_flipped']  = array_flip($data['target_books']);
         // remove items that user given a rate
         $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        //   sort by matching value desc
+        arsort($data['recommend_list']);
+
         $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
 
         // get item details from their name
@@ -167,7 +215,6 @@ class BooksController extends CI_Controller
         } else {
             $data['final_recommend_list'] = false;
         }
-
         $data['top_rated'] = $this->books_model->get_top_rated();
         $data['category_list'] = $this->books_model->get_cateory_list();
 
@@ -180,6 +227,11 @@ class BooksController extends CI_Controller
         $this->load->view('footer');
     }
 
+    /*
+    | -------------------------------------------------------------------------
+    | pagination
+    | -------------------------------------------------------------------------
+    */
     public function pagination()
     {
         $config = array();
@@ -206,6 +258,11 @@ class BooksController extends CI_Controller
         $this->load->view('footer');
     }
 
+    /*
+    | -------------------------------------------------------------------------
+    | test
+    | -------------------------------------------------------------------------
+    */
     public function recommend()
     {
         $this->check_auth('recommend');

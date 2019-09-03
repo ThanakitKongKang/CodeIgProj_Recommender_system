@@ -33,20 +33,34 @@ class Bookmark_model extends BaseModel
         $this->db->delete($this->table);
     }
 
-    public function get_saved_list($username)
+    public function get_saved_list($username,$returnType)
     {
+
         $sql = "SELECT * FROM `saved_book`,book WHERE username = ? AND book.book_id = saved_book.book_id";
         $query = $this->db->query($sql, array($username));
         $array = json_decode(json_encode($query->result()), True);
-        return $array;
+        if ($returnType == "rows")
+            return $array;
+        else if ($returnType == "count")
+            return $query->num_rows();
     }
 
-    public function get_saved_list_dynamic($limit, $start)
+    public function get_saved_list_dynamic($username, $limit, $start, $returnType)
     {
-        $start = ($start == 0) ? 0 : ($limit * ($start - 1));
-        $this->db->limit($limit, $start);
-        $query = $this->db->get($this->table);
+        $sql = "SELECT * FROM `saved_book`,book WHERE username = ? AND book.book_id = saved_book.book_id ORDER BY saved_book.date DESC LIMIT ?, ? ";
+        if ($returnType == "rows") {
 
-        return $query->result();
+            $query = $this->db->query($sql, array($username, $start, $limit));
+
+            if ($query->num_rows() > 0) {
+                $array = json_decode(json_encode($query->result()), True);
+                return $array;
+            } else {
+                return FALSE;
+            }
+        } else if ($returnType == "count") {
+            $query = $this->db->query($sql, array($username, $start, $limit));
+            return $query->num_rows();
+        }
     }
 }

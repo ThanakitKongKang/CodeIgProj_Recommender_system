@@ -61,7 +61,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>/assets/css/star-rating.min.css">
     <script src="<?= base_url() ?>/assets/js/star-rating.min.js"></script>
 
-
+    <!-- moment -->
+    <script src="<?= base_url() ?>/assets/js/moment.min.js"></script>
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
 </head>
@@ -115,6 +116,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url() ?>signup">SIGN UP</a>
                                 </li>
+                                
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
                                 </li>
@@ -125,7 +127,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="<?= base_url() ?>saved">Saved items</a>
+                                        <a class="dropdown-item" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
+                                        <hr>
                                         <a class="dropdown-item" href="<?= base_url() ?>logout">LOG OUT</a>
                                     </div>
                                 </li>
@@ -150,7 +153,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             var prevScrollpos = window.pageYOffset;
             window.onscroll = function() {
                 var currentScrollPos = window.pageYOffset;
+
                 if (prevScrollpos > currentScrollPos) {
+                    console.log(prevScrollpos + " > " + currentScrollPos)
                     document.getElementById("navbar").style.top = "0";
                 } else {
                     document.getElementById("navbar").style.top = "-75px";

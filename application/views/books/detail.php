@@ -34,23 +34,29 @@
                             <?php } ?>
                         </div>
                         <hr>
-                        <div class="font-arial text-center font-italic text-secondary small">Your rate</div>
+                        <div class="font-arial text-center font-italic text-secondary small">Your rate : <span id="your_rate"><?= $user_rate['rate'] ?></span></div>
                         <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
                     </div>
                     <!-- BOOK detail section -->
-                    <div class="position-absolute pr-3" style="top:8rem">
+                    <div class="position-absolute w-100" style="top:8rem;padding-right:1.75rem;">
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                         <div class="pb-2 font-arial font-weight-bolder"> <?= $book_detail['book_name'] ?></div>
-                        <div class="text-col-2-author pt-1">Category : <a class="text-col-2-author" href="<?= base_url() ?>browse/<?= $book_detail['book_type'] ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
-                        <div class="text-col-2-author pt-1">Author : <?= $book_detail['author'] ?></div>
+                        <div class="book_detail_text pt-1">Category : <a class="link" href="<?= base_url() ?>browse/<?= $book_detail['book_type'] ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
+                        <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
                     </div>
 
                     <!-- bookmark trigger -->
-                    <div class="position-absolute pr-4 w-100" style="bottom:1rem;">
+                    <div class="position-absolute w-100 text-center" style="bottom:1rem;padding-right:1.75rem;">
                         <hr class="mb-2">
-                        <button class="btn btn-primary bookmark_trigger"><?php if ($bookmark == TRUE) { ?><i class="fas fa-bookmark" id="bookmark_icon"></i><?php echo "<span class='save_text'> unsave book</span>";
-                        } else { ?><i class="far fa-bookmark" id="bookmark_icon"></i> <?php echo "<span class='save_text'> save book</span>"; } ?></button>
+                        <button class="btn btn-primary bookmark_trigger mt-2">
+                            <?php if ($bookmark == TRUE) { ?>
+                                <i class="fas fa-bookmark" id="bookmark_icon"></i>
+                            <?php echo "<span class='save_text'> unsave book</span>";
+                            } else {
+                                ?><i class="far fa-bookmark" id="bookmark_icon"></i>
+                            <?php echo "<span class='save_text'> save book</span>";
+                            } ?></button>
                     </div>
 
                 </div>
@@ -62,9 +68,9 @@
 
 <script>
     $(document).ready(function() {
-        var is_logged_in = true;
+        var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>
-            var is_logged_in = false;
+            var not_login = false;
         <?php } ?>
         $('.rater_star').rating({
             'stars': '5',
@@ -73,52 +79,55 @@
             'step': '0.5',
             'size': 'sm',
             containerClass: 'text-center',
-            displayOnly: is_logged_in,
+            displayOnly: not_login,
             showCaption: false,
             showClear: false,
         });
-        // rater
-        $('.rating-input').change(function(e) {
-            // call bookscontroller to call model
-            var rating = {
-                'rating': $('.rating-input').val(),
-                'book_id': $('#book_id').val(),
-            };
+        if (not_login) {
+            // rater
+            $('.rating-stars').click(function(e) {
+                please_login();
+            });
+        } else {
+            // rater
+            $('.rating-input').change(function(e) {
+                // call bookscontroller to call model
+                var rating = {
+                    'rating': $('.rating-input').val(),
+                    'book_id': $('#book_id').val(),
+                };
 
-            $.ajax({
-                type: 'post',
-                url: "<?php echo base_url(); ?>books/rateBook",
-                data: rating,
-                success: function(data) {
-                    $('#rate_avg').html(data);
-                    $('#span_rating').removeClass("badge-secondary");
-                    $('#span_rating').addClass("badge-warning");
-                    $('#span_rating_text').html("based on 1 user");
-                }
-            })
-        });
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo base_url(); ?>books/rateBook",
+                    data: rating,
+                    success: function(data) {
+                        $('#rate_avg').html(data);
+                        $('#your_rate').html($('.rating-input').val());
+
+                        $('#span_rating').removeClass("badge-secondary");
+                        $('#span_rating').addClass("badge-warning");
+                        $('#span_rating_text').html("based on 1 user");
+
+                    }
+                })
+            });
+        }
+
         // bookmarker
         $('.bookmark_trigger').click(function(e) {
+            var this_elm = $(this);
             var bookmark_data = {
                 'book_id': $('#book_id').val(),
             };
-
+            var count_all_saved_list = $('#count_all_saved_list').html();
             $.ajax({
                 type: 'post',
                 url: "<?php echo base_url(); ?>books/update_bookmark",
                 data: bookmark_data,
                 success: function(data) {
                     if (data == "login") {
-                        Swal.fire({
-                            title: 'ไม่สามารถทำรายการได้ กรุณาเข้าสู่ระบบ!',
-                            type: 'error',
-                            confirmButtonText: 'เข้าสู่ระบบ',
-                            // timer: 1500
-                        }).then((result) => {
-                            if (result.value) {
-                                window.location = "<?= base_url() ?>login";
-                            }
-                        })
+                        please_login();
                     } else if (data == "inserted") {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -131,10 +140,12 @@
                             title: 'บุ๊กมาร์กสำเร็จ !',
                             type: 'success',
                         });
-                        $('#bookmark_icon').removeClass("far");
-                        $('#bookmark_icon').addClass("fas");
-                        $('.save_text').html(" unsave book");
+                        this_elm.find('i').removeClass("far");
+                        this_elm.find('i').addClass("fas");
+                        this_elm.find('span').html(" unsave book");
 
+                        count_all_saved_list++;
+                        $('#count_all_saved_list').html(count_all_saved_list)
 
                     } else if (data == "removed") {
                         const Toast = Swal.mixin({
@@ -148,15 +159,29 @@
                             title: 'นำออกจากรายการบุ๊กมาร์กสำเร็จ !',
                             type: 'success',
                         });
-                        $('#bookmark_icon').removeClass("fas");
-                        $('#bookmark_icon').addClass("far");
-                        $('.save_text').html(" save book");
-
+                        this_elm.find('i').removeClass("fas");
+                        this_elm.find('i').addClass("far");
+                        this_elm.find('span').html(" save book");
+                        count_all_saved_list--;
+                        $('#count_all_saved_list').html(count_all_saved_list)
                     }
                 }
             })
         });
 
+        function please_login() {
+            Swal.fire({
+                title: 'ไม่สามารถทำรายการได้!',
+                html: '<div>กรุณา<a href="<?= base_url() ?>login">เข้าสู่ระบบ</a></div>',
+                type: 'error',
+                confirmButtonText: 'เข้าสู่ระบบ',
+                // timer: 1500
+            }).then((result) => {
+                if (result.value) {
+                    window.location = "<?= base_url() ?>login";
+                }
+            })
+        }
 
     });
 </script>

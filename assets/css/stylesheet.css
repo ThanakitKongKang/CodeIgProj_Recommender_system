@@ -114,10 +114,10 @@ body {
 }
 
 #img-col-1 {
-	height: 80%;
+	height: 29rem;
 	width: 100%;
 	z-index: -1;
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
 	object-fit: cover;
 }
 
@@ -129,8 +129,8 @@ body {
 }
 
 .img-book {
-	height: 100%;
-	width: 100%;
+	height: 23rem;
+	width: 17rem;
 	object-fit: cover;
 	box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25)
 }
@@ -248,7 +248,24 @@ body {
 	text-decoration: none !important;
 }
 
+.opacity {
+	opacity: 0.5;
+}
+
+
 .text-col-2-author {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 0.9rem;
+	position: absolute;
+	right: 1.5rem;
+	bottom: 0;
+	max-width: 7rem;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.book_detail_text {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	font-size: 0.9rem;
 }
@@ -260,6 +277,27 @@ body {
 	bottom: 0;
 }
 
+#book_detail_content_col1 {
+	border-radius: 1rem;
+	height: 9rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+#text-col-2-author_col1 {
+	right: 4rem;
+}
+
+.text-col-2-footer {
+	position: absolute;
+	bottom: 0.5rem;
+}
+
+.text-col-1-footer {
+	position: absolute;
+	bottom: 2rem;
+}
+
 .link {
 	cursor: pointer;
 	color: #535353;
@@ -267,6 +305,7 @@ body {
 }
 
 .link:hover {
+	text-decoration: none;
 	color: #007bff !important;
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;
@@ -277,8 +316,8 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 92%;
-	height: 77.5%;
+	width: 22rem;
+	height: 29rem;
 	background-color: rgba(0, 0, 0, 0);
 	transition: background-color 0.5s ease;
 }
@@ -302,11 +341,16 @@ body {
 	color: white;
 	text-shadow: 1px 1px 2px black;
 	/* width: 500px; */
-	/* left: 6rem; */
-	padding: 3rem;
-	top: 1rem;
+	left: 4rem;
+	padding: 2rem;
+	top: 4rem;
 	opacity: 0;
 	transition: opacity .35s ease;
+}
+
+.hover_img_content_name {
+	width: 12rem;
+	overflow: hidden;
 }
 
 .hover_img:hover .hover_img_button {
@@ -351,7 +395,7 @@ body {
 	color: white;
 	text-shadow: 1px 1px 2px black;
 	/* width: 500px; */
-	left: 5rem;
+	left: 5.5rem;
 	top: 7rem;
 	opacity: 0;
 	transition: opacity .35s ease;
@@ -367,8 +411,8 @@ body {
 	position: absolute;
 	top: 3rem;
 	left: 0;
-	width: 74%;
-	height: 79%;
+	width: 17rem;
+	height: 23rem;
 	background-color: rgba(0, 0, 0, 0);
 	transition: background-color 0.5s ease;
 }
@@ -397,7 +441,7 @@ body {
 }
 
 .book_detail_content {
-	border: 2px solid transparent;
+	border: 1px solid #0000000d;
 	-webkit-transition: box-shadow .1s;
 	transition: box-shadow .1s;
 	-webkit-transition-delay: .1s;
@@ -409,4 +453,23 @@ body {
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes animation_popup {
+	0% {
+		transform: scale(0.3) translateY(-50%);
+		opacity:0;
+	}
+
+	100% {
+		transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+
+	}
+}
+
+.animation_enter {
+	animation: 1s ease-out 0s 1 animation_popup;
+
+
+
 }

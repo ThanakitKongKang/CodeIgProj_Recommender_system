@@ -50,4 +50,9 @@ echo "<div class='container'><h1>Recommended List - detail</h1>";
 print("<pre>" . print_r($final_recommend_list, true) . "</pre>");
 echo "</div>";
 
+echo "<div class='container'><h1>test sort</h1>";
+print("<pre>" . print_r($recommend_list, true) . "</pre>");
+echo "</div>";
+
+
 ?>
