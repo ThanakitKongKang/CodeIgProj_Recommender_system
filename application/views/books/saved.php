@@ -38,7 +38,7 @@
                         <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
                         <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= $saved['book_type'] ?>"><span><?= $saved['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $saved['author'] ?></div>
-                        <span class="removed_item position-absolute text-info font-apple" style="top:9.5rem;left:23rem;"></span>
+                        <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:23rem;"></span>
                         <!-- bookmark trigger -->
                         <div class="pr-4 w-100">
                             <hr>
@@ -46,14 +46,14 @@
                                 <i class="fas fa-bookmark bookmark_icon"></i>
                                 <span class="bookmark_trigger_text"> unsave book</span>
                             </button>
-                            <span class="text-secondary small" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" style="float:right"><?= $saved['date'] ?></span>
+                            <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" style="float:right"><?= $saved['date'] ?></span>
                         </div>
                     </div>
                 </div>
             <?php $i++;
                 }
                 if ($num_rows == 5 &&  $this->session->userdata('count_all_saved_list') != $i) { ?>
-                <div class="load-more d-flex justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
+                <div class="load-more text-center justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
                     <!-- <img src="<?php echo base_url('assets/img/loading.gif'); ?>" /> -->
 
                     <div class="spinner-border text-primary mr-3" role="status">
@@ -83,6 +83,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        moment.locale('th');
         // time formatter
         $("[data-time-format]").each(function() {
             var el = $(this);
@@ -90,14 +91,13 @@
                 case "time-ago":
                     var timeValue = el.attr("data-time-value")
                     var strTimeAgo = moment(timeValue).fromNow();
-                    el.text(strTimeAgo);
+                    el.text("บันทึกเมื่อ " + strTimeAgo);
                     break;
             }
         });
 
         // bookmarker
         $('.bookmark_trigger<?= $round_count ?>').click(function(e) {
-
             var bookmark_data = {
                 'book_id': ($(this).data('book_id'))
             };
@@ -105,13 +105,16 @@
             var parent = this_elm.parents('.book_detail_content ');
             var count_all_saved_list = $('#count_all_saved_list').html();
 
+
             // console.log($(this).data('book_id'));
 
             $.ajax({
                 type: 'post',
                 url: "<?php echo base_url(); ?>books/update_bookmark",
                 data: bookmark_data,
+
                 success: function(data) {
+
                     if (data == "inserted") {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -160,13 +163,15 @@
         var call = 0
 
         $(window).scroll(function() {
-
             var lastID = $('.load-more').attr('lastID');
-            if (($(window).scrollTop() == $(document).height() - $(window).height()) && (lastID != 0) && num_rows == 5 && call == 0) {
-                call = 1;
-                // console.log(num_rows);
-                // console.log(lastID);
+            var height = $(document).height() - $(window).height();
+            var scroll_value = (numeral($(window).scrollTop()).value() + 250);
+            // console.log(num_rows + " " + lastID + " " + call);
+            console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call);
 
+            if ((scroll_value >= height) && (lastID != 0) && num_rows == 5 && call == 0) {
+                console.log("true");
+                call = 1;
                 var post_data = {
                     'start': lastID,
                     'i': <?= $i ?>,

@@ -299,6 +299,7 @@ class BooksController extends CI_Controller
         $data['target_books_flipped']  = array_flip($data['target_books']);
         // remove items that user given a rate
         $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        arsort($data['recommend_list']);
         $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
 
         // get item details from their name

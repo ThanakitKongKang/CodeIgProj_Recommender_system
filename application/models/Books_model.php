@@ -65,6 +65,7 @@ class Books_model extends BaseModel
     {
         $category = $this->input->post('category');
         $this->db->where('book_type', $category);
+        $this->db->limit(48);
         $this->db->select('*');
         $query = $this->db->get($this->table);
         return $query->result();

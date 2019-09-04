@@ -64,7 +64,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- moment -->
     <script src="<?= base_url() ?>/assets/js/moment.min.js"></script>
 
+    <!-- numeral -->
+    <script src="<?= base_url() ?>/assets/js/numeral.min.js"></script>
+
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/footer.css">
+    
 </head>
 
 <body>
@@ -116,7 +121,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url() ?>signup">SIGN UP</a>
                                 </li>
-                                
+
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
                                 </li>
@@ -147,17 +152,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 
     <div id="content">
-
-
         <script>
             var prevScrollpos = window.pageYOffset;
             window.onscroll = function() {
                 var currentScrollPos = window.pageYOffset;
-
+                // console.log(prevScrollpos + " : " + currentScrollPos)
                 if (prevScrollpos > currentScrollPos) {
-                    console.log(prevScrollpos + " > " + currentScrollPos)
+
                     document.getElementById("navbar").style.top = "0";
-                } else {
+                } else if( prevScrollpos != 0){
                     document.getElementById("navbar").style.top = "-75px";
                 }
                 prevScrollpos = currentScrollPos;

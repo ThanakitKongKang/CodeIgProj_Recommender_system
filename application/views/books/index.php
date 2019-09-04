@@ -30,19 +30,23 @@
                         <div class="small py-2">author : <?= $final_recommend_list[0]['author'] ?></div>
                     </div>
                 </div>
-            <?php } ?>
 
-            <div class="my-3 bg-light book_detail_content" id="book_detail_content_col1">
-                <a class="text-col-2-type ctg"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
-                <div class="text-col-2-name mt-2"> <a href="book/<?= $final_recommend_list[0]['book_id'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
-                <div class="text-col-1-footer w-100">
-                    <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star_col2" title="">
-                    <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
-                    <div class="small pl-1 badge badge-success">Match <?= number_format($final_recommend_list[0]['match'] * 100, 0) ?>%</div>
-                    <div class="text-col-2-author font-italic text-secondary" id="text-col-2-author_col1">By <?= $final_recommend_list[0]['author'] ?></div>
+                <div class="my-3 bg-light book_detail_content" id="book_detail_content_col1">
+                    <a class="text-col-2-type ctg"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
+                    <div class="text-col-2-name mt-2"> <a href="book/<?= $final_recommend_list[0]['book_id'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
+                    <div class="text-col-1-footer w-100">
+                        <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star_col2" title="">
+                        <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
+                        <div class="small pl-1 badge badge-success">Match <?= number_format($final_recommend_list[0]['match'] * 100, 0) ?>%</div>
+                        <div class="text-col-2-author font-italic text-secondary" id="text-col-2-author_col1" title="<?= $final_recommend_list[0]['author'] ?>">By <?= $final_recommend_list[0]['author'] ?></div>
+                    </div>
+
                 </div>
 
-            </div>
+
+
+            <?php } ?>
+
         </div>
         <div class="col" id="col-2">
             <!-- another 4 recommended items -->
@@ -62,7 +66,7 @@
                             </div>
 
                             <div class="col-8 text-col-2 bg-light book_detail_content" style="border-radius:1rem;">
-                                <a class="text-col-2-type ctg" ><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
+                                <a class="text-col-2-type ctg"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
                                 <div class="text-col-2-name"> <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
                                 <div class="text-col-2-footer w-100">
                                     <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
@@ -97,7 +101,7 @@
                 <div class="collapse navbar-collapse col-12 justify-content-center" id="navbarNavDropdown-index">
                     <ul class="navbar-nav nav-menu">
                         <li class="nav-item">
-                            <a class="nav-link"  id="top-rated">Top rated books <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" id="top-rated">Top rated books <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown" id="dropdown-category-toggle">
                             <a class="nav-link dropdown-toggle" id="dropdown-category">
@@ -118,7 +122,7 @@
                     foreach ($category_list as $category) {
                         ?>
                         <div class="col-3 category">
-                            <a class="nav-link link"  data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
+                            <a class="nav-link link" data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
                         </div>
                     <?php
                     }
@@ -127,7 +131,7 @@
             </div>
         </div>
         <!-- Current title -->
-        <div id="app_mid_title">
+        <div id="app_mid_title" class="animation_enter">
             <template>
                 <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
                 <hr class="mb-2 w-25" style="border: 0;border-top: 3px solid #007bff;">
@@ -159,7 +163,7 @@
                                 <div class="hover_img_content_mid text-center">
                                     <div class="py-2"><?= $top['book_name'] ?></div>
                                     <div class="small py-2">field : <?= $top['book_type'] ?></div>
-                                    <div class="small py-2">author : <?= $top['author'] ?></div>
+                                    <div class="small py-2" title="<?= $top['author'] ?>">author : <?= $top['author'] ?></div>
                                     <div class="mt-5 text-center">
                                         <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
                                         <?php if ($top['count_rate'] != 0) { ?>
@@ -242,9 +246,14 @@
         });
 
         $('#top-rated').click(function(e) {
+            $('#app_mid_title').removeClass('animation_enter');
+            $('.load-more').toggle();
+            $('#app_mid_title').addClass('animation_enter');
             mid_title.title = "20 Top rated books of all time";
             toprated.category = "toprated";
             category_content.category = "";
+            $('.load-more').toggle();
+
         });
         $('.ctg').click(function(e) {
             mid_title.title = "Category 1";
@@ -270,10 +279,12 @@
                 beforeSend: function() {
                     $('.load-more').toggle();
                     $('#category_contents_body').removeClass('animation_enter');
+                    $('#app_mid_title').removeClass('animation_enter');
                 },
                 success: function(data) {
                     category_content.books = JSON.parse(data);
                     $('#category_contents_body').addClass('animation_enter');
+                    $('#app_mid_title').addClass('animation_enter');
                     $('.load-more').toggle();
                 }
             })
