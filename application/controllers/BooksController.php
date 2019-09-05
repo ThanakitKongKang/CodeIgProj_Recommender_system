@@ -15,6 +15,20 @@ class BooksController extends CI_Controller
         $this->load->model('bookmark_model');
         $this->load->library("pagination");
     }
+
+    /*
+    | -------------------------------------------------------------------------
+    | pagination
+    | -------------------------------------------------------------------------
+    */
+    public function browse()
+    {   
+        $data['browse_all'] = "yes";
+        $header["title"] = "Browse All";
+        $this->load->view('./header', $header);
+        $this->load->view('books/browse', $data);
+        $this->load->view('footer');
+    }
     /*
     | -------------------------------------------------------------------------
     | book detail page

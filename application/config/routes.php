@@ -104,9 +104,8 @@ $route['store-image'] = 'imageuploadcontroller/store';
 | STORING USER DATA in CI SESSIONS
 | -------------------------------------------------------------------------
 */
+$route['signup'] = 'sessioncontroller/signup';
 $route['login'] = 'sessioncontroller/login';
-$route['settings'] = 'sessioncontroller/settings';
-$route['dashboard'] = 'sessioncontroller/dashboard';
 $route['logout'] = 'sessioncontroller/logout';
 /*
 | -------------------------------------------------------------------------
@@ -122,20 +121,32 @@ $route['books/pagination/(:num)'] = 'bookscontroller/pagination';
 | INDEX
 | -------------------------------------------------------------------------
 */
-$route['test'] = 'bookscontroller/recommend';
+
 $route['book/(:num)'] = 'bookscontroller/book';
 $route['books'] = 'bookscontroller';
 $route['books/getBooksByCategory'] = 'bookscontroller/getBooksByCategory';
 $route['books/rateBook'] = 'bookscontroller/rateBook';
 $route['books/update_bookmark'] = 'bookscontroller/update_bookmark';
 $route['books/loadMoreData'] = 'bookscontroller/loadMoreData';
+
 /*
 | -------------------------------------------------------------------------
-| ACCOUNT
+| SAVED LIST
 | -------------------------------------------------------------------------
 */
-
-$route['signup'] = 'sessioncontroller/signup';
-
-$route['testmode'] = 'bookscontroller/testmode';
 $route['saved'] = 'bookscontroller/saved';
+
+/*
+| -------------------------------------------------------------------------
+| TEST
+| -------------------------------------------------------------------------
+*/
+$route['test'] = 'bookscontroller/recommend';
+$route['testmode'] = 'bookscontroller/testmode';
+
+/*
+| -------------------------------------------------------------------------
+| TEST
+| -------------------------------------------------------------------------
+*/
+$route['browse'] = 'bookscontroller/browse';
