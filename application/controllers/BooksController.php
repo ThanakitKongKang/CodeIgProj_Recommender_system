@@ -198,6 +198,17 @@ class BooksController extends CI_Controller
         arsort($data['recommend_list']);
 
         $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
+        if (sizeof($data['recommend_list_bookname']) < 9) {
+            $data['full_list_bookname'] = array(9);
+            $size = sizeof($data['recommend_list_bookname']);
+            $need = 9 - $size;
+            $data['list_bookname_to_merge'] = $this->books_model->get_random_book($need, $data['recommend_list_bookname']);
+            $i = 0;
+            for ($size; $size < 9; $size++) {
+                $data['recommend_list_bookname'][$size] =  $data['list_bookname_to_merge'][$i]["book_name"];
+                $i++;
+            }
+        }
 
         // get item details from their name
         foreach ($data['recommend_list_bookname'] as $row_recommend) {
@@ -215,6 +226,7 @@ class BooksController extends CI_Controller
         } else {
             $data['final_recommend_list'] = false;
         }
+        
         $data['top_rated'] = $this->books_model->get_top_rated();
         $data['category_list'] = $this->books_model->get_cateory_list();
 
@@ -299,15 +311,27 @@ class BooksController extends CI_Controller
         $data['target_books_flipped']  = array_flip($data['target_books']);
         // remove items that user given a rate
         $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        //   sort by matching value desc
         arsort($data['recommend_list']);
+
         $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
+
+        if (sizeof($data['recommend_list_bookname']) < 9) {
+            $data['full_list_bookname'] = array(9);
+            $size = sizeof($data['recommend_list_bookname']);
+            $need = 9 - $size;
+            $data['list_bookname_to_merge'] = $this->books_model->get_random_book($need, $data['recommend_list_bookname']);
+            $i = 0;
+            for ($size; $size < 9; $size++) {
+                $data['recommend_list_bookname'][$size] =  $data['list_bookname_to_merge'][$i]["book_name"];
+                $i++;
+            }
+        }
 
         // get item details from their name
         foreach ($data['recommend_list_bookname'] as $row_recommend) {
-            $data['recommend_list_detail'][] = $this->books_model->get_by_id($row_recommend);
+            $data['recommend_list_detail'][] = $this->books_model->get_by_name($row_recommend);
         }
-
-        // push match score into result array
         if (!empty($data['recommend_list_detail'])) {
             $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
 

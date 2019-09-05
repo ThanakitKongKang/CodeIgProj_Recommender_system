@@ -105,4 +105,20 @@ class Books_model extends BaseModel
 
         return $array = json_decode(json_encode($query->row()), True);
     }
+
+    // random strategy
+    public function get_random_book($limit, $book_names)
+    {
+        $this->db->select('book_name');
+        $this->db->from('book');
+        if (!empty($book_names)) {
+            $this->db->where_not_in('book_name', $book_names);
+        }
+
+        $this->db->order_by('bookd_id', 'RANDOM');
+        $this->db->limit($limit);
+        $query = $this->db->get();
+        $array = json_decode(json_encode($query->result()), True);
+        return $array;
+    }
 }
