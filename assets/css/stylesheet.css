@@ -96,10 +96,11 @@ body {
 	border-color: #007bff !important;
 }
 
-.nav-menu>li>a:hover {
+.nav-menu>li>a:hover,.nav-menu>li>a.hovered {
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;
 	border-color: #007bff;
+	color: rgba(0,0,0,.7)!important;
 }
 
 .nav-menu>li.active>a {

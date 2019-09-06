@@ -70,6 +70,9 @@
 
             <div class="load-more pt-5" lastID="0">
                 <h1 class="font-weight-lighter text-center">คุณไม่ได้บันทึก <i class="far fa-bookmark"></i> รายการใด ๆ</h1>
+                <div class="position:relative text-center">
+                    <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:40rem" alt="">
+                </div>
             </div>
 
         <?php } else if ($num_rows == 0) { ?>
@@ -83,6 +86,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        var bookmark_trigger_count = 0;
         moment.locale('th');
         // time formatter
         $("[data-time-format]").each(function() {
@@ -134,6 +138,7 @@
                         $('.count_all_saved_list').html(count_all_saved_list)
                         parent.removeClass("opacity");
                         parent.find('.removed_item').html("");
+                        bookmark_trigger_count--;
 
                     } else if (data == "removed") {
                         const Toast = Swal.mixin({
@@ -154,6 +159,7 @@
                         $('.count_all_saved_list').html(count_all_saved_list)
                         parent.addClass("opacity");
                         parent.find('.removed_item').html("ลบออกจากรายการที่บันทึกแล้ว");
+                        bookmark_trigger_count++;
                     }
                 }
             })
@@ -167,17 +173,19 @@
             var height = $(document).height() - $(window).height();
             var scroll_value = (numeral($(window).scrollTop()).value() + 250);
             // console.log(num_rows + " " + lastID + " " + call);
-            console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call);
+            // console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call);
 
             if ((scroll_value >= height) && (lastID != 0) && num_rows == 5 && call == 0) {
-                console.log("true");
+                // console.log("true");
                 call = 1;
                 var post_data = {
                     'start': lastID,
                     'i': <?= $i ?>,
-                    'round_count': <?= $round_count ?>
+                    'round_count': <?= $round_count ?>,
+                    'bookmark_trigger_count':bookmark_trigger_count,
                 };
 
+        
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo base_url('books/loadMoreData'); ?>',
@@ -190,6 +198,7 @@
                         setTimeout(() => {
                             $('.load-more').remove();
                             $('#saved_list').append(html);
+
                         }, 500);
 
                     }

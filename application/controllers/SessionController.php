@@ -27,52 +27,56 @@ class SessionController extends CI_Controller
 
     public function login()
     {
-        $rules = array(
-            array(
-                'field' => 'username',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => 'กรุณากรอกชื่อผู้ใช้.',
+        if (!$this->session->userdata('logged_in')) {
+            $rules = array(
+                array(
+                    'field' => 'username',
+                    'rules' => 'required',
+                    'errors' => array(
+                        'required' => 'กรุณากรอกชื่อผู้ใช้.',
+                    ),
                 ),
-            ),
-            array(
-                'field' => 'password',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => 'กรุณากรอกรหัสผ่าน.',
-                ),
-            )
-        );
-        $this->form_validation->set_rules($rules);
-
-        if ($this->form_validation->run() == FALSE) {
-            $header['title'] = "Login";
-            $this->load->view('sessions/login', $header);
-        } else {
-            $post_data = array(
-                'username' => $this->input->post('username'),
-                'password' => $this->input->post('password'),
+                array(
+                    'field' => 'password',
+                    'rules' => 'required',
+                    'errors' => array(
+                        'required' => 'กรุณากรอกรหัสผ่าน.',
+                    ),
+                )
             );
-            $data = $this->users_model->login($post_data['username'], $post_data['password']);
+            $this->form_validation->set_rules($rules);
 
-            if ($data != FALSE) {
-                $sessionArr = array(
-                    'username' => $data[0]->username,
-                    'firstname' => $data[0]->first_name,
-                    'lastname' => $data[0]->last_name
+            if ($this->form_validation->run() == FALSE) {
+                $header['title'] = "Login";
+                $this->load->view('sessions/login', $header);
+            } else {
+                $post_data = array(
+                    'username' => $this->input->post('username'),
+                    'password' => $this->input->post('password'),
                 );
-                $this->load->model('bookmark_model');
+                $data = $this->users_model->login($post_data['username'], $post_data['password']);
 
-                $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($data[0]->username, "count"));
-                $this->session->set_userdata('user', $sessionArr);
-                $this->session->set_userdata('logged_in', TRUE);
-                $this->session->set_flashdata('flash_success', TRUE);
-                redirect(base_url());
-            } else if ($data == FALSE) {
-                $data['title'] = "Login";
-                $data["feedback"] = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
-                $this->load->view('sessions/login', $data);
+                if ($data != FALSE) {
+                    $sessionArr = array(
+                        'username' => $data[0]->username,
+                        'firstname' => $data[0]->first_name,
+                        'lastname' => $data[0]->last_name
+                    );
+                    $this->load->model('bookmark_model');
+
+                    $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($data[0]->username, "count"));
+                    $this->session->set_userdata('user', $sessionArr);
+                    $this->session->set_userdata('logged_in', TRUE);
+                    $this->session->set_flashdata('flash_success', TRUE);
+                    redirect(base_url());
+                } else if ($data == FALSE) {
+                    $data['title'] = "Login";
+                    $data["feedback"] = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
+                    $this->load->view('sessions/login', $data);
+                }
             }
+        } else {
+            redirect(base_url());
         }
     }
 

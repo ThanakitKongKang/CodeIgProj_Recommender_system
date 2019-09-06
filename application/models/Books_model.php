@@ -121,4 +121,30 @@ class Books_model extends BaseModel
         $array = json_decode(json_encode($query->result()), True);
         return $array;
     }
+
+    // browse all
+    public function get_content_list_dynamic($limit, $start, $returnType, $category)
+    {
+        if ($category == "all")
+            $sql = "SELECT * FROM `book` ORDER BY book_id DESC LIMIT ?, ?";
+        else if ($category != "all")
+            $sql = "SELECT * FROM `book` WHERE book_type = ? ORDER BY book_id DESC  LIMIT ?, ?";
+
+
+        if ($category == "all")
+            $query = $this->db->query($sql, array($start, $limit));
+        else if ($category != "all")
+            $query = $this->db->query($sql, array($category, $start, $limit));
+
+        if ($returnType == "rows") {
+            if ($query->num_rows() > 0) {
+                $array = json_decode(json_encode($query->result()), True);
+                return $array;
+            } else {
+                return FALSE;
+            }
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
 }

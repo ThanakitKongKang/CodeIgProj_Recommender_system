@@ -60,10 +60,16 @@
                             <?php echo validation_errors('<span class="errmsg text-center text-danger">', '</span><br>'); ?>
                             <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger mb-3"><?= $feedback ?></div> <?php } ?>
                             <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
-                            <div class="text-center mt-3">
-                                <a class="small" href="signup"  style="text-decoration:none">Create account</a></div>
+                            <div class="text-center">
+                                <!-- <a class="small" href="signup" style="text-decoration:none">Create account</a> -->
+                                <a class="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2 mt-1" href="<?= base_url('signup') ?>">Sign up</a>
+                            </div>
                         </form>
+                        <div class="position:relative justify-content-center">
+                            <img src="<?= base_url() ?>assets/img/authentication.png" class="position-absolute" style="bottom:1rem;max-width:8rem;right:1rem;" alt="">
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

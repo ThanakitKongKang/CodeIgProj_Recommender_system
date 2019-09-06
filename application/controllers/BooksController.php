@@ -18,17 +18,36 @@ class BooksController extends CI_Controller
 
     /*
     | -------------------------------------------------------------------------
-    | pagination
+    | browse
     | -------------------------------------------------------------------------
     */
     public function browse()
-    {   
-        $data['browse_all'] = "yes";
+    {
+        $data['i'] = 0;
+        $data['category_list'] = $this->books_model->get_cateory_list();
+
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(20, 0, "rows", "all");
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(20, 0, "count", "all");
+
         $header["title"] = "Browse All";
         $this->load->view('./header', $header);
         $this->load->view('books/browse', $data);
         $this->load->view('footer');
     }
+
+    function browse_loadMoreData()
+    {
+
+        $start = (int) $this->input->post('start');
+        $data['i'] = (int) $this->input->post('i');
+        $category = $this->input->post('category');
+
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(20, $start, "rows", $category);
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(20, $start, "count", $category);
+
+        // $this->load->view('books/saved', $data);
+    }
+
     /*
     | -------------------------------------------------------------------------
     | book detail page
@@ -82,10 +101,11 @@ class BooksController extends CI_Controller
         $data['round_count'] = ((int) $this->input->post('round_count')) + 1;
         $start = (int) $this->input->post('start');
         $data['i'] = (int) $this->input->post('i');
+        $save_removed = (int) $this->input->post('bookmark_trigger_count');
         $username = $this->session->userdata('user')['username'];
 
-        $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start, "rows");
-        $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start, "count");
+        $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start - $save_removed, "rows");
+        $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start - $save_removed, "count");
 
         $this->load->view('books/saved', $data);
     }
@@ -240,7 +260,7 @@ class BooksController extends CI_Controller
         } else {
             $data['final_recommend_list'] = false;
         }
-        
+
         $data['top_rated'] = $this->books_model->get_top_rated();
         $data['category_list'] = $this->books_model->get_cateory_list();
 
