@@ -190,7 +190,10 @@
                             <!-- Current title -->
                             <div id="app_mid_title" class="animation_enter">
                                 <template>
-                                    <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
+                                    <div class="position-relative">
+                                        <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
+                                        <img class="position-absolute" :src="img_url" style="max-width:8rem;top:1rem;right:1rem;">
+                                    </div>
                                     <hr class="mb-2 w-25" style="border: 0;border-top: 3px solid #007bff;">
                                     <div class="load-more justify-content-center my-5 text-center" style="display: none!important;">
                                         <div class="spinner-border text-primary mr-3" role="status">
@@ -310,6 +313,7 @@
                                 $('#toprate-div').addClass('animation_enter');
                                 mid_title.title = "20 Top rated books of all time";
                                 toprated.category = "toprated";
+                                mid_title.img_url = '<?= base_url() ?>assets/img/Online_education_SVG.svg';
                                 category_content.category = "";
                                 $('.load-more').toggle();
 
@@ -344,6 +348,7 @@
                                     },
                                     success: function(data) {
                                         mid_title.title = category;
+                                        mid_title.img_url = '<?= base_url() ?>assets/img/' + category + ".svg";
                                         toprated.category = false;
                                         category_content.category = "category";
                                         $('#category_contents_body').removeClass('invisible');
@@ -442,7 +447,8 @@
                         var mid_title = new Vue({
                             el: '#app_mid_title',
                             data: {
-                                title: '20 Top rated books of all time'
+                                title: '20 Top rated books of all time',
+                                img_url: '<?= base_url() ?>assets/img/Online_education_SVG.svg'
                             }
                         });
 
