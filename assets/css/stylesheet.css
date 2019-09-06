@@ -311,7 +311,8 @@ body {
 }
 
 #text-col-2-author_col1 {
-	right: 4rem;
+	right: -12rem;
+	max-width:10rem;
 }
 
 .text-col-2-footer {
