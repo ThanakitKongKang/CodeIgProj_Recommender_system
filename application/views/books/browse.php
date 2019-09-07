@@ -89,95 +89,100 @@
                 <!-- fix this -->
             <?php } else if ($all_num_rows == 0) { ?>
 
-                <div class="load-more pt-5" lastID="0">
-                    <h1 class="font-weight-lighter text-center">คุณไม่ได้บันทึก <i class="far fa-bookmark"></i> รายการใด ๆ</h1>
+                <div class="load-more pt-5 w-100" lastID="0">
+                    <h1 class="font-weight-lighter text-center">ไม่มีหนังสือ <i class="fas fa-book"></i> ประเภท <span class="text-primary"><?= str_replace("%20", " ", $get_url) ?></span> </h1>
                     <div class="position:relative text-center">
-                        <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:40rem" alt="">
+                        <?php $rand = rand(1, 2);
+                            if ($rand == 1) { ?>
+                            <img src="<?= base_url() ?>assets/img/fogg-page-not-found-1.png" style="max-width:65rem" alt="">
+                        <?php } else if ($rand == 2) { ?>
+                            <img src="<?= base_url() ?>assets/img/fogg-page-not-found.png" style="max-width:65rem" alt="">
+                        <?php } ?>
                     </div>
                 </div>
-
-            <?php } else if ($num_rows == 0) { ?>
-                <div class="load-more pt-5" lastID="0">
-
-                </div>
-            <?php } ?>
         </div>
+    <?php } else if ($num_rows == 0) { ?>
+        <div class="load-more pt-5" lastID="0">
 
-        <!-- เอาให้เหมือน index col-2  -->
+        </div>
+    <?php } ?>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            // console.log(<?= $page ?>);
-            var category = mid_title.title.replace(" ", "-");
-            $('#' + category).addClass("hovered");
+    <!-- เอาให้เหมือน index col-2  -->
+</div>
 
-            // console.log("i: " + <?= $i ?>);
-            // console.log("num_rows: " + <?= $num_rows ?>);
-            // console.log("all_num_rows: " + <?= $all_num_rows ?>);
-            // console.log("lastid : " + $('.load-more').attr('lastid'));
+<script>
+    $(document).ready(function() {
+        // console.log(<?= $page ?>);
+        var category = mid_title.title.replace(" ", "-");
+        $('#' + category).addClass("hovered");
 
-            var num_rows = <?= $num_rows ?>;
-            var call = 0
-            $(window).scroll(function() {
-                var lastID = $('.load-more').attr('lastID');
-                var height = $(document).height() - $(window).height();
-                var scroll_value = (numeral($(window).scrollTop()).value() + 250);
-                // console.log(num_rows + " " + lastID + " " + call);
+        // console.log("i: " + <?= $i ?>);
+        // console.log("num_rows: " + <?= $num_rows ?>);
+        // console.log("all_num_rows: " + <?= $all_num_rows ?>);
+        // console.log("lastid : " + $('.load-more').attr('lastid'));
+
+        var num_rows = <?= $num_rows ?>;
+        var call = 0
+        $(window).scroll(function() {
+            var lastID = $('.load-more').attr('lastID');
+            var height = $(document).height() - $(window).height();
+            var scroll_value = (numeral($(window).scrollTop()).value() + 250);
+            // console.log(num_rows + " " + lastID + " " + call);
 
 
-                if ((scroll_value >= height) && (lastID != 0) && num_rows == 21 && call == 0) {
-                    // console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call + " i : " + <?= $i ?>);
-                    call = 1;
-                    var category = $('#mid-title').html();
-                    var post_data = {
-                        'start': lastID,
-                        'i': <?= $i ?>,
-                        'category': category,
-                        'all_num_rows': <?= $all_num_rows ?>,
-                    };
+            if ((scroll_value >= height) && (lastID != 0) && num_rows == 21 && call == 0) {
+                // console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call + " i : " + <?= $i ?>);
+                call = 1;
+                var category = $('#mid-title').html();
+                var post_data = {
+                    'start': lastID,
+                    'i': <?= $i ?>,
+                    'category': category,
+                    'all_num_rows': <?= $all_num_rows ?>,
+                };
 
-                    contentLoader(post_data)
+                contentLoader(post_data)
+
+            }
+        });
+
+        function contentLoader(post_data) {
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('books/browse_loadMoreData'); ?>',
+                data: post_data,
+                async: true,
+                beforeSend: function() {
+                    $('.load-more').show();
+                },
+                success: function(html) {
+                    setTimeout(() => {
+                        $('.load-more').remove();
+                        $('#content_list').append(html);
+
+                    }, 500);
 
                 }
             });
+        }
+    });
+    var mid_title = new Vue({
+        el: '#app_mid_title',
+        data: {
+            title: '<?= $page ?>',
+            img_url: '<?= base_url() ?>assets/img/<?= $page ?>.svg'
+        }
+    });
 
-            function contentLoader(post_data) {
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo base_url('books/browse_loadMoreData'); ?>',
-                    data: post_data,
-                    async: true,
-                    beforeSend: function() {
-                        $('.load-more').show();
-                    },
-                    success: function(html) {
-                        setTimeout(() => {
-                            $('.load-more').remove();
-                            $('#content_list').append(html);
+    $('.rater_star').rating({
+        'showCaption': false,
+        'stars': '5',
+        'min': '0',
+        'max': '5',
+        'step': '0.5',
+        'size': 'xs',
+        displayOnly: true,
 
-                        }, 500);
-
-                    }
-                });
-            }
-        });
-        var mid_title = new Vue({
-            el: '#app_mid_title',
-            data: {
-                title: '<?= $page ?>',
-                img_url: '<?= base_url() ?>assets/img/<?= $page ?>.svg'
-            }
-        });
-
-        $('.rater_star').rating({
-            'showCaption': false,
-            'stars': '5',
-            'min': '0',
-            'max': '5',
-            'step': '0.5',
-            'size': 'xs',
-            displayOnly: true,
-
-        });
-    </script>
+    });
+</script>

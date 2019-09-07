@@ -23,8 +23,8 @@ class BooksController extends CI_Controller
     */
     public function browse()
     {
-        $data['page'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "All";
-        $data['page'] = str_replace("-", " ", $data['page']);
+        $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "All";
+        $data['page'] = str_replace("-", " ", $data['get_url']);
 
         $data['i'] = 0;
         $data['category_list'] = $this->books_model->get_cateory_list();
@@ -33,6 +33,10 @@ class BooksController extends CI_Controller
         $data['num_rows'] = $this->books_model->get_content_list_dynamic(21, 0, "count", $data['page']);
         $data['all_num_rows'] = $this->books_model->get_all_num_rows_by_category($data['page']);
 
+        if ($data['all_num_rows'] == false) {
+            $data['all_num_rows'] = 0;
+            $data['page'] = "404-Page-Not-Found";
+        }
 
         $header["title"] = "Browse - " . $data['page'];
         $header['browse_all'] = 'active';

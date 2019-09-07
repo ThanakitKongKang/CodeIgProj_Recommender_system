@@ -71,7 +71,7 @@
             <div class="load-more pt-5" lastID="0">
                 <h1 class="font-weight-lighter text-center">คุณไม่ได้บันทึก <i class="far fa-bookmark"></i> รายการใด ๆ</h1>
                 <div class="position:relative text-center">
-                    <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:40rem" alt="">
+                    <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:65rem" alt="">
                 </div>
             </div>
 
