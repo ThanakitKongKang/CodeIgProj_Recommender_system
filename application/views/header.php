@@ -103,7 +103,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <a class="nav-link" href="<?= base_url() ?>test">How</a>
                             </li>
                             <li class="nav-item <?php if (isset($browse_all)) echo $browse_all; ?>">
-                                <a class="nav-link" href="<?= base_url() ?>browse">Browse All</a>
+                                <a class="nav-link" href="<?= base_url() ?>browse/all">Browse All</a>
                             </li>
                             <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

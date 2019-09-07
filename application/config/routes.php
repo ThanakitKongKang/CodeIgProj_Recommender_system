@@ -150,4 +150,6 @@ $route['testmode'] = 'bookscontroller/testmode';
 | -------------------------------------------------------------------------
 */
 $route['browse'] = 'bookscontroller/browse';
+$route['browse/(:any)'] = 'bookscontroller/browse';
 $route['books/browse_loadMoreData'] = 'bookscontroller/browse_loadMoreData';
+$route['books/browse_categoryChange'] = 'bookscontroller/browse_categoryChange';

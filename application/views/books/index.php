@@ -11,7 +11,7 @@
 
                     <!-- <div id="text-col-1"></div> -->
 
-                    <div class="overlay"><a href="book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"> </a></div>
+                    <div class="overlay"><a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"> </a></div>
 
                     <!-- <div class="hover_img_button">
                         <a class="btn btn-primary bookmark_trigger"><i class="far fa-bookmark"></i></a>
@@ -39,7 +39,7 @@
 
                     <div class="my-3 bg-light book_detail_content" id="book_detail_content_col1">
                         <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[0]["book_type"] ?>"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
-                        <div class="text-col-2-name mt-2"> <a href="book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
+                        <div class="text-col-2-name mt-2"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
                         <div class="text-col-1-footer">
                             <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star_col2" title="">
                             <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
@@ -72,14 +72,14 @@
                                             <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
 
 
-                                            <div class="overlay_col2"><a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
+                                            <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
 
                                             <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                         </div>
 
                                         <div class="col-8 text-col-2 bg-light book_detail_content" style="border-radius:1rem;">
                                             <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
-                                            <div class="text-col-2-name"> <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
+                                            <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
                                             <div class="text-col-2-footer w-100">
                                                 <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
                                                 <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
@@ -114,14 +114,14 @@
                                                     <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
 
 
-                                                    <div class="overlay_col2"><a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
+                                                    <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
 
                                                     <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                                 </div>
 
                                                 <div class="col-8 text-col-2 bg-light book_detail_content" style="border-radius:1rem;">
                                                     <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
-                                                    <div class="text-col-2-name"> <a href="book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
+                                                    <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
                                                     <div class="text-col-2-footer w-100">
                                                         <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
                                                         <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
@@ -217,7 +217,7 @@
                                                     <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
                                                     <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
                                                     <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
-                                                    <div class="overlay_mid"><a href="book/<?= $top['book_id'] ?>" class="stretched-link"></a></div>
+                                                    <div class="overlay_mid"><a href="<?= base_url() ?>book/<?= $top['book_id'] ?>" class="stretched-link"></a></div>
 
                                                     <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                                     <div class="hover_img_content_mid text-center">
@@ -256,7 +256,7 @@
                                                 <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.png'" />
                                                 <!-- <span class="text-img"> {{ book.book_name }}</span> -->
 
-                                                <div class="overlay_mid"><a v-bind:href="'book/'+book.book_id+''" class="stretched-link"></a></div>
+                                                <div class="overlay_mid"><a v-bind:href="'<?= base_url() ?>book/'+book.book_id+''" class="stretched-link"></a></div>
                                                 <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                                 <div class="hover_img_content_mid text-center">
                                                     <div class="py-2">{{ book.book_name }}</div>
@@ -313,7 +313,7 @@
                                 $('#toprate-div').addClass('animation_enter');
                                 mid_title.title = "20 Top rated books of all time";
                                 toprated.category = "toprated";
-                                mid_title.img_url = '<?= base_url() ?>assets/img/Online_education_SVG.svg';
+                                mid_title.img_url = '<?= base_url() ?>assets/img/All.svg';
                                 category_content.category = "";
                                 $('.load-more').toggle();
 
@@ -361,30 +361,6 @@
                                     }
                                 })
                             }
-
-
-                            $('.rater_star').rating({
-                                'showCaption': false,
-                                'stars': '5',
-                                'min': '0',
-                                'max': '5',
-                                'step': '0.5',
-                                'size': 'sm',
-                                displayOnly: true,
-
-                            });
-
-                            $('.rater_star_col2').rating({
-                                'showCaption': false,
-                                'stars': '5',
-                                'min': '0',
-                                'max': '5',
-                                'step': '0.5',
-                                'size': 'xs',
-                                displayOnly: true,
-
-                            });
-
                             // bookmarker
                             $('.bookmark_trigger').click(function(e) {
                                 var bookmark_data = {
@@ -444,11 +420,32 @@
 
                         });
 
+                        $('.rater_star').rating({
+                            'showCaption': false,
+                            'stars': '5',
+                            'min': '0',
+                            'max': '5',
+                            'step': '0.5',
+                            'size': 'sm',
+                            displayOnly: true,
+
+                        });
+
+                        $('.rater_star_col2').rating({
+                            'showCaption': false,
+                            'stars': '5',
+                            'min': '0',
+                            'max': '5',
+                            'step': '0.5',
+                            'size': 'xs',
+                            displayOnly: true,
+
+                        });
                         var mid_title = new Vue({
                             el: '#app_mid_title',
                             data: {
                                 title: '20 Top rated books of all time',
-                                img_url: '<?= base_url() ?>assets/img/Online_education_SVG.svg'
+                                img_url: '<?= base_url() ?>assets/img/All.svg'
                             }
                         });
 

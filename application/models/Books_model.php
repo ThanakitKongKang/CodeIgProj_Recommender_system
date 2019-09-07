@@ -122,7 +122,7 @@ class Books_model extends BaseModel
         return $array;
     }
 
-    // browse all
+    // browse
     public function get_content_list_dynamic($limit, $start, $returnType, $category)
     {
         if ($category == "all")
@@ -145,6 +145,26 @@ class Books_model extends BaseModel
             }
         } else if ($returnType == "count") {
             return $query->num_rows();
+        }
+    }
+
+    // browse
+    public function get_all_num_rows_by_category($category)
+    {
+        if ($category == "all")
+            $sql = "SELECT * FROM `book` ORDER BY book_id DESC";
+        else if ($category != "all")
+            $sql = "SELECT * FROM `book` WHERE book_type = ? ORDER BY book_id DESC";
+
+        if ($category == "all")
+            $query = $this->db->query($sql);
+        else if ($category != "all")
+            $query = $this->db->query($sql, array($category));
+
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return FALSE;
         }
     }
 }

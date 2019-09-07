@@ -23,13 +23,19 @@ class BooksController extends CI_Controller
     */
     public function browse()
     {
+        $data['page'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "All";
+        $data['page'] = str_replace("-", " ", $data['page']);
+
         $data['i'] = 0;
         $data['category_list'] = $this->books_model->get_cateory_list();
 
-        $data['content_list'] = $this->books_model->get_content_list_dynamic(20, 0, "rows", "all");
-        $data['num_rows'] = $this->books_model->get_content_list_dynamic(20, 0, "count", "all");
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(21, 0, "rows", $data['page']);
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(21, 0, "count", $data['page']);
+        $data['all_num_rows'] = $this->books_model->get_all_num_rows_by_category($data['page']);
 
-        $header["title"] = "Browse All";
+
+        $header["title"] = "Browse - " . $data['page'];
+        $header['browse_all'] = 'active';
         $this->load->view('./header', $header);
         $this->load->view('books/browse', $data);
         $this->load->view('footer');
@@ -41,11 +47,16 @@ class BooksController extends CI_Controller
         $start = (int) $this->input->post('start');
         $data['i'] = (int) $this->input->post('i');
         $category = $this->input->post('category');
+        $data['all_num_rows'] = $this->input->post('all_num_rows');
+        $data['what'] = $data['all_num_rows'];
 
-        $data['content_list'] = $this->books_model->get_content_list_dynamic(20, $start, "rows", $category);
-        $data['num_rows'] = $this->books_model->get_content_list_dynamic(20, $start, "count", $category);
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(21, $start, "rows", $category);
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(21, $start, "count", $category);
 
-        // $this->load->view('books/saved', $data);
+        // debug
+        $data['category'] = $category;
+        $data['start'] = $start;
+        $this->load->view('books/browse_content_list', $data);
     }
 
     /*
