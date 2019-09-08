@@ -19,8 +19,8 @@
                 <div class="col-6 the_border_right">
                     <!-- Filter 1 -->
                     <div class="btn-group pr-2">
-                        <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span id="category_text" class="small">Category</span>
+                        <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle small no_overflow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="category_text">
+                            Category
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item search_option_category" href="#" id="all" data-search="all">All</a>
@@ -37,8 +37,8 @@
                     <!-- Filter 2 -->
                     <?php if (!empty($author_list)) { ?>
                         <div class="btn-group pr-2">
-                            <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span id="filter_author_text" class="small">Author</span>
+                            <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle small no_overflow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_author_text">
+                                Author
                             </button>
                             <div class="dropdown-menu">
                                 <?php
@@ -79,33 +79,48 @@
             <hr>
         </div>
         <!-- Search Result -->
-        <div class="row no-gutters">
-            <?php foreach ($books as $book) : ?>
+        <?php if (!empty($books)) { ?>
+            <div class="row no-gutters">
+                <?php foreach ($books as $book) : ?>
 
-                <div class="col-4">
-                    <div class="py-3" style="width:21.5rem;">
-                        <div class="card hover_img_col2" style="width: 21.5rem;">
-                            <a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>">
-                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.png" style="height:28rem"></a>
-                            <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" class="stretched-link"></a></div>
-                            <div class="card-body pb-0 pt-2" style="height:8rem;">
-                                <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book->book_type))) ?>"><span><?= $book->book_type ?></span></a>
-                                <div class="card-title text-col-2-name pt-1"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>"><?= $book->book_name ?></a></div>
-                                <div class="rater_star_grid">
-                                    <input value="<?= $book->b_rate ?>" class="rater_star" title="">
+                    <div class="col-4">
+                        <div class="py-3" style="width:21.5rem;">
+                            <div class="card hover_img_col2" style="width: 21.5rem;">
+                                <a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>">
+                                    <img class="w-100" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.png" style="height:28rem"></a>
+                                <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" class="stretched-link"></a></div>
+                                <div class="card-body pb-0 pt-2" style="height:8rem;">
+                                    <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book->book_type))) ?>"><span><?= $book->book_type ?></span></a>
+                                    <div class="card-title text-col-2-name pt-1"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>"><?= $book->book_name ?></a></div>
+                                    <div class="rater_star_grid">
+                                        <input value="<?= $book->b_rate ?>" class="rater_star" title="">
+                                    </div>
+                                    <div class="text-card-author font-italic text-secondary" title="<?= $book->author ?>">By <?= $book->author ?></div>
                                 </div>
-                                <div class="text-card-author font-italic text-secondary" title="<?= $book->author ?>">By <?= $book->author ?></div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            <?php endforeach; ?>
-        </div>
+                <?php endforeach; ?>
+            </div>
+            <hr class="w-100">
+            <p id="pagination" class="pagination d-flex justify-content-end"><?php echo $links; ?></p>
+        <?php } else { ?>
+            <div class="position:relative text-center">
+                <?php $rand = rand(1, 2);
+                    if ($rand == 1) { ?>
+                    <img src="<?= base_url() ?>assets/img/fogg-page-not-found-1.png" style="max-width:65rem" alt="">
+                <?php } else if ($rand == 2) { ?>
+                    <img src="<?= base_url() ?>assets/img/fogg-page-not-found.png" style="max-width:65rem" alt="">
+                <?php } ?>
+            </div>
+        <?php } ?>
 
-        <p id="pagination" class="pagination"><?php echo $links; ?></p>
+
     </div>
+
 </div>
+
 
 <script>
     $('.rater_star').rating({
@@ -128,16 +143,18 @@
 
         // category active
         var category = url.searchParams.get("category") ? url.searchParams.get("category") : " ";
-        category = category.replace(" ", "-")
+        var regex = new RegExp(" ", "g");
+        category = category.replace(regex, "-")
         $('#' + category).addClass("active");
         $('#category_text').html($('#' + category).html());
 
         // author active
         var author = url.searchParams.get("author") ? url.searchParams.get("author") : " ";
-        author = author.replace(" ", "-")
+        var regex = new RegExp(" ", "g");
+        author = author.replace(regex, "-")
         $('#' + author).addClass("active");
         $('#filter_author_text').html($('#' + author).html());
-
+        console.log(author);
         if (sort_rate != " " || category != "-" || author != "-") {
             // console.log("true : "+ sort_rate + category + author );
             $('#filter_clear').toggle();

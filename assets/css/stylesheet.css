@@ -53,6 +53,21 @@ body {
 	margin: 0 5px;
 	padding: .5rem 1rem;
 	text-decoration: none;
+	-webkit-transition: background-color .25s;
+	transition: background-color .25s;
+}
+
+.pagination>a:hover {
+	border: 1px solid #dee2e6 !important;
+	border-color: #007bff !important;
+	border-radius: 50% !important;
+	margin: 0 5px;
+	padding: .5rem 1rem;
+	text-decoration: none;
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+
 }
 
 .pagination>strong {
@@ -65,6 +80,7 @@ body {
 	color: #fff;
 	background-color: #007bff;
 	border-color: #007bff;
+	cursor: default;
 }
 
 #input-search {
@@ -589,4 +605,14 @@ body {
 
 .the_border_right {
 	border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+.no_overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#filter_author_text {
+
+	width: 8rem;
 }

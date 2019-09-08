@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2019 at 10:20 PM
+-- Generation Time: Sep 08, 2019 at 11:27 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -62,7 +62,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (17, 'Poul Klausen', 'Java 9_ Swing, Documents and printing', 'Java Programming', NULL, 2.5, 2),
 (18, 'Poul Klausen', 'Java 10_ Java2D, Drawing of the window', 'Java Programming', NULL, NULL, 0),
 (19, 'Poul Klausen', 'Java 11_ Web applications and Java EE', 'Java Programming', NULL, 4, 1),
-(20, 'Poul Klausen', 'Java 12_ WWW and development of the client part', 'Java Programming', NULL, NULL, 0),
+(20, 'Poul Klausen', 'Java 12_ WWW and development of the client part', 'Java Programming', NULL, 4, 1),
 (21, 'Poul Klausen', 'Java 13_ Distributed programming and Java EE', 'Java Programming', NULL, NULL, 0),
 (22, 'Poul Klausen', 'Java 14_ Development of applications with JavaFX', 'Java Programming', NULL, NULL, 0),
 (23, 'Poul Klausen', 'Java 15_ More about JavaFX', 'Java Programming', NULL, NULL, 0),
@@ -81,10 +81,10 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (36, 'David Etheridge', 'Java_ Graphical User Interfaces', 'Java Programming', NULL, NULL, 0),
 (37, 'David Etheridge', 'Java_ The Fundamentals of Objects and Classes', 'Java Programming', NULL, NULL, 0),
 (38, 'Simon Kendal', 'Object Oriented Programming using Java', 'Java Programming', NULL, NULL, 0),
-(39, 'Norbert Euler, Lulea University of Technology', 'A First Course in Ordinary Differential Equations', 'Calculus', NULL, NULL, 0),
+(39, 'Norbert Euler', 'A First Course in Ordinary Differential Equations', 'Calculus', NULL, NULL, 0),
 (40, 'Fredric Mynard', 'A youtube Calculus Workbook (Part I)', 'Calculus', NULL, 3.5, 1),
 (41, 'Fredric Mynard', 'A youtube Calculus Workbook (Part II)', 'Calculus', NULL, NULL, 0),
-(42, 'Nicholas N.N. Nsowah-Nuamah', 'Advanced Topics In Introductory Probability', 'Calculus', NULL, NULL, 0),
+(42, 'Nicholas Nsowah-Nuamah', 'Advanced Topics In Introductory Probability', 'Calculus', NULL, NULL, 0),
 (43, 'Albert Brontein', 'Calculus II YouTube Workbook', 'Calculus', NULL, NULL, 0),
 (44, 'Leif Mejlbro', 'Calculus of Residua', 'Calculus', NULL, NULL, 0),
 (45, 'Lars-Ake Lindahl', 'Convexity', 'Calculus', NULL, NULL, 0),
@@ -99,7 +99,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (54, 'Leif Mejbro', 'Examples of General Elementary Series', 'Calculus', NULL, NULL, 0),
 (55, 'Leif Mejbro', 'Examples of Power Series', 'Calculus', NULL, NULL, 0),
 (56, 'Leif Mejbro', 'Examples of Sequences', 'Calculus', NULL, NULL, 0),
-(57, 'Leif Mejbro', 'Examples of Systems of Differential Equations', 'Calculus', NULL, NULL, 0),
+(57, 'Leif Mejbro', 'Examples of Systems of Differential Equations', 'Calculus', NULL, 3, 1),
 (58, 'Frederic Mynard', 'Exercises for A youtube Calculus Workbook Part II', 'Calculus', NULL, NULL, 0),
 (59, 'Leif Mejbro', 'Fourier Series and Systems of Differential', 'Calculus', NULL, NULL, 0),
 (60, 'Christopher C. Tisdell', 'Introduction to Complex Numbers', 'Calculus', NULL, NULL, 0),
@@ -110,19 +110,19 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (65, 'Leif Mejbro', 'Methods for finding Zeros in Polynomials', 'Calculus', NULL, NULL, 0),
 (66, 'Leif Mejbro', 'My Horror Chamber', 'Calculus', NULL, NULL, 0),
 (67, 'Leif Mejbro', 'Ordinary differential equations of first order', 'Calculus', NULL, NULL, 0),
-(68, 'Marianna Euler; Norbert Euler, Lulea University of Technology', 'Problems, Theory and Solutions in Linear Algebra', 'Calculus', NULL, NULL, 0),
-(69, 'Leif Mejbro', 'Real Functions in One Variable - Complex', 'Calculus', NULL, NULL, 0),
-(70, 'Leif Mejbro', 'Real Functions in One Variable - Elementary', 'Calculus', NULL, NULL, 0),
-(71, 'Leif Mejbro', 'Real Functions in One Variable - Integrals', 'Calculus', NULL, NULL, 0),
-(72, 'Leif Mejbro', 'Real Functions in One Variable - Simple 1', 'Calculus', NULL, NULL, 0),
-(73, 'Leif Mejbro', 'Real Functions in One Variable - Simple 2', 'Calculus', NULL, NULL, 0),
-(74, 'Leif Mejbro', 'Real Functions in One Variable - Taylor\'s', 'Calculus', NULL, NULL, 0),
+(68, 'Marianna Euler', 'Problems, Theory and Solutions in Linear Algebra', 'Calculus', NULL, NULL, 0),
+(69, 'Leif Mejbro', 'Real Functions in One Variable - Complex...', 'Calculus', NULL, NULL, 0),
+(70, 'Leif Mejbro', 'Real Functions in One Variable - Elementary...', 'Calculus', NULL, NULL, 0),
+(71, 'Leif Mejbro', 'Real Functions in One Variable - Integrals...', 'Calculus', NULL, NULL, 0),
+(72, 'Leif Mejbro', 'Real Functions in One Variable - Simple 1...', 'Calculus', NULL, NULL, 0),
+(73, 'Leif Mejbro', 'Real Functions in One Variable - Simple 2...', 'Calculus', NULL, 4, 1),
+(74, 'Leif Mejbro', 'Real Functions in One Variable - Taylor\'s...', 'Calculus', NULL, NULL, 0),
 (75, 'Leif Mejbro', 'Real Functions in One Variable', 'Calculus', NULL, NULL, 0),
 (76, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume I', 'Calculus', NULL, NULL, 0),
 (77, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume II', 'Calculus', NULL, NULL, 0),
 (78, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume III', 'Calculus', NULL, NULL, 0),
-(79, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume IV', 'Calculus', NULL, NULL, 0),
-(80, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume IX', 'Calculus', NULL, NULL, 0),
+(79, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume IV', 'Calculus', NULL, 2.5, 1),
+(80, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume IX', 'Calculus', NULL, 3.5, 1),
 (81, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume V', 'Calculus', NULL, NULL, 0),
 (82, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume VI', 'Calculus', NULL, NULL, 0),
 (83, 'Leif Mejbro', 'Real Functions in Several Variables_ Volume VII', 'Calculus', NULL, NULL, 0),
@@ -151,11 +151,16 @@ CREATE TABLE `rate` (
 INSERT INTO `rate` (`book_id`, `username`, `rate`) VALUES
 (3, 'nam', 3),
 (1, 'nam', 4),
+(80, 'admin', 3.5),
 (1, 'golf', 3),
+(57, 'admin', 3),
 (2, 'admin', 5),
+(79, 'admin', 2.5),
 (13, 'admin', 4),
 (16, 'admin', 4),
 (15, 'admin', 5),
+(73, 'admin', 4),
+(20, 'admin', 4),
 (19, 'admin', 4),
 (4, 'nam', 5),
 (1, 'admin', 5);
@@ -178,11 +183,7 @@ CREATE TABLE `saved_book` (
 
 INSERT INTO `saved_book` (`book_id`, `username`, `date`) VALUES
 (6, 'nam', '2019-09-04 02:01:37'),
-(11, 'admin', '2019-09-05 03:25:31'),
-(1, 'admin', '2019-09-05 03:25:30'),
-(6, 'admin', '2019-09-05 03:25:31'),
-(8, 'admin', '2019-09-05 03:25:32'),
-(9, 'admin', '2019-09-05 03:47:36');
+(81, 'admin', '2019-09-08 16:55:38');
 
 -- --------------------------------------------------------
 
@@ -215,7 +216,9 @@ INSERT INTO `user` (`username`, `password`, `first_name`, `last_name`) VALUES
 ('admintestRegis', 'awdawdQQqqqq111', 'qweqwdawd', 'aww'),
 ('adminawdadawdawdawdaw', 'admindwwQqqq11', 'wdawdwa', 'dwww'),
 ('namawdawd', 'n', 'm', 'mm'),
-('admin2', 'admin2', 'awd', 'awd');
+('admin2', 'admin2', 'awd', 'awd'),
+('123', '123', '123', '123'),
+('admin_test', 'awd', 'awdawd', 'awdawd');
 
 --
 -- Indexes for dumped tables
