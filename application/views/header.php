@@ -89,8 +89,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <div class="col-4">
-                        <form class="form-inline" style="margin:0rem">
-                            <input class="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search" id="input-search">
+                        <form class="form-inline" style="margin:0rem" action="<?= base_url() ?>search/result">
+                            <input class="form-control mr-sm-1" type="search" name="q" placeholder="Search" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
                         </form>
                     </div>
@@ -99,9 +99,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <li class="nav-item <?php if (isset($home)) echo $home; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <!-- <li class="nav-item <?php if (isset($test)) echo $test; ?>">
-                                <a class="nav-link" href="<?= base_url() ?>test">How</a>
-                            </li> -->
+
                             <li class="nav-item <?php if (isset($browse_all)) echo $browse_all; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>browse/all">Browse All</a>
                             </li>
@@ -117,10 +115,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </li> -->
                             <?php
                             if (!$this->session->userdata('logged_in')) { ?>
-                                <li class="nav-item mt-1">
+                                <li class="nav-item pl-2 mt-1">
                                     <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary">LOG IN</button></a>
                                 </li>
-                                <li class="nav-item pl-2 mt-1">
+                                <li class="nav-item pl-3 mt-1">
                                     <a href="<?= base_url() ?>signup" class="different_a"><button class="btn btn-primary">SIGN UP</button></a>
                                 </li>
 
@@ -133,7 +131,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <a class="dropdown-item" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
-                                        <hr>
+
+                                        <a class="dropdown-item" href="<?= base_url() ?>test">How</a>
+
+                                        <hr class="my-2">
                                         <a class="dropdown-item" href="<?= base_url() ?>logout">LOG OUT</a>
                                     </div>
                                 </li>

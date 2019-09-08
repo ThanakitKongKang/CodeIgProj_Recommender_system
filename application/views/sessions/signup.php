@@ -47,31 +47,31 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="text" class="form-control  <?php if (!empty(form_error('username'))) echo "border border-danger"; ?>" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
-                                <?php if (!empty(form_error('username'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('username') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
+                                <input type="text" class="form-control  <?php if (!empty(form_error('username'))) echo "is-invalid"; ?>" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
+                                <?php if (!empty(form_error('username'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('username') ?>"><i class="far fa-times-circle invisible"></i></a> <?php } ?>
                             </div>
 
                             <div class="form-label-group input-group mb-1">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 </div>
-                                <input type="password" class="form-control <?php if (!empty(form_error('password'))) echo "border border-danger"; ?>" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
-                                <?php if (!empty(form_error('password'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('password') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
+                                <input type="password" class="form-control <?php if (!empty(form_error('password'))) echo "is-invalid"; ?>" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
+                                <?php if (!empty(form_error('password'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('password') ?>"><i class="far fa-times-circle invisible"></i></a> <?php } ?>
                             </div>
                             <div class="form-label-group input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 </div>
-                                <input type="password" class="form-control <?php if (!empty(form_error('passconf'))) echo "border border-danger"; ?>" placeholder="ยืนยันรหัสผ่าน" name="passconf" id="passconf" value="<?php echo set_value('passconf'); ?>">
-                                <?php if (!empty(form_error('passconf'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('passconf') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
+                                <input type="password" class="form-control <?php if (!empty(form_error('passconf'))) echo "is-invalid"; ?>" placeholder="ยืนยันรหัสผ่าน" name="passconf" id="passconf" value="<?php echo set_value('passconf'); ?>">
+                                <?php if (!empty(form_error('passconf'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('passconf') ?>"><i class="far fa-times-circle invisible"></i></a> <?php } ?>
                             </div>
 
                             <div class="form-label-group input-group mb-1">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-portrait"></i></span>
                                 </div>
-                                <input type="text" class="form-control <?php if (!empty(form_error('firstname'))) echo "border border-danger"; ?>" placeholder="ชื่อ" name="firstname" id="firstname" value="<?php echo set_value('firstname'); ?>">
-                                <?php if (!empty(form_error('firstname'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('firstname') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
+                                <input type="text" class="form-control <?php if (!empty(form_error('firstname'))) echo "is-invalid"; ?>" placeholder="ชื่อ" name="firstname" id="firstname" value="<?php echo set_value('firstname'); ?>">
+                                <?php if (!empty(form_error('firstname'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('firstname') ?>"><i class="far fa-times-circle invisible"></i></a> <?php } ?>
 
                             </div>
 
@@ -79,8 +79,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-portrait"></i></span>
                                 </div>
-                                <input type="text" class="form-control <?php if (!empty(form_error('lastname'))) echo "border border-danger"; ?>" placeholder="นามสกุล" name="lastname" id="lastname" value="<?php echo set_value('lastname'); ?>">
-                                <?php if (!empty(form_error('lastname'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('lastname') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
+                                <input type="text" class="form-control <?php if (!empty(form_error('lastname'))) echo "is-invalid"; ?>" placeholder="นามสกุล" name="lastname" id="lastname" value="<?php echo set_value('lastname'); ?>">
+                                <?php if (!empty(form_error('lastname'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('lastname') ?>"><i class="far fa-times-circle invisible"></i></a> <?php } ?>
 
                             </div>
 
@@ -104,8 +104,9 @@
 <script>
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover({
-            trigger: "click hover",
+            trigger: "hover",
             placement: "right"
         });;
+        
     });
 </script>

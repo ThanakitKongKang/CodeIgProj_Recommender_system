@@ -24,6 +24,63 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
+    public function search_books($limit, $start, $query, $sort_rate, $category, $author)
+    {
+        $start = ($start == 0) ? 0 : ($limit * ($start - 1));
+        $this->db->like('book_name', $query, 'both');
+        if (!empty($sort_rate)) {
+            $this->db->order_by('b_rate', $sort_rate);
+        }
+        if (!empty($category)) {
+            if ($category != "all")
+                $this->db->where('book_type', $category);
+        }
+        if (!empty($author)) {
+            $this->db->where('author', $author);
+        }
+        $this->db->limit($limit, $start);
+        $query = $this->db->get($this->table);
+
+        return $query->result();
+    }
+
+    public function search_books_get_count($query, $sort_rate, $category, $author)
+    {
+        $this->db->like('book_name', $query, 'both');
+        if (!empty($sort_rate)) {
+            $this->db->order_by('b_rate', $sort_rate);
+        }
+        if (!empty($category)) {
+            if ($category != "all")
+                $this->db->where('book_type', $category);
+        }
+        if (!empty($author)) {
+            $this->db->where('author', $author);
+        }
+        $query = $this->db->get($this->table);
+
+        return $query->num_rows();
+    }
+
+    public function search_books_get_author($query, $sort_rate, $category)
+    {
+        $this->db->select('author');
+        $this->db->distinct();
+        $this->db->like('book_name', $query, 'both');
+        if (!empty($sort_rate)) {
+            $this->db->order_by('b_rate', $sort_rate);
+        }
+        if (!empty($category)) {
+            if ($category != "all")
+                $this->db->where('book_type', $category);
+        }
+        $query = $this->db->get($this->table);
+
+        return $query->result();
+    }
+
+
+
     public function get_by_name($name)
     {
         $this->db->where('book_name', $name);

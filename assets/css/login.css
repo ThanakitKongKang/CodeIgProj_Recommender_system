@@ -79,6 +79,7 @@ body {
 	right: 6%;
 
 }
+
 /* 
 .form-signup {
 
@@ -148,8 +149,13 @@ body {
 	}
 }
 
-.error_message{
-	position:absolute;
-	bottom:1rem;
-	right:-1.5rem;
+.error_message {
+	position: absolute;
+	bottom: 1rem;
+	right: 0.7rem;
+}
+
+.input-group>.form-control {
+	border-top-right-radius: 2rem !important;
+	border-bottom-right-radius:  2rem !important;
 }

@@ -1,8 +1,10 @@
 <div class="container">
     <div class="row">
         <div class="d-inline-block col" style="height: 90vh!important;width:40vw!important">
-            <object data="<?= base_url() ?>assets/book_files/<?= $book_detail['book_name'] ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
+            <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
+
+            
         </div>
         <div class="pl-5 col">
             <div class="row" style="height:22rem">
