@@ -69,7 +69,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/footer.css">
-    
+
 </head>
 
 <body>
@@ -99,9 +99,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <li class="nav-item <?php if (isset($home)) echo $home; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item <?php if (isset($test)) echo $test; ?>">
+                            <!-- <li class="nav-item <?php if (isset($test)) echo $test; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>test">How</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item <?php if (isset($browse_all)) echo $browse_all; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>browse/all">Browse All</a>
                             </li>
@@ -117,13 +117,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </li> -->
                             <?php
                             if (!$this->session->userdata('logged_in')) { ?>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<?= base_url() ?>signup">SIGN UP</a>
+                                <li class="nav-item mt-1">
+                                    <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary">LOG IN</button></a>
+                                </li>
+                                <li class="nav-item pl-2 mt-1">
+                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn btn-primary">SIGN UP</button></a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<?= base_url() ?>login">LOG IN</a>
-                                </li>
+
                             <?php
                             } else { ?>
                                 <li class="nav-item dropdown ml-auto">
@@ -159,7 +160,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 if (prevScrollpos > currentScrollPos) {
 
                     document.getElementById("navbar").style.top = "0";
-                } else if( prevScrollpos != 0){
+                } else if (prevScrollpos != 0) {
                     document.getElementById("navbar").style.top = "-75px";
                 }
                 prevScrollpos = currentScrollPos;

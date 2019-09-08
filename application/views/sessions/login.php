@@ -44,21 +44,23 @@
                         <!-- <h3 class="card-title text-center mt-2">Login</h3> -->
                         <form method="post" class="form-signin" action="<?= site_url('login') ?>">
                             <div class="form-label-group">
-                                <input type="text" class="form-control" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
+                                <input type="text" class="form-control <?php if (!empty(form_error('username'))) echo "border border-danger"; ?>" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
                                 <!-- <label for="inputUsername">Username</label> -->
+                                <?php if (!empty(form_error('username'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('username') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" class="form-control" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
+                                <input type="password" class="form-control <?php if (!empty(form_error('password'))) echo "border border-danger"; ?>" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
                                 <!-- <label for="inputPassword">Password</label> -->
+                                <?php if (!empty(form_error('password'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('password') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
                             </div>
 
                             <!-- <div class="custom-control custom-checkbox mb-3">
                                             <input type="checkbox" class="custom-control-input" id="customCheck1">
                                             <label class="custom-control-label" for="customCheck1">Remember password</label>
                                         </div> -->
-                            <?php echo validation_errors('<span class="errmsg text-center text-danger">', '</span><br>'); ?>
-                            <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger mb-3"><?= $feedback ?></div> <?php } ?>
+
+                            <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger mb-3"><i class="fas fa-times-circle"></i> <?= $feedback ?></div> <?php } ?>
                             <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
                             <div class="text-center">
                                 <!-- <a class="small" href="signup" style="text-decoration:none">Create account</a> -->
@@ -74,3 +76,12 @@
             </div>
         </div>
 </body>
+
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover({
+            trigger: "click hover",
+            placement: "right"
+        });;
+    });
+</script>

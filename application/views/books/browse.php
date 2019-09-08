@@ -72,7 +72,7 @@
                     }
                     echo "</div>";
                     // fix this session userdata
-                    if ($num_rows == 21 &&  $all_num_rows != $i) { ?>
+                    if ($num_rows == 9 &&  $all_num_rows != $i) { ?>
 
                     <div class="load-more text-center justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
                         <!-- <img src="<?php echo base_url('assets/img/loading.gif'); ?>" /> -->
@@ -131,7 +131,7 @@
             // console.log(num_rows + " " + lastID + " " + call);
 
 
-            if ((scroll_value >= height) && (lastID != 0) && num_rows == 21 && call == 0) {
+            if ((scroll_value >= height) && (lastID != 0) && num_rows == 9 && call == 0) {
                 // console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call + " i : " + <?= $i ?>);
                 call = 1;
                 var category = $('#mid-title').html();

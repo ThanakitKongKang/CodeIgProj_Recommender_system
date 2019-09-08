@@ -29,8 +29,8 @@ class BooksController extends CI_Controller
         $data['i'] = 0;
         $data['category_list'] = $this->books_model->get_cateory_list();
 
-        $data['content_list'] = $this->books_model->get_content_list_dynamic(21, 0, "rows", $data['page']);
-        $data['num_rows'] = $this->books_model->get_content_list_dynamic(21, 0, "count", $data['page']);
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(9, 0, "rows", $data['page']);
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(9, 0, "count", $data['page']);
         $data['all_num_rows'] = $this->books_model->get_all_num_rows_by_category($data['page']);
 
         if ($data['all_num_rows'] == false) {
@@ -54,8 +54,8 @@ class BooksController extends CI_Controller
         $data['all_num_rows'] = $this->input->post('all_num_rows');
         $data['what'] = $data['all_num_rows'];
 
-        $data['content_list'] = $this->books_model->get_content_list_dynamic(21, $start, "rows", $category);
-        $data['num_rows'] = $this->books_model->get_content_list_dynamic(21, $start, "count", $category);
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(9, $start, "rows", $category);
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(9, $start, "count", $category);
 
         // debug
         $data['category'] = $category;

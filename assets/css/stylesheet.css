@@ -12,6 +12,7 @@
 	font-family: "Open Sans", Arial, sans-serif;
 }
 
+
 ::selection {
 	background-color: #ff0000;
 	color: #ffffff;
@@ -96,7 +97,7 @@ body {
 	border-color: #007bff !important;
 }
 
-.nav-menu>li>a:hover,
+.nav-menu>li>a:hover:not(.different_a),
 .nav-menu>li>a.hovered {
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;

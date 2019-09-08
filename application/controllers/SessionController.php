@@ -45,6 +45,7 @@ class SessionController extends CI_Controller
                 )
             );
             $this->form_validation->set_rules($rules);
+            $this->form_validation->set_error_delimiters('', '');
 
             if ($this->form_validation->run() == FALSE) {
                 $header['title'] = "Login";
@@ -105,7 +106,7 @@ class SessionController extends CI_Controller
         $rules = array(
             array(
                 'field' => 'username',
-                'rules' => 'required',
+                'rules' => 'required|min_length[3]|max_length[24]|callback_username_check',
                 'errors' => array(
                     'required' => 'กรุณากรอกชื่อผู้ใช้.',
                 ),
@@ -115,6 +116,15 @@ class SessionController extends CI_Controller
                 'rules' => 'required',
                 'errors' => array(
                     'required' => 'กรุณากรอกรหัสผ่าน.',
+                ),
+            ),
+            array(
+                'field' => 'passconf',
+                'rules' => 'trim|required|matches[password]',
+                'errors' => array(
+                    'required' => 'กรุณายืนยันรหัสผ่าน.',
+                    'matches' => 'รหัสผ่านไม่ตรงกัน',
+                    'trim' => 'รหัสผ่านไม่ตรงกัน',
                 ),
             ),
             array(
@@ -132,8 +142,9 @@ class SessionController extends CI_Controller
                 ),
             ),
         );
-        $this->form_validation->set_rules($rules);
 
+        $this->form_validation->set_rules($rules);
+        $this->form_validation->set_error_delimiters('', '');
         if ($this->form_validation->run() == FALSE) {
             $header['title'] = "Sign Up";
             $this->load->view('sessions/signup', $header);
@@ -144,24 +155,27 @@ class SessionController extends CI_Controller
                 'first_name' => $this->input->post('firstname'),
                 'last_name' => $this->input->post('lastname'),
             );
-            $username_exists = $this->users_model->check_exist($post_data['username']);
+            $this->users_model->insert($post_data);
+            $sessionArr = array(
+                'username' => $post_data['username'],
+                'firstname' => $post_data['first_name'],
+                'lastname' => $post_data['last_name']
+            );
+            $this->session->set_userdata('user', $sessionArr);
+            $this->session->set_userdata('logged_in', TRUE);
+            $this->session->set_flashdata('register_success', TRUE);
+            redirect(base_url());
+        }
+    }
+    public function username_check($str)
+    {
+        $username_exists = $this->users_model->check_exist($str);
 
-            if ($username_exists == FALSE) {
-                $this->users_model->insert($post_data);
-                $sessionArr = array(
-                    'username' => $post_data['username'],
-                    'firstname' => $post_data['first_name'],
-                    'lastname' => $post_data['last_name']
-                );
-                $this->session->set_userdata('user', $sessionArr);
-                $this->session->set_userdata('logged_in', TRUE);
-                $this->session->set_flashdata('register_success', TRUE);
-                redirect(base_url());
-            } else if ($username_exists != FALSE) {
-                $data['title'] = "Sign Up";
-                $data["feedback"] = "มีชื่อผู้ใช้นี้อยู่แล้ว";
-                $this->load->view('sessions/signup', $data);
-            }
+        if ($username_exists != FALSE) {
+            $this->form_validation->set_message('username_check', 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว');
+            return FALSE;
+        } else if ($username_exists == FALSE) {
+            return TRUE;
         }
     }
 }
