@@ -44,7 +44,7 @@
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                         <div class="pb-2 font-arial font-weight-bolder"> <?= $book_detail['book_name'] ?></div>
-                        <div class="book_detail_text pt-1">Category : <a class="link" href="<?= base_url() ?>browse/<?= $book_detail['book_type'] ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
+                        <div class="book_detail_text pt-1">Category : <a class="link"  href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
                     </div>
 
