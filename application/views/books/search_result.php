@@ -13,7 +13,7 @@
             <hr>
             <div class="row">
                 <!-- Search result total -->
-                <div class="col-4 pt-2 the_border_right"><?= $total_rows ?> item found<?php if ($total_rows > 1) echo "s"; ?> for "<?= $query ?>"</div>
+                <div class="col-4 pt-2 the_border_right"><?= $total_rows ?> item<?php if ($total_rows > 1) echo "s"; ?> found for "<?= $query ?>"</div>
 
 
                 <div class="col-6 the_border_right">
