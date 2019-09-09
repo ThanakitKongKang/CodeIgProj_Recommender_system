@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2019 at 11:27 PM
+-- Generation Time: Sep 09, 2019 at 11:03 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -149,21 +149,13 @@ CREATE TABLE `rate` (
 --
 
 INSERT INTO `rate` (`book_id`, `username`, `rate`) VALUES
-(3, 'nam', 3),
-(1, 'nam', 4),
-(80, 'admin', 3.5),
-(1, 'golf', 3),
-(57, 'admin', 3),
-(2, 'admin', 5),
-(79, 'admin', 2.5),
-(13, 'admin', 4),
-(16, 'admin', 4),
-(15, 'admin', 5),
-(73, 'admin', 4),
-(20, 'admin', 4),
-(19, 'admin', 4),
-(4, 'nam', 5),
-(1, 'admin', 5);
+(1, 'nam', 5),
+(1, 'thanakit', 5),
+(2, 'nam', 5),
+(4, 'thanakit', 1),
+(1, 'admin', 5),
+(1, 'golf', 1),
+(3, 'golf', 1);
 
 -- --------------------------------------------------------
 
@@ -204,21 +196,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `first_name`, `last_name`) VALUES
 ('nam', 'nam', 'nam', 'nam'),
-('admin', 'admin', 'admin', 'admin'),
-('awdawd', 'awdaw!Qd5', 'awd', 'add'),
-('awdawdawdawd', 'awdawdQd1', 'awdawd', 'dawdwawd'),
-('awdawdwad', 'awdwadQ1', 'awdawd', 'daddd'),
-('awwadawd', 'awdwawdD1d', 'awdwad', 'dddwa'),
-('awdwad', 'awdawdawdAdawd1', 'awdawd', 'awdwad'),
-('golf', 'Sawaddee12', 'thanakit', 'awdawd'),
-('thanakit', 'awdawdawdawdQq1', 'awdawdawd', 'dawdawdawd'),
-('testRegistration', 'awdawdawdawQq1', 'aawawdAwd', 'awdawdawd'),
-('admintestRegis', 'awdawdQQqqqq111', 'qweqwdawd', 'aww'),
-('adminawdadawdawdawdaw', 'admindwwQqqq11', 'wdawdwa', 'dwww'),
-('namawdawd', 'n', 'm', 'mm'),
-('admin2', 'admin2', 'awd', 'awd'),
-('123', '123', '123', '123'),
-('admin_test', 'awd', 'awdawd', 'awdawd');
+('golf', 'golf', 'thanakit', 'awdawd'),
+('thanakit', 'thanakit', 'test', 'test'),
+('admin', 'admin', 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
