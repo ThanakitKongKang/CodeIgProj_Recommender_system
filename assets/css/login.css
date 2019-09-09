@@ -153,6 +153,7 @@ body {
 	position: absolute;
 	bottom: 1rem;
 	right: 0.7rem;
+	z-index:1000;
 }
 
 .input-group>.form-control {
