@@ -37,6 +37,9 @@
                     </div>
 
                     <div class="card-body" style="min-height:80vh;">
+                        <div class="position-absolute" style="right:2rem;top:1rem;">
+                            <a href="javascript:history.go(-1)" class="link text-secondary"><i class="fas fa-times fa-3x"></i></a>
+                        </div>
 
                         <div class="justify-content-center d-flex">
                             <img src="<?= base_url() ?>/assets/img/kingdom-4.png" width="100" height="100" class="d-inline-block align-top" alt="">
@@ -107,6 +110,6 @@
             trigger: "hover",
             placement: "right"
         });;
-        
+
     });
 </script>
