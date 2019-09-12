@@ -4,7 +4,7 @@
             <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
 
-            
+
         </div>
         <div class="pl-5 col">
             <div class="row" style="height:22rem">
@@ -23,7 +23,7 @@
                                         </span>
                                         <span class="small" style="color: #6b6b6b;">/5</span></span>
                                 </span>
-                                <span class="small text-secondary">based on <?= $book_detail['count_rate'] ?> user<?php if ($book_detail['count_rate'] != 1) echo "s";  ?> </span>
+                                <span class="small text-secondary">based on <span id="rate_avg_user"><?= $book_detail['count_rate'] ?></span> user<?php if ($book_detail['count_rate'] != 1) echo "s";  ?> </span>
 
                             <?php } else { ?>
                                 <span class="badge badge-secondary" style="font-size: 1rem;" id="span_rating"><span class="font-arial">
@@ -44,7 +44,7 @@
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                         <div class="pb-2 font-arial font-weight-bolder"> <?= $book_detail['book_name'] ?></div>
-                        <div class="book_detail_text pt-1">Category : <a class="link"  href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
+                        <div class="book_detail_text pt-1">Category : <a class="link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
                     </div>
 
@@ -92,7 +92,11 @@
             });
         } else {
             // rater
+            var default_rating = $('.rating-input').val();
+            
+
             $('.rating-input').change(function(e) {
+                console.log(default_rating)
                 // call bookscontroller to call model
                 var rating = {
                     'rating': $('.rating-input').val(),
@@ -104,12 +108,21 @@
                     url: "<?php echo base_url(); ?>books/rateBook",
                     data: rating,
                     success: function(data) {
+                        if (default_rating == "") {
+                            $('#span_rating_text').html("based on 1 user");
+                            $('#rate_avg_user').html(Number($('#rate_avg_user').html()) + 1);
+                            default_rating = 1;
+                        }
+
                         $('#rate_avg').html(data);
+
+
                         $('#your_rate').html($('.rating-input').val());
 
                         $('#span_rating').removeClass("badge-secondary");
                         $('#span_rating').addClass("badge-warning");
-                        $('#span_rating_text').html("based on 1 user");
+
+
 
                     }
                 })

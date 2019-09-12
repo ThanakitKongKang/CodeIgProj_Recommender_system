@@ -28,6 +28,7 @@ class Books_model extends BaseModel
     {
         $start = ($start == 0) ? 0 : ($limit * ($start - 1));
         $this->db->like('book_name', $query, 'both');
+        $this->db->or_like('author', $query, 'both');
         if (!empty($sort_rate)) {
             $this->db->order_by('b_rate', $sort_rate);
         }
@@ -47,6 +48,7 @@ class Books_model extends BaseModel
     public function search_books_get_count($query, $sort_rate, $category, $author)
     {
         $this->db->like('book_name', $query, 'both');
+        $this->db->or_like('author', $query, 'both');
         if (!empty($sort_rate)) {
             $this->db->order_by('b_rate', $sort_rate);
         }
@@ -67,6 +69,7 @@ class Books_model extends BaseModel
         $this->db->select('author');
         $this->db->distinct();
         $this->db->like('book_name', $query, 'both');
+        $this->db->or_like('author', $query, 'both');
         if (!empty($sort_rate)) {
             $this->db->order_by('b_rate', $sort_rate);
         }
@@ -130,37 +133,70 @@ class Books_model extends BaseModel
 
     public function update_book_rate($book_id, $rate)
     {
-        $sql = "SELECT ROUND(SUM(rate)/COUNT(book_id),2) as avg FROM rate WHERE book_id = ?";
-        $query = $this->db->query($sql, array($book_id));
 
+        $sql = "SELECT (count(book_id)/count(DISTINCT book_id)) as avg_num_votes,
+        SUM(rate)/COUNT(book_id) as avg_rating,
+        (SELECT COUNT(book_id) FROM rate WHERE book_id = ?) as this_num_votes,
+        (SELECT ROUND(SUM(rate)/COUNT(book_id),2) FROM rate WHERE book_id = ?) as this_rating  
+        FROM `rate`";
+        $query = $this->db->query($sql, array($book_id, $book_id));
+
+        $this->db->where('book_id', $book_id);
 
         if ($query->num_rows() == 1) {
             $array = json_decode(json_encode($query->row()), True);
-            $this->db->where('book_id', $book_id);
-            $this->db->set('b_rate', $array['avg'], FALSE);
+            $bayesian_average = (($array['avg_num_votes'] * $array['avg_rating']) + ($array['this_num_votes'] * $array['this_rating'])) / ($array['avg_num_votes'] + $array['this_num_votes']);
+
+            $this->db->set('b_rate', $bayesian_average, FALSE);
         } else {
-            $this->db->where('book_id', $book_id);
             $this->db->set('b_rate', $rate, FALSE);
         }
 
-        $this->db->where('book_id', $book_id);
+
         $this->db->set('count_rate', 'count_rate+1', FALSE);
         $this->db->update($this->table);
 
-        return $array = json_decode(json_encode($query->row()), True);
+        $this->update_all_books_bayesian_rate();
+
+        return $bayesian_average;
     }
 
     public function update_book_rate_exists($book_id)
     {
-        $sql = "SELECT ROUND(SUM(rate)/COUNT(book_id),2) as avg FROM rate WHERE book_id = ?";
-        $query = $this->db->query($sql, array($book_id));
+        $sql = "SELECT (count(book_id)/count(DISTINCT book_id)) as avg_num_votes,
+        SUM(rate)/COUNT(book_id) as avg_rating,
+        (SELECT COUNT(book_id) FROM rate WHERE book_id = ?) as this_num_votes,
+        (SELECT ROUND(SUM(rate)/COUNT(book_id),2) FROM rate WHERE book_id = ?) as this_rating  
+        FROM `rate`";
+        $query = $this->db->query($sql, array($book_id, $book_id));
         $array = json_decode(json_encode($query->row()), True);
-        $this->db->where('book_id', $book_id);
-        $this->db->set('b_rate', $array['avg'], FALSE);
+        $bayesian_average = (($array['avg_num_votes'] * $array['avg_rating']) + ($array['this_num_votes'] * $array['this_rating'])) / ($array['avg_num_votes'] + $array['this_num_votes']);
 
-        $this->db->update($this->table);
+        $this->update_all_books_bayesian_rate();
 
-        return $array = json_decode(json_encode($query->row()), True);
+        return $bayesian_average;
+    }
+
+    function update_all_books_bayesian_rate()
+    {
+        // update all each book that rated
+        $sql = "SELECT DISTINCT book_id FROM `rate`";
+        $query = $this->db->query($sql);
+        $books_id = json_decode(json_encode($query->row()), True);
+
+        foreach ($books_id as $book_id) {
+            $sql = "SELECT (count(book_id)/count(DISTINCT book_id)) as avg_num_votes,
+            SUM(rate)/COUNT(book_id) as avg_rating,
+            (SELECT COUNT(book_id) FROM rate WHERE book_id = ?) as this_num_votes,
+            (SELECT ROUND(SUM(rate)/COUNT(book_id),2) FROM rate WHERE book_id = ?) as this_rating  
+            FROM `rate`";
+            $query = $this->db->query($sql, array($book_id, $book_id));
+            $array = json_decode(json_encode($query->row()), True);
+            $bayesian_average = (($array['avg_num_votes'] * $array['avg_rating']) + ($array['this_num_votes'] * $array['this_rating'])) / ($array['avg_num_votes'] + $array['this_num_votes']);
+            $this->db->where('book_id', $book_id);
+            $this->db->set('b_rate', $bayesian_average, FALSE);
+            $this->db->update($this->table);
+        }
     }
 
     // random strategy
@@ -223,5 +259,25 @@ class Books_model extends BaseModel
         } else {
             return FALSE;
         }
+    }
+
+    // bayesian average
+    public function bayesianAVG($book_id)
+    {
+        $sql = "SELECT (count(book_id)/count(DISTINCT book_id)) as avg_num_votes,
+            SUM(rate)/COUNT(book_id) as avg_rating,
+            (SELECT COUNT(book_id) FROM rate WHERE book_id = ?) as this_num_votes,
+            (SELECT ROUND(SUM(rate)/COUNT(book_id),2) FROM rate WHERE book_id = ?) as this_rating  
+            FROM `rate`";
+        $query = $this->db->query($sql, array($book_id, $book_id));
+        $array = json_decode(json_encode($query->row()), True);
+        $bayesian_average = (($array['avg_num_votes'] * $array['avg_rating']) + ($array['this_num_votes'] * $array['this_rating'])) / ($array['avg_num_votes'] + $array['this_num_votes']);
+
+        $this->db->where('book_id', $book_id);
+        $this->db->set('b_rate', $bayesian_average, FALSE);
+
+        $this->db->update($this->table);
+
+        return $bayesian_average;
     }
 }

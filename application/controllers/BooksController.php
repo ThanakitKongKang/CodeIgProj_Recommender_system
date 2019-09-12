@@ -131,9 +131,11 @@ class BooksController extends CI_Controller
     */
     public function testmode()
     {
+        $bookid = 1;
+        $data['bayesian'] = $this->books_model->bayesianAVG($bookid);
         $header["title"] = "Test mode";
         $this->load->view('./header', $header);
-        $this->load->view('books/testmode');
+        $this->load->view('books/testmode', $data);
         $this->load->view('footer');
     }
 
@@ -202,7 +204,7 @@ class BooksController extends CI_Controller
             $this->rate_model->update_rate($bookid, $username, $rate);
             $rate_avg = $this->books_model->update_book_rate_exists($bookid);
         }
-        echo number_format($rate_avg['avg'], 1);
+        echo number_format($rate_avg, 1);
     }
     /*
     | -------------------------------------------------------------------------

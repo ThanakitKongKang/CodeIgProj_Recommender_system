@@ -263,15 +263,17 @@
                                                     <div class="small py-2">field : {{ book.book_type }}</div>
                                                     <div class="small py-2">author : {{ book.author }}</div>
 
-                                                    <div class="mt-5 text-center" v-if="book.count_rate !== '0'">
+                                                    <div class="mt-5 text-center">
                                                         <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
-                                                        <div class="rating-container rating-sm rating-animate is-display-only">
-                                                            <!-- HARD CODE rater star for Vue.js -->
-                                                            <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rating-input" title=""></div>
-                                                        </div>
+                                                        <div v-if="book.count_rate !== '0'">
+                                                            <div class="rating-container rating-sm rating-animate is-display-only">
+                                                                <!-- HARD CODE rater star for Vue.js -->
+                                                                <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rating-input" title=""></div>
+                                                            </div>
 
-                                                        <!-- <input v-bind:value="book.b_rate" class="rater_star" title="" /> -->
-                                                        <div class="small">{{ book.b_rate }}/5.0 rated by {{ book.count_rate }} user(s)</div>
+                                                            <!-- <input v-bind:value="book.b_rate" class="rater_star" title="" /> -->
+                                                            <div class="small">{{ book.b_rate }}/5.0 rated by {{ book.count_rate }} user(s)</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
