@@ -28,7 +28,7 @@ class Books_model extends BaseModel
     {
         $start = ($start == 0) ? 0 : ($limit * ($start - 1));
         $this->db->like('book_name', $query, 'both');
-        $this->db->or_like('author', $query, 'both');
+
         if (!empty($sort_rate)) {
             $this->db->order_by('b_rate', $sort_rate);
         }
@@ -48,7 +48,7 @@ class Books_model extends BaseModel
     public function search_books_get_count($query, $sort_rate, $category, $author)
     {
         $this->db->like('book_name', $query, 'both');
-        $this->db->or_like('author', $query, 'both');
+
         if (!empty($sort_rate)) {
             $this->db->order_by('b_rate', $sort_rate);
         }
@@ -69,7 +69,7 @@ class Books_model extends BaseModel
         $this->db->select('author');
         $this->db->distinct();
         $this->db->like('book_name', $query, 'both');
-        $this->db->or_like('author', $query, 'both');
+
         if (!empty($sort_rate)) {
             $this->db->order_by('b_rate', $sort_rate);
         }
