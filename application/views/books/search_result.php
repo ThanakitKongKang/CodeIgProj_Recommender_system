@@ -95,6 +95,9 @@
                                     <div class="rater_star_grid">
                                         <input value="<?= $book->b_rate ?>" class="rater_star" title="">
                                     </div>
+                                    <?php if ($book->count_rate != 0) { ?>
+                                        <span class="position-absolute small font-arial text-info" style="bottom:1.1rem;left:8.5rem;width:2rem;">(<?= $book->count_rate ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                    <?php } ?>
                                     <div class="text-card-author font-italic text-secondary" title="<?= $book->author ?>">By <?= $book->author ?></div>
                                 </div>
                             </div>
