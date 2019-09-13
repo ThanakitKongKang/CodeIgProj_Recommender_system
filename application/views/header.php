@@ -90,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <div class="col-4">
                         <form class="form-inline" style="margin:0rem" action="<?= base_url() ?>search/result">
-                            <input class="form-control mr-sm-1" type="search" name="q" placeholder="Search" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
+                            <input class="form-control mr-sm-1" type="search" name="q" placeholder="title or author" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
                         </form>
                     </div>

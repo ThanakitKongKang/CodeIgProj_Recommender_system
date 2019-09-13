@@ -4,7 +4,6 @@
             <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
 
-
         </div>
         <div class="pl-5 col">
             <div class="row" style="height:22rem">
@@ -36,7 +35,7 @@
                             <?php } ?>
                         </div>
                         <hr>
-                        <div class="font-arial text-center font-italic text-secondary small">Your rate : <span id="your_rate"><?= $user_rate['rate'] ?></span></div>
+                        <div class="font-arial text-center font-italic text-secondary small">You rated this : <span id="your_rate"><?= $user_rate['rate'] ?></span></div>
                         <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
                     </div>
                     <!-- BOOK detail section -->
