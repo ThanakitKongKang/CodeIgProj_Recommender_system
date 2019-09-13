@@ -39,7 +39,7 @@
 
                     <div class="my-3 bg-light book_detail_content" id="book_detail_content_col1">
                         <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[0]["book_type"] ?>"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
-                        <div class="text-col-2-name mt-2"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
+                        <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
                         <div class="text-col-1-footer">
                             <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star_col2" title="">
                             <?php if ($final_recommend_list[0]['count_rate'] != 0) { ?>
