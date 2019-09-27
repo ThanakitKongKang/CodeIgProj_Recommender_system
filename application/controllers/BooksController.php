@@ -418,12 +418,13 @@ class BooksController extends CI_Controller
 
         if (count($similar) == 0)
             return 0;
-
+       
         foreach ($preferences[$person1] as $key => $value) {
-            if (array_key_exists($key, $preferences[$person2]))
+            if (array_key_exists($key, $preferences[$person2])){
                 $sum = $sum + pow($value - $preferences[$person2][$key], 2);
+            }
         }
-
+    
         return  1 / (1 + sqrt($sum));
     }
 
@@ -437,7 +438,7 @@ class BooksController extends CI_Controller
             if ($otherPerson !== $person) {
 
                 $sim = $this->similarityDistance($preferences, $person, $otherPerson);
-
+        
                 if ($sim > 0) {
                     $score[$otherPerson] = $sim;
                 }

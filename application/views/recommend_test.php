@@ -32,6 +32,11 @@ echo "<div class='container'><h1>raw user rate (flipped)</h1>";
 print("<pre>" . print_r($books, true) . "</pre>");
 echo "</div>";
 
+echo "<div class='container'><h1>match</h1>";
+print("<pre>" . print_r($recommend_matched, true) . "</pre>");
+echo "</div>";
+
+
 echo "<div class='container'><h1>after matching </h1>";
 echo "<div class='container'><h3>target list </h3>";
 echo "<div class='text-primary'>";
