@@ -1,10 +1,12 @@
 <div class="container">
     <div class="row">
+        <!-- pdf -->
         <div class="d-inline-block col" style="height: 90vh!important;width:40vw!important">
             <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
 
         </div>
+        <!-- right section -->
         <div class="pl-5 col">
             <div class="row" style="height:22rem">
                 <div class="col pt-3">
@@ -62,8 +64,29 @@
 
                 </div>
             </div>
+            <div class="row bg-light py-3 mt-3" style="border-radius:0.25rem;border:1px solid #0000000d;overflow-x: auto;white-space: nowrap;">
+                            <!-- foreach -->
+                <div class="col-3">
+                    <a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>">
+                        <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.png" style="height:28rem"></a>
+                </div>
+
+            </div>
         </div>
     </div>
+
+    <?php
+
+    echo "<div class='container'><h4>cosine similarity</h4>";
+    print("<pre>" . print_r($cosineSim, true) . "</pre>");
+    echo "</div>";
+
+ 
+    echo "<div class='container'><h4>cosine similarity</h4>";
+    print("<pre>" . print_r($recommend_list_detail, true) . "</pre>");
+    echo "</div>";
+
+    ?>
 </div>
 
 
@@ -92,7 +115,7 @@
         } else {
             // rater
             var default_rating = $('.rating-input').val();
-            
+
 
             $('.rating-input').change(function(e) {
                 console.log(default_rating)
@@ -196,6 +219,14 @@
                 }
             })
         }
+
+        $("body").mousewheel(function(event, delta) {
+
+            this.scrollLeft -= (delta * 30);
+
+            event.preventDefault();
+
+        });
 
     });
 </script>

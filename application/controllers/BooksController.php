@@ -1,9 +1,26 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
+require_once './vendor/autoload.php';
+
+use Phpml\FeatureExtraction\TfIdfTransformer;
 
 class BooksController extends CI_Controller
 {
+    public static $stopWords = [
+        'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'aren\'t', 'as', 'at', 'be', 'because',
+        'been', 'before', 'being', 'below', 'between', 'both', 'but', 'by', 'can\'t', 'cannot', 'could', 'couldn\'t', 'did', 'didn\'t',
+        'do', 'does', 'doesn\'t', 'doing', 'don\'t', 'down', 'during', 'each', 'few', 'for', 'from', 'further', 'had', 'hadn\'t', 'has',
+        'hasn\'t', 'have', 'haven\'t', 'having', 'he', 'he\'d', 'he\'ll', 'he\'s', 'her', 'here', 'here\'s', 'hers', 'herself', 'him',
+        'himself', 'his', 'how', 'how\'s', 'i', 'i\'d', 'i\'ll', 'i\'m', 'i\'ve', 'if', 'in', 'into', 'is', 'isn\'t', 'it', 'it\'s', 'its',
+        'itself', 'let\'s', 'me', 'more', 'most', 'mustn\'t', 'my', 'myself', 'no', 'nor', 'not', 'of', 'off', 'on', 'once', 'only', 'or',
+        'other', 'ought', 'our', 'oursourselves', 'out', 'over', 'own', 'same', 'shan\'t', 'she', 'she\'d', 'she\'ll', 'she\'s', 'should',
+        'shouldn\'t', 'so', 'some', 'such', 'than', 'that', 'that\'s', 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'there',
+        'there\'s', 'these', 'they', 'they\'d', 'they\'ll', 'they\'re', 'they\'ve', 'this', 'those', 'through', 'to', 'too', 'under',
+        'until', 'up', 'very', 'was', 'wasn\'t', 'we', 'we\'d', 'we\'ll', 'we\'re', 'we\'ve', 'were', 'weren\'t', 'what', 'what\'s',
+        'when', 'when\'s', 'where', 'where\'s', 'which', 'while', 'who', 'who\'s', 'whom', 'why', 'why\'s', 'with', 'won\'t', 'would',
+        'wouldn\'t', 'you', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve', 'your', 'yours', 'yourself', 'yourselves', '-', 'I', 'II', 'III',
+        'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'The', 'A','_','\'s',
+    ];
 
     public function __construct()
     {
@@ -78,11 +95,67 @@ class BooksController extends CI_Controller
 
         $data['bookmark'] = $this->bookmark_model->get_if_user_bookmarked($bookid, $username);
 
+        /*
+        | -------------------------------------------------------------------------
+        | Content-based recommendation
+        | -------------------------------------------------------------------------
+        */
+        $data['books_name'] = $this->books_model->get_name_all();
+        // TF
+        $data['words_segment'] = array();
+        foreach ($data['books_name'] as $book_name) {
+            array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+        }
+
+        // Stop words removal
+        $stopWords = array_flip(self::$stopWords);
+        $data['tf_no_stopwords'] = array();
+        foreach ($data['words_segment'] as $word_segment) {
+            array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+        }
+        $transformer = new TfIdfTransformer($data['tf_no_stopwords']);
+        $transformer->transform($data['tf_no_stopwords']);
+
+        // cosine similarity 
+        $data['cosineSim'] = array();
+        $i = 0;
+        $bookid--;
+        foreach ($data['books_name'] as $book_name) {
+            $data['cosineSim'][$i+1] =  $this->cosine($data['tf_no_stopwords'][$bookid], $data['tf_no_stopwords'][$i]);
+            $i++;
+        }
+        // $data['cosineSim'][2] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][2]);
+        // $data['cosineSim'][3] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][3]);
+        // $data['cosineSim'][4] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][4]);
+        // remove itself from array
+        unset($data['cosineSim'][$bookid+1]);
+
+        // remove 0 similarity from array
+        foreach ($data['cosineSim'] as $key => $cosineSim) {
+            if ($cosineSim == 0 || is_nan($cosineSim)) {
+                unset($data['cosineSim'][$key]);
+            }
+        }
+
+        // get content based books detail
+        foreach ($data['cosineSim'] as $key => $value) {
+            $data['recommend_list_detail'][$key] = $this->books_model->get_by_id($key);
+        }
+        foreach ($data['cosineSim'] as $key => $value) {
+            $data['recommend_list_detail'][$key]['match'] = $value;
+        }
+        // sort by similarity score
+        $match = array_column($data['recommend_list_detail'], 'match');
+        array_multisort($match, SORT_DESC, $data['recommend_list_detail']);
+
+
+
         $header["title"] = $data['book_detail']['book_name'];
         $this->load->view('./header', $header);
         $this->load->view('books/detail', $data);
         $this->load->view('footer');
     }
+
     /*
     | -------------------------------------------------------------------------
     | saved_items page
@@ -129,10 +202,38 @@ class BooksController extends CI_Controller
     | test page
     | -------------------------------------------------------------------------
     */
+
     public function testmode()
     {
-        $bookid = 1;
-        $data['bayesian'] = $this->books_model->bayesianAVG($bookid);
+        $data['books_name'] = $this->books_model->get_name_all();
+        // TF
+        $data['words_segment'] = array();
+        foreach ($data['books_name'] as $book_name) {
+            array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+        }
+
+        // Stop words removal
+
+        $stopWords = array_flip(self::$stopWords);
+        $data['tf_no_stopwords'] = array();
+        foreach ($data['words_segment'] as $word_segment) {
+            array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+            // print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+        }
+
+        $transformer = new TfIdfTransformer($data['tf_no_stopwords']);
+        $transformer->transform($data['tf_no_stopwords']);
+
+        // cosine similarity 
+        $data['cosineSim'] = array();
+        // $data['cosineSim'] = $this->cosine($data['tf_no_stopwords'][84], $data['tf_no_stopwords'][85]);
+        array_push($data['cosineSim'], $this->cosine($data['tf_no_stopwords'][33], $data['tf_no_stopwords'][35]));
+        array_push($data['cosineSim'], $this->cosine($data['tf_no_stopwords'][34], $data['tf_no_stopwords'][35]));
+        array_push($data['cosineSim'], $this->cosine($data['tf_no_stopwords'][84], $data['tf_no_stopwords'][85]));
+        // $a = [1, 1, 1, 1, 1, 0];
+        // $b = [1, 1, 1, 1, 0, 1];
+        // $data['cosineSim'] = $this->cosine($a, $b);
+
         $header["title"] = "Test mode";
         $this->load->view('./header', $header);
         $this->load->view('books/testmode', $data);
@@ -418,13 +519,13 @@ class BooksController extends CI_Controller
 
         if (count($similar) == 0)
             return 0;
-       
+
         foreach ($preferences[$person1] as $key => $value) {
-            if (array_key_exists($key, $preferences[$person2])){
+            if (array_key_exists($key, $preferences[$person2])) {
                 $sum = $sum + pow($value - $preferences[$person2][$key], 2);
             }
         }
-    
+
         return  1 / (1 + sqrt($sum));
     }
 
@@ -438,7 +539,7 @@ class BooksController extends CI_Controller
             if ($otherPerson !== $person) {
 
                 $sim = $this->similarityDistance($preferences, $person, $otherPerson);
-        
+
                 if ($sim > 0) {
                     $score[$otherPerson] = $sim;
                 }
@@ -520,5 +621,51 @@ class BooksController extends CI_Controller
             }
         }
         return $result;
+    }
+
+    public function dot_product($a, $b)
+    {
+        $dot_product = 0;
+
+        foreach ($a as $key_a => $value_a) {
+            if (array_key_exists($key_a, $b)) {
+                $dot_product += $a[$key_a] * $b[$key_a];
+                // echo "<br>true " . $key_a;
+            } else {
+                // echo "<br>false " . $key_a;
+            }
+        }
+        // echo "<br>dot_product : ".$dot_product;
+        return $dot_product;
+
+        // $products = array_map(function ($a, $b) {
+        //     // echo "<br>array_map : " . $a * $b;
+        //     return $a * $b;
+        // }, $a, $b);
+        // return array_reduce($products, function ($a, $b) {
+        //     return $a + $b;
+        // });
+
+    }
+    public function magnitude($point)
+    {
+        $squares = array_map(function ($x) {
+            return pow($x, 2);
+        }, $point);
+        return sqrt(array_reduce($squares, function ($a, $b) {
+            return $a + $b;
+        }));
+    }
+
+    public function cosine($a, $b)
+    {
+        // echo "<div class='container'><h4>watcher</h4>";
+        // echo "<br><br>";
+        // echo "<br>magnitude a : " . self::magnitude($a);
+        // echo "<br>magnitude b : " . self::magnitude($b);
+        // echo "<br>magnitude a*b : " . self::magnitude($a) * self::magnitude($b);
+        // echo "</div>";
+
+        return self::dot_product($a, $b) / (self::magnitude($a) * self::magnitude($b));
     }
 }

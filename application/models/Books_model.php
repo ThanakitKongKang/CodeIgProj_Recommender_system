@@ -82,7 +82,14 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
-
+    public function get_name_all()
+    {
+        $this->db->select('book_name');
+        $this->db->from('book');
+        $query = $this->db->get();
+        $array = json_decode(json_encode($query->result()), True);
+        return $array;
+    }
 
     public function get_by_name($name)
     {

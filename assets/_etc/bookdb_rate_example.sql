@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2019 at 05:08 PM
+-- Generation Time: Sep 29, 2019 at 01:57 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -43,10 +43,10 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b_rate`, `count_rate`) VALUES
-(1, 'William John Teahan', 'Artificial Intelligence – Agent Behaviour', 'Artificial Intelligence', NULL, 3.54773, 3),
-(2, 'William John Teahan', 'Artificial Intelligence – Agents and Environments', 'Artificial Intelligence', NULL, 5, 1),
-(3, 'William John Teahan', 'Artificial Intelligence_ Exercises I', 'Artificial Intelligence', NULL, 2.71427, 1),
-(4, 'William John Teahan', 'Artificial Intelligence_ Exercises II', 'Artificial Intelligence', NULL, 2.2, 1),
+(1, 'William John Teahan', 'Artificial Intelligence - Agent Behaviour', 'Artificial Intelligence', NULL, 3.54773, 3),
+(2, 'William John Teahan', 'Artificial Intelligence - Agents and Environments', 'Artificial Intelligence', NULL, 5, 1),
+(3, 'William John Teahan', 'Artificial Intelligence - Exercises I', 'Artificial Intelligence', NULL, 2.71427, 1),
+(4, 'William John Teahan', 'Artificial Intelligence - Exercises II', 'Artificial Intelligence', NULL, 2.2, 1),
 (5, 'David Haskins', 'C Programming in Linux', 'Programming', NULL, 4, 1),
 (6, 'Poul Klausen', 'C# 1', 'Programming', 'Introduction to programming and the C# language', NULL, 0),
 (7, 'Kjell Backman', 'Structured Programming with C++', 'Programming', '', NULL, 0),
@@ -54,7 +54,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (9, 'Poul Klausen', 'Java 1_ Basic syntax and semantics', 'Java Programming', NULL, NULL, 0),
 (10, 'Poul Klausen', 'Java 2_ Programs with a graphical user interface', 'Java Programming', NULL, NULL, 0),
 (11, 'Poul Klausen', 'Java 3_ Object-oriented programming', 'Java Programming', NULL, NULL, 0),
-(12, 'Poul Klausen', 'Java 4_ Java’s type system and collection classes', 'Java Programming', NULL, NULL, 0),
+(12, 'Poul Klausen', 'Java 4_ Java\'s type system and collection classes', 'Java Programming', NULL, NULL, 0),
 (13, 'Poul Klausen', 'Java 5_ Files and Java IO', 'Java Programming', NULL, NULL, 0),
 (14, 'Poul Klausen', 'Java 6_ JDBC and database applications', 'Java Programming', NULL, NULL, 0),
 (15, 'Poul Klausen', 'Java 7_ About system development', 'Java Programming', NULL, NULL, 0),
@@ -175,7 +175,7 @@ CREATE TABLE `saved_book` (
 
 INSERT INTO `saved_book` (`book_id`, `username`, `date`) VALUES
 (6, 'nam', '2019-09-04 02:01:37'),
-(81, 'admin', '2019-09-08 16:55:38');
+(81, 'admin', '2019-09-16 12:31:33');
 
 -- --------------------------------------------------------
 
