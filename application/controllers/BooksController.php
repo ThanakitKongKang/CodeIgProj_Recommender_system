@@ -148,6 +148,8 @@ class BooksController extends CI_Controller
         $match = array_column($data['recommend_list_detail'], 'match');
         array_multisort($match, SORT_DESC, $data['recommend_list_detail']);
 
+        // chopping to get only 12 items
+        $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'],0,12));
 
 
         $header["title"] = $data['book_detail']['book_name'];

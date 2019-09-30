@@ -7,7 +7,7 @@
 
         </div>
         <!-- right section -->
-        <div class="pl-5 col">
+        <div class="pl-5 col position-relative">
             <div class="row" style="height:22rem">
                 <div class="col pt-3">
                     <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.png">
@@ -64,33 +64,46 @@
 
                 </div>
             </div>
-            <div class="row bg-light py-3 mt-3" style="border-radius:0.25rem;border:1px solid #0000000d;overflow-x: auto;white-space: nowrap;">
-                            <!-- foreach -->
-                <div class="col-3">
-                    <a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>">
-                        <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.png" style="height:28rem"></a>
-                </div>
 
+            <div class="position-absolute font-apple" id="similar_book_title">Similar to</div>
+            <div class="row py-3 mt-3 position-relative" id="similar_book_detail" style="border-radius:0.25rem;border:1px solid #0000000d;background-color:#f9f9f9">
+                <div class="pt-5 pr-5" id="similar_book_content">
+                    <?php foreach ($recommend_list_detail as $book) { ?>
+                        <div class="col-4 hover_img_similar_book_content">
+
+                            <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.png">
+                            <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
+                            <div class="hover_img_content_similar text-center">
+                                <div class="py-2 hover_similar_book_title mb-2" style="white-space:normal"><?= $book['book_name'] ?></div>
+                                <div class="small pt-1 overlay_similar_content font-apple">field : <?= $book['book_type'] ?></div>
+                                <div class="small pt-1 overlay_similar_content font-apple" title="<?= $book['author'] ?>">author : <?= $book['author'] ?></div>
+                                <div class="mt-4 text-center">
+                                    <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                    <?php if ($book['count_rate'] != 0) { ?>
+                                        <!-- HARD CODE rater star -->
+                                        <div class="rating-container rating-xs rating-animate is-display-only">
+                                            <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
+                                            <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $top['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
+                                        </div>
+                                        <div class="small"><?= number_format($book['b_rate'], 1) ?>/5.0 rated by <?= $book['count_rate'] ?> user<?php if ($book['count_rate'] > 1) echo "s"; ?></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
+            <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_left"><i class="text-white fas fa-chevron-left fa-lg pr-2" style="z-index:1"></i></div>
+            <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_right"><i class="text-white fas fa-chevron-right fa-lg  pl-2" style="z-index:1"></i></div>
         </div>
     </div>
-
-    <?php
-
-    echo "<div class='container'><h4>cosine similarity</h4>";
-    print("<pre>" . print_r($cosineSim, true) . "</pre>");
-    echo "</div>";
-
- 
-    echo "<div class='container'><h4>cosine similarity</h4>";
-    print("<pre>" . print_r($recommend_list_detail, true) . "</pre>");
-    echo "</div>";
-
-    ?>
 </div>
-
-
 <script>
+    var similar_book_detail_width = $("#similar_book_detail").get(0);
+    if (similar_book_detail_width.scrollWidth < 600) {
+        $("#similar_book_arrow_right").hide();
+    }
+
     $(document).ready(function() {
         var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>
@@ -219,14 +232,41 @@
                 }
             })
         }
+        $("#similar_book_arrow_right").click(function(e) {
+            var leftPos = $('#similar_book_detail').scrollLeft();
+            $("#similar_book_detail").animate({
+                scrollLeft: leftPos + 300
+            }, 250, function() {
+                var newPos = $('#similar_book_detail').scrollLeft();
+                // console.log(newPos);
+                if (newPos != 0) {
+                    $("#similar_book_arrow_left").show();
+                }
 
-        $("body").mousewheel(function(event, delta) {
-
-            this.scrollLeft -= (delta * 30);
-
-            event.preventDefault();
-
+                var similar_book_detail_width = $("#similar_book_detail").get(0);
+                // console.log(newPos+600 + ">" + similar_book_detail_width.scrollWidth);
+                if (newPos + 600 > similar_book_detail_width.scrollWidth) {
+                    $("#similar_book_arrow_right").hide();
+                }
+            });
         });
 
+        $("#similar_book_arrow_left").click(function(e) {
+            var leftPos = $('#similar_book_detail').scrollLeft();
+            $("#similar_book_detail").animate({
+                scrollLeft: leftPos - 300
+            }, 250, function() {
+                var newPos = $('#similar_book_detail').scrollLeft();
+                // console.log(newPos);
+                if (newPos <= 100) {
+                    $("#similar_book_arrow_left").hide();
+                }
+                var similar_book_detail_width = $("#similar_book_detail").get(0);
+                // console.log(newPos+600 + ">" + similar_book_detail_width.scrollWidth);
+                if (newPos + 600 < similar_book_detail_width.scrollWidth) {
+                    $("#similar_book_arrow_right").show();
+                }
+            });
+        });
     });
 </script>
