@@ -294,7 +294,7 @@
                         </div>
                     </div>
 
-                    <script>
+                    <script type="text/javascript">
                         $(document).ready(function() {
                             $(document).on('click', 'a[href^="#"]', function(e) {
                                 e.preventDefault();

@@ -125,7 +125,7 @@
 </div>
 
 
-<script>
+<script type="text/javascript">
     $('.rater_star').rating({
         'showCaption': false,
         'stars': '5',

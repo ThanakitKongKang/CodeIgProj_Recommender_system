@@ -69,7 +69,11 @@ class SessionController extends CI_Controller
                     $this->session->set_userdata('user', $sessionArr);
                     $this->session->set_userdata('logged_in', TRUE);
                     $this->session->set_flashdata('flash_success', TRUE);
-                    redirect(base_url());
+                    ?>
+                    <script type="text/javascript">
+                        window.history.go(-2);
+                    </script>
+                    <?php
                 } else if ($data == FALSE) {
                     $data['title'] = "Login";
                     $data["feedback"] = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
@@ -77,7 +81,12 @@ class SessionController extends CI_Controller
                 }
             }
         } else {
-            redirect(base_url());
+            ?>
+            <script type="text/javascript">
+                window.history.go(-1);
+            </script>
+            <?php
+            $this->session->set_flashdata('already_logged_in', TRUE);
         }
     }
 

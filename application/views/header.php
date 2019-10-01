@@ -80,17 +80,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <div class="col-4">
+                    <div class="col-3">
                         <a class="navbar-brand" href="<?= base_url() ?>">
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                            <span style="font-family:sans-serif;font-size:1.5rem">Book Recommendation</span>
+                            <span style="font-family:sans-serif;font-size:1.5rem">D-Book</span>
 
                         </a>
                     </div>
 
-                    <div class="col-4">
-                        <form class="form-inline" style="margin:0rem" action="<?= base_url() ?>search/result">
-                            <input class="form-control mr-sm-1" type="search" name="q" placeholder="title or author" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
+                    <!-- Search -->
+                    <div class="col-5">
+                        <form class="form-inline" style="margin:0rem;" action="<?= base_url() ?>search/result">
+                            <input class="form-control mr-sm-1" style="width:100%" type="text" name="q" autocomplete="off" placeholder="title" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
                         </form>
                     </div>
@@ -151,67 +152,135 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         </nav>
     </div>
+    <div class="col-4 container" id="livesearch"></div>
+    <script type="text/javascript">
+        // scroll hide header
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+            // console.log(prevScrollpos + " : " + currentScrollPos)
+            if (prevScrollpos > currentScrollPos) {
+                document.getElementById("navbar").style.top = "0";
+            } else if (prevScrollpos != 0) {
+                document.getElementById("navbar").style.top = "-75px";
+            }
+            prevScrollpos = currentScrollPos;
+        }
 
-    <div id="content">
-        <script>
-            var prevScrollpos = window.pageYOffset;
-            window.onscroll = function() {
-                var currentScrollPos = window.pageYOffset;
-                // console.log(prevScrollpos + " : " + currentScrollPos)
-                if (prevScrollpos > currentScrollPos) {
+        function checkTypingLength(typing) {
+            if (typing.length == 0) {
+                document.getElementById("livesearch").innerHTML = "";
+                document.getElementById("livesearch").style.border = "0px";
+                return;
+            }
+        }
 
-                    document.getElementById("navbar").style.top = "0";
-                } else if (prevScrollpos != 0) {
-                    document.getElementById("navbar").style.top = "-75px";
+        // on select live search
+        $('#livesearch').on('click', ".live_search_reslut_option", function(e) {
+            $('#input-search').val($(this).html());
+            $('#livesearch').hide();
+        });
+
+        $('#input-search').focusout(function(e) {
+            if (!$("#livesearch").hasClass("hovered")) {
+                $('#livesearch').hide();
+            }
+        });
+
+        $('#input-search').focusin(function(e) {
+            $('#livesearch').show();
+        });
+
+        $("#livesearch").hover(function() {
+            $(this).addClass("hovered");
+        }, function() {
+            $(this).removeClass("hovered");
+        });
+
+        // Live search
+        $('#input-search').keyup(function(e) {
+            var typing = $('#input-search').val();
+            checkTypingLength(typing);
+            var post_data = {
+                'typing': typing
+            };
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('search/liveSearch'); ?>',
+                data: post_data,
+                beforeSend: function() {
+                    // do something
+                },
+                success: function(html) {
+                    $('#livesearch').html(html);
+                    // console.log(html);
                 }
-                prevScrollpos = currentScrollPos;
-            }
-            <?php
-            if ($this->session->userdata('flash_success')) {
-                ?>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
+            });
 
-                Toast.fire({
-                    title: 'เข้าสู่ระบบสำเร็จ !',
-                    type: 'success',
-                    confirmButtonText: 'ตกลง',
-                })
-            <?php
-            }
-            if ($this->session->userdata('register_success')) {
-                ?>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
+        });
 
-                Toast.fire({
-                    title: 'สมัครสมาชิกสำเร็จ !',
-                    type: 'success',
-                    confirmButtonText: 'ตกลง',
-                })
-            <?php }
-            if ($this->session->userdata('flash_logout')) { ?>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-
-                Toast.fire({
-                    title: 'ออกจากระบบสำเร็จ !',
-                    type: 'success',
-                    confirmButtonText: 'ตกลง',
-                })
-            <?php
-            }
+        // Swal alerts
+        <?php
+        if ($this->session->userdata('flash_success')) {
             ?>
-        </script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                title: 'เข้าสู่ระบบสำเร็จ !',
+                type: 'success',
+                confirmButtonText: 'ตกลง',
+            })
+        <?php
+        }
+        if ($this->session->userdata('register_success')) {
+            ?>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                title: 'สมัครสมาชิกสำเร็จ !',
+                type: 'success',
+                confirmButtonText: 'ตกลง',
+            })
+        <?php }
+        if ($this->session->userdata('flash_logout')) { ?>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                title: 'ออกจากระบบสำเร็จ !',
+                type: 'success',
+                confirmButtonText: 'ตกลง',
+            })
+        <?php
+        }
+        if ($this->session->userdata('already_logged_in')) { ?>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                title: 'คุณได้เข้าสู่ระบบแล้ว !',
+                type: 'info',
+                confirmButtonText: 'ตกลง',
+            })
+
+        <?php } ?>
+    </script>
+    <div id="content">

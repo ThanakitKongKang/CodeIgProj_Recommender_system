@@ -114,7 +114,7 @@
     <!-- เอาให้เหมือน index col-2  -->
 </div>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         // console.log(<?= $page ?>);
         var category = mid_title.title.replace(" ", "-");

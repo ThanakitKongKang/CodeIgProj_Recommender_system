@@ -48,7 +48,7 @@ class SearchController extends CI_Controller
 
         $data['page'] = $page;
         $data['total_rows'] = $config["total_rows"];
-        $data['category_list'] = $this->books_model->get_cateory_list();
+        $data['category_list'] = $this->books_model->search_books_get_category($query, $sort_rate);
         $header['title'] = 'Search result';
 
 
@@ -60,5 +60,29 @@ class SearchController extends CI_Controller
         $this->load->view('./header', $header);
         $this->load->view('books/search_result', $data);
         $this->load->view('footer');
+    }
+
+    function liveSearch()
+    {
+        $typing = $this->input->post('typing');
+        $results = $this->books_model->search_live_soundex($typing);
+        $results_not_soundex = $this->books_model->search_live_not_soundex($typing);
+
+        echo "<div id='live_search_result_container' class='bg-white position-absolute'>";
+        if ($results != FALSE) {
+            foreach ($results as $result) {
+                echo "<a class='dropdown-item live_search_reslut_option'>";
+                echo $result['book_name'];
+                echo "</a>";
+            }
+        } 
+        else if ($results == FALSE) {
+            foreach ($results_not_soundex as $result) {
+                echo "<a class='dropdown-item live_search_reslut_option'>";
+                echo $result['book_name'];
+                echo "</a>";
+            }
+        }
+        echo "</div>";
     }
 }

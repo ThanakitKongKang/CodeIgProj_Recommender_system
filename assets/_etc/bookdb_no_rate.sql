@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2019 at 01:58 PM
+-- Generation Time: Oct 01, 2019 at 05:54 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -21,6 +21,52 @@ SET time_zone = "+00:00";
 --
 -- Database: `bookdb`
 --
+
+DELIMITER $$
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `soundex_match` (`needle` VARCHAR(128), `haystack` TEXT, `splitChar` VARCHAR(1)) RETURNS TINYINT(4) begin
+    declare spacePos int;
+    declare searchLen int default length(haystack);
+    declare curWord varchar(128) default '';
+    declare tempStr text default haystack;
+    declare tmp text default '';
+    declare soundx1 varchar(64) default soundex(needle);
+    declare soundx2 varchar(64) default '';
+
+    set spacePos = locate(splitChar, tempStr);
+
+    while searchLen > 0 do
+      if spacePos = 0 then
+        set tmp = tempStr;
+        select soundex(tmp) into soundx2;
+        if soundx1 = soundx2 then
+          return 1;
+        else
+          return 0;
+        end if;
+      end if;
+
+      if spacePos != 0 then
+        set tmp = substr(tempStr, 1, spacePos-1);
+        set soundx2 = soundex(tmp);
+        if soundx1 = soundx2 then
+          return 1;
+        end if;
+        set tempStr = substr(tempStr, spacePos+1);
+        set searchLen = length(tempStr);
+      end if;
+
+      set spacePos = locate(splitChar, tempStr);
+
+    end while;
+
+    return 0;
+
+  end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -102,7 +148,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (57, 'Leif Mejbro', 'Examples of Systems of Differential Equations', 'Calculus', NULL, NULL, 0),
 (58, 'Frederic Mynard', 'Exercises for A youtube Calculus Workbook Part II', 'Calculus', NULL, NULL, 0),
 (59, 'Leif Mejbro', 'Fourier Series and Systems of Differential', 'Calculus', NULL, NULL, 0),
-(60, 'Christopher C. Tisdell', 'Introduction to Complex Numbers', 'Calculus', NULL, NULL, 0),
+(60, 'Christopher C. Tisdell', 'Introduction to Complex Numbers', 'Calculus', NULL, 5, 1),
 (61, 'Christopher C. Tisdell', 'Learn Calculus 2 on Your Mobile Device', 'Calculus', NULL, NULL, 0),
 (62, 'Kenneth Kuttler', 'Linear Algebra II', 'Calculus', NULL, NULL, 0),
 (63, 'Lars-Ake Lindahl', 'Linear and Convex Optimization', 'Calculus', NULL, NULL, 0),
@@ -155,6 +201,14 @@ CREATE TABLE `saved_book` (
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `saved_book`
+--
+
+INSERT INTO `saved_book` (`book_id`, `username`, `date`) VALUES
+(87, 'admin', '2019-09-29 19:45:33'),
+(88, 'admin', '2019-09-29 19:45:31');
 
 -- --------------------------------------------------------
 

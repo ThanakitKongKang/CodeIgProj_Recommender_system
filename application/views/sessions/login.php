@@ -79,7 +79,7 @@
         </div>
 </body>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover({
             trigger: "click hover",

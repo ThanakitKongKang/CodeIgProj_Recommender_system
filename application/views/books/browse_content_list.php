@@ -55,7 +55,7 @@
         <?php } ?>
     </div>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             // console.log("i: " + <?= $i ?>);
             // console.log("num_rows: " + <?= $num_rows ?>);

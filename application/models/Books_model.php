@@ -81,6 +81,48 @@ class Books_model extends BaseModel
 
         return $query->result();
     }
+    public function search_books_get_category($query, $sort_rate)
+    {
+        $this->db->select('book_type');
+        $this->db->distinct();
+        $this->db->like('book_name', $query, 'both');
+
+        if (!empty($sort_rate)) {
+            $this->db->order_by('b_rate', $sort_rate);
+        }
+        $query = $this->db->get($this->table);
+
+        $array = json_decode(json_encode($query->result()), True);
+        return $array;
+    }
+
+    public function search_live_soundex($typing)
+    {
+
+        $sql = "SELECT book_name FROM book WHERE soundex_match(?, book_name, ' ') LIMIT 10";
+        $query = $this->db->query($sql, array($typing));
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function search_live_not_soundex($typing)
+    {
+        $this->db->like('book_name', $typing, 'both');
+        $this->db->limit(10);
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
 
     public function get_name_all()
     {

@@ -161,3 +161,4 @@ $route['books/browse_categoryChange'] = 'bookscontroller/browse_categoryChange';
 $route['search'] = 'searchcontroller/search';
 $route['search/result'] = 'searchcontroller/search';
 $route['search/result/(:num)'] = 'searchcontroller/search';
+$route['search/liveSearch'] = 'searchcontroller/liveSearch';

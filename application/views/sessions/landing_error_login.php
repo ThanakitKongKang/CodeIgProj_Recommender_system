@@ -6,7 +6,7 @@
     <div class="text-center">ไปหน้าเข้าสู่ระบบใน <span id="countdown"> 5 </span> วินาที</div>
 </div>
 
-<script>
+<script type="text/javascript">
     var timeleft = 4;
     var downloadTimer = setInterval(function() {
         document.getElementById("countdown").innerHTML = timeleft;

@@ -99,7 +99,7 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
     var similar_book_detail_width = $("#similar_book_detail").get(0);
     if (similar_book_detail_width.scrollWidth < 600) {
         $("#similar_book_arrow_right").hide();
