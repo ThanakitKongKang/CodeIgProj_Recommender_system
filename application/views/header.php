@@ -90,8 +90,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <!-- Search -->
                     <div class="col-5">
-                        <form class="form-inline" style="margin:0rem;" action="<?= base_url() ?>search/result">
-                            <input class="form-control mr-sm-1" style="width:100%" type="text" name="q" autocomplete="off" placeholder="title" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
+                        <form class="form-inline" id="search_form" style="margin:0rem;" action="<?= base_url() ?>search/result">
+                            <input class="form-control mr-sm-1" style="width:100%" type="search" name="q" autocomplete="off" placeholder="title" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
                         </form>
                     </div>
@@ -179,22 +179,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $('#livesearch').on('click', ".live_search_reslut_option", function(e) {
             $('#input-search').val($(this).html());
             $('#livesearch').hide();
-        });
+            $('#search_form').submit();
 
+        });
+        // lose focus
         $('#input-search').focusout(function(e) {
             if (!$("#livesearch").hasClass("hovered")) {
                 $('#livesearch').hide();
             }
         });
 
+        // in focus
         $('#input-search').focusin(function(e) {
             $('#livesearch').show();
         });
 
+        // hover options
         $("#livesearch").hover(function() {
             $(this).addClass("hovered");
         }, function() {
             $(this).removeClass("hovered");
+        });
+
+        // if user clicks X
+        $('input[type=search]').on('search', function() {
+               var typing = $('#input-search').val();
+            checkTypingLength(typing);
         });
 
         // Live search
