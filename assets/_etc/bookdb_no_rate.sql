@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2019 at 05:54 PM
+-- Generation Time: Oct 02, 2019 at 07:51 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -89,11 +89,11 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b_rate`, `count_rate`) VALUES
-(1, 'William John Teahan', 'Artificial Intelligence - Agent Behaviour', 'Artificial Intelligence', NULL, 3.54773, 3),
-(2, 'William John Teahan', 'Artificial Intelligence - Agents and Environments', 'Artificial Intelligence', NULL, 5, 1),
-(3, 'William John Teahan', 'Artificial Intelligence - Exercises I', 'Artificial Intelligence', NULL, 2.71427, 1),
-(4, 'William John Teahan', 'Artificial Intelligence - Exercises II', 'Artificial Intelligence', NULL, 2.2, 1),
-(5, 'David Haskins', 'C Programming in Linux', 'Programming', NULL, 4, 1),
+(1, 'William John Teahan', 'Artificial Intelligence - Agent Behaviour', 'Artificial Intelligence', NULL, NULL, 0),
+(2, 'William John Teahan', 'Artificial Intelligence - Agents and Environments', 'Artificial Intelligence', NULL, NULL, 0),
+(3, 'William John Teahan', 'Artificial Intelligence - Exercises I', 'Artificial Intelligence', NULL, NULL, 0),
+(4, 'William John Teahan', 'Artificial Intelligence - Exercises II', 'Artificial Intelligence', NULL, NULL, 0),
+(5, 'David Haskins', 'C Programming in Linux', 'Programming', NULL, NULL, 0),
 (6, 'Poul Klausen', 'C# 1', 'Programming', 'Introduction to programming and the C# language', NULL, 0),
 (7, 'Kjell Backman', 'Structured Programming with C++', 'Programming', '', NULL, 0),
 (8, 'Poul Klausen', 'Introduction to Web Services with Java', 'Java Programming', NULL, NULL, 0),
@@ -127,7 +127,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (36, 'David Etheridge', 'Java_ Graphical User Interfaces', 'Java Programming', NULL, NULL, 0),
 (37, 'David Etheridge', 'Java_ The Fundamentals of Objects and Classes', 'Java Programming', NULL, NULL, 0),
 (38, 'Simon Kendal', 'Object Oriented Programming using Java', 'Java Programming', NULL, NULL, 0),
-(39, 'Norbert Euler', 'A First Course in Ordinary Differential Equations', 'Calculus', NULL, NULL, 0),
+(39, 'Norbert Euler', 'A First Course in Ordinary Differential Equations', 'Calculus', NULL, NULL, 1),
 (40, 'Fredric Mynard', 'A youtube Calculus Workbook (Part I)', 'Calculus', NULL, NULL, 0),
 (41, 'Fredric Mynard', 'A youtube Calculus Workbook (Part II)', 'Calculus', NULL, NULL, 0),
 (42, 'Nicholas Nsowah-Nuamah', 'Advanced Topics In Introductory Probability', 'Calculus', NULL, NULL, 0),
@@ -148,7 +148,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (57, 'Leif Mejbro', 'Examples of Systems of Differential Equations', 'Calculus', NULL, NULL, 0),
 (58, 'Frederic Mynard', 'Exercises for A youtube Calculus Workbook Part II', 'Calculus', NULL, NULL, 0),
 (59, 'Leif Mejbro', 'Fourier Series and Systems of Differential', 'Calculus', NULL, NULL, 0),
-(60, 'Christopher C. Tisdell', 'Introduction to Complex Numbers', 'Calculus', NULL, 5, 1),
+(60, 'Christopher C. Tisdell', 'Introduction to Complex Numbers', 'Calculus', NULL, NULL, 0),
 (61, 'Christopher C. Tisdell', 'Learn Calculus 2 on Your Mobile Device', 'Calculus', NULL, NULL, 0),
 (62, 'Kenneth Kuttler', 'Linear Algebra II', 'Calculus', NULL, NULL, 0),
 (63, 'Lars-Ake Lindahl', 'Linear and Convex Optimization', 'Calculus', NULL, NULL, 0),
@@ -157,7 +157,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (66, 'Leif Mejbro', 'My Horror Chamber', 'Calculus', NULL, NULL, 0),
 (67, 'Leif Mejbro', 'Ordinary differential equations of first order', 'Calculus', NULL, NULL, 0),
 (68, 'Marianna Euler', 'Problems, Theory and Solutions in Linear Algebra', 'Calculus', NULL, NULL, 0),
-(69, 'Leif Mejbro', 'Real Functions in One Variable - Complex...', 'Calculus', NULL, NULL, 0),
+(69, 'Leif Mejbro', 'Real Functions in One Variable - Complex...', 'Calculus', NULL, NULL, 1),
 (70, 'Leif Mejbro', 'Real Functions in One Variable - Elementary...', 'Calculus', NULL, NULL, 0),
 (71, 'Leif Mejbro', 'Real Functions in One Variable - Integrals...', 'Calculus', NULL, NULL, 0),
 (72, 'Leif Mejbro', 'Real Functions in One Variable - Simple 1...', 'Calculus', NULL, NULL, 0),
@@ -201,14 +201,6 @@ CREATE TABLE `saved_book` (
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `saved_book`
---
-
-INSERT INTO `saved_book` (`book_id`, `username`, `date`) VALUES
-(87, 'admin', '2019-09-29 19:45:33'),
-(88, 'admin', '2019-09-29 19:45:31');
 
 -- --------------------------------------------------------
 
