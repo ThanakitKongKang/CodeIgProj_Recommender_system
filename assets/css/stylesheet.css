@@ -913,9 +913,9 @@ body {
 }
 
 #popup_menu {
-	width: 9rem;
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
+	width: 10rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
 	border: 1px solid rgba(0, 0, 0, .15);
 	border-radius: 3px;
 	box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
@@ -923,9 +923,10 @@ body {
 
 #popup_menu>div>a {
 	padding: 0.5rem;
+	padding-left:0.75rem;
 	cursor: default;
 }
 
-.popup_menu_icon {
-	width: 1.5rem;
+.popup_menu_item:active{
+	color:#fff!important;
 }

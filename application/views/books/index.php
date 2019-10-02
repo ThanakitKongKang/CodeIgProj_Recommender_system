@@ -414,7 +414,7 @@
                             function clickedPopupTrigger(book_id, rect, book_name) {
                                 $('#popup_menu').css({
                                     "top": (rect.top - 155),
-                                    "left": (rect.left - 130),
+                                    "left": (rect.left - 150),
                                 });
 
                                 if ($('#popup_menu').css('display') == 'none') {
@@ -446,9 +446,9 @@
                                     data: post_data,
                                     success: function(data) {
                                         if (data) {
-                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger" data-book_id="' + book_id + '"><i class="fas fa-bookmark popup_menu_icon" id="bookmark_icon"></i><span class="save_text">unsave book</span></a>');
+                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="fas fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">unsave book</span></div></div></a>');
                                         } else {
-                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger" data-book_id="' + book_id + '"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i><span class="save_text">save book</span></a>');
+                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">save book</span></div></div></a>');
                                         }
                                         $.ajax({
                                             type: 'post',
@@ -465,7 +465,7 @@
                                                 }
                                                 $('.rate_trigger').attr("data-book_id", book_id);
 
-                                                $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger" data-toggle="modal" data-target="#rate_modal"><i class="far fa-star popup_menu_icon"></i>rate this</a>');
+                                                $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="far fa-star popup_menu_icon"></i></div><div class="col">rate this</div></div></a>');
                                                 $('#modal_label').html('Rate <span class="text-primary">' + book_name + '</span>');
 
                                             }
