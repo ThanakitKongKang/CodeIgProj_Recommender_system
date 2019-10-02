@@ -19,7 +19,7 @@ class BooksController extends CI_Controller
         'until', 'up', 'very', 'was', 'wasn\'t', 'we', 'we\'d', 'we\'ll', 'we\'re', 'we\'ve', 'were', 'weren\'t', 'what', 'what\'s',
         'when', 'when\'s', 'where', 'where\'s', 'which', 'while', 'who', 'who\'s', 'whom', 'why', 'why\'s', 'with', 'won\'t', 'would',
         'wouldn\'t', 'you', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve', 'your', 'yours', 'yourself', 'yourselves', '-', 'I', 'II', 'III',
-        'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'The', 'A','_','\'s',
+        'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'The', 'A', '_', '\'s',
     ];
 
     public function __construct()
@@ -121,14 +121,14 @@ class BooksController extends CI_Controller
         $i = 0;
         $bookid--;
         foreach ($data['books_name'] as $book_name) {
-            $data['cosineSim'][$i+1] =  $this->cosine($data['tf_no_stopwords'][$bookid], $data['tf_no_stopwords'][$i]);
+            $data['cosineSim'][$i + 1] =  $this->cosine($data['tf_no_stopwords'][$bookid], $data['tf_no_stopwords'][$i]);
             $i++;
         }
         // $data['cosineSim'][2] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][2]);
         // $data['cosineSim'][3] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][3]);
         // $data['cosineSim'][4] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][4]);
         // remove itself from array
-        unset($data['cosineSim'][$bookid+1]);
+        unset($data['cosineSim'][$bookid + 1]);
 
         // remove 0 similarity from array
         foreach ($data['cosineSim'] as $key => $cosineSim) {
@@ -149,7 +149,7 @@ class BooksController extends CI_Controller
         array_multisort($match, SORT_DESC, $data['recommend_list_detail']);
 
         // chopping to get only 12 items
-        $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'],0,12));
+        $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
 
 
         $header["title"] = $data['book_detail']['book_name'];
@@ -282,6 +282,23 @@ class BooksController extends CI_Controller
             echo "login";
         }
     }
+
+    function isBookmarked()
+    {
+        $bookid = $this->input->post('book_id');
+        $username = $this->session->userdata('user')['username'];
+        $isBookmarked = $this->bookmark_model->get_if_user_bookmarked($bookid, $username);
+        echo $isBookmarked;
+    }
+
+    function getBookRateByUser()
+    {
+        $bookid = $this->input->post('book_id');
+        $username = $this->session->userdata('user')['username'];
+        $isRated = $this->rate_model->get_rate_user_book($username , $bookid);
+        echo $isRated["rate"];
+    }
+
     /*
     | -------------------------------------------------------------------------
     | rate

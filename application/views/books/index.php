@@ -39,6 +39,9 @@
 
                     <div class="my-3 bg-light book_detail_content" id="book_detail_content_col1">
                         <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[0]["book_type"] ?>"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
+                        <?php if ($this->session->userdata('logged_in')) { ?>
+                            <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[0]["book_id"] ?>" data-book_name="<?= $final_recommend_list[0]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
+                        <?php } ?>
                         <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
                         <div class="text-col-1-footer">
                             <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
@@ -83,6 +86,9 @@
 
                                         <div class="col-8 text-col-2 bg-light book_detail_content" style="border-radius:1rem;">
                                             <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
+                                            <?php if ($this->session->userdata('logged_in')) { ?>
+                                                <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[$i]["book_id"] ?>" data-book_name="<?= $final_recommend_list[$i]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
+                                            <?php } ?>
                                             <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
                                             <div class="text-col-2-footer w-100">
                                                 <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
@@ -128,6 +134,9 @@
 
                                                 <div class="col-8 text-col-2 bg-light book_detail_content" style="border-radius:1rem;">
                                                     <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
+                                                    <?php if ($this->session->userdata('logged_in')) { ?>
+                                                        <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[$i]["book_id"] ?>" data-book_name="<?= $final_recommend_list[$i]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
+                                                    <?php } ?>
                                                     <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
                                                     <div class="text-col-2-footer w-100">
                                                         <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
@@ -217,7 +226,7 @@
 
                             <!-- Top rated -->
                             <template id="top_rated_contents" v-if="category === 'toprated'">
-                                <div class="animation_enter" id="toprate-div">
+                                <div class="animation_enter the_mid_content" id="toprate-div">
                                     <div class="row no-gutters">
                                         <?php
                                         foreach ($top_rated as $top) {
@@ -227,24 +236,27 @@
                                                     <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
                                                     <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
                                                     <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
-                                                    <div class="overlay_mid"><a href="<?= base_url() ?>book/<?= $top['book_id'] ?>" class="stretched-link"></a></div>
+
+                                                    <a class="overlay_mid" href="<?= base_url() ?>book/<?= $top['book_id'] ?>"></a>
 
                                                     <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                                     <div class="hover_img_content_mid text-center">
-                                                        <div class="py-2"><?= $top['book_name'] ?></div>
-                                                        <div class="small py-2">field : <?= $top['book_type'] ?></div>
-                                                        <div class="small py-2" title="<?= $top['author'] ?>">author : <?= $top['author'] ?></div>
-                                                        <div class="mt-5 text-center">
-                                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
-                                                            <?php if ($top['count_rate'] != 0) { ?>
-                                                                <!-- HARD CODE rater star -->
-                                                                <div class="rating-container rating-sm rating-animate is-display-only">
-                                                                    <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
-                                                                    <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $top['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
-                                                                </div>
-                                                                <div class="small"><?= number_format($top['b_rate'], 1) ?>/5.0 rated by <?= $top['count_rate'] ?> user<?php if ($top['count_rate'] > 1) echo "s"; ?></div>
-                                                            <?php } ?>
-                                                        </div>
+                                                        <a href="<?= base_url() ?>book/<?= $top['book_id'] ?>" class="text-decoration-none text-white stretched-link">
+                                                            <div class="py-2"><?= $top['book_name'] ?></div>
+                                                            <div class="small py-2">field : <?= $top['book_type'] ?></div>
+                                                            <div class="small py-2" title="<?= $top['author'] ?>">author : <?= $top['author'] ?></div>
+                                                            <div class="mt-5 text-center">
+                                                                <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                                                <?php if ($top['count_rate'] != 0) { ?>
+                                                                    <!-- HARD CODE rater star -->
+                                                                    <div class="rating-container rating-sm rating-animate is-display-only">
+                                                                        <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
+                                                                        <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $top['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
+                                                                    </div>
+                                                                    <div class="small"><?= number_format($top['b_rate'], 1) ?>/5.0 rated by <?= $top['count_rate'] ?> user<?php if ($top['count_rate'] > 1) echo "s"; ?></div>
+                                                                <?php } ?>
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -258,7 +270,7 @@
 
                             <!-- items by category -->
                             <template id="category_contents" v-if="category === 'category'">
-                                <div class="animation_enter" id="category_contents_body">
+                                <div class="animation_enter the_mid_content" id="category_contents_body">
                                     <div class="row no-gutters">
                                         <div class="col-4 p-5" v-for="book in books">
                                             <div class="hover_img_mid">
@@ -266,31 +278,62 @@
                                                 <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.png'" />
                                                 <!-- <span class="text-img"> {{ book.book_name }}</span> -->
 
-                                                <div class="overlay_mid"><a v-bind:href="'<?= base_url() ?>book/'+book.book_id+''" class="stretched-link"></a></div>
+                                                <a class="overlay_mid" v-bind:href="'<?= base_url() ?>book/'+book.book_id+''"></a>
+
                                                 <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                                 <div class="hover_img_content_mid text-center">
-                                                    <div class="py-2">{{ book.book_name }}</div>
-                                                    <div class="small py-2">field : {{ book.book_type }}</div>
-                                                    <div class="small py-2">author : {{ book.author }}</div>
+                                                    <a v-bind:href="'<?= base_url() ?>book/'+book.book_id+''" class="text-decoration-none text-white stretched-link">
+                                                        <div class="py-2">{{ book.book_name }}</div>
+                                                        <div class="small py-2">field : {{ book.book_type }}</div>
+                                                        <div class="small py-2">author : {{ book.author }}</div>
 
-                                                    <div class="mt-5 text-center">
-                                                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
-                                                        <div v-if="book.count_rate !== '0'">
-                                                            <div class="rating-container rating-sm rating-animate is-display-only">
-                                                                <!-- HARD CODE rater star for Vue.js -->
-                                                                <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rating-input" title=""></div>
+                                                        <div class="mt-5 text-center">
+                                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                                            <div v-if="book.count_rate !== '0'">
+                                                                <div class="rating-container rating-sm rating-animate is-display-only">
+                                                                    <!-- HARD CODE rater star for Vue.js -->
+                                                                    <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rating-input" title=""></div>
+                                                                </div>
+
+                                                                <!-- <input v-bind:value="book.b_rate" class="rater_star" title="" /> -->
+                                                                <div class="small">{{ book.b_rate }}/5.0 rated by {{ book.count_rate }} user(s)</div>
                                                             </div>
-
-                                                            <!-- <input v-bind:value="book.b_rate" class="rater_star" title="" /> -->
-                                                            <div class="small">{{ book.b_rate }}/5.0 rated by {{ book.count_rate }} user(s)</div>
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </template>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade slide-bottom" id="rate_modal" tabindex="-1" role="dialog" aria-labelledby="rate_modal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal_label"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="margin-left:8rem;">
+                                    <input value="0" class="rater_star_modal" title="" data-show-clear="false">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" style="display:none;" data-book_id="0" class="btn btn-primary rate_trigger">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="popup_menu" class="position-absolute bg-white slide-bottom" style="display:none">
+                        <div id="popup_menu_bookmark">
+                        </div>
+                        <div id="popup_menu_rate">
                         </div>
                     </div>
 
@@ -306,6 +349,11 @@
                             $('html').click(function() {
                                 $('#dropdown-category-menu').hide();
                                 $('#dropdown-category').removeClass("hover");
+                                if (!$(".ellipsis_menu").hasClass("hovered")) {
+                                    if (!$("#popup_menu").hasClass("hovered")) {
+                                        $('#popup_menu').toggle();
+                                    }
+                                }
                             });
 
                             $('#dropdown-category-toggle').click(function(e) {
@@ -338,6 +386,128 @@
                             $('.category').on("click", "a", function(event) {
                                 var category = ($(this).data('ctg'));
                                 get_items_by_category(category);
+                            });
+
+                            var global_book_id = 0;
+                            $('.ellipsis_menu_trigger').click(function(e) {
+                                var book_id = ($(this).data('book_id'));
+                                var book_name = ($(this).data('book_name'));
+                                var rect = $(this).offset();
+                                clickedPopupTrigger(book_id, rect, book_name)
+                            });
+
+                            // hover ellipsis_menu
+                            $(".ellipsis_menu").hover(function() {
+                                $(this).addClass("hovered");
+                            }, function() {
+                                $(this).removeClass("hovered");
+                            });
+
+                            // hover ellipsis_menu
+                            $("#popup_menu").hover(function() {
+                                $(this).addClass("hovered");
+                            }, function() {
+                                $(this).removeClass("hovered");
+                            });
+
+
+                            function clickedPopupTrigger(book_id, rect, book_name) {
+                                $('#popup_menu').css({
+                                    "top": (rect.top - 155),
+                                    "left": (rect.left - 130),
+                                });
+
+                                if ($('#popup_menu').css('display') == 'none') {
+                                    showPopupMenu(book_id, book_name);
+                                } else {
+                                    if (global_book_id != book_id) {
+                                        $('#popup_menu').hide();
+                                        var interval = setInterval(function() {
+                                            showPopupMenu(book_id, book_name);
+                                            clearInterval(interval);
+                                        }, 50);
+
+                                    } else {
+                                        $('#popup_menu').toggle();
+                                    }
+                                }
+                                global_book_id = book_id;
+                            }
+
+                            function showPopupMenu(book_id, book_name) {
+                                var post_data = {
+                                    'book_id': book_id,
+                                };
+
+                                $.ajax({
+                                    type: 'post',
+                                    url: "<?php echo base_url(); ?>books/isBookmarked",
+                                    async: true,
+                                    data: post_data,
+                                    success: function(data) {
+                                        if (data) {
+                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger" data-book_id="' + book_id + '"><i class="fas fa-bookmark popup_menu_icon" id="bookmark_icon"></i><span class="save_text">unsave book</span></a>');
+                                        } else {
+                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger" data-book_id="' + book_id + '"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i><span class="save_text">save book</span></a>');
+                                        }
+                                        $.ajax({
+                                            type: 'post',
+                                            url: "<?php echo base_url(); ?>books/getBookRateByUser",
+                                            async: true,
+                                            data: post_data,
+
+                                            success: function(data) {
+                                                if (data != false) {
+                                                    $('.rater_star_modal').rating('update', data);
+                                                } else {
+                                                    $('.rater_star_modal').rating('update', 0);
+                                                    $('.rate_trigger').hide();
+                                                }
+                                                $('.rate_trigger').attr("data-book_id", book_id);
+
+                                                $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger" data-toggle="modal" data-target="#rate_modal"><i class="far fa-star popup_menu_icon"></i>rate this</a>');
+                                                $('#modal_label').html('Rate <span class="text-primary">' + book_name + '</span>');
+
+                                            }
+                                        })
+                                    }
+                                })
+                                $('#popup_menu').show();
+                            }
+                            $('#rate_modal').on('hidden.bs.modal', function() {
+                                $('#popup_menu').hide();
+                            })
+
+                            $('.rater_star_modal').on('rating:change', function(event, value, caption) {
+                                $('.rate_trigger').show();
+                            });
+
+                            $('.rate_trigger').click(function(e) {
+                                var rating = {
+                                    'rating': $('.rater_star_modal').rating().val(),
+                                    'book_id': $(this).data("book_id"),
+                                };
+                                $.ajax({
+                                    type: 'post',
+                                    url: "<?php echo base_url(); ?>books/rateBook",
+                                    data: rating,
+                                    success: function(data) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        });
+
+                                        Toast.fire({
+                                            title: 'ให้คะแนนสำเร็จ !',
+                                            type: 'success',
+                                        });
+                                        $('#rate_modal').modal('hide');
+                                        global_book_id = 0;
+
+                                    }
+                                })
                             });
 
                             function get_items_by_category(category) {
@@ -373,10 +543,15 @@
                                     }
                                 })
                             }
+
+                            $('#popup_menu_rate').click(function(e) {
+                                $('#popup_menu').hide();
+                            });
                             // bookmarker
-                            $('.bookmark_trigger').click(function(e) {
+                            $('#popup_menu_bookmark').click('.bookmark_trigger', function(e) {
+                                var this_elm = $(this).find('.bookmark_trigger');
                                 var bookmark_data = {
-                                    'book_id': $('#book_id').val(),
+                                    'book_id': this_elm.data('book_id'),
                                 };
 
                                 $.ajax({
@@ -385,16 +560,7 @@
                                     data: bookmark_data,
                                     success: function(data) {
                                         if (data == "login") {
-                                            Swal.fire({
-                                                title: 'ไม่สามารถทำรายการได้ กรุณาเข้าสู่ระบบ!',
-                                                type: 'error',
-                                                confirmButtonText: 'เข้าสู่ระบบ',
-                                                // timer: 1500
-                                            }).then((result) => {
-                                                if (result.value) {
-                                                    window.location = "<?= base_url() ?>login";
-                                                }
-                                            })
+                                            please_login();
                                         } else if (data == "inserted") {
                                             const Toast = Swal.mixin({
                                                 toast: true,
@@ -407,8 +573,9 @@
                                                 title: 'บุ๊กมาร์กสำเร็จ !',
                                                 type: 'success',
                                             });
-                                            $('#bookmark_icon').removeClass("far");
-                                            $('#bookmark_icon').addClass("fas");
+                                            this_elm.find('i').removeClass("far");
+                                            this_elm.find('i').addClass("fas");
+                                            this_elm.find('span').html(" unsave book");
 
                                         } else if (data == "removed") {
                                             const Toast = Swal.mixin({
@@ -422,10 +589,11 @@
                                                 title: 'นำออกจากรายการบุ๊กมาร์กสำเร็จ !',
                                                 type: 'success',
                                             });
-                                            $('#bookmark_icon').removeClass("fas");
-                                            $('#bookmark_icon').addClass("far");
-
+                                            this_elm.find('i').removeClass("fas");
+                                            this_elm.find('i').addClass("far");
+                                            this_elm.find('span').html(" save book");
                                         }
+                                        $('#popup_menu').hide();
                                     }
                                 })
                             });
@@ -440,7 +608,15 @@
                             'step': '0.5',
                             'size': 'sm',
                             displayOnly: true,
+                        });
 
+                        $('.rater_star_modal').rating({
+                            'showCaption': true,
+                            'stars': '5',
+                            'min': '0',
+                            'max': '5',
+                            'step': '0.5',
+                            'size': 'sm',
                         });
 
                         $('.rater_star_col2').rating({

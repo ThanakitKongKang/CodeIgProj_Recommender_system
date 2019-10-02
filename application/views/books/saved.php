@@ -184,8 +184,7 @@
                     'round_count': <?= $round_count ?>,
                     'bookmark_trigger_count':bookmark_trigger_count,
                 };
-
-        
+                
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo base_url('books/loadMoreData'); ?>',

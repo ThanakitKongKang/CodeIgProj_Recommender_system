@@ -127,6 +127,8 @@ $route['books'] = 'bookscontroller';
 $route['books/getBooksByCategory'] = 'bookscontroller/getBooksByCategory';
 $route['books/rateBook'] = 'bookscontroller/rateBook';
 $route['books/update_bookmark'] = 'bookscontroller/update_bookmark';
+$route['books/isBookmarked'] = 'bookscontroller/isBookmarked';
+$route['books/getBookRateByUser'] = 'bookscontroller/getBookRateByUser';
 $route['books/loadMoreData'] = 'bookscontroller/loadMoreData';
 
 /*

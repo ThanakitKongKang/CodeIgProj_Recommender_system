@@ -149,17 +149,10 @@
                             $('#rate_avg_user').html(Number($('#rate_avg_user').html()) + 1);
                             default_rating = 1;
                         }
-
                         $('#rate_avg').html(data);
-
-
                         $('#your_rate').html($('.rating-input').val());
-
                         $('#span_rating').removeClass("badge-secondary");
                         $('#span_rating').addClass("badge-warning");
-
-
-
                     }
                 })
             });
