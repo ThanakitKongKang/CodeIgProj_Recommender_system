@@ -359,7 +359,7 @@
                                 $('#dropdown-category').removeClass("hover");
                                 if (!$(".ellipsis_menu").hasClass("hovered")) {
                                     if (!$("#popup_menu").hasClass("hovered")) {
-                                        $('#popup_menu').toggle();
+                                        $('#popup_menu').hide();
                                     }
                                 }
                             });
