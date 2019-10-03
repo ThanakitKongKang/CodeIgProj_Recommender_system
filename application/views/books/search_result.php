@@ -87,7 +87,7 @@
                         <div class="py-3" style="width:21.5rem;">
                             <div class="card hover_img_col2" style="width: 21.5rem;">
                                 <a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>">
-                                    <img class="w-100" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.png" style="height:28rem"></a>
+                                    <img class="w-100" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.PNG" style="height:28rem"></a>
                                 <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" class="stretched-link"></a></div>
                                 <div class="card-body pb-0 pt-2" style="height:8rem;">
                                     <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book->book_type))) ?>"><span><?= $book->book_type ?></span></a>

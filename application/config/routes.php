@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'bookscontroller';
+$route['default_controller'] = 'BooksController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 /*
@@ -57,7 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 | ABOUT
 | -------------------------------------------------------------------------
 */
-$route['welcome'] = 'welcome';
+$route['welcome'] = 'Welcome';
 /*
 | -------------------------------------------------------------------------
 | CONTACTS
@@ -89,8 +89,8 @@ $route['authors/(:num)'] = 'authors';
 | SESSION FLASH DATA
 | -------------------------------------------------------------------------
 */
-$route['flash_index'] = 'sessioncontroller';
-$route['flash_message'] = 'sessioncontroller/flash_message';
+$route['flash_index'] = 'SessionController';
+$route['flash_message'] = 'SessionController/flash_message';
 
 /*
 | -------------------------------------------------------------------------
@@ -104,16 +104,16 @@ $route['store-image'] = 'imageuploadcontroller/store';
 | STORING USER DATA in CI SESSIONS
 | -------------------------------------------------------------------------
 */
-$route['signup'] = 'sessioncontroller/signup';
-$route['login'] = 'sessioncontroller/login';
-$route['logout'] = 'sessioncontroller/logout';
+$route['signup'] = 'SessionController/signup';
+$route['login'] = 'SessionController/login';
+$route['logout'] = 'SessionController/logout';
 /*
 | -------------------------------------------------------------------------
 | START
 | -------------------------------------------------------------------------
 */
-$route['books/pagination'] = 'bookscontroller/pagination';
-$route['books/pagination/(:num)'] = 'bookscontroller/pagination';
+$route['books/pagination'] = 'BooksController/pagination';
+$route['books/pagination/(:num)'] = 'BooksController/pagination';
 
 
 /*
@@ -122,45 +122,45 @@ $route['books/pagination/(:num)'] = 'bookscontroller/pagination';
 | -------------------------------------------------------------------------
 */
 
-$route['book/(:num)'] = 'bookscontroller/book';
-$route['books'] = 'bookscontroller';
-$route['books/getBooksByCategory'] = 'bookscontroller/getBooksByCategory';
-$route['books/rateBook'] = 'bookscontroller/rateBook';
-$route['books/update_bookmark'] = 'bookscontroller/update_bookmark';
-$route['books/isBookmarked'] = 'bookscontroller/isBookmarked';
-$route['books/getBookRateByUser'] = 'bookscontroller/getBookRateByUser';
-$route['books/loadMoreData'] = 'bookscontroller/loadMoreData';
+$route['book/(:num)'] = 'BooksController/book';
+$route['books'] = 'BooksController';
+$route['books/getBooksByCategory'] = 'BooksController/getBooksByCategory';
+$route['books/rateBook'] = 'BooksController/rateBook';
+$route['books/update_bookmark'] = 'BooksController/update_bookmark';
+$route['books/isBookmarked'] = 'BooksController/isBookmarked';
+$route['books/getBookRateByUser'] = 'BooksController/getBookRateByUser';
+$route['books/loadMoreData'] = 'BooksController/loadMoreData';
 
 /*
 | -------------------------------------------------------------------------
 | SAVED LIST
 | -------------------------------------------------------------------------
 */
-$route['saved'] = 'bookscontroller/saved';
+$route['saved'] = 'BooksController/saved';
 
 /*
 | -------------------------------------------------------------------------
 | TEST
 | -------------------------------------------------------------------------
 */
-$route['test'] = 'bookscontroller/recommend';
-$route['testmode'] = 'bookscontroller/testmode';
+$route['test'] = 'BooksController/recommend';
+$route['testmode'] = 'BooksController/testmode';
 
 /*
 | -------------------------------------------------------------------------
 | BROWSE
 | -------------------------------------------------------------------------
 */
-$route['browse'] = 'bookscontroller/browse';
-$route['browse/(:any)'] = 'bookscontroller/browse';
-$route['books/browse_loadMoreData'] = 'bookscontroller/browse_loadMoreData';
-$route['books/browse_categoryChange'] = 'bookscontroller/browse_categoryChange';
+$route['browse'] = 'BooksController/browse';
+$route['browse/(:any)'] = 'BooksController/browse';
+$route['books/browse_loadMoreData'] = 'BooksController/browse_loadMoreData';
+$route['books/browse_categoryChange'] = 'BooksController/browse_categoryChange';
 /*
 | -------------------------------------------------------------------------
 | SEARCH
 | -------------------------------------------------------------------------
 */
-$route['search'] = 'searchcontroller/search';
-$route['search/result'] = 'searchcontroller/search';
-$route['search/result/(:num)'] = 'searchcontroller/search';
-$route['search/liveSearch'] = 'searchcontroller/liveSearch';
+$route['search'] = 'SearchController/search';
+$route['search/result'] = 'SearchController/search';
+$route['search/result/(:num)'] = 'SearchController/search';
+$route['search/liveSearch'] = 'SearchController/liveSearch';

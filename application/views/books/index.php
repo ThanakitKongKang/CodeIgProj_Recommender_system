@@ -7,7 +7,7 @@
             else { ?>
                 <div class="hover_img">
 
-                    <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.png">
+                    <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.PNG">
 
                     <!-- <div id="text-col-1"></div> -->
 
@@ -76,7 +76,7 @@
                                     <div class="row h-100">
                                         <div class="col-4 hover_img_col2">
 
-                                            <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
+                                            <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
 
 
                                             <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
@@ -124,7 +124,7 @@
                                             <div class="row">
                                                 <div class="col-4 hover_img_col2">
 
-                                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.png">
+                                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
 
 
                                                     <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
@@ -234,7 +234,7 @@
                                             <div class="col-4 p-5 ">
                                                 <div class="hover_img_mid">
                                                     <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
-                                                    <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.png">
+                                                    <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.PNG">
                                                     <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
 
                                                     <a class="overlay_mid" href="<?= base_url() ?>book/<?= $top['book_id'] ?>"></a>

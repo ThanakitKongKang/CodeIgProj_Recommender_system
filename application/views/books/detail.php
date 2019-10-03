@@ -10,7 +10,7 @@
         <div class="pl-5 col position-relative">
             <div class="row" style="height:22rem">
                 <div class="col pt-3">
-                    <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.png">
+                    <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG">
                 </div>
 
                 <div class="col bg-light pt-3 book_detail_content" style="border-radius:1rem;">
@@ -71,7 +71,7 @@
                     <?php foreach ($recommend_list_detail as $book) { ?>
                         <div class="col-4 hover_img_similar_book_content">
                             <div>
-                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.png">
+                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
                                 <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
                             </div>
                             <div class="hover_img_content_similar text-center">

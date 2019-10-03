@@ -94,3 +94,25 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['webhost'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'id11095585_root',
+	'password' => 'Quicksand1',
+	'database' => 'id11095585_bookdb',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT != 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => TRUE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);

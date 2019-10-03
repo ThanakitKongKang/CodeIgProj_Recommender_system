@@ -1,7 +1,10 @@
 /* header */
 @font-face {
 	font-family: 'Kanit';
+	/* localhost */
 	src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
+	/* webhost */
+	/* src: url("https://kkubooksrecommender.000webhostapp.com/assets/_etc/Kanit-Regular.ttf"); */
 }
 
 .font-apple {

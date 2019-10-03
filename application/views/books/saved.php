@@ -9,7 +9,7 @@
                 <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
                     <div class="col pl-4" style="max-width:11rem;">
                         <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
-                            <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.png">
+                            <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
                         </a>
                     </div>
                     <!-- RATE section -->

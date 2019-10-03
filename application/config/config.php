@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/CodeIgProj_Recommender_system';
-
+// $config['base_url'] = 'https://kkubooksrecommender.000webhostapp.com';
 /*
 |--------------------------------------------------------------------------
 | Index File
