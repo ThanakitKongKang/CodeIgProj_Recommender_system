@@ -56,7 +56,7 @@ body {
 }
 
 #content {
-	overflow-y:hidden;
+	overflow-y: hidden;
 	min-height: 100vh;
 	position: relative;
 	top: 5rem;
@@ -926,10 +926,15 @@ body {
 
 #popup_menu>div>div>a {
 	padding: 0.5rem;
-	padding-left:0.75rem;
+	padding-left: 0.75rem;
 	cursor: default;
 }
 
-.popup_menu_item:active{
-	color:#fff!important;
+.popup_menu_item:active {
+	color: #fff !important;
+}
+
+.disabled {
+	pointer-events: all!important;
+	cursor: wait!important;
 }

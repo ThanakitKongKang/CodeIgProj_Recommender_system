@@ -159,7 +159,9 @@
         }
 
         // bookmarker
-        $('.bookmark_trigger').click(function(e) {
+        $('.bookmark_trigger').on("click", bookmark_triggered);
+
+        function bookmark_triggered() {
             var this_elm = $(this);
             var bookmark_data = {
                 'book_id': $('#book_id').val(),
@@ -169,7 +171,14 @@
                 type: 'post',
                 url: "<?php echo base_url(); ?>books/update_bookmark",
                 data: bookmark_data,
+                beforeSend: function() {
+                    $(this_elm).off('click');
+                    $(this_elm).addClass("disabled");
+                },
                 success: function(data) {
+                    $(this_elm).on('click',bookmark_triggered);
+                    $(this_elm).removeClass("disabled");
+                    
                     if (data == "login") {
                         please_login();
                     } else if (data == "inserted") {
@@ -211,7 +220,7 @@
                     }
                 }
             })
-        });
+        }
 
         function please_login() {
             Swal.fire({
