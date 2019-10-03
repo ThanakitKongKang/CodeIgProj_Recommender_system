@@ -100,24 +100,34 @@
             }
         });
 
+
+
+
+
+
+
         // bookmarker
-        $('.bookmark_trigger<?= $round_count ?>').click(function(e) {
+        $('.bookmark_trigger<?= $round_count ?>').on("click", bookmark_triggered);
+
+        function bookmark_triggered() {
+            var this_elm = $(this);
             var bookmark_data = {
                 'book_id': ($(this).data('book_id'))
             };
-            var this_elm = $(this);
             var parent = this_elm.parents('.book_detail_content ');
             var count_all_saved_list = $('#count_all_saved_list').html();
-
-
-            // console.log($(this).data('book_id'));
-
             $.ajax({
                 type: 'post',
                 url: "<?php echo base_url(); ?>books/update_bookmark",
                 data: bookmark_data,
-
+                async: true,
+                beforeSend: function() {
+                    $(this_elm).off('click');
+                    $(this_elm).addClass("disabled");
+                },
                 success: function(data) {
+                    $(this_elm).on('click', bookmark_triggered);
+                    $(this_elm).removeClass("disabled");
 
                     if (data == "inserted") {
                         const Toast = Swal.mixin({
@@ -131,14 +141,17 @@
                             title: 'บุ๊กมาร์กสำเร็จ !',
                             type: 'success',
                         });
-                        this_elm.find('i').removeClass("far");
-                        this_elm.find('i').addClass("fas");
-                        this_elm.find('span').html(" unsave book");
-                        count_all_saved_list++;
-                        $('.count_all_saved_list').html(count_all_saved_list)
                         parent.removeClass("opacity");
                         parent.find('.removed_item').html("");
                         bookmark_trigger_count--;
+
+                        this_elm.find('i').removeClass("far");
+                        this_elm.find('i').addClass("fas");
+                        this_elm.find('span').html(" unsave book");
+
+                        count_all_saved_list++;
+                        $('#count_all_saved_list').html(count_all_saved_list);
+                        $('.count_all_saved_list').html(count_all_saved_list);
 
                     } else if (data == "removed") {
                         const Toast = Swal.mixin({
@@ -152,18 +165,20 @@
                             title: 'นำออกจากรายการบุ๊กมาร์กสำเร็จ !',
                             type: 'success',
                         });
+                        parent.addClass("opacity");
+                        parent.find('.removed_item').html("ลบออกจากรายการที่บันทึกแล้ว");
+                        bookmark_trigger_count++;
+
                         this_elm.find('i').removeClass("fas");
                         this_elm.find('i').addClass("far");
                         this_elm.find('span').html(" save book");
                         count_all_saved_list--;
-                        $('.count_all_saved_list').html(count_all_saved_list)
-                        parent.addClass("opacity");
-                        parent.find('.removed_item').html("ลบออกจากรายการที่บันทึกแล้ว");
-                        bookmark_trigger_count++;
+                        $('#count_all_saved_list').html(count_all_saved_list);
+                        $('.count_all_saved_list').html(count_all_saved_list);
                     }
                 }
             })
-        });
+        }
 
         var num_rows = <?= $num_rows ?>;
         var call = 0
@@ -182,9 +197,9 @@
                     'start': lastID,
                     'i': <?= $i ?>,
                     'round_count': <?= $round_count ?>,
-                    'bookmark_trigger_count':bookmark_trigger_count,
+                    'bookmark_trigger_count': bookmark_trigger_count,
                 };
-                
+
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo base_url('books/loadMoreData'); ?>',

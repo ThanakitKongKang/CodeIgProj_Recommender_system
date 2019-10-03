@@ -129,10 +129,11 @@
         } else {
             // rater
             var default_rating = $('.rating-input').val();
+            // bookmarker
+            $('.rating-stars').on("click", rating_change);
 
-
-            $('.rating-input').change(function(e) {
-                console.log(default_rating)
+            function rating_change() {
+                var this_elm = $(this);
                 // call bookscontroller to call model
                 var rating = {
                     'rating': $('.rating-input').val(),
@@ -143,6 +144,10 @@
                     type: 'post',
                     url: "<?php echo base_url(); ?>books/rateBook",
                     data: rating,
+                    async: true,
+                    beforeSend: function() {
+                        $(this_elm).addClass("disabled");
+                    },
                     success: function(data) {
                         if (default_rating == "") {
                             $('#span_rating_text').html("based on 1 user");
@@ -153,9 +158,12 @@
                         $('#your_rate').html($('.rating-input').val());
                         $('#span_rating').removeClass("badge-secondary");
                         $('#span_rating').addClass("badge-warning");
+                        $(this_elm).removeClass("disabled");
+                        $(this_elm).on("click", rating_change);
+
                     }
                 })
-            });
+            }
         }
 
         // bookmarker
@@ -171,14 +179,15 @@
                 type: 'post',
                 url: "<?php echo base_url(); ?>books/update_bookmark",
                 data: bookmark_data,
+                async: true,
                 beforeSend: function() {
                     $(this_elm).off('click');
                     $(this_elm).addClass("disabled");
                 },
                 success: function(data) {
-                    $(this_elm).on('click',bookmark_triggered);
+                    $(this_elm).on('click', bookmark_triggered);
                     $(this_elm).removeClass("disabled");
-                    
+
                     if (data == "login") {
                         please_login();
                     } else if (data == "inserted") {

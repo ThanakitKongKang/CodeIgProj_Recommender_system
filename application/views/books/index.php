@@ -275,7 +275,7 @@
                                         <div class="col-4 p-5" v-for="book in books">
                                             <div class="hover_img_mid">
                                                 <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
-                                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.png'" />
+                                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" />
                                                 <!-- <span class="text-img"> {{ book.book_name }}</span> -->
 
                                                 <a class="overlay_mid" v-bind:href="'<?= base_url() ?>book/'+book.book_id+''"></a>
@@ -458,23 +458,22 @@
                                         $('#popup_menu_content').hide();
 
                                     },
-                                    success: function(data) {
-                                        $('.load_popup_menu').hide();
-                                        $('#popup_menu_content').show();
-                                        if (data) {
-                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="fas fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">unsave book</span></div></div></a>');
-                                        } else {
-                                            $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">save book</span></div></div></a>');
-                                        }
+                                    success: function(data_isBookmarked) {
                                         $.ajax({
                                             type: 'post',
                                             url: "<?php echo base_url(); ?>books/getBookRateByUser",
                                             async: true,
                                             data: post_data,
-
-                                            success: function(data) {
-                                                if (data != false) {
-                                                    $('.rater_star_modal').rating('update', data);
+                                            success: function(data_getBookRateByUser) {
+                                                $('.load_popup_menu').hide();
+                                                $('#popup_menu_content').show();
+                                                if (data_isBookmarked) {
+                                                    $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="fas fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">unsave book</span></div></div></a>');
+                                                } else {
+                                                    $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">save book</span></div></div></a>');
+                                                }
+                                                if (data_getBookRateByUser != false) {
+                                                    $('.rater_star_modal').rating('update', data_getBookRateByUser);
                                                 } else {
                                                     $('.rater_star_modal').rating('update', 0);
                                                     $('.rate_trigger').hide();
@@ -510,6 +509,7 @@
                                     type: 'post',
                                     url: "<?php echo base_url(); ?>books/rateBook",
                                     data: rating,
+                                    async: true,
                                     success: function(data) {
                                         const Toast = Swal.mixin({
                                             toast: true,
@@ -548,6 +548,7 @@
                                     },
                                     success: function(data) {
                                         mid_title.title = category;
+                                        category = category.toLowerCase()
                                         mid_title.img_url = '<?= base_url() ?>assets/img/' + category + ".svg";
                                         toprated.category = false;
                                         category_content.category = "category";
@@ -571,11 +572,12 @@
                                 var bookmark_data = {
                                     'book_id': this_elm.data('book_id'),
                                 };
-
+                                var count_all_saved_list = $('#count_all_saved_list').html();
                                 $.ajax({
                                     type: 'post',
                                     url: "<?php echo base_url(); ?>books/update_bookmark",
                                     data: bookmark_data,
+                                    async: true,
                                     success: function(data) {
                                         if (data == "login") {
                                             please_login();
@@ -594,6 +596,8 @@
                                             this_elm.find('i').removeClass("far");
                                             this_elm.find('i').addClass("fas");
                                             this_elm.find('span').html(" unsave book");
+                                            count_all_saved_list++;
+                                            $('#count_all_saved_list').html(count_all_saved_list)
 
                                         } else if (data == "removed") {
                                             const Toast = Swal.mixin({
@@ -610,6 +614,8 @@
                                             this_elm.find('i').removeClass("fas");
                                             this_elm.find('i').addClass("far");
                                             this_elm.find('span').html(" save book");
+                                            count_all_saved_list--;
+                                            $('#count_all_saved_list').html(count_all_saved_list)
                                         }
                                         $('#popup_menu').hide();
                                     }
@@ -651,7 +657,7 @@
                             el: '#app_mid_title',
                             data: {
                                 title: '20 Top rated books of all time',
-                                img_url: '<?= base_url() ?>assets/img/All.svg'
+                                img_url: '<?= base_url() ?>assets/img/all.svg'
                             }
                         });
 
