@@ -331,9 +331,17 @@
                     </div>
 
                     <div id="popup_menu" class="position-absolute bg-white slide-bottom" style="display:none">
-                        <div id="popup_menu_bookmark">
+                        <div class="load_popup_menu text-center justify-content-center my-5" style="display: none;">
+                            <div class="spinner-border text-primary mr-3" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Loading...
                         </div>
-                        <div id="popup_menu_rate">
+                        <div id="popup_menu_content">
+                            <div id="popup_menu_bookmark">
+                            </div>
+                            <div id="popup_menu_rate">
+                            </div>
                         </div>
                     </div>
 
@@ -444,7 +452,14 @@
                                     url: "<?php echo base_url(); ?>books/isBookmarked",
                                     async: true,
                                     data: post_data,
+                                    beforeSend: function() {
+                                        $('.load_popup_menu').show();
+                                        $('#popup_menu_content').hide();
+                                        
+                                    },
                                     success: function(data) {
+                                        $('.load_popup_menu').hide();
+                                        $('#popup_menu_content').show();
                                         if (data) {
                                             $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="fas fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">unsave book</span></div></div></a>');
                                         } else {
