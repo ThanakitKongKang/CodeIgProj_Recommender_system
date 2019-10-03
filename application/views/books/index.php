@@ -321,6 +321,7 @@
                                 </div>
                                 <div class="modal-body" style="margin-left:8rem;">
                                     <input value="0" class="rater_star_modal" title="" data-show-clear="false">
+                                    <input value="0" id="modal_book_id" title="" type="hidden">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -455,7 +456,7 @@
                                     beforeSend: function() {
                                         $('.load_popup_menu').show();
                                         $('#popup_menu_content').hide();
-                                        
+
                                     },
                                     success: function(data) {
                                         $('.load_popup_menu').hide();
@@ -478,7 +479,10 @@
                                                     $('.rater_star_modal').rating('update', 0);
                                                     $('.rate_trigger').hide();
                                                 }
-                                                $('.rate_trigger').attr("data-book_id", book_id);
+                                                modal_book_id
+                                                $('#modal_book_id').val(book_id);
+                                                // $('.rate_trigger').attr("data-book_id", "");
+                                                // $('.rate_trigger').attr("data-book_id", book_id);
 
                                                 $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="far fa-star popup_menu_icon"></i></div><div class="col">rate this</div></div></a>');
                                                 $('#modal_label').html('Rate <span class="text-primary">' + book_name + '</span>');
@@ -500,7 +504,7 @@
                             $('.rate_trigger').click(function(e) {
                                 var rating = {
                                     'rating': $('.rater_star_modal').rating().val(),
-                                    'book_id': $(this).data("book_id"),
+                                    'book_id': $('#modal_book_id').val(),
                                 };
                                 $.ajax({
                                     type: 'post',
@@ -520,7 +524,6 @@
                                         });
                                         $('#rate_modal').modal('hide');
                                         global_book_id = 0;
-
                                     }
                                 })
                             });
