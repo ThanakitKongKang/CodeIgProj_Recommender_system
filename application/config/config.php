@@ -23,6 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+// webhost
 $config['base_url'] = 'http://localhost/CodeIgProj_Recommender_system';
 // $config['base_url'] = 'https://kkubooksrecommender.000webhostapp.com';
 /*

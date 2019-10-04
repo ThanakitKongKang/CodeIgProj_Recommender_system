@@ -36,7 +36,7 @@
                         </div>
                         <!-- BOOK detail section -->
                         <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
-                        <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= $saved['book_type'] ?>"><span><?= $saved['book_type'] ?></span></a></div>
+                        <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $saved['author'] ?></div>
                         <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:23rem;"></span>
                         <!-- bookmark trigger -->
