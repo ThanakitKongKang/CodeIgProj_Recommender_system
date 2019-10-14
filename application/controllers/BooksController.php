@@ -40,9 +40,9 @@ class BooksController extends CI_Controller
     */
     public function browse()
     {
-        $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "All";
+        $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "all";
         $data['page'] = str_replace("-", " ", $data['get_url']);
-
+        $data['round_count'] = 1;
         $data['i'] = 0;
         $data['category_list'] = $this->books_model->get_cateory_list();
 
@@ -69,7 +69,7 @@ class BooksController extends CI_Controller
         $data['i'] = (int) $this->input->post('i');
         $category = $this->input->post('category');
         $data['all_num_rows'] = $this->input->post('all_num_rows');
-        $data['what'] = $data['all_num_rows'];
+        $data['round_count'] = ((int) $this->input->post('round_count')) + 1;
 
         $data['content_list'] = $this->books_model->get_content_list_dynamic(9, $start, "rows", $category);
         $data['num_rows'] = $this->books_model->get_content_list_dynamic(9, $start, "count", $category);
@@ -407,6 +407,89 @@ class BooksController extends CI_Controller
         $header['home'] = 'active';
         $this->load->view('./header', $header);
         $this->load->view('books/index', $data);
+        $this->load->view('footer');
+    }
+/*
+    | -------------------------------------------------------------------------
+    | admin_index
+    | -------------------------------------------------------------------------
+    */
+    public function admin_index()
+    {
+        // array declaring
+        $data['recommend_matched'] = array();
+        $data['recommend_averaged'] = array();
+        $data['recommend_flattened'] = array();
+        $data['recommend_list'] = array();
+        $data['recommend_list_bookname'] = array();
+        $data['final_recommend_list'] = array();
+        $data['target_books'] = array();
+
+        //should be top rated by currently user
+        // $data['target_books'] = ['Certified Management Accountant (CMA), Part 2','Trading the Decentralization of the Financial Systems','High Performance Python (from Training at EuroPython 2011)','Red Tea Detox'];
+        $username = $this->session->userdata('user')['username'];
+        $data['raw_target_books'] = $this->rate_model->get_rate_by_username($username);
+
+        // get current user preferenced books
+        foreach ($data['raw_target_books'] as $user_book) {
+            $data['target_books'][] = $user_book['book_name'];
+        }
+
+        $data['raw_books'] = $this->rate_model->get_rate();
+        $data['books'] = $this->flip_array($data['raw_books']);
+        $result = $this->transformPreferences($data['books']);
+        foreach ($data['target_books'] as $user_book) {
+            array_push($data['recommend_matched'], $this->matchItems($result, $user_book));
+        }
+
+        $data['recommend_averaged'] = $this->array_average($data['recommend_matched']);
+        $data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+        $data['target_books_flipped']  = array_flip($data['target_books']);
+        // remove items that user given a rate
+        $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        //   sort by matching value desc
+        arsort($data['recommend_list']);
+
+        $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
+        if (sizeof($data['recommend_list_bookname']) < 9) {
+            $data['full_list_bookname'] = array(9);
+            $size = sizeof($data['recommend_list_bookname']);
+            $need = 9 - $size;
+            $data['list_bookname_to_merge'] = $this->books_model->get_random_book($need, $data['recommend_list_bookname']);
+            $i = 0;
+            for ($size; $size < 9; $size++) {
+                $data['recommend_list_bookname'][$size] =  $data['list_bookname_to_merge'][$i]["book_name"];
+                $i++;
+            }
+        }
+
+        // get item details from their name
+        foreach ($data['recommend_list_bookname'] as $row_recommend) {
+            $data['recommend_list_detail'][] = $this->books_model->get_by_name($row_recommend);
+        }
+        if (!empty($data['recommend_list_detail'])) {
+            $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
+
+            // push match score into result array
+            $i = 0;
+            foreach ($data['recommend_list'] as $row_recommend) {
+                $data['final_recommend_list'][$i]["match"] = $row_recommend;
+                $i++;
+            }
+        } else {
+            $data['final_recommend_list'] = false;
+        }
+
+        $data['top_rated'] = $this->books_model->get_top_rated();
+        $data['category_list'] = $this->books_model->get_cateory_list();
+
+        $header['title'] = 'Book Recommendation';
+        $data['books'] = $this->books_model->get_all();
+
+        $header['home'] = 'active';
+        $this->load->view('./header', $header);
+        $this->load->view('books/admin_index', $data);
         $this->load->view('footer');
     }
 

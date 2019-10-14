@@ -53,12 +53,13 @@
                 foreach ($content_list as $content) { ?>
                     <div class="col-4">
                         <div class="py-3" style="width:21.5rem;">
-                            <div class="card hover_img_col2" style="width: 21.5rem;">
+                            <div class="card card_hover_img" style="width: 21.5rem;">
                                 <a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>">
-                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.PNG" style="height:28rem"></a>
+                                    <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.PNG" style="height:28rem"></a>
                                 <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" class="stretched-link"></a></div>
                                 <div class="card-body pb-0 pt-2" style="height:8rem;">
                                     <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $content["book_type"]))) ?>"><span><?= $content['book_type'] ?></span></a>
+
                                     <div class="card-title text-col-2-name pt-1"><a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>"><?= $content['book_name'] ?></a></div>
                                     <div class="rater_star_grid">
                                         <input value="<?= $content['b_rate'] ?>" class="rater_star" title="">

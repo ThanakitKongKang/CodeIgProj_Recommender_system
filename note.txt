@@ -1,0 +1,7 @@
+Installation
+-  composer require php-ai/php-ml
+https://php-ml.readthedocs.io/en/latest/
+
+-  import /assets/_etc bookdb.sql
+
+!! caution : book_id must be serially, otherwise, similar book not works correctly

@@ -46,7 +46,7 @@
                                 <i class="fas fa-bookmark bookmark_icon"></i>
                                 <span class="bookmark_trigger_text"> unsave book</span>
                             </button>
-                            <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" style="float:right"><?= $saved['date'] ?></span>
+                            <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" title="<?= $saved['date'] ?>" style="float:right;cursor:default;"><?= $saved['date'] ?></span>
                         </div>
                     </div>
                 </div>
@@ -99,12 +99,6 @@
                     break;
             }
         });
-
-
-
-
-
-
 
         // bookmarker
         $('.bookmark_trigger<?= $round_count ?>').on("click", bookmark_triggered);

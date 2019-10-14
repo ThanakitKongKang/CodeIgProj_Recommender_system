@@ -22,7 +22,7 @@
                         <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle small no_overflow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="category_text">
                             Category
                         </button>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu" style="max-height:25rem;overflow-y:auto;">
                             <a class="dropdown-item search_option_category" href="#" id="all" data-search="all">All</a>
 
                             <?php
@@ -40,7 +40,7 @@
                             <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle small no_overflow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_author_text">
                                 Author
                             </button>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu"  style="max-height:25rem;overflow-y:auto;">
                                 <?php
                                     foreach ($author_list as $author) {
                                         ?>
@@ -85,7 +85,7 @@
 
                     <div class="col-4">
                         <div class="py-3" style="width:21.5rem;">
-                            <div class="card hover_img_col2" style="width: 21.5rem;">
+                            <div class="card card_hover_img" style="width: 21.5rem;">
                                 <a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>">
                                     <img class="w-100" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.PNG" style="height:28rem"></a>
                                 <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" class="stretched-link"></a></div>
@@ -98,7 +98,7 @@
                                     <?php if ($book->count_rate != 0) { ?>
                                         <span class="position-absolute small font-arial text-info" style="bottom:1.1rem;left:8.5rem;width:2rem;">(<?= $book->count_rate ?> <i class="fas fa-user fa-xs"></i>)</span>
                                     <?php } ?>
-                                    <div class="text-card-author font-italic text-secondary" title="<?= $book->author ?>">By <?= $book->author ?></div>
+                                    <div class="text-card-author font-italic text-secondary" title="<?= $book->author ?>"><?= $book->author ?></div>
                                 </div>
                             </div>
                         </div>
@@ -148,16 +148,32 @@
         var category = url.searchParams.get("category") ? url.searchParams.get("category") : " ";
         var regex = new RegExp(" ", "g");
         category = category.replace(regex, "-")
-        $('#' + category).addClass("active");
-        $('#category_text').html($('#' + category).html());
+        if (category != "-" && category != "all") {
+            $('#' + category).addClass("active");
+            $('#category_text').html($('#' + category).html());
+            $('#category_text').removeClass("btn-outline-secondary");
+            $('#category_text').addClass("btn-secondary");
+        } else if (category == "all") {
+            $('#' + category).addClass("active");
+            $('#category_text').html($('#' + category).html());
+        }
+
 
         // author active
         var author = url.searchParams.get("author") ? url.searchParams.get("author") : " ";
+        // remove dots
+        var author2 = author.split('.').join('\\.');
         var regex = new RegExp(" ", "g");
-        author = author.replace(regex, "-")
-        $('#' + author).addClass("active");
-        $('#filter_author_text').html($('#' + author).html());
-        console.log(author);
+        author2 = author2.replace(regex, "-")
+        console.log(author2)
+        $('#' + author2).addClass("active");
+        
+        if (author2 != "-") {
+            $('#filter_author_text').html(author);
+            $('#filter_author_text').removeClass("btn-outline-secondary");
+            $('#filter_author_text').addClass("btn-secondary");
+        }
+
         if (sort_rate != " " || category != "-" || author != "-") {
             // console.log("true : "+ sort_rate + category + author );
             $('#filter_clear').toggle();

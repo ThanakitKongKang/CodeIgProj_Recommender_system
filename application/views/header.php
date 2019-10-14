@@ -158,6 +158,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </nav>
     </div>
     <div class="col-4 container" id="livesearch"></div>
+
     <script type="text/javascript">
         // scroll hide header
         var prevScrollpos = window.pageYOffset;
@@ -176,17 +177,42 @@ defined('BASEPATH') or exit('No direct script access allowed');
             if (typing.length == 0) {
                 document.getElementById("livesearch").innerHTML = "";
                 document.getElementById("livesearch").style.border = "0px";
+                $('#livesearch').hide();
+                // ประวัติการค้นหา show
+                return;
+            } else {
+                $('#livesearch').show();
+                // ประวัติการค้นหา hide
                 return;
             }
         }
 
         // on select live search
-        $('#livesearch').on('click', ".live_search_reslut_option", function(e) {
+        $('#livesearch').on('click', ".live_search_result_option", function(e) {
+            e.preventDefault();
             $('#input-search').val($(this).html());
             $('#livesearch').hide();
             $('#search_form').submit();
 
         });
+
+        // on select live search author
+        $('#livesearch').on('click', ".live_search_result_option_author", function(e) {
+            e.preventDefault();
+            $('#input-search').val($(this).html());
+            $('#livesearch').hide();
+            var query = "q=&author=" + $(this).html();
+            window.location.href = '<?=base_url()?>search/result?' + query;
+
+        });
+
+        $('#livesearch').on('click', ".live_search_result_all", function(e) {
+            e.preventDefault();
+            $('#livesearch').hide();
+            $('#search_form').submit();
+
+        });
+
         // lose focus
         $('#input-search').focusout(function(e) {
             if (!$("#livesearch").hasClass("hovered")) {

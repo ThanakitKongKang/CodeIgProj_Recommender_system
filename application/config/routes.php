@@ -124,6 +124,7 @@ $route['books/pagination/(:num)'] = 'BooksController/pagination';
 
 $route['book/(:num)'] = 'BooksController/book';
 $route['books'] = 'BooksController';
+$route['admin_index'] = 'BooksController/admin_index';
 $route['books/getBooksByCategory'] = 'BooksController/getBooksByCategory';
 $route['books/rateBook'] = 'BooksController/rateBook';
 $route['books/update_bookmark'] = 'BooksController/update_bookmark';

@@ -124,6 +124,23 @@ class Books_model extends BaseModel
         }
     }
 
+    public function search_live_not_soundex_author($typing)
+    {
+        $this->db->select('author');
+        $this->db->distinct();
+        $this->db->like('author', $typing, 'both');
+        $this->db->limit(5);
+       
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function get_name_all()
     {
         $this->db->select('book_name');

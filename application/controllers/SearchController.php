@@ -67,22 +67,40 @@ class SearchController extends CI_Controller
         $typing = $this->input->post('typing');
         $results = $this->books_model->search_live_soundex($typing);
         $results_not_soundex = $this->books_model->search_live_not_soundex($typing);
+        $results_not_soundex_author = $this->books_model->search_live_not_soundex_author($typing);
 
         echo "<div id='live_search_result_container' class='bg-white position-absolute'>";
+
         if ($results != FALSE) {
+            echo "<div class='live_search_panel font-arial'> title";
+            echo "</div>";
             foreach ($results as $result) {
-                echo "<a class='dropdown-item live_search_reslut_option'>";
+                echo "<a class='dropdown-item-search live_search_result_option' href>";
                 echo $result['book_name'];
                 echo "</a>";
             }
-        } 
-        else if ($results == FALSE) {
+        } else if ($results == FALSE && $results_not_soundex != FALSE) {
+            echo "<div class='live_search_panel font-arial'> title";
+            echo "</div>";
             foreach ($results_not_soundex as $result) {
-                echo "<a class='dropdown-item live_search_reslut_option'>";
+                echo "<a class='dropdown-item-search live_search_result_option' href>";
                 echo $result['book_name'];
                 echo "</a>";
             }
         }
+
+        if ($results_not_soundex_author != FALSE) {
+            echo "<div class='live_search_panel font-arial'> author";
+            echo "</div>";
+
+            foreach ($results_not_soundex_author as $result) {
+                echo "<a class='dropdown-item-search live_search_result_option_author' href>";
+                echo $result['author'];
+                echo "</a>";
+            }
+        }
+
+        echo "<a class='dropdown-item live_search_result_all' href>all results for \"" . $typing . "\"</a>";
         echo "</div>";
     }
 }
