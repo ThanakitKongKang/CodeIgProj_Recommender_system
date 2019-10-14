@@ -5,3 +5,9 @@ https://php-ml.readthedocs.io/en/latest/
 -  import /assets/_etc bookdb.sql
 
 !! caution : book_id must be serially, otherwise, similar book not works correctly
+
+error ? 
+
+appended elements cant execute function ? 
+ans - $(document).on('click', 'selector',function(e) {});
+https://stackoverflow.com/questions/49250571/cant-execute-function-on-appended-elements

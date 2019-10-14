@@ -13,7 +13,11 @@
             <hr>
             <div class="row">
                 <!-- Search result total -->
-                <div class="col-4 pt-2 the_border_right"><?= $total_rows ?> item<?php if ($total_rows > 1) echo "s"; ?> found for "<?= $query ?>"</div>
+                <div class="col-4 pt-2 the_border_right">
+                    <div class="query_text">
+                        <?= $total_rows ?> item<?php if ($total_rows > 1) echo "s"; ?> found for "<?= $query ?>"
+                    </div>
+                </div>
 
 
                 <div class="col-6 the_border_right">
@@ -40,7 +44,7 @@
                             <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle small no_overflow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_author_text">
                                 Author
                             </button>
-                            <div class="dropdown-menu"  style="max-height:25rem;overflow-y:auto;">
+                            <div class="dropdown-menu" style="max-height:25rem;overflow-y:auto;">
                                 <?php
                                     foreach ($author_list as $author) {
                                         ?>
@@ -167,7 +171,7 @@
         author2 = author2.replace(regex, "-")
         console.log(author2)
         $('#' + author2).addClass("active");
-        
+
         if (author2 != "-") {
             $('#filter_author_text').html(author);
             $('#filter_author_text').removeClass("btn-outline-secondary");
