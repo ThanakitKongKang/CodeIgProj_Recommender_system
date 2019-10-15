@@ -70,7 +70,7 @@
         <?php } else if ($this->session->userdata('count_all_saved_list') == 0) { ?>
 
             <div class="load-more pt-5" lastID="0">
-                <h1 class="font-weight-lighter text-center">คุณไม่ได้บันทึก <i class="far fa-bookmark"></i> รายการใด ๆ</h1>
+                <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i>  any item</h1>
                 <div class="position:relative text-center">
                     <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:65rem" alt="">
                 </div>
