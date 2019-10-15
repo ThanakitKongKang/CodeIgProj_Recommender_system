@@ -68,7 +68,7 @@
                 <div class="text-right col-2">
 
                     <div class="btn-group">
-                        <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_sort_rate">
                             <span id="sort_rating_text" class="small">Sort by rating</span>
                         </button>
                         <div class="dropdown-menu">
@@ -144,17 +144,11 @@
     $(document).ready(function() {
         var url_string = window.location.href;
         var url = new URL(url_string);
-        // sort rate active
-        var sort_rate = url.searchParams.get("sort_rate") ? url.searchParams.get("sort_rate") : " ";
-
-        $('#sort_rate_' + sort_rate).addClass("active");
-        $('#sort_rating_text').html($('#sort_rate_' + sort_rate).html());
 
         // category active
         var category = url.searchParams.get("category") ? url.searchParams.get("category") : " ";
         var regex = new RegExp(" ", "g");
         var category2 = category.replace(regex, "-")
-
         if (category2 != "-" && category2 != "all") {
             $('#' + category2).addClass("active");
             $('#category_text').html($('#' + category2).html());
@@ -162,19 +156,25 @@
             $('#category_text').addClass("btn-secondary");
         }
 
-
         // author active
         var author = url.searchParams.get("author") ? url.searchParams.get("author") : " ";
-        // remove dots
-        var author2 = author.split('.').join('\\.');
+        var author2 = author.split('.').join('\\.'); // remove dots
         var regex = new RegExp(" ", "g");
         author2 = author2.replace(regex, "-")
         $('#' + author2).addClass("active");
-
         if (author2 != "-" && author2 != "all") {
             $('#filter_author_text').html(author);
             $('#filter_author_text').removeClass("btn-outline-secondary");
             $('#filter_author_text').addClass("btn-secondary");
+        }
+
+        //sort_rate active
+        var sort_rate = url.searchParams.get("sort_rate") ? url.searchParams.get("sort_rate") : " ";
+        if (sort_rate != " ") {
+            $('#sort_rate_' + sort_rate).addClass("active");
+            $('#sort_rating_text').html($('#sort_rate_' + sort_rate).html());
+            $('#filter_sort_rate').removeClass("btn-outline-secondary");
+            $('#filter_sort_rate').addClass("btn-secondary");
         }
 
         // show clear button
