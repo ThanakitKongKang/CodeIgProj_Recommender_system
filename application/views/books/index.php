@@ -407,7 +407,7 @@
             function clickedPopupTrigger(book_id, rect, book_name) {
                 $('#popup_menu').css({
                     "top": (rect.top - 155),
-                    "left": (rect.left - 150),
+                    "left": (rect.left - 230),
                 });
 
                 if ($('#popup_menu').css('display') == 'none') {
@@ -452,18 +452,18 @@
                                 $('.load_popup_menu').hide();
                                 $('#popup_menu_content').show();
                                 if (data_isBookmarked) {
-                                    $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="fas fa-bookmark popup_menu_icon text-primary" id="bookmark_icon"></i></div><div class="col"><span class="save_text">unsave book</span></div></div></a>');
+                                    $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="fas fa-bookmark popup_menu_icon text-primary" id="bookmark_icon"></i></div><div class="col" style="padding-left: 0.8rem;"><div class="save_text">unsave book</div><div class="save_text_muted">ลบออกจากรายการที่บันทึกไว้ของคุณ</div></div></div></a>');
                                 } else {
-                                    $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col"><span class="save_text">save book</span></div></div></a>');
+                                    $('#popup_menu_bookmark').html('<a class="dropdown-item bookmark_trigger popup_menu_item" data-book_id="' + book_id + '"><div class="row"><div class="col-1" style="padding-left:1.1rem;"><i class="far fa-bookmark popup_menu_icon" id="bookmark_icon"></i></div><div class="col" style="padding-left: 0.8rem;"><div class="save_text">save book</div><div class="save_text_muted">เพิ่มลงในรายการที่บันทึกไว้ของคุณ</div></div></div></a>');
                                 }
                                 if (data_getBookRateByUser != false) {
                                     $('.rater_star_modal').rating('update', data_getBookRateByUser);
-                                    $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="fas fa-star popup_menu_icon text-warning"></i></div><div class="col">update rate</div></div></a>');
+                                    $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="fas fa-star popup_menu_icon text-warning"></i></div><div class="col"><div class="rate_text">update rate</div><div class="rate_text_muted">เปลี่ยนคะแนนที่คุณให้</div></div></div></a>');
 
                                 } else {
                                     $('.rater_star_modal').rating('update', 0);
                                     $('.rate_trigger').hide();
-                                    $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="far fa-star popup_menu_icon"></i></div><div class="col">rate this</div></div></a>');
+                                    $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="far fa-star popup_menu_icon"></i></div><div class="col"><div class="rate_text">rate this</div><div class="rate_text_muted">ให้คะแนนสิ่งนี้</div></div></div></a>');
 
                                 }
                                 modal_book_id

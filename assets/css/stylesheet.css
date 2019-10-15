@@ -939,7 +939,7 @@ body {
 }
 
 #popup_menu {
-	width: 10rem;
+	width: 15rem;
 	padding-top: 0.25rem;
 	padding-bottom: 0.25rem;
 	border: 1px solid rgba(0, 0, 0, .15);
@@ -953,7 +953,7 @@ body {
 	cursor: default;
 }
 
-.popup_menu_item:active {
+.popup_menu_item:active div div{
 	color: #fff !important;
 }
 
@@ -1026,4 +1026,14 @@ body {
 	position: absolute;
 	left: 0;
 	margin-top: 5px;
+}
+
+.save_text_muted {
+	font-size: 0.75rem;
+	color: #6c757d;
+}
+
+.rate_text_muted {
+	font-size: 0.75rem;
+	color: #6c757d;
 }

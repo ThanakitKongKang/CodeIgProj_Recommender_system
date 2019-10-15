@@ -37,7 +37,8 @@ class Books_model extends BaseModel
                 $this->db->where('book_type', $category);
         }
         if (!empty($author)) {
-            $this->db->where('author', $author);
+            if ($author != "all")
+                $this->db->where('author', $author);
         }
         $this->db->limit($limit, $start);
         $query = $this->db->get($this->table);
@@ -57,7 +58,8 @@ class Books_model extends BaseModel
                 $this->db->where('book_type', $category);
         }
         if (!empty($author)) {
-            $this->db->where('author', $author);
+            if ($author != "all")
+                $this->db->where('author', $author);
         }
         $query = $this->db->get($this->table);
 
@@ -130,7 +132,7 @@ class Books_model extends BaseModel
         $this->db->distinct();
         $this->db->like('author', $typing, 'both');
         $this->db->limit(5);
-       
+
         $query = $this->db->get($this->table);
 
         if ($query->num_rows() > 0) {

@@ -27,7 +27,7 @@
                             Category
                         </button>
                         <div class="dropdown-menu" style="max-height:25rem;overflow-y:auto;">
-                            <a class="dropdown-item search_option_category" href="#" id="all" data-search="all">All</a>
+                            <a class="dropdown-item search_option_category" href="#" id="category_all" data-search="all">All</a>
 
                             <?php
                             foreach ($category_list as $category) {
@@ -45,6 +45,7 @@
                                 Author
                             </button>
                             <div class="dropdown-menu" style="max-height:25rem;overflow-y:auto;">
+                                <a class="dropdown-item search_option_author" href="#" id="author_all" data-search="all">All</a>
                                 <?php
                                     foreach ($author_list as $author) {
                                         ?>
@@ -145,21 +146,20 @@
         var url = new URL(url_string);
         // sort rate active
         var sort_rate = url.searchParams.get("sort_rate") ? url.searchParams.get("sort_rate") : " ";
+
         $('#sort_rate_' + sort_rate).addClass("active");
         $('#sort_rating_text').html($('#sort_rate_' + sort_rate).html());
 
         // category active
         var category = url.searchParams.get("category") ? url.searchParams.get("category") : " ";
         var regex = new RegExp(" ", "g");
-        category = category.replace(regex, "-")
-        if (category != "-" && category != "all") {
-            $('#' + category).addClass("active");
-            $('#category_text').html($('#' + category).html());
+        var category2 = category.replace(regex, "-")
+
+        if (category2 != "-" && category2 != "all") {
+            $('#' + category2).addClass("active");
+            $('#category_text').html($('#' + category2).html());
             $('#category_text').removeClass("btn-outline-secondary");
             $('#category_text').addClass("btn-secondary");
-        } else if (category == "all") {
-            $('#' + category).addClass("active");
-            $('#category_text').html($('#' + category).html());
         }
 
 
@@ -169,18 +169,23 @@
         var author2 = author.split('.').join('\\.');
         var regex = new RegExp(" ", "g");
         author2 = author2.replace(regex, "-")
-        console.log(author2)
         $('#' + author2).addClass("active");
 
-        if (author2 != "-") {
+        if (author2 != "-" && author2 != "all") {
             $('#filter_author_text').html(author);
             $('#filter_author_text').removeClass("btn-outline-secondary");
             $('#filter_author_text').addClass("btn-secondary");
         }
 
-        if (sort_rate != " " || category != "-" || author != "-") {
-            // console.log("true : "+ sort_rate + category + author );
-            $('#filter_clear').toggle();
+        // show clear button
+        if (category != "all" && category != " ") {
+            $('#filter_clear').show();
+        } else if (author != "all" && author != " ") {
+            $('#filter_clear').show();
+        }
+
+        if (sort_rate != " ") {
+            $('#filter_clear').show();
         }
 
         $('#filter_clear').click(function(e) {
