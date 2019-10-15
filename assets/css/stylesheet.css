@@ -133,6 +133,14 @@ body {
 
 }
 
+#userDropdown {
+	padding-top: 0.7rem;
+	cursor: default;
+	max-width: 10rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .hover {
 	transition-delay: 0ms !important;
 	-webkit-transition-delay: 0ms !important;
@@ -953,7 +961,7 @@ body {
 	cursor: default;
 }
 
-.popup_menu_item:active div div{
+.popup_menu_item:active div div {
 	color: #fff !important;
 }
 

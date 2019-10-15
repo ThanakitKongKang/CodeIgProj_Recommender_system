@@ -3,14 +3,12 @@
 
     <footer class="footer">
         <div class="footer__addr">
-            <h1 class="footer__logo">Book Recommendation</h1>
-
-            <h2>Contact Us</h2>
-
+            <h1 class="footer__logo mb-5 font-oswald">Book Recommendation</h1>
             <address>
-                &nbsp;5534 Somewhere In. The World 22193-10212<br>
-
-                <a class="footer__btn btn btn-primary" href="mailto:example@gmail.com">Email Us</a>
+                <div style="font-size:1.25rem">ภาควิชาวิทยาการคอมพิวเตอร์</div>
+                <div style="font-size:1.25rem"> คณะวิทยาศาสตร์ มหาวิทยาลัยขอนแก่น</div>
+                <div class="small"> 123 ถ. มิตรภาพ ต.ในเมือง อ.เมือง จ.ขอนแก่น 40002</div>
+                <div class="small"> โทรศัพท์: 0-4336-2188-90 ต่อ 101-103 โทรสาร: 0-4334-2910</div>
             </address>
         </div>
 
@@ -18,67 +16,67 @@
             <li class="nav__item">
                 <h1 class="nav__title">Media</h2>
 
-                <ul class="nav__ul">
-                    <li>
-                        <a href="#">Online</a>
-                    </li>
+                    <ul class="nav__ul">
+                        <li>
+                            <a href="#">Online</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Print</a>
-                    </li>
+                        <li>
+                            <a href="#">Print</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Alternative Ads</a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="#">Alternative Ads</a>
+                        </li>
+                    </ul>
             </li>
 
             <li class="nav__item nav__item--extra">
                 <h1 class="nav__title">Technology</h2>
 
-                <ul class="nav__ul nav__ul--extra">
-                    <li>
-                        <a href="#">Hardware Design</a>
-                    </li>
+                    <ul class="nav__ul nav__ul--extra">
+                        <li>
+                            <a href="#">Hardware Design</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Software Design</a>
-                    </li>
+                        <li>
+                            <a href="#">Software Design</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Digital Signage</a>
-                    </li>
+                        <li>
+                            <a href="#">Digital Signage</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Automation</a>
-                    </li>
+                        <li>
+                            <a href="#">Automation</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Artificial Intelligence</a>
-                    </li>
+                        <li>
+                            <a href="#">Artificial Intelligence</a>
+                        </li>
 
-                    <li>
-                        <a href="#">IoT</a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="#">IoT</a>
+                        </li>
+                    </ul>
             </li>
 
             <li class="nav__item">
                 <h1 class="nav__title">Legal</h2>
 
-                <ul class="nav__ul">
-                    <li>
-                        <a href="#">Privacy Policy</a>
-                    </li>
+                    <ul class="nav__ul">
+                        <li>
+                            <a href="#">Privacy Policy</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Terms of Use</a>
-                    </li>
+                        <li>
+                            <a href="#">Terms of Use</a>
+                        </li>
 
-                    <li>
-                        <a href="#">Sitemap</a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="#">Sitemap</a>
+                        </li>
+                    </ul>
             </li>
         </ul>
 

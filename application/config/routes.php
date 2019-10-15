@@ -165,3 +165,9 @@ $route['search'] = 'SearchController/search';
 $route['search/result'] = 'SearchController/search';
 $route['search/result/(:num)'] = 'SearchController/search';
 $route['search/liveSearch'] = 'SearchController/liveSearch';
+/*
+| -------------------------------------------------------------------------
+| COURSE
+| -------------------------------------------------------------------------
+*/
+$route['course'] = 'CoursesController';

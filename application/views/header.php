@@ -132,10 +132,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php
                             } else { ?>
                                 <li class="nav-item dropdown ml-auto">
-                                    <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    </div>
+                                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                        <a class="dropdown-item" href="<?= base_url() ?>course">Your course</a>
                                         <a class="dropdown-item" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
 
                                         <a class="dropdown-item" href="<?= base_url() ?>test">How</a>
@@ -202,7 +203,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $('#input-search').val($(this).html());
             $('#livesearch').hide();
             var query = "q=&author=" + $(this).html();
-            window.location.href = '<?=base_url()?>search/result?' + query;
+            window.location.href = '<?= base_url() ?>search/result?' + query;
 
         });
 

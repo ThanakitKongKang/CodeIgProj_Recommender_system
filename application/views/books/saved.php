@@ -1,4 +1,5 @@
-<?php if ($showheader == true) { ?><div class="container">
+<?php if ($showheader == true) { ?>
+    <div class="container">
         <h1 class="display-4">Saved Items <span class="badge badge-secondary count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></h1>
         <hr class="mb-2 w-50 mr-auto ml-0" style="border: 0;border-top: 3px solid #007bff;"><?php } ?>
 
