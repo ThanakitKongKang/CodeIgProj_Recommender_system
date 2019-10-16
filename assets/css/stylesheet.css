@@ -24,6 +24,9 @@
 	font-family: "Open Sans", Arial, sans-serif;
 }
 
+.font-kanit{
+	font-family:'Kanit';
+}
 
 ::selection {
 	background-color: #ff0000;
@@ -1044,4 +1047,8 @@ body {
 .rate_text_muted {
 	font-size: 0.75rem;
 	color: #6c757d;
+}
+
+.select2-search__field{
+	width:200px!important;
 }

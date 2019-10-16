@@ -41,12 +41,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- datatables -->
     <script src="<?= base_url() ?>/assets/js/datatables.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/fh-3.1.4/kt-2.5.0/r-2.2.2/sc-2.0.0/datatables.min.js"></script> -->
     <script src="<?= base_url() ?>/assets/js/jquery.dataTables.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
     <script src="<?= base_url() ?>/assets/js/dataTables.bootstrap4.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/dataTables.bootstrap4.min.css">
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/fh-3.1.4/kt-2.5.0/r-2.2.2/sc-2.0.0/datatables.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" /> -->
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" /> -->
 
@@ -69,6 +69,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/footer.css">
+
+    <!-- select search -->
+    <link href="<?= base_url() ?>/assets/css/select2.min.css" rel="stylesheet" />
 
 </head>
 

@@ -64,46 +64,49 @@
 
                 </div>
             </div>
-
-            <div class="position-absolute font-apple" id="similar_book_title">Similar to</div>
-            <div class="row py-3 mt-3 position-relative" id="similar_book_detail" style="border-radius:0.25rem;border:1px solid #0000000d;background-color:#f9f9f9">
-                <div class="pt-5 pr-5" id="similar_book_content">
-                    <?php foreach ($recommend_list_detail as $book) { ?>
-                        <div class="col-4 hover_img_similar_book_content">
-                            <div>
-                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
-                                <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
-                            </div>
-                            <div class="hover_img_content_similar text-center">
-                                <div class="py-2 hover_similar_book_title mb-2" style="white-space:normal"><?= $book['book_name'] ?></div>
-                                <div class="small pt-1 overlay_similar_content font-arial">field : <?= $book['book_type'] ?></div>
-                                <div class="small pt-1 overlay_similar_content font-arial" title="<?= $book['author'] ?>">author : <?= $book['author'] ?></div>
-                                <div class="mt-4 text-center">
-                                    <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
-                                    <?php if ($book['count_rate'] != 0) { ?>
-                                        <!-- HARD CODE rater star -->
-                                        <div class="rating-container rating-xs rating-animate is-display-only">
-                                            <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
-                                            <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $book['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $book['b_rate'] ?>" class="rating-input" title=""></div>
-                                        </div>
-                                        <div class="small"><?= number_format($book['b_rate'], 1) ?>/5.0 rated by <?= $book['count_rate'] ?> user<?php if ($book['count_rate'] > 1) echo "s"; ?></div>
-                                    <?php } ?>
+            <?php if (!empty($recommend_list_detail)) { ?>
+                <div class="position-absolute font-apple" id="similar_book_title">Similar to</div>
+                <div class="row py-3 mt-3 position-relative" id="similar_book_detail" style="border-radius:0.25rem;border:1px solid #0000000d;background-color:#f9f9f9">
+                    <div class="pt-5 pr-5" id="similar_book_content">
+                        <?php foreach ($recommend_list_detail as $book) { ?>
+                            <div class="col-4 hover_img_similar_book_content">
+                                <div>
+                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
+                                    <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
+                                </div>
+                                <div class="hover_img_content_similar text-center">
+                                    <div class="py-2 hover_similar_book_title mb-2" style="white-space:normal"><?= $book['book_name'] ?></div>
+                                    <div class="small pt-1 overlay_similar_content font-arial">field : <?= $book['book_type'] ?></div>
+                                    <div class="small pt-1 overlay_similar_content font-arial" title="<?= $book['author'] ?>">author : <?= $book['author'] ?></div>
+                                    <div class="mt-4 text-center">
+                                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                        <?php if ($book['count_rate'] != 0) { ?>
+                                            <!-- HARD CODE rater star -->
+                                            <div class="rating-container rating-xs rating-animate is-display-only">
+                                                <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
+                                                <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $book['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $book['b_rate'] ?>" class="rating-input" title=""></div>
+                                            </div>
+                                            <div class="small"><?= number_format($book['b_rate'], 1) ?>/5.0 rated by <?= $book['count_rate'] ?> user<?php if ($book['count_rate'] > 1) echo "s"; ?></div>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php } ?>
+                        <?php } ?>
+                    </div>
                 </div>
-            </div>
-            <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_left"><i class="text-white fas fa-chevron-left fa-lg pr-2" style="z-index:1"></i></div>
-            <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_right"><i class="text-white fas fa-chevron-right fa-lg  pl-2" style="z-index:1"></i></div>
+                <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_left"><i class="text-white fas fa-chevron-left fa-lg pr-2" style="z-index:1"></i></div>
+                <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_right"><i class="text-white fas fa-chevron-right fa-lg  pl-2" style="z-index:1"></i></div>
+            <?php } ?>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    var similar_book_detail_width = $("#similar_book_detail").get(0);
-    if (similar_book_detail_width.scrollWidth < 600) {
-        $("#similar_book_arrow_right").hide();
-    }
+    <?php if (!empty($recommend_list_detail)) { ?>
+        var similar_book_detail_width = $("#similar_book_detail").get(0);
+        if (similar_book_detail_width.scrollWidth < 600) {
+            $("#similar_book_arrow_right").hide();
+        }
+    <?php } ?>
 
     $(document).ready(function() {
         var not_login = true;

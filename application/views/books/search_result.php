@@ -241,4 +241,5 @@
             img_url: '<?= base_url() ?>assets/img/<?= $search ?>.png'
         }
     });
+    
 </script>

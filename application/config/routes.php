@@ -171,3 +171,4 @@ $route['search/liveSearch'] = 'SearchController/liveSearch';
 | -------------------------------------------------------------------------
 */
 $route['course'] = 'CoursesController';
+$route['course/select_search'] = 'CoursesController/select_search';
