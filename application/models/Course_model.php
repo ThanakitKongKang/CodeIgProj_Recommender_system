@@ -32,6 +32,7 @@ class Course_model extends BaseModel
         $this->db->like('course_id', $typing, 'both');
         $this->db->or_like('course_name_th', $typing, 'both');
         $this->db->or_like('course_name_en', $typing, 'both');
+        $this->db->limit(20);
 
         $query = $this->db->get($this->table);
 

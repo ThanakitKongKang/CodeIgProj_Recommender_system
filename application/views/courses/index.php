@@ -20,9 +20,9 @@
                     <div class="col-2">Date added</div>
                 </div>
                 <?php foreach ($course_registered as $course) : ?>
-                    <div class="row bg-white py-3" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">
+                    <div class="row bg-white py-3 course_row" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">
                         <div class="col-1 align-self-center text-center">
-                            <input type="checkbox" style="transform: scale(1.5);">
+                            <input type="checkbox" class="checkbox" style="transform: scale(1.5);">
                         </div>
                         <div class="col-2 align-self-center"><?= $course['course_id'] ?></div>
                         <div class="col-7">
@@ -60,8 +60,8 @@
             </div>
 
 
-            <div class="modal-body text-center">
-                <select class="js-select-course" multiple="multiple" style="width:50%;">
+            <div class="modal-body text-center px-5">
+                <select class="js-select-course" multiple="multiple">
                 </select>
 
             </div>
@@ -99,21 +99,15 @@
                 data: function(params) {
                     return {
                         q: params.term, // search term
-                        page: params.page
                     };
                 },
-                processResults: function(data, params) {
+                processResults: function(data) {
                     // parse the results into the format expected by Select2
                     // since we are using custom formatting functions we do not need to
                     // alter the remote JSON data, except to indicate that infinite
                     // scrolling can be used
-                    params.page = params.page || 1;
-
                     return {
                         results: data.items,
-                        pagination: {
-                            more: (params.page * 30) < data.total_count
-                        }
                     };
                 },
                 cache: true
@@ -132,9 +126,9 @@
             }
             var $container = $(
                 "<div class='select2-result clearfix'>" +
-                "<div class='select2-result__result_id'></div>" +
+                "<div class='select2-result__result_id small'></div>" +
                 "<div class='select2-result__result_name_th'></div>" +
-                "<div class='select2-result__result_name_en'></div>" +
+                "<div class='select2-result__result_name_en '></div>" +
                 "</div>"
             );
 
@@ -149,5 +143,20 @@
             return result.course_name_en || result.course_name_th;
         }
 
+        $('.course_row').on("click", checkbox_trigger);
+
+        $(".checkbox").hover(function() {
+            $(this).addClass("hovered");
+        }, function() {
+            $(this).removeClass("hovered");
+        });
+
+        function checkbox_trigger() {
+            if (!$(".checkbox").hasClass("hovered")) {
+                var this_elm = $(this);
+                this_elm.find(".checkbox").prop("checked", !(this_elm.find(".checkbox").prop("checked")));
+                console.log("wow");
+            }
+        }
     });
 </script>
