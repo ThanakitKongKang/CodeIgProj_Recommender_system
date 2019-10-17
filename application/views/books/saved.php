@@ -88,7 +88,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var bookmark_trigger_count = 0;
-        moment.locale('th');
+        // moment.locale('th');
         // time formatter
         $("[data-time-format]").each(function() {
             var el = $(this);
@@ -96,7 +96,7 @@
                 case "time-ago":
                     var timeValue = el.attr("data-time-value")
                     var strTimeAgo = moment(timeValue).fromNow();
-                    el.text("บันทึกเมื่อ " + strTimeAgo);
+                    el.text("saved " + strTimeAgo);
                     break;
             }
         });

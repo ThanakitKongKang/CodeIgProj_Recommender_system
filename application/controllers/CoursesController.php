@@ -9,7 +9,7 @@ class CoursesController extends CI_Controller
         parent::__construct();
         $this->load->helper('url', 'form');
         $this->load->model('course_model');
-        $this->load->model('bookmark_model');
+        $this->load->model('registered_course_model');
     }
 
     public function index()
@@ -33,5 +33,28 @@ class CoursesController extends CI_Controller
             $search_result["total_count"] = $search_result_count;
             echo json_encode($search_result);
         }
+    }
+
+    function add_course()
+    {
+        $username = $this->session->userdata('user')['username'];
+        $post_data = array(
+            'course_id' => $this->input->post('course_id'),
+            'username' => $username,
+            'date' => date('Y-m-d H:i:s'),
+        );
+
+        $this->registered_course_model->insert($post_data);
+    }
+
+    function delete_course()
+    {
+        $username = $this->session->userdata('user')['username'];
+        $post_data = array(
+            'course_id' => $this->input->post('course_id'),
+            'username' => $username,
+        );
+
+        $this->registered_course_model->delete_registered_course($post_data);
     }
 }
