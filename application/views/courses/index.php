@@ -313,7 +313,7 @@
             Swal.fire({
                 title: 'Delete course?',
                 type: 'warning',
-                html: "<span class='text-muted font-arial'>Are you sure you want to?</span>",
+                html: "<span class='text-muted font-arial'>Are you sure you want to delete?</span>",
                 showCancelButton: true,
                 confirmButtonColor: '#dc3545',
                 cancelButtonColor: '#6c757d',
