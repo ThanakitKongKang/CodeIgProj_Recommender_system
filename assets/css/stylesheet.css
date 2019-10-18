@@ -2,14 +2,18 @@
 @font-face {
 	font-family: 'Kanit';
 	/* localhost */
-	src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
+	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf"); */
 	/* webhost */
-	/* src: url("https://kkubooksrecommender.000webhostapp.com/assets/_etc/Kanit-Regular.ttf"); */
+	src: url("https://kkubooksrecommender.000webhostapp.com/assets/_etc/Kanit-Regular.ttf");
 }
 
 @font-face {
 	font-family: 'Oswald';
-	src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf");
+	/* localhost */
+	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf"); */
+	/* webhost */
+	src: url("https://kkubooksrecommender.000webhostapp.com/assets/_etc/Oswald-Regular.ttf");
+	
 }
 
 .font-oswald {
@@ -1101,4 +1105,43 @@ li.select2-results__option {
 
 .course_row:not(:last-child) {
 	border-bottom: 1px solid #4c5a673d;
+}
+
+
+.select2-results__option--highlighted div div {
+	color: #fff !important;
+}
+
+.page_title_header {
+	margin-left: 3rem;
+	position: relative;
+	text-transform: uppercase;
+}
+
+.page_title_header::before {
+	position: absolute;
+	background-color: #007bff;
+	content: "";
+	min-width: 30px;
+	height: 30px;
+	top: 20px;
+	left: -3rem;
+}
+
+.page_title_header:not(.page_title_header_no_after)::after {
+	position: absolute;
+	background-color: #007bff;
+	content: "";
+	min-width: 30px;
+	height: 30px;
+
+	top: 20px;
+	margin-left: 11px;
+	width: 25%;
+
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+	background: linear-gradient(to left, #0062E6, #33AEFF);
 }

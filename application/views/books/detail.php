@@ -202,7 +202,7 @@
                         });
 
                         Toast.fire({
-                            title: 'บุ๊กมาร์กสำเร็จ !',
+                            title: 'Saved successfully !',
                             type: 'success',
                         });
                         this_elm.find('i').removeClass("far");
@@ -221,7 +221,7 @@
                         });
 
                         Toast.fire({
-                            title: 'นำออกจากรายการบุ๊กมาร์กสำเร็จ !',
+                            title: 'Unsaved successfully !',
                             type: 'success',
                         });
                         this_elm.find('i').removeClass("fas");

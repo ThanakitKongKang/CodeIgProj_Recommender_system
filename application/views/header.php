@@ -125,10 +125,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <?php
                             if (!$this->session->userdata('logged_in')) { ?>
                                 <li class="nav-item pl-2 mt-1">
-                                    <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;"">LOG IN</button></a>
+                                    <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">LOG IN</button></a>
                                 </li>
                                 <li class="nav-item pl-3 mt-1">
-                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn btn-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;"">SIGN UP</button></a>
+                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn btn-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">SIGN UP</button></a>
                                 </li>
 
 
@@ -139,13 +139,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </div>
                                     <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="<?= base_url() ?>course">Your course</a>
-                                        <a class="dropdown-item" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
-
-                                        <a class="dropdown-item" href="<?= base_url() ?>test">How</a>
+                                        <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your course</a>
+                                        <a class="dropdown-item <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
+                                        <a class="dropdown-item <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating history</a>
+                                        <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->
 
                                         <hr class="my-2">
-                                        <a class="dropdown-item" href="<?= base_url() ?>logout">LOG OUT</a>
+                                        <a class="dropdown-item" href="<?= base_url() ?>logout">Log Out</a>
                                     </div>
                                 </li>
 
@@ -278,7 +278,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             });
 
             Toast.fire({
-                title: 'เข้าสู่ระบบสำเร็จ !',
+                title: 'Logged in successfully !',
                 type: 'success',
                 confirmButtonText: 'ตกลง',
             })
@@ -294,7 +294,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             });
 
             Toast.fire({
-                title: 'สมัครสมาชิกสำเร็จ !',
+                title: 'Registered successfully !',
                 type: 'success',
                 confirmButtonText: 'ตกลง',
             })
@@ -308,7 +308,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             });
 
             Toast.fire({
-                title: 'ออกจากระบบสำเร็จ !',
+                title: 'Logged out successfully !',
                 type: 'success',
                 confirmButtonText: 'ตกลง',
             })
@@ -323,7 +323,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             });
 
             Toast.fire({
-                title: 'คุณได้เข้าสู่ระบบแล้ว !',
+                title: 'You\'re already Logged in !',
                 type: 'info',
                 confirmButtonText: 'ตกลง',
             })

@@ -77,7 +77,6 @@
                 <?php $i++;
                     }
                     echo "</div>";
-                    // fix this session userdata
                     if ($num_rows == 9 &&  $all_num_rows != $i) { ?>
 
                     <div class="load-more text-center justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
@@ -346,7 +345,7 @@
                     });
 
                     Toast.fire({
-                        title: 'ให้คะแนนสำเร็จ !',
+                        title: 'Rated successfully !',
                         type: 'success',
                     });
                     $('#rate_modal').modal('hide');
@@ -382,7 +381,7 @@
                         });
 
                         Toast.fire({
-                            title: 'บุ๊กมาร์กสำเร็จ !',
+                            title: 'Saved successfully !',
                             type: 'success',
                         });
                         this_elm.find('i').removeClass("far");
@@ -400,7 +399,7 @@
                         });
 
                         Toast.fire({
-                            title: 'นำออกจากรายการบุ๊กมาร์กสำเร็จ !',
+                            title: 'Unsaved successfully !',
                             type: 'success',
                         });
                         this_elm.find('i').removeClass("fas");

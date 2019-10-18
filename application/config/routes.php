@@ -174,3 +174,11 @@ $route['course'] = 'CoursesController';
 $route['course/select_search'] = 'CoursesController/select_search';
 $route['course/add_course'] = 'CoursesController/add_course';
 $route['course/delete_course'] = 'CoursesController/delete_course';
+/*
+| -------------------------------------------------------------------------
+| Rating history
+| -------------------------------------------------------------------------
+*/
+$route['ratinghistory'] = 'BooksController/rating_history';
+$route['books/loadMoreData_rating_history'] = 'BooksController/loadMoreData_rating_history';
+

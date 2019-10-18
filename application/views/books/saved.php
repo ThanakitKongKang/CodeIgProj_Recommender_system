@@ -1,7 +1,13 @@
 <?php if ($showheader == true) { ?>
     <div class="container">
-        <h1 class="display-4">Saved Items <span class="badge badge-secondary count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></h1>
-        <hr class="mb-2 w-50 mr-auto ml-0" style="border: 0;border-top: 3px solid #007bff;"><?php } ?>
+        <nav class="nav nav-pills justify-content-end font-arial">
+            <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
+            <a class="nav-item nav-link <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved Item</a>
+            <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
+        </nav>
+
+        <h1 class="display-4 page_title_header page_title_header_no_after">Saved Items <span class="badge badge-secondary count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></h1>
+    <?php } ?>
 
     <div id="saved_list">
         <?php if (($saved_list != FALSE)) {
@@ -70,7 +76,8 @@
         <?php } else if ($this->session->userdata('count_all_saved_list') == 0) { ?>
 
             <div class="load-more pt-5" lastID="0">
-                <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i>  any item</h1>
+                <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
+                <div class="text-muted text-center">Save a book to get started!</div>
                 <div class="position:relative text-center">
                     <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:65rem" alt="">
                 </div>
@@ -133,7 +140,7 @@
                         });
 
                         Toast.fire({
-                            title: 'บุ๊กมาร์กสำเร็จ !',
+                            title: 'Saved successfully !',
                             type: 'success',
                         });
                         parent.removeClass("opacity");
@@ -157,7 +164,7 @@
                         });
 
                         Toast.fire({
-                            title: 'นำออกจากรายการบุ๊กมาร์กสำเร็จ !',
+                            title: 'Unsaved successfully !',
                             type: 'success',
                         });
                         parent.addClass("opacity");
@@ -177,7 +184,6 @@
 
         var num_rows = <?= $num_rows ?>;
         var call = 0
-
         $(window).scroll(function() {
             var lastID = $('.load-more').attr('lastID');
             var height = $(document).height() - $(window).height();

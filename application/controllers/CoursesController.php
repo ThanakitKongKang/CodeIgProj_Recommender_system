@@ -14,10 +14,12 @@ class CoursesController extends CI_Controller
 
     public function index()
     {
-        $this->check_auth('dashboard');
-
-        $data['course_registered'] = $this->course_model->get_course_registered("admin");
+        $this->check_auth('courses/index');
+        $username = $this->session->userdata('user')['username'];
+        $data['course_registered'] = $this->course_model->get_course_registered($username);
         $header["title"] = "Your course";
+        $header["yourcourse"] = "active";
+
         $this->load->view('./header', $header);
         $this->load->view('courses/index', $data);
         $this->load->view('footer');

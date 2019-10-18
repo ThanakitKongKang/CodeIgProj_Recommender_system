@@ -171,6 +171,7 @@ class BooksController extends CI_Controller
             $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "rows");
             $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count");
             $header["title"] = "Saved items";
+            $header["saveditems"] = "active";
             $data['showheader'] = true;
             $data['i'] = 0;
             $data['round_count'] = 1;
@@ -295,7 +296,7 @@ class BooksController extends CI_Controller
     {
         $bookid = $this->input->post('book_id');
         $username = $this->session->userdata('user')['username'];
-        $isRated = $this->rate_model->get_rate_user_book($username , $bookid);
+        $isRated = $this->rate_model->get_rate_user_book($username, $bookid);
         echo $isRated["rate"];
     }
 
@@ -315,13 +316,15 @@ class BooksController extends CI_Controller
                 'book_id' => $bookid,
                 'username' => $username,
                 'rate' =>  $rate,
+                'date' => date('Y-m-d H:i:s'),
             );
 
             $this->rate_model->insert($rate_data);
             $rate_avg = $this->books_model->update_book_rate($bookid, $rate);
         } else {
             // update instead of create
-            $this->rate_model->update_rate($bookid, $username, $rate);
+            $date = date('Y-m-d H:i:s');
+            $this->rate_model->update_rate($bookid, $username, $rate, $date);
             $rate_avg = $this->books_model->update_book_rate_exists($bookid);
         }
         echo number_format($rate_avg, 1);
@@ -409,7 +412,7 @@ class BooksController extends CI_Controller
         $this->load->view('books/index', $data);
         $this->load->view('footer');
     }
-/*
+    /*
     | -------------------------------------------------------------------------
     | admin_index
     | -------------------------------------------------------------------------
@@ -605,6 +608,46 @@ class BooksController extends CI_Controller
         $this->load->view('./header', $header);
         $this->load->view('recommend_test', $data);
         $this->load->view('footer');
+    }
+
+    /*
+    | -------------------------------------------------------------------------
+    | rating history
+    | -------------------------------------------------------------------------
+    */
+
+    public function rating_history()
+    {
+        $this->check_auth('rating_history');
+
+        $username = $this->session->userdata('user')['username'];
+        $data["rating_history_list"] = $this->rate_model->get_rate_by_username_dynamic($username, 5, 0, "rows");
+        $data["num_rows"] = $this->rate_model->get_rate_by_username_dynamic($username, 5, 0, "count");
+        $data['all_num_rows'] = $this->rate_model->get_all_num_rows_username($username);
+
+        $data["showheader"] = true;
+        $data['i'] = 0;
+
+        $header['title'] = 'Rating history';
+        $header['ratinghistory'] = "active";
+
+        $this->load->view('./header', $header);
+        $this->load->view('books/rating_history', $data);
+        $this->load->view('footer');
+    }
+
+    function loadMoreData_rating_history()
+    {
+        $data['showheader'] = false;
+        $start = (int) $this->input->post('start');
+        $data['i'] = (int) $this->input->post('i');
+        $data['all_num_rows'] = (int) $this->input->post('all_num_rows');
+        $username = $this->session->userdata('user')['username'];
+
+        $data['rating_history_list'] = $this->rate_model->get_rate_by_username_dynamic($username, 5, $start, "rows");
+        $data['num_rows'] = $this->rate_model->get_rate_by_username_dynamic($username, 5, $start, "count");
+
+        $this->load->view('books/rating_history', $data);
     }
 
 

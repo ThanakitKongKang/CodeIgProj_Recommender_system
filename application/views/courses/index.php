@@ -1,6 +1,11 @@
 <div class="container">
-    <h1 class="display-4">Your Courses</h1>
-    <hr class="mb-2 w-50 mr-auto ml-0" style="border: 0;border-top: 3px solid #007bff;">
+    <nav class="nav nav-pills justify-content-end font-arial">
+        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
+        <a class="nav-item nav-link <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved Item</a>
+        <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
+    </nav>
+
+    <h1 class="display-4 page_title_header page_title_header_no_after">Your Course</h1>
     <div id="course_content" class="mt-4">
         <!-- content header -->
         <div class="row justify-content-end mx-0 w-100" style="height:5rem;position: relative;background: linear-gradient(to left, #0062E6, #33AEFF);">
@@ -12,39 +17,43 @@
         </div>
 
         <!-- content -->
-        <div class="row mx-0 font-arial" style="min-height:25rem;border-bottom-left-radius: 7.5px;border-bottom-right-radius: 7.5px;border:1px solid #4c5a673d;background:#d0e8ff3d">
+        <div class="row mx-0 font-arial" style="min-height:40rem;border-bottom-left-radius: 7.5px;border-bottom-right-radius: 7.5px;border:1px solid #4c5a673d;background:#d0e8ff3d">
             <div class="col-12" id="content_to_append">
-                <div class="row py-3 font-weight-bold font-arial" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">
-                    <div class="col-1"></div>
-                    <div class="col-2">ID</div>
-                    <div class="col-7">Name</div>
-                    <div class="col-2">Date added</div>
-                </div>
-                <?php foreach ($course_registered as $course) : ?>
-                    <div class="row bg-white py-3 course_row">
-                        <div class="col-1 align-self-center text-center checkbox_div">
-                            <input type="checkbox" class="checkbox" style="transform: scale(1.5);">
-                        </div>
-                        <div class="col-2 align-self-center content_course_id" data-course_id="<?= $course['course_id'] ?>"><?= $course['course_id'] ?></div>
-                        <div class="col-7">
-                            <div> <?= $course['course_name_en'] ?></div>
-                            <div class="font-kanit"><?= $course['course_name_th'] ?></div>
-                        </div>
-                        <!-- monment js -->
-                        <div class="col-2 small align-self-center font-kanit" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $course['date'] ?>" title="<?= $course['date'] ?>"><?= $course['date'] ?></div>
-
+                <?php if ($course_registered != FALSE) { ?>
+                    <div class="row py-3 font-weight-bold font-arial content_header" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">
+                        <div class="col-1"></div>
+                        <div class="col-2">ID</div>
+                        <div class="col-7">Name</div>
+                        <div class="col-2">Date added</div>
                     </div>
-                <?php endforeach; ?>
+                    <?php foreach ($course_registered as $course) : ?>
+                        <div class="row bg-white py-3 course_row">
+                            <div class="col-1 align-self-center text-center checkbox_div">
+                                <input type="checkbox" class="checkbox" style="transform: scale(1.5);">
+                            </div>
+                            <div class="col-2 align-self-center content_course_id" data-course_id="<?= $course['course_id'] ?>"><?= $course['course_id'] ?></div>
+                            <div class="col-7">
+                                <div> <?= $course['course_name_en'] ?></div>
+                                <div class="font-kanit"><?= $course['course_name_th'] ?></div>
+                            </div>
+                            <!-- monment js -->
+                            <div class="col-2 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $course['date'] ?>" title="<?= $course['date'] ?>"><?= $course['date'] ?></div>
+
+                        </div>
+                    <?php endforeach;
+                    } else { ?>
+                    <!-- zero course added -->
+                    <div class="text-center font-arial bg-light pb-5 mb-5 zero_course" style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
+                        <img src="<?= base_url() ?>assets/img/clip-list-is-empty.png" style="max-width:45rem" alt="">
+                        <div class="font-weight-bold" style="color:#164d96">You haven't added any course </div>
+                        <div class="text-muted">Add a course to get started!</div>
+                    </div>
+                <?php } ?>
 
             </div>
         </div>
 
-        <!-- zero course added -->
-        <!-- <div class="text-center font-arial bg-light pb-5 mb-5" style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
-            <img src="<?= base_url() ?>assets/img/clip-list-is-empty.png" style="max-width:45rem" alt="">
-            <div class="font-weight-bold" style="color:#164d96">You haven't added any course </div>
-            <div class="text-muted">Add a course to get started!</div>
-        </div> -->
+
 
     </div>
 </div>
@@ -133,8 +142,8 @@
             }
             var $container = $(
                 "<div class='select2-result clearfix'>" +
-                "<div class='select2-result__result_id small text-secondary'></div>" +
-                "<div class='select2-result__result_name_th pl-3 text-primary'></div>" +
+                "<div class='select2-result__result_id small' style='color:#6c757d'></div>" +
+                "<div class='select2-result__result_name_th pl-3' style='color:#007bff'></div>" +
                 "<div class='select2-result__result_name_en font-arial pl-3'></div>" +
                 "</div>"
             );
@@ -198,10 +207,7 @@
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.value) {
-                    var today = new Date();
-                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                    var dateTime = date + ' ' + time;
+                    var dateTime = moment().format();
 
                     data.forEach(function(entry) {
                         var formData = {
@@ -217,6 +223,7 @@
                                 $('#add_course_modal_trigger').addClass("disabled");
                             },
                             success: function(data) {
+                                add_content_count_check();
                                 $('#add_course_modal_trigger').removeClass("disabled");
                                 // show added course
                                 var string_html = '<div class="row bg-white py-3 course_row">' +
@@ -228,7 +235,7 @@
                                     '<div>' + entry["course_name_en"] + '</div>' +
                                     '<div class="font-kanit">' + entry["course_name_th"] + '</div>' +
                                     '</div>' +
-                                    '<div class="col-2 small align-self-center font-kanit" style="cursor:default" data-time-format="time-ago" data-time-value="' + dateTime + '" title="' + dateTime + '">' + dateTime + '</div>' +
+                                    '<div class="col-2 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="' + dateTime + '" title="' + dateTime + '">' + dateTime + '</div>' +
                                     '</div>';
                                 $("#content_to_append > div").first().after(string_html);
                                 refreshTime();
@@ -247,12 +254,100 @@
                         title: 'Add course success !',
                         type: 'success',
                     })
+
+                    // if($('.content_header').)
+
                     $('.js-select-course').val(null).trigger("change");
                 } else {
                     $('#course_registeration').modal('show');
                 }
             })
         });
+
+        $('#delete_course').on("click", function(e) {
+            Swal.fire({
+                title: 'Delete course?',
+                type: 'warning',
+                html: "<span class='text-muted font-arial'>Are you sure you want to delete?</span>",
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.value) {
+                    selected_course.forEach(function(entry) {
+                        var formData = {
+                            'course_id': entry,
+                        };
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?php echo base_url('course/delete_course'); ?>',
+                            data: formData,
+
+                            beforeSend: function() {
+                                $('#delete_course').addClass("disabled");
+                            },
+                            success: function(data) {
+                                remove_content_count_check();
+
+                                var elem = $('[data-course_id=' + entry + ']');
+                                elem.parent().remove();
+
+                                $('#delete_course').removeClass("disabled");
+                            }
+                        })
+                    });
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    Toast.fire({
+                        title: 'Remove course success !',
+                        type: 'success',
+                    })
+                    // empty the array and uncheck all box
+                    $('input:checkbox').removeAttr('checked');
+                    selected_course = [];
+                    isArrayEmpty();
+                }
+            })
+        });
+
+        // content count checker
+        function add_content_count_check() {
+            var count_course = $("#content_to_append .course_row").length;
+            if (count_course == 0) {
+                // append header 
+                $("#content_to_append").append(' <div class="row py-3 font-weight-bold font-arial content_header" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">' +
+                    '<div class="col-1"></div>' +
+                    '<div class="col-2">ID</div>' +
+                    '<div class="col-7">Name</div>' +
+                    '<div class="col-2">Date added</div>' +
+                    '</div>');
+
+                // remove zero course png
+                $(".zero_course").remove();
+            }
+        }
+
+        function remove_content_count_check() {
+            var count_course = $("#content_to_append .course_row").length;
+            if (count_course == 1) {
+                //remove header
+                $(".content_header").remove();
+
+                //append zero course png
+                $("#content_to_append").append('<div class="text-center font-arial bg-light pb-5 mb-5 zero_course" style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">' +
+                    '<img src="<?= base_url() ?>assets/img/clip-list-is-empty.png" style="max-width:45rem" alt="">' +
+                    '<div class="font-weight-bold" style="color:#164d96">You haven\'t added any course </div>' +
+                    '<div class="text-muted">Add a course to get started!</div>' +
+                    '</div>');
+            }
+        }
 
         // checkbox things
         // $('.course_row').on("click", checkbox_trigger);
@@ -309,55 +404,6 @@
             }
             isArrayEmpty();
         }
-        $('#delete_course').on("click", function(e) {
-            Swal.fire({
-                title: 'Delete course?',
-                type: 'warning',
-                html: "<span class='text-muted font-arial'>Are you sure you want to delete?</span>",
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Delete',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.value) {
-                    selected_course.forEach(function(entry) {
-                        var formData = {
-                            'course_id': entry,
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?php echo base_url('course/delete_course'); ?>',
-                            data: formData,
 
-                            beforeSend: function() {
-                                $('#delete_course').addClass("disabled");
-                            },
-                            success: function(data) {
-                                var elem = $('[data-course_id=' + entry + ']');
-                                elem.parent().remove();
-
-                                $('#delete_course').removeClass("disabled");
-                            }
-                        })
-                    });
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-
-                    Toast.fire({
-                        title: 'Remove course success !',
-                        type: 'success',
-                    })
-                    // empty the array and uncheck all box
-                    $('input:checkbox').removeAttr('checked');
-                    selected_course = [];
-                    isArrayEmpty();
-                }
-            })
-        });
     });
 </script>
