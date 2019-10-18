@@ -24,8 +24,8 @@ date_default_timezone_set('Asia/Bangkok');
 |
 */
 // webhost
-// $config['base_url'] = 'http://localhost/CodeIgProj_Recommender_system';
-$config['base_url'] = 'https://kkubooksrecommender.000webhostapp.com';
+$config['base_url'] = 'http://localhost/CodeIgProj_Recommender_system';
+// $config['base_url'] = 'https://kkubooksrecommender.000webhostapp.com';
 /*
 |--------------------------------------------------------------------------
 | Index File

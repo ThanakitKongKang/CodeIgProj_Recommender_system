@@ -13,7 +13,7 @@
 
         <?php if (($rating_history_list != FALSE)) {
             foreach ($rating_history_list as $rating_history) { ?>
-                <div class="row py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
 
                     <div class="col pl-3" style="max-width: 9rem;">
                         <a href="<?= base_url() ?>book/<?= $rating_history['book_id'] ?>">

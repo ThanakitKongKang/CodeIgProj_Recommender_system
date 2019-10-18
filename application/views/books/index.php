@@ -1,4 +1,3 @@
-
 <div class="container">
     <div id="top" class="row">
         <div class="col " id="col-1">
@@ -357,14 +356,22 @@
             $('#top-rated').click(function(e) {
                 $('#toprate-div').removeClass('animation_enter');
                 $('#app_mid_title').removeClass('animation_enter');
-                $('.load-more').toggle();
-                $('#app_mid_title').addClass('animation_enter');
-                $('#toprate-div').addClass('animation_enter');
-                mid_title.title = "20 Top rated books of all time";
-                toprated.category = "toprated";
-                mid_title.img_url = '<?= base_url() ?>assets/img/All.svg';
-                category_content.category = "";
-                $('.load-more').toggle();
+                $(document.body).css({
+                    'cursor': 'wait'
+                });
+                var interval = setInterval(function() {
+                    $('#app_mid_title').addClass('animation_enter');
+                    $('#toprate-div').addClass('animation_enter');
+                    mid_title.title = "20 Top rated books of all time";
+                    toprated.category = "toprated";
+                    mid_title.img_url = '<?= base_url() ?>assets/img/all.svg';
+                    category_content.category = "";
+                    clearInterval(interval);
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                }, 50);
+
 
             });
             $('.ctg').click(function(e) {
@@ -520,16 +527,19 @@
                 var data_category = {
                     'category': category,
                 };
+
                 // call bookscontroller to call model
                 $.ajax({
                     type: 'post',
                     url: "<?php echo base_url(); ?>books/getBooksByCategory/",
                     data: data_category,
                     beforeSend: function() {
+                        $(document.body).css({
+                            'cursor': 'wait'
+                        });
                         $('.load-more').toggle();
                         $('#category_contents_body').removeClass('animation_enter');
                         $('#app_mid_title').removeClass('animation_enter');
-
                         $('#category_contents_body').addClass('invisible');
                         $('#app_mid_title').addClass('invisible');
 
@@ -547,6 +557,9 @@
                         $('#category_contents_body').addClass('animation_enter');
                         $('#app_mid_title').addClass('animation_enter');
                         $('.load-more').toggle();
+                        $(document.body).css({
+                            'cursor': 'default'
+                        });
                     }
                 })
             }
