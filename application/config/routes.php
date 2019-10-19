@@ -181,4 +181,12 @@ $route['course/delete_course'] = 'CoursesController/delete_course';
 */
 $route['ratinghistory'] = 'BooksController/rating_history';
 $route['books/loadMoreData_rating_history'] = 'BooksController/loadMoreData_rating_history';
+/*
+| -------------------------------------------------------------------------
+| Save collection
+| -------------------------------------------------------------------------
+*/
+$route['books/get_collection_by_username'] = 'BooksController/get_collection_by_username';
+$route['books/add_to_collection'] = 'BooksController/add_to_collection';
+$route['books/create_collection'] = 'BooksController/create_collection';
 

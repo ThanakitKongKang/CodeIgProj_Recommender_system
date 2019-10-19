@@ -46,7 +46,7 @@
                         <div class="text-col-1-footer">
                             <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
                             <?php if ($final_recommend_list[0]['count_rate'] != 0) { ?>
-                                <span class="position-absolute font-arial text-info" title="<?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?> rated this" style="bottom:1.6rem;left:10rem;width:10rem;">(<?= $final_recommend_list[0]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                <span class="position-absolute font-arial text-info" title="<?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?> rated this" style="bottom:0.25rem;left:10rem;width:10rem;">(<?= $final_recommend_list[0]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
                             <?php } ?>
                             <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
 
@@ -87,7 +87,7 @@
                                         <div class="text-col-2-footer w-100">
                                             <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
                                             <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
-                                                <span class="position-absolute small font-arial text-info" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:1.6rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                                <span class="position-absolute small font-arial text-info" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
                                             <?php } ?>
                                             <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
                                             <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
@@ -128,7 +128,7 @@
                                         <div class="text-col-2-footer w-100">
                                             <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
                                             <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
-                                                <span class="position-absolute small font-arial text-info" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:1.6rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                                <span class="position-absolute small font-arial text-info" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
                                             <?php } ?>
                                             <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
                                             <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
@@ -327,6 +327,8 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+       
+
             $(document).on('click', 'a[href^="#"]', function(e) {
                 e.preventDefault();
                 $('html, body').stop().animate({
@@ -342,6 +344,8 @@
                         $('#popup_menu').hide();
                     }
                 }
+
+
             });
 
             $('#dropdown-category-toggle').click(function(e) {
@@ -567,6 +571,7 @@
             $('#popup_menu_rate').click(function(e) {
                 $('#popup_menu').hide();
             });
+            
             // bookmarker
             $('#popup_menu_bookmark').click('.bookmark_trigger', function(e) {
                 var this_elm = $(this).find('.bookmark_trigger');
@@ -583,17 +588,8 @@
                         if (data == "login") {
                             please_login();
                         } else if (data == "inserted") {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000
-                            });
+                            toastBookmarkSaved(this_elm.data('book_id'));
 
-                            Toast.fire({
-                                title: 'Saved successfully !',
-                                type: 'success',
-                            });
                             this_elm.find('i').removeClass("far");
                             this_elm.find('i').addClass("fas");
                             this_elm.find('span').html(" unsave book");
@@ -601,17 +597,7 @@
                             $('#count_all_saved_list').html(count_all_saved_list)
 
                         } else if (data == "removed") {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000
-                            });
-
-                            Toast.fire({
-                                title: 'Unsaved successfully !',
-                                type: 'success',
-                            });
+                            toastBookmarkUnsaved();
                             this_elm.find('i').removeClass("fas");
                             this_elm.find('i').addClass("far");
                             this_elm.find('span').html(" save book");

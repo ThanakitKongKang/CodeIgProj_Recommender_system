@@ -194,17 +194,8 @@
                     if (data == "login") {
                         please_login();
                     } else if (data == "inserted") {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
+                        toastBookmarkSaved($('#book_id').val());
 
-                        Toast.fire({
-                            title: 'Saved successfully !',
-                            type: 'success',
-                        });
                         this_elm.find('i').removeClass("far");
                         this_elm.find('i').addClass("fas");
                         this_elm.find('span').html(" unsave book");
@@ -213,17 +204,7 @@
                         $('#count_all_saved_list').html(count_all_saved_list)
 
                     } else if (data == "removed") {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-
-                        Toast.fire({
-                            title: 'Unsaved successfully !',
-                            type: 'success',
-                        });
+                        toastBookmarkUnsaved();
                         this_elm.find('i').removeClass("fas");
                         this_elm.find('i').addClass("far");
                         this_elm.find('span').html(" save book");

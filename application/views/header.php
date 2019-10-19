@@ -140,7 +140,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>
                                     <div class="dropdown-menu" aria-labelledby="userDropdown">
                                         <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your course</a>
-                                        <a class="dropdown-item <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
+                                        <a class="dropdown-item <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
                                         <a class="dropdown-item <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating history</a>
                                         <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->
 
@@ -162,6 +162,46 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </nav>
     </div>
     <div class="col-4 container" id="livesearch"></div>
+
+    <!-- create collection modal -->
+    <div class="modal fade slide-bottom" id="create_collection_modal" tabindex="-1" role="dialog" aria-labelledby="create_collection_modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Collection</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Collection name</span>
+                        </div>
+                        <input type="text" id="collection_name_input" autofocus class="form-control" placeholder="Give your collection a name...">
+                        <span class="text-danger small position-absolute" style="display:none;top: 2.75rem;left: 5rem;" id="collection_name_input_pattern">1 - 60 characters</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" style="display:none;" class="btn btn-primary create_collection_submit">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="save_collection_menu" class="position-absolute bg-white slide-bottom" style="display:none;">
+        <div class="load_collection_menu text-center justify-content-center my-5" style="display: none;">
+            <div class="spinner-border text-primary mr-3" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            Loading...
+        </div>
+        <div id="collection_menu_content">
+            <div id="collection_menu" class="collection_menu">
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
         // scroll hide header
@@ -329,5 +369,214 @@ defined('BASEPATH') or exit('No direct script access allowed');
             })
 
         <?php } ?>
+        $('html').click(function() {
+            if (!$("#stop-timer").hasClass("hovered")) {
+                if (!$("#save_collection_menu").hasClass("hovered")) {
+                    $('#save_collection_menu').hide();
+                }
+            }
+        });
+
+        $("#save_collection_menu").hover(function() {
+                $(this).addClass("hovered");
+            },
+            function() {
+                $(this).removeClass("hovered");
+            }
+        );
+
+        function toastBookmarkSaved(book_id) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 30000,
+                onOpen: () => {
+                    $('.swal2-footer #stop-timer').on('mouseover', function(e) {
+                        Swal.stopTimer();
+                        $(this).addClass("hovered");
+                    });
+                    $('.swal2-footer #stop-timer').on('mouseout', function(e) {
+                        Swal.resumeTimer();
+                        $(this).removeClass("hovered");
+                    });
+                    $('.swal2-footer #stop-timer').on('click', function(e) {
+                        e.preventDefault();
+                        var rect = $(this).offset();
+                        appearCollection(book_id, rect);
+                        console.log("toastBookmarkSaved : " + book_id)
+                    });
+                }
+            });
+
+            Toast.fire({
+                title: 'Saved successfully !',
+                // html: '<a href id="stop-timer" style="border-bottom:1px solid #eee">Save to collection.</a>',
+                footer: '<a href class="stop-timer text-decoration-none w-100 text-center" id="stop-timer">Save to collection.</a>',
+                type: 'success',
+            });
+        }
+
+        function toastBookmarkUnsaved() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                title: 'Unsaved successfully !',
+                type: 'success',
+            });
+        }
+
+        function toastSavedToCollection(collection_name) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                title: 'Saved to collection ' + collection_name + ' successfully !',
+                type: 'success',
+            });
+        }
+
+        function appearCollection(book_id, rect) {
+            $('#save_collection_menu').css({
+                "top": (rect.top - 100),
+                "left": (rect.left - 0),
+            });
+            $('#save_collection_menu').show();
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/get_collection_by_username",
+                async: true,
+                beforeSend: function() {
+                    $(".load_collection_menu").show();
+                },
+                success: function(data) {
+                    $(".load_collection_menu").hide();
+                    var hr_html = "<hr class='m-0'>";
+                    var create_html = "<div id='create_collection' class='dropdown-item small text-secondary' data-toggle='modal' data-target='#create_collection_modal' data-book_id='" + book_id + "'><i class='fas fa-plus-circle'></i> Create Collection</div>";
+                    if (data == "zero") {
+                        $('#collection_menu').html("<div class='text-secondary text-center font-arial'>You haven't create any collection.</div>" + hr_html + create_html);
+                    } else {
+                        $('#collection_menu').html(data + hr_html + create_html);
+                    }
+                }
+            })
+        }
+
+        // collection select
+        $(document).on('click', '.collection_select', function(e) {
+            // console.log($('#create_collection').data("book_id"));
+            // console.log($(this).html());
+            var book_id = $('#create_collection').data("book_id");
+            var collection_name = $(this).html();
+            var post_data = {
+                'book_id': book_id,
+                'collection_name': collection_name,
+            };
+            console.log(book_id);
+            console.log(collection_name);
+
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/add_to_collection",
+                data: post_data,
+                async: true,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    $('#save_collection_menu').hide();
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                    toastSavedToCollection(collection_name);
+                }
+            })
+        });
+
+        // collection create
+        // autofocus any input with attribute in a modal
+        $('.modal').on('shown.bs.modal', function() {
+            $(this).find('[autofocus]').focus();
+            $("#save_collection_menu").hide();
+        });
+
+        // on modal close
+        $('#create_collection_modal').on('hidden.bs.modal', function() {
+            $('#collection_name_input').val("");
+            $('#save_collection_menu').show();
+        })
+
+        // on typing
+        $('#collection_name_input').keyup(function(e) {
+            var typing = $('#collection_name_input').val();
+            checkTypingLength_collection_name(typing);
+        });
+
+        // on submit
+        $('.create_collection_submit').on('click', function(e) {
+            var book_id = $('#create_collection').data("book_id");
+            var collection_name = $('#collection_name_input').val();
+            var post_data_create = {
+                'collection_name': collection_name,
+            };
+            // create collection
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/create_collection",
+                data: post_data_create,
+                async: true,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    $('#create_collection_modal').modal('hide');
+                    var post_data_add = {
+                        'book_id': book_id,
+                        'collection_name': collection_name,
+                    };
+                    // set saved book to new collection
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo base_url(); ?>books/add_to_collection",
+                        data: post_data_add,
+                        async: true,
+                        success: function(data) {
+                            $("#save_collection_menu").hide();
+                            $(document.body).css({
+                                'cursor': 'default'
+                            });
+                            toastSavedToCollection(collection_name);
+                        }
+                    })
+                }
+            })
+        });
+
+        function checkTypingLength_collection_name(typing) {
+            if (typing.length == 0) {
+                $('.create_collection_submit').hide();
+                return;
+            } else if (typing.length > 60) {
+                $('#collection_name_input_pattern').show()
+            } else {
+                $('.create_collection_submit').show();
+                return;
+            }
+        }
     </script>
+
+
     <div id="content">

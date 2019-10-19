@@ -167,14 +167,25 @@ class BooksController extends CI_Controller
     {
         // $data['books'] = $this->bookmark_model->get_saved_list_dynamic(10, $page);
         $username = $this->session->userdata('user')['username'];
+
         if ($username != null) {
-            $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "rows");
-            $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count");
+            $collection_get  = isset($_GET['collection']) ? $_GET['collection'] : NULL;
+            if (!isset($_GET['collection'])) {
+                $data["all_saved"] = "active";
+            }
+            $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "rows", $collection_get);
+            $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count", $collection_get);
+            $data['all_num_rows'] = $this->bookmark_model->get_saved_list_all_num_rows($username, $collection_get);
+            
             $header["title"] = "Saved items";
-            $header["saveditems"] = "active";
+            $header["saveditem"] = "active";
             $data['showheader'] = true;
             $data['i'] = 0;
             $data['round_count'] = 1;
+            $data["collection_get"] = $collection_get;
+
+            $data["collection_name"] = $this->bookmark_model->get_collection_by_username($username);
+
             $this->load->view('./header', $header);
             $this->load->view('books/saved', $data);
             $this->load->view('footer');
@@ -188,6 +199,7 @@ class BooksController extends CI_Controller
 
     function loadMoreData()
     {
+        $collection_get  = isset($_POST['collection_get']) ? $_POST['collection_get'] : NULL;
         $data['showheader'] = false;
         $data['round_count'] = ((int) $this->input->post('round_count')) + 1;
         $start = (int) $this->input->post('start');
@@ -195,8 +207,8 @@ class BooksController extends CI_Controller
         $save_removed = (int) $this->input->post('bookmark_trigger_count');
         $username = $this->session->userdata('user')['username'];
 
-        $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start - $save_removed, "rows");
-        $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start - $save_removed, "count");
+        $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start - $save_removed, "rows", $collection_get);
+        $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, $start - $save_removed, "count", $collection_get);
 
         $this->load->view('books/saved', $data);
     }
@@ -292,12 +304,36 @@ class BooksController extends CI_Controller
         echo $isBookmarked;
     }
 
-    function getBookRateByUser()
+    function get_collection_by_username()
     {
-        $bookid = $this->input->post('book_id');
         $username = $this->session->userdata('user')['username'];
-        $isRated = $this->rate_model->get_rate_user_book($username, $bookid);
-        echo $isRated["rate"];
+        $collection = $this->bookmark_model->get_collection_by_username($username);
+        if ($collection != false) {
+            $string_html = "";
+            foreach ($collection as $cl) {
+                $string_html .= "<div class='dropdown-item collection_select'>" . $cl["collection_name"] . "</div>";
+            }
+            echo $string_html;
+        } else {
+            echo "zero";
+        }
+    }
+
+    function add_to_collection()
+    {
+        $username = $this->session->userdata('user')['username'];
+        $bookid = $this->input->post('book_id');
+        $collection_name = $this->input->post('collection_name');
+        $this->bookmark_model->add_to_collection($username, $collection_name, $bookid);
+    }
+
+    function create_collection()
+    {
+        $post_data = array(
+            'username' => $this->session->userdata('user')['username'],
+            'collection_name' =>  $this->input->post('collection_name'),
+        );
+        $this->bookmark_model->create_collection($post_data);
     }
 
     /*
@@ -328,6 +364,14 @@ class BooksController extends CI_Controller
             $rate_avg = $this->books_model->update_book_rate_exists($bookid);
         }
         echo number_format($rate_avg, 1);
+    }
+
+    function getBookRateByUser()
+    {
+        $bookid = $this->input->post('book_id');
+        $username = $this->session->userdata('user')['username'];
+        $isRated = $this->rate_model->get_rate_user_book($username, $bookid);
+        echo $isRated["rate"];
     }
     /*
     | -------------------------------------------------------------------------

@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="nav nav-pills justify-content-end font-arial">
             <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
-            <a class="nav-item nav-link <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved Item</a>
+            <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
             <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
         </nav>
 
@@ -13,7 +13,7 @@
 
         <?php if (($rating_history_list != FALSE)) {
             foreach ($rating_history_list as $rating_history) { ?>
-                <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                <div class="row bg-light py-3 book_detail_content animated_book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
 
                     <div class="col pl-3" style="max-width: 9rem;">
                         <a href="<?= base_url() ?>book/<?= $rating_history['book_id'] ?>">

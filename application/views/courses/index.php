@@ -1,7 +1,7 @@
 <div class="container">
     <nav class="nav nav-pills justify-content-end font-arial">
         <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
-        <a class="nav-item nav-link <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved Item</a>
+        <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
         <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
     </nav>
 

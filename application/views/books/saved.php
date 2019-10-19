@@ -2,18 +2,27 @@
     <div class="container">
         <nav class="nav nav-pills justify-content-end font-arial">
             <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
-            <a class="nav-item nav-link <?php if (isset($saveditems)) echo $saveditems; ?>" href="<?= base_url() ?>saved">Saved Item</a>
+            <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
             <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
         </nav>
 
-        <h1 class="display-4 page_title_header page_title_header_no_after">Saved Items <span class="badge badge-secondary count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></h1>
-    <?php } ?>
+        <h1 class="display-4 page_title_header page_title_header_no_after">Saved Item <span class="badge badge-secondary count_saved_list"><?= $all_num_rows ?></span></h1>
+        <div class="nav nav-pills font-arial">
+            <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved</a>
+            <?php if (($collection_name != FALSE)) {
+                    foreach ($collection_name as $cl) { ?>
+                    <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?></a>
 
-    <div id="saved_list">
+            <?php }
+                } ?>
+        </div>
+        <div id="saved_list">
+        <?php } ?>
+
+
         <?php if (($saved_list != FALSE)) {
             foreach ($saved_list as $saved) { ?>
-
-                <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                <div class="row bg-light py-3 book_detail_content animated_book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
                     <div class="col pl-4" style="max-width:11rem;">
                         <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
                             <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
@@ -88,8 +97,9 @@
 
             </div>
         <?php } ?>
-    </div>
-    <?php if ($showheader == true) { ?>
+
+        <?php if ($showheader == true) { ?>
+        </div>
     </div> <?php } ?>
 
 <script type="text/javascript">
@@ -113,11 +123,14 @@
 
         function bookmark_triggered() {
             var this_elm = $(this);
+            var book_id = ($(this).data('book_id'));
             var bookmark_data = {
-                'book_id': ($(this).data('book_id'))
+                'book_id': book_id,
             };
             var parent = this_elm.parents('.book_detail_content ');
             var count_all_saved_list = $('#count_all_saved_list').html();
+            var count_saved_list = $('.count_saved_list').html();
+
             $.ajax({
                 type: 'post',
                 url: "<?php echo base_url(); ?>books/update_bookmark",
@@ -132,17 +145,8 @@
                     $(this_elm).removeClass("disabled");
 
                     if (data == "inserted") {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
+                        toastBookmarkSaved(book_id);
 
-                        Toast.fire({
-                            title: 'Saved successfully !',
-                            type: 'success',
-                        });
                         parent.removeClass("opacity");
                         parent.find('.removed_item').html("");
                         bookmark_trigger_count--;
@@ -150,23 +154,14 @@
                         this_elm.find('i').removeClass("far");
                         this_elm.find('i').addClass("fas");
                         this_elm.find('span').html(" unsave book");
-
+                        count_saved_list++;
                         count_all_saved_list++;
+                        $('.count_saved_list').html(count_saved_list);
                         $('#count_all_saved_list').html(count_all_saved_list);
-                        $('.count_all_saved_list').html(count_all_saved_list);
 
                     } else if (data == "removed") {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
+                        toastBookmarkUnsaved();
 
-                        Toast.fire({
-                            title: 'Unsaved successfully !',
-                            type: 'success',
-                        });
                         parent.addClass("opacity");
                         parent.find('.removed_item').html("ลบออกจากรายการที่บันทึกแล้ว");
                         bookmark_trigger_count++;
@@ -174,9 +169,11 @@
                         this_elm.find('i').removeClass("fas");
                         this_elm.find('i').addClass("far");
                         this_elm.find('span').html(" save book");
+                        count_saved_list--;
                         count_all_saved_list--;
+
+                        $('.count_saved_list').html(count_saved_list);
                         $('#count_all_saved_list').html(count_all_saved_list);
-                        $('.count_all_saved_list').html(count_all_saved_list);
                     }
                 }
             })
@@ -184,6 +181,7 @@
 
         var num_rows = <?= $num_rows ?>;
         var call = 0
+
         $(window).scroll(function() {
             var lastID = $('.load-more').attr('lastID');
             var height = $(document).height() - $(window).height();
@@ -194,12 +192,27 @@
             if ((scroll_value >= height) && (lastID != 0) && num_rows == 5 && call == 0) {
                 // console.log("true");
                 call = 1;
-                var post_data = {
-                    'start': lastID,
-                    'i': <?= $i ?>,
-                    'round_count': <?= $round_count ?>,
-                    'bookmark_trigger_count': bookmark_trigger_count,
-                };
+                <?php
+                if (isset($collection_get)) { ?>
+                    var post_data = {
+                        'start': lastID,
+                        'i': <?= $i ?>,
+                        'round_count': <?= $round_count ?>,
+                        'bookmark_trigger_count': bookmark_trigger_count,
+                        'collection_get': "<?= $collection_get ?>",
+                    };
+
+                <?php } else { ?>
+                    var post_data = {
+                        'start': lastID,
+                        'i': <?= $i ?>,
+                        'round_count': <?= $round_count ?>,
+                        'bookmark_trigger_count': bookmark_trigger_count,
+                    };
+                <?php } ?>
+
+
+
 
                 $.ajax({
                     type: 'POST',
@@ -220,5 +233,16 @@
                 });
             }
         });
+        //active nav save collection name
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var collection_name_param = url.searchParams.get("collection") ? url.searchParams.get("collection") : " ";
+        var regex = new RegExp(" ", "g");
+        var collection_name_param2 = collection_name_param.replace(regex, "-")
+        if (collection_name_param2 != "-") {
+            $('.' + collection_name_param2).addClass("active");
+        }
+
+
     });
 </script>
