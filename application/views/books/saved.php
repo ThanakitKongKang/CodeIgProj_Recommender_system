@@ -501,7 +501,7 @@
                         toastBookmarkUnsaved();
 
                         parent.addClass("opacity");
-                        parent.find('.removed_item').html("ลบออกจากรายการที่บันทึกแล้ว");
+                        parent.find('.removed_item').html("Unsaved");
                         bookmark_trigger_count++;
 
                         this_elm.find('i').removeClass("fas");

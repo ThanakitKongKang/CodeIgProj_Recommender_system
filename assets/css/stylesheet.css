@@ -1209,12 +1209,13 @@ li.select2-results__option {
 
 #title_collection_name {
 	position: relative;
-	max-width:20rem;
+	max-width:30rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: inline-block;
 	white-space: nowrap;
 	top:0.75rem;
+	text-transform: none;
 	
 }
 
