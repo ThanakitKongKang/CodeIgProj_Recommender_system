@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2019 at 10:32 PM
+-- Generation Time: Oct 20, 2019 at 06:07 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -17,7 +17,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
 --
 --
 -- Database: `id11095585_bookdb`
@@ -69,6 +68,7 @@ create function soundex_match (needle varchar(128), haystack text, splitChar var
 $$
 delimiter ;
 -- --------------------------------------------------------
+
 
 --
 -- Table structure for table `book`
@@ -385,7 +385,8 @@ ALTER TABLE `registered_course`
 -- Indexes for table `saved_book`
 --
 ALTER TABLE `saved_book`
-  ADD PRIMARY KEY (`book_id`,`username`);
+  ADD PRIMARY KEY (`book_id`,`username`),
+  ADD KEY `fk_collection_name` (`collection_name`);
 
 --
 -- Indexes for table `saved_book_collection`

@@ -60,8 +60,11 @@
                         <!-- BOOK detail section -->
                         <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
                         <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
-                        <div class="book_detail_text pt-1">Author : <?= $saved['author'] ?></div>
+                        <div class="book_detail_text pt-1 mb-3">Author : <?= $saved['author'] ?></div>
                         <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:23rem;"></span>
+                        <?php if ($saved['collection_name'] != 'none') { ?>
+                            <span class="small font-arial text-secondary">Saved to </span><a href="<?= base_url() ?>saved?collection=<?= $saved['collection_name'] ?>" class="font-arial" style="background:#cde8ff;padding:0.25rem"><?= $saved['collection_name'] ?></a>
+                        <?php } ?>
                         <!-- bookmark trigger -->
                         <div class="pr-4 w-100">
                             <hr>
@@ -69,6 +72,7 @@
                                 <i class="fas fa-bookmark bookmark_icon"></i>
                                 <span class="bookmark_trigger_text"> unsave book</span>
                             </button>
+
                             <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" title="<?= $saved['date'] ?>" style="float:right;cursor:default;"><?= $saved['date'] ?></span>
                         </div>
                     </div>
@@ -124,7 +128,7 @@
                             <span class="input-group-text">Collection name</span>
                         </div>
                         <input type="text" id="collection_name_input_saved" autofocus class="form-control" placeholder="Give your collection a name...">
-                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 5rem;">1 - 60 characters</span>
+                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 5rem;">Thai or English 1 - 60 characters (no space)</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -151,7 +155,7 @@
                             <span class="input-group-text">Collection name</span>
                         </div>
                         <input type="text" id="edit_collection_name_input_saved" autofocus class="form-control" placeholder="Give your collection a name...">
-                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 5rem;">1 - 60 characters</span>
+                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 5rem;">Thai or English 1 - 60 characters (no space)</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -168,6 +172,14 @@
         $('#create_collection_modal_saved').on('hidden.bs.modal', function() {
             $('#collection_name_input_saved').val("");
             $('.create_collection_submit_saved').hide();
+            $('.collection_name_input_pattern').hide();
+        })
+
+        // on modal close
+        $('#edit_collection_modal_saved').on('hidden.bs.modal', function() {
+            $('#edit_collection_name_input_saved').val("");
+            $('.edit_collection_submit_saved').hide();
+            $('.collection_name_input_pattern').hide();
         })
         // on typing
         $('#collection_name_input_saved').keyup(function(e) {
@@ -223,10 +235,16 @@
             } else if (typing.length > 60) {
                 $('.edit_collection_submit_saved').hide();
                 $('.collection_name_input_pattern').show();
+
             } else {
-                $('.edit_collection_submit_saved').show();
-                $('.collection_name_input_pattern').hide();
-                $('.create_collection_submit_saved').show();
+                var re = /^[a-zA-Z0-9_ก-๏.]+$/;
+                if (re.test(typing)) {
+                    $('.edit_collection_submit_saved').show();
+                    $('.collection_name_input_pattern').hide();
+                    $('.create_collection_submit_saved').show();
+                } else {
+                    $('.collection_name_input_pattern').show();
+                }
                 return;
             }
         }
@@ -246,6 +264,10 @@
 
         $('#edit_collection_modal_saved').on('shown.bs.modal', function() {
             $(this).find('[autofocus]').focus();
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var collection_name_param = url.searchParams.get("collection") ? url.searchParams.get("collection") : " ";
+            $('#edit_collection_name_input_saved').val(collection_name_param);
         });
 
         // edit on typing
@@ -557,7 +579,7 @@
         var collection_name_param2 = collection_name_param.replace(regex, "-")
         if (collection_name_param2 != "-") {
             $('.' + collection_name_param2).addClass("active");
-            $('#title_collection_name').html("- " + collection_name_param);
+            $('#title_collection_name').html("<i class='fas fa-angle-double-right small'></i> " + collection_name_param);
             $('#title_collection_name').prop('title', collection_name_param);
             $('#title_collection_edit').html("<i class='fas fa-ellipsis-h'></i>");
             $('#edit_collection_name_input_saved').val(collection_name_param);

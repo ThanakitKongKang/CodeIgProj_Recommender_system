@@ -179,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <span class="input-group-text">Collection name</span>
                         </div>
                         <input type="text" id="collection_name_input" autofocus class="form-control" placeholder="Give your collection a name...">
-                        <span class="text-danger small position-absolute" style="display:none;top: 2.75rem;left: 5rem;" id="collection_name_input_pattern">1 - 60 characters</span>
+                        <span class="text-danger small position-absolute" style="display:none;top: 2.75rem;left: 5rem;" id="collection_name_input_pattern">Thai or English 1 - 60 characters (no space)</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -568,6 +568,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $('#create_collection_modal').on('hidden.bs.modal', function() {
             $('#collection_name_input').val("");
             $('#save_collection_menu').show();
+            $('#collection_name_input_pattern').hide();
         })
 
         // on typing
@@ -634,9 +635,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
             } else if (typing.length > 60) {
                 $('#collection_name_input_pattern').show()
             } else {
-                $('#collection_name_input_pattern').hide()
-                $('.create_collection_submit').show();
-                return;
+                var re = /^[a-zA-Z0-9_ก-๏.]+$/;
+                if (re.test(typing)) {
+                    $('#collection_name_input_pattern').hide()
+                    $('.create_collection_submit').show();
+                    return;
+                } else {
+                    $('#collection_name_input_pattern').show()
+                }
+
             }
         }
     </script>
