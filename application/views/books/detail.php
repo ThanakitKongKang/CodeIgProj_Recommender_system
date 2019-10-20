@@ -55,10 +55,10 @@
                         <button class="btn btn-primary bookmark_trigger mt-2">
                             <?php if ($bookmark == TRUE) { ?>
                                 <i class="fas fa-bookmark" id="bookmark_icon"></i>
-                            <?php echo "<span class='save_text'> unsave book</span>";
+                            <?php echo "<span class='save_text font-arial'> unsave book</span>";
                             } else {
                                 ?><i class="far fa-bookmark" id="bookmark_icon"></i>
-                            <?php echo "<span class='save_text'> save book</span>";
+                            <?php echo "<span class='save_text font-arial'> save book</span>";
                             } ?></button>
                     </div>
 

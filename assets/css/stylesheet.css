@@ -435,12 +435,12 @@ body {
 
 .text-col-2-footer {
 	position: absolute;
-	bottom: 0.5rem;
+	bottom: 0.3rem;
 }
 
 .text-col-1-footer {
 	position: absolute;
-	bottom: 2rem;
+	bottom: 1.5rem;
 }
 
 .link {
