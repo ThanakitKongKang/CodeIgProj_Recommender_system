@@ -1193,7 +1193,7 @@ li.select2-results__option {
 
 }
 
-#save_collection_menu>div>div>div{
+#save_collection_menu>div>div>div {
 	padding: 0.5rem;
 	padding-left: 0.75rem;
 	cursor: default;
@@ -1203,6 +1203,30 @@ li.select2-results__option {
 	color: #fff !important;
 }
 
-#create_collection{
+#create_collection_saved {
+	padding-left: 2rem
+}
 
+#title_collection_name {
+	position: relative;
+	max-width:20rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	white-space: nowrap;
+	top:0.75rem;
+	
+}
+
+#title_collection_edit {
+	position:relative;
+	top:1rem;
+	float: right;
+	color: #44597c78 !important;
+	cursor: pointer;
+	text-decoration: none !important;
+}
+
+#title_collection_edit:hover{
+	color: #506b84 !important;
 }

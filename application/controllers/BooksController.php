@@ -176,7 +176,7 @@ class BooksController extends CI_Controller
             $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "rows", $collection_get);
             $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count", $collection_get);
             $data['all_num_rows'] = $this->bookmark_model->get_saved_list_all_num_rows($username, $collection_get);
-            
+
             $header["title"] = "Saved items";
             $header["saveditem"] = "active";
             $data['showheader'] = true;
@@ -308,10 +308,17 @@ class BooksController extends CI_Controller
     {
         $username = $this->session->userdata('user')['username'];
         $collection = $this->bookmark_model->get_collection_by_username($username);
+        $bookid = $this->input->post('book_id');
+        $collection_name_in = $this->bookmark_model->get_collection_book_in($username, $bookid);
+
         if ($collection != false) {
             $string_html = "";
             foreach ($collection as $cl) {
-                $string_html .= "<div class='dropdown-item collection_select'>" . $cl["collection_name"] . "</div>";
+                if ($cl["collection_name"] == $collection_name_in["collection_name"]) {
+                    $string_html .= "<div data-cn='" . $cl["collection_name"] . "' class='dropdown-item text-secondary collection_remove_to_default'>" . $cl["collection_name"] . "<i class='fas fa-check-circle text-primary float-right pt-1'></i></div>";
+                } else {
+                    $string_html .= "<div class='dropdown-item collection_select'>" . $cl["collection_name"] . "</div>";
+                }
             }
             echo $string_html;
         } else {
@@ -329,11 +336,49 @@ class BooksController extends CI_Controller
 
     function create_collection()
     {
-        $post_data = array(
-            'username' => $this->session->userdata('user')['username'],
-            'collection_name' =>  $this->input->post('collection_name'),
-        );
-        $this->bookmark_model->create_collection($post_data);
+        $username = $this->session->userdata('user')['username'];
+        $collection_name = $this->input->post('collection_name');
+
+        $query = $this->bookmark_model->get_collection_by_id($collection_name, $username);
+
+        if ($query) {
+            echo "duplicate";
+        } else {
+            $post_data = array(
+                'username' => $username,
+                'collection_name' =>  $collection_name,
+            );
+            echo $this->bookmark_model->create_collection($post_data);
+        }
+    }
+
+    function edit_collection_name()
+    {
+        $username = $this->session->userdata('user')['username'];
+        $collection_name = $this->input->post('collection_name');
+        $old_collection_name = $this->input->post('old_collection_name');
+
+        $query = $this->bookmark_model->get_collection_by_id($collection_name, $username);
+
+        if ($query) {
+            echo "duplicate";
+        } else {
+            echo $this->bookmark_model->edit_collection_name($collection_name, $old_collection_name, $username);
+        }
+    }
+
+    function delete_collection()
+    {
+        $username = $this->session->userdata('user')['username'];
+        $collection_name = $this->input->post('collection_name');
+        $this->bookmark_model->delete_collection_by_id($collection_name, $username);
+    }
+
+    function remove_from_collection()
+    {
+        $username = $this->session->userdata('user')['username'];
+        $bookid = $this->input->post('book_id');
+        $this->bookmark_model->remove_from_collection($bookid, $username);
     }
 
     /*

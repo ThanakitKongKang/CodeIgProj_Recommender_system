@@ -370,7 +370,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <?php } ?>
         $('html').click(function() {
-            if (!$("#stop-timer").hasClass("hovered")) {
+            // have to add all trigger to appear that shit
+            if (!$("#stop-timer").hasClass("hovered") && !$(".move_to_another_collection").hasClass("hovered")) {
                 if (!$("#save_collection_menu").hasClass("hovered")) {
                     $('#save_collection_menu').hide();
                 }
@@ -390,7 +391,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 30000,
+                timer: 3000,
                 onOpen: () => {
                     $('.swal2-footer #stop-timer').on('mouseover', function(e) {
                         Swal.stopTimer();
@@ -404,7 +405,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         e.preventDefault();
                         var rect = $(this).offset();
                         appearCollection(book_id, rect);
-                        console.log("toastBookmarkSaved : " + book_id)
                     });
                 }
             });
@@ -440,7 +440,77 @@ defined('BASEPATH') or exit('No direct script access allowed');
             });
 
             Toast.fire({
-                title: 'Saved to collection ' + collection_name + ' successfully !',
+                html: '<div style="margin:0.6em;font-weight:600;">Saved to collection <span class="font-arial text-primary">' + collection_name + '</span> successfully !</div>',
+                type: 'success',
+            });
+        }
+
+        function toastCreateCollection(collection_name) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                html: '<div style="margin:0.6em;font-weight:600;">Created collection <span class="font-arial text-primary">' + collection_name + '</span> successfully !</div>',
+                type: 'success',
+            });
+        }
+
+        function toastEditCollection(collection_name) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                html: '<div style="margin:0.6em;font-weight:600;">Collection name changed to <span class="font-arial text-primary">' + collection_name + '</span> successfully !</div><div>refreshing in 3 seconds...</div>',
+                type: 'success',
+            });
+        }
+
+        function toastDeleteCollection(collection_name) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000
+            });
+
+            Toast.fire({
+                html: '<div style="margin:0.6em;font-weight:600;">Collection <span class="font-arial text-primary">' + collection_name + '</span> has been removed !</div><div>redirecting...</div>',
+                type: 'success',
+            });
+        }
+
+        function toastCreateCollection_duplicate(collection_name) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'center',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                html: '<div style="margin:0.6em;font-weight:600;"><span class="font-arial text-primary">' + collection_name + '</span> is already taken!</div>',
+                type: 'error',
+            });
+        }
+
+        function toastRemoveFromCollection(collection_name) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                html: '<div style="margin:0.6em;font-weight:600;">Remove from collection <span class="font-arial text-primary">' + collection_name + '</span> successfully!</div><div class="small font-arial">Refresh to see changes.</div>',
                 type: 'success',
             });
         }
@@ -481,27 +551,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 'book_id': book_id,
                 'collection_name': collection_name,
             };
-            console.log(book_id);
-            console.log(collection_name);
-
-            $.ajax({
-                type: 'post',
-                url: "<?php echo base_url(); ?>books/add_to_collection",
-                data: post_data,
-                async: true,
-                beforeSend: function() {
-                    $(document.body).css({
-                        'cursor': 'wait'
-                    });
-                },
-                success: function(data) {
-                    $('#save_collection_menu').hide();
-                    $(document.body).css({
-                        'cursor': 'default'
-                    });
-                    toastSavedToCollection(collection_name);
-                }
-            })
+            add_to_collection_ajax(post_data, collection_name);
         });
 
         // collection create
@@ -509,6 +559,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $('.modal').on('shown.bs.modal', function() {
             $(this).find('[autofocus]').focus();
             $("#save_collection_menu").hide();
+            $('.create_collection_submit_saved').hide();
+            $('.create_collection_submit').hide();
+
         });
 
         // on modal close
@@ -547,31 +600,41 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         'book_id': book_id,
                         'collection_name': collection_name,
                     };
-                    // set saved book to new collection
-                    $.ajax({
-                        type: 'post',
-                        url: "<?php echo base_url(); ?>books/add_to_collection",
-                        data: post_data_add,
-                        async: true,
-                        success: function(data) {
-                            $("#save_collection_menu").hide();
-                            $(document.body).css({
-                                'cursor': 'default'
-                            });
-                            toastSavedToCollection(collection_name);
-                        }
-                    })
+                    add_to_collection_ajax(post_data_add, collection_name);
                 }
             })
         });
 
+        function add_to_collection_ajax(post_data, collection_name) {
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/add_to_collection",
+                data: post_data,
+                async: true,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    $('#save_collection_menu').hide();
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                    toastSavedToCollection(collection_name);
+                }
+            })
+        }
+
         function checkTypingLength_collection_name(typing) {
             if (typing.length == 0) {
+                $('#collection_name_input_pattern').hide()
                 $('.create_collection_submit').hide();
                 return;
             } else if (typing.length > 60) {
                 $('#collection_name_input_pattern').show()
             } else {
+                $('#collection_name_input_pattern').hide()
                 $('.create_collection_submit').show();
                 return;
             }

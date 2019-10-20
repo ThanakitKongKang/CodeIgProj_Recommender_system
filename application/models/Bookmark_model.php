@@ -119,6 +119,18 @@ class Bookmark_model extends BaseModel
         }
     }
 
+    public function get_collection_book_in($username, $book_id)
+    {
+        $sql = "SELECT collection_name FROM `saved_book` where username = ? AND book_id = ?";
+        $query = $this->db->query($sql, array($username, $book_id));
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->row()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function add_to_collection($username, $collection_name, $book_id)
     {
         $this->db->where('book_id', $book_id);
@@ -129,6 +141,72 @@ class Bookmark_model extends BaseModel
 
     public function create_collection($data)
     {
-        return $this->db->insert("saved_book_collection", $data);
+        $insert = $this->db->insert("saved_book_collection", $data);
+        if (!$insert && $this->db->_error_number() == 1062) {
+            //some logics here, you may create some string here to alert user
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_collection_by_id($collection_name, $username)
+    {
+        $this->db->select('*');
+        $this->db->from("saved_book_collection");
+        $this->db->where('collection_name', $collection_name);
+        $this->db->where('username', $username);
+
+        $qry =  $this->db->get();
+        if ($qry->num_rows() == 1) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function edit_collection_name($collection_name, $old_collection_name, $username)
+    {
+        $this->db->where('collection_name', $old_collection_name);
+        $this->db->where('username', $username);
+        $this->db->set('collection_name', "'" . $collection_name . "'", FALSE);
+        $this->db->update("saved_book_collection");
+
+        $sql_update_collection_name = "SELECT * FROM `saved_book` where username = ? AND collection_name = ?";
+        $query = $this->db->query($sql_update_collection_name, array($username, $old_collection_name));
+        if ($query->num_rows() > 0) {
+            $sql_update_each_row = "UPDATE `saved_book` SET `collection_name` = ? 
+            WHERE `saved_book`.`book_id` = ? 
+            AND `saved_book`.`username` = ?";
+            foreach ($query->result_array() as $row) {
+                $query = $this->db->query($sql_update_each_row, array($collection_name, $row["book_id"], $username));
+            }
+        }
+    }
+
+    public function delete_collection_by_id($collection_name, $username)
+    {
+        $this->db->where('collection_name', $collection_name);
+        $this->db->where('username', $username);
+        $this->db->delete("saved_book_collection");
+
+        $sql_delete_collection_name = "SELECT * FROM `saved_book` where username = ? AND collection_name = ?";
+        $query = $this->db->query($sql_delete_collection_name, array($username, $collection_name));
+        if ($query->num_rows() > 0) {
+            $sql_delete_each_row = "DELETE FROM `saved_book`
+            WHERE `saved_book`.`book_id` = ? 
+            AND `saved_book`.`username` = ?";
+            foreach ($query->result_array() as $row) {
+                $query = $this->db->query($sql_delete_each_row, array($row["book_id"], $username));
+            }
+        }
+    }
+
+    public function remove_from_collection($book_id, $username)
+    {
+        $this->db->where('book_id', $book_id);
+        $this->db->where('username', $username);
+        $this->db->set('collection_name', 'none');
+        $this->db->update("saved_book");
     }
 }

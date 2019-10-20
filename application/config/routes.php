@@ -188,5 +188,7 @@ $route['books/loadMoreData_rating_history'] = 'BooksController/loadMoreData_rati
 */
 $route['books/get_collection_by_username'] = 'BooksController/get_collection_by_username';
 $route['books/add_to_collection'] = 'BooksController/add_to_collection';
+$route['books/remove_from_collection'] = 'BooksController/remove_from_collection';
 $route['books/create_collection'] = 'BooksController/create_collection';
-
+$route['books/edit_collection_name'] = 'BooksController/edit_collection_name';
+$route['books/delete_collection'] = 'BooksController/delete_collection';

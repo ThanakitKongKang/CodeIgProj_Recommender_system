@@ -6,8 +6,12 @@
             <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
         </nav>
 
-        <h1 class="display-4 page_title_header page_title_header_no_after">Saved Item <span class="badge badge-secondary count_saved_list"><?= $all_num_rows ?></span></h1>
-        <div class="nav nav-pills font-arial">
+        <h1 class="display-4 page_title_header page_title_header_no_after">Saved Item
+            <span id="title_collection_name" title="" class="small align-self-center text-secondary"></span>
+            <span class="badge badge-secondary count_saved_list"><?= $all_num_rows ?></span>
+            <span id="title_collection_edit" class="small align-self-center" data-toggle='modal' data-target='#edit_collection_modal_saved'></span>
+        </h1>
+        <div class="nav nav-pills font-arial" id="collection_wrapper">
             <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved</a>
             <?php if (($collection_name != FALSE)) {
                     foreach ($collection_name as $cl) { ?>
@@ -15,14 +19,16 @@
 
             <?php }
                 } ?>
+            <a id='create_collection_saved' class='nav-item nav-link text-secondary position-relative' href data-toggle='modal' data-target='#create_collection_modal_saved'><i class='fas fa-plus-circle'></i> Create Collection</a>
         </div>
+
         <div id="saved_list">
         <?php } ?>
 
 
         <?php if (($saved_list != FALSE)) {
             foreach ($saved_list as $saved) { ?>
-                <div class="row bg-light py-3 book_detail_content animated_book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
                     <div class="col pl-4" style="max-width:11rem;">
                         <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
                             <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
@@ -49,6 +55,7 @@
                                 </span>
                                 <span class="small text-secondary" id="span_rating_text">No ratings</span>
                             <?php } ?>
+                            <a class="float-right link move_to_another_collection" data-book_id="<?= $saved['book_id'] ?>" href><i class="fas fa-ellipsis-h"></i></a>
                         </div>
                         <!-- BOOK detail section -->
                         <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
@@ -82,7 +89,7 @@
                 </div>
             <?php } ?>
 
-        <?php } else if ($this->session->userdata('count_all_saved_list') == 0) { ?>
+        <?php } else if ($all_num_rows == 0) { ?>
 
             <div class="load-more pt-5" lastID="0">
                 <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
@@ -100,7 +107,316 @@
 
         <?php if ($showheader == true) { ?>
         </div>
-    </div> <?php } ?>
+    </div>
+    <!-- create collection modal -->
+    <div class="modal fade slide-bottom" id="create_collection_modal_saved" tabindex="-1" role="dialog" aria-labelledby="create_collection_modal_saved" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Collection</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Collection name</span>
+                        </div>
+                        <input type="text" id="collection_name_input_saved" autofocus class="form-control" placeholder="Give your collection a name...">
+                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 5rem;">1 - 60 characters</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" style="display:none;" class="btn btn-primary create_collection_submit_saved">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- edit collection modal -->
+    <div class="modal fade slide-bottom" id="edit_collection_modal_saved" tabindex="-1" role="dialog" aria-labelledby="edit_collection_modal_saved" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Collection</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Collection name</span>
+                        </div>
+                        <input type="text" id="edit_collection_name_input_saved" autofocus class="form-control" placeholder="Give your collection a name...">
+                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 5rem;">1 - 60 characters</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="mr-auto text-primary" href id="delete_collection_submit_modal">Delete collection</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary edit_collection_submit_saved">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // on modal close
+        $('#create_collection_modal_saved').on('hidden.bs.modal', function() {
+            $('#collection_name_input_saved').val("");
+            $('.create_collection_submit_saved').hide();
+        })
+        // on typing
+        $('#collection_name_input_saved').keyup(function(e) {
+            var typing = $('#collection_name_input_saved').val();
+            checkTypingLength_collection_name_saved(typing);
+        });
+
+        // on submit
+        $('.create_collection_submit_saved').on('click', function(e) {
+            var collection_name = $('#collection_name_input_saved').val();
+            var post_data_create = {
+                'collection_name': collection_name,
+            };
+            // create collection
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/create_collection",
+                data: post_data_create,
+                async: true,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+
+                    if (data == "duplicate") {
+                        toastCreateCollection_duplicate(collection_name);
+                    } else {
+                        toastCreateCollection(collection_name);
+                        appendCollectionName(collection_name);
+                    }
+                    $('#create_collection_modal_saved').modal('hide');
+
+                },
+            })
+        });
+
+        function appendCollectionName(collection_name) {
+            var string_html = '<a class="nav-item nav-link" href="<?= base_url() ?>saved?collection=' + collection_name + '">' + collection_name + '</a>';
+            $("#collection_wrapper .nav-item:last").before(string_html);
+        }
+
+        function checkTypingLength_collection_name_saved(typing) {
+            if (typing.length == 0) {
+                $('.collection_name_input_pattern').hide();
+                $('.create_collection_submit_saved').hide();
+                $('.edit_collection_submit_saved').hide();
+                return;
+            } else if (typing.length > 60) {
+                $('.edit_collection_submit_saved').hide();
+                $('.collection_name_input_pattern').show();
+            } else {
+                $('.edit_collection_submit_saved').show();
+                $('.collection_name_input_pattern').hide();
+                $('.create_collection_submit_saved').show();
+                return;
+            }
+        }
+        var interval = setInterval(function() {
+            $("[data-time-format]").each(function() {
+                var el = $(this);
+                switch (el.attr("data-time-format")) {
+                    case "time-ago":
+                        var timeValue = el.attr("data-time-value")
+                        var strTimeAgo = moment(timeValue).fromNow();
+                        el.text("saved " + strTimeAgo);
+                        console.log("time updated")
+                        break;
+                }
+            });
+        }, 60000);
+
+        $('#edit_collection_modal_saved').on('shown.bs.modal', function() {
+            $(this).find('[autofocus]').focus();
+        });
+
+        // edit on typing
+        $('#edit_collection_name_input_saved').keyup(function(e) {
+            var typing = $('#edit_collection_name_input_saved').val();
+            checkTypingLength_collection_name_saved(typing);
+        });
+
+        // on submit
+        $('.edit_collection_submit_saved').on('click', function(e) {
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var old_collection_name = url.searchParams.get("collection");
+
+            var collection_name = $('#edit_collection_name_input_saved').val();
+            var post_data_edit = {
+                'collection_name': collection_name,
+                'old_collection_name': old_collection_name,
+            };
+            // edit collection
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/edit_collection_name",
+                data: post_data_edit,
+                async: true,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                    if (data == "duplicate") {
+                        toastCreateCollection_duplicate(collection_name);
+                    } else {
+                        toastEditCollection(collection_name);
+                        var interval = setInterval(function() {
+                            window.location.href = "<?= base_url() ?>saved?collection=" + collection_name;
+                            clearInterval(interval);
+                        }, 3000);
+                    }
+                    $('#edit_collection_modal_saved').modal('hide');
+                },
+            })
+        });
+
+        $('#delete_collection_submit_modal').on('click', function(e) {
+            e.preventDefault();
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var collection_name = url.searchParams.get("collection");
+
+            swalAlertConfirmDelete(collection_name);
+
+        });
+
+        function swalAlertConfirmDelete(collection_name) {
+            $('#edit_collection_modal_saved').modal('hide');
+            Swal.fire({
+                title: 'Delete collection : ' + collection_name + '?',
+                type: 'warning',
+                html: "<span class='text-muted font-arial'>All items in collection will be unsaved</span>",
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.value) {
+                    var post_data_delete = {
+                        'collection_name': collection_name,
+                    };
+                    // delete collection
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo base_url(); ?>books/delete_collection",
+                        data: post_data_delete,
+                        async: true,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
+                        success: function(data) {
+                            $(document.body).css({
+                                'cursor': 'default'
+                            });
+                            toastDeleteCollection(collection_name);
+                            var interval = setInterval(function() {
+                                window.location.href = "<?= base_url() ?>saved";
+                                clearInterval(interval);
+                            }, 1000);
+                        },
+                    })
+                } else {
+                    $('#edit_collection_modal_saved').modal('show');
+                }
+            })
+        }
+        $('.move_to_another_collection').on('click', function(e) {
+            e.preventDefault();
+            var rect = $(this).offset();
+            var book_id = $(this).data("book_id");
+            appearCollection_move(book_id, rect);
+        });
+
+        function appearCollection_move(book_id, rect) {
+            $('#save_collection_menu').css({
+                "top": (rect.top - 100),
+                "left": (rect.left - 0),
+            });
+            var formData = {
+                'book_id': book_id,
+            };
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/get_collection_by_username",
+                async: true,
+                data: formData,
+                beforeSend: function() {
+                    $(".load_collection_menu").show();
+                },
+                success: function(data) {
+                    $(".load_collection_menu").hide();
+                    var hr_html = "<hr class='m-0'>";
+                    var create_html = "<div id='create_collection' class='dropdown-item small text-secondary' data-toggle='modal' data-target='#create_collection_modal' data-book_id='" + book_id + "'><i class='fas fa-plus-circle'></i> Create Collection</div>";
+                    if (data == "zero") {
+                        $('#collection_menu').html("<div class='text-secondary text-center font-arial'>You haven't create any collection.</div>" + hr_html + create_html);
+                    } else {
+                        $('#collection_menu').html(data + hr_html + create_html);
+                    }
+                    $('#save_collection_menu').show();
+                }
+            })
+        }
+        $(document).on('click', '.collection_remove_to_default', function(e) {
+            var collection_name = $(this).data("cn");
+            var book_id = $('#create_collection').data("book_id");
+            var formData = {
+                'book_id': book_id,
+            };
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/remove_from_collection",
+                async: true,
+                data: formData,
+                beforeSend: function() {
+                    $('#save_collection_menu').hide();
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                    toastRemoveFromCollection(collection_name);
+                }
+            })
+        });
+
+        $('.move_to_another_collection').on('mouseover', function(e) {
+            $(this).addClass("hovered");
+        });
+        $('.move_to_another_collection').on('mouseout', function(e) {
+            $(this).removeClass("hovered");
+        });
+    </script>
+<?php } ?>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -241,6 +557,10 @@
         var collection_name_param2 = collection_name_param.replace(regex, "-")
         if (collection_name_param2 != "-") {
             $('.' + collection_name_param2).addClass("active");
+            $('#title_collection_name').html("- " + collection_name_param);
+            $('#title_collection_name').prop('title', collection_name_param);
+            $('#title_collection_edit').html("<i class='fas fa-ellipsis-h'></i>");
+            $('#edit_collection_name_input_saved').val(collection_name_param);
         }
 
 
