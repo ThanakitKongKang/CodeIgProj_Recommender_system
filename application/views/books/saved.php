@@ -15,10 +15,14 @@
         <div class="row mb-5">
             <div class="col-3 mt-3 pr-5" id="collection_col_wrapper">
                 <div class="nav nav-pills font-arial flex-column" id="collection_wrapper">
-                    <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved <span class="count_all_saved_list badge <?php if (isset($all_saved)) echo "badge-light";
-                                                                                                                                                                                        else echo "badge-secondary"; ?> float-right" style="font-size:1em"><?= $this->session->userdata('count_all_saved_list') ?></span></a>
-                    <?php if (($collection_name != FALSE)) {
-                            foreach ($collection_name as $cl) { ?>
+                    <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved
+                        <span class="count_all_saved_list badge  <?php if (isset($all_saved)) echo "badge-light";
+                                                                        else echo "badge-secondary"; ?> float-right" style="font-size:1em"><?= $this->session->userdata('count_all_saved_list') ?>
+                        </span>
+                    </a>
+                    <?php if (($collection_name != FALSE)) { ?>
+                        <hr class="w-100 my-2">
+                        <?php foreach ($collection_name as $cl) { ?>
                             <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?><span class="badge badge-secondary float-right" style="font-size:1em" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
 
                     <?php }
@@ -66,7 +70,7 @@
                             <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
                             <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
                             <div class="book_detail_text pt-1 mb-3">Author : <?= $saved['author'] ?></div>
-                            <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:23rem;"></span>
+                            <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:16rem;"></span>
                             <?php if ($saved['collection_name'] != 'none') { ?>
                                 <span class="small font-arial text-secondary">Saved to </span><a href="<?= base_url() ?>saved?collection=<?= $saved['collection_name'] ?>" class="font-arial" style="background:#cde8ff;padding:0.25rem"><?= $saved['collection_name'] ?></a>
                             <?php } ?>
@@ -369,9 +373,9 @@
                                 clearInterval(interval);
                             }, 1000);
 
-                             // calculate count to saved_count_all
-                             var current_count = Number ($('.count_all_saved_list').html());
-                            var to_be_removed = Number ($('#' + collection_name).html());
+                            // calculate count to saved_count_all
+                            var current_count = Number($('.count_all_saved_list').html());
+                            var to_be_removed = Number($('#' + collection_name).html());
                             $('.count_all_saved_list').html(current_count - to_be_removed);
 
                             //remove collection element
@@ -524,7 +528,7 @@
                         toastBookmarkUnsaved();
 
                         parent.addClass("opacity");
-                        parent.find('.removed_item').html("Unsaved");
+                        parent.find('.removed_item').html("Removed from a saved list");
                         bookmark_trigger_count++;
 
                         this_elm.find('i').removeClass("fas");
