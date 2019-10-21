@@ -11,105 +11,111 @@
             <span class="badge badge-secondary count_saved_list"><?= $all_num_rows ?></span>
             <span id="title_collection_edit" class="small align-self-center" data-toggle='modal' data-target='#edit_collection_modal_saved'></span>
         </h1>
-        <div class="nav nav-pills font-arial" id="collection_wrapper">
-            <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved</a>
-            <?php if (($collection_name != FALSE)) {
-                    foreach ($collection_name as $cl) { ?>
-                    <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?></a>
 
-            <?php }
-                } ?>
-            <a id='create_collection_saved' class='nav-item nav-link text-secondary position-relative' href data-toggle='modal' data-target='#create_collection_modal_saved'><i class='fas fa-plus-circle'></i> Create Collection</a>
-        </div>
+        <div class="row mb-5">
+            <div class="col-3 mt-3 pr-5" id="collection_col_wrapper">
+                <div class="nav nav-pills font-arial flex-column" id="collection_wrapper">
+                    <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved <span class="count_all_saved_list badge <?php if (isset($all_saved)) echo "badge-light";
+                                                                                                                                                                                        else echo "badge-secondary"; ?> float-right" style="font-size:1em"><?= $this->session->userdata('count_all_saved_list') ?></span></a>
+                    <?php if (($collection_name != FALSE)) {
+                            foreach ($collection_name as $cl) { ?>
+                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?><span class="badge badge-secondary float-right" style="font-size:1em" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
 
-        <div id="saved_list">
-        <?php } ?>
+                    <?php }
+                        } ?>
+                    <a id='create_collection_saved' class='btn btn-outline-secondary nav-item nav-link position-relative mt-3' href data-toggle='modal' data-target='#create_collection_modal_saved'><i class='fas fa-plus-circle'></i> Create Collection</a>
+                </div>
+            </div>
+            <div id="saved_list" class="col-9">
+
+            <?php } ?>
 
 
-        <?php if (($saved_list != FALSE)) {
-            foreach ($saved_list as $saved) { ?>
-                <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
-                    <div class="col pl-4" style="max-width:11rem;">
-                        <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
-                            <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
-                        </a>
-                    </div>
-                    <!-- RATE section -->
-                    <div class="col">
-                        <div>
-                            <?php if ($saved['count_rate'] != 0) { ?>
-                                <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
-                                        <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
-                                            <?= number_format($saved['b_rate'], 1); ?>
-                                        </span>
-                                        <span class="small" style="color: #6b6b6b;">/5</span></span>
-                                </span>
-                                <span class="small text-secondary">based on <?= $saved['count_rate'] ?> user<?php if ($saved['count_rate'] != 1) echo "s";  ?> </span>
+            <?php if (($saved_list != FALSE)) {
+                foreach ($saved_list as $saved) { ?>
+                    <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                        <div class="col pl-4" style="max-width:11rem;">
+                            <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
+                                <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
+                            </a>
+                        </div>
+                        <!-- RATE section -->
+                        <div class="col">
+                            <div>
+                                <?php if ($saved['count_rate'] != 0) { ?>
+                                    <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
+                                            <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
+                                                <?= number_format($saved['b_rate'], 1); ?>
+                                            </span>
+                                            <span class="small" style="color: #6b6b6b;">/5</span></span>
+                                    </span>
+                                    <span class="small text-secondary">based on <?= $saved['count_rate'] ?> user<?php if ($saved['count_rate'] != 1) echo "s";  ?> </span>
 
-                            <?php } else { ?>
-                                <span class="badge badge-secondary" style="font-size: 1rem;" id="span_rating"><span class="font-arial">
-                                        <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
-                                            0
-                                        </span>
-                                        <span class="small">/5</span></span>
-                                </span>
-                                <span class="small text-secondary" id="span_rating_text">No ratings</span>
+                                <?php } else { ?>
+                                    <span class="badge badge-secondary" style="font-size: 1rem;" id="span_rating"><span class="font-arial">
+                                            <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
+                                                0
+                                            </span>
+                                            <span class="small">/5</span></span>
+                                    </span>
+                                    <span class="small text-secondary" id="span_rating_text">No ratings</span>
+                                <?php } ?>
+                                <a class="float-right link move_to_another_collection" title="Move item to another collection" data-book_id="<?= $saved['book_id'] ?>" href><i class="fas fa-ellipsis-h"></i></a>
+                            </div>
+                            <!-- BOOK detail section -->
+                            <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
+                            <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
+                            <div class="book_detail_text pt-1 mb-3">Author : <?= $saved['author'] ?></div>
+                            <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:23rem;"></span>
+                            <?php if ($saved['collection_name'] != 'none') { ?>
+                                <span class="small font-arial text-secondary">Saved to </span><a href="<?= base_url() ?>saved?collection=<?= $saved['collection_name'] ?>" class="font-arial" style="background:#cde8ff;padding:0.25rem"><?= $saved['collection_name'] ?></a>
                             <?php } ?>
-                            <a class="float-right link move_to_another_collection" data-book_id="<?= $saved['book_id'] ?>" href><i class="fas fa-ellipsis-h"></i></a>
-                        </div>
-                        <!-- BOOK detail section -->
-                        <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
-                        <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
-                        <div class="book_detail_text pt-1 mb-3">Author : <?= $saved['author'] ?></div>
-                        <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:23rem;"></span>
-                        <?php if ($saved['collection_name'] != 'none') { ?>
-                            <span class="small font-arial text-secondary">Saved to </span><a href="<?= base_url() ?>saved?collection=<?= $saved['collection_name'] ?>" class="font-arial" style="background:#cde8ff;padding:0.25rem"><?= $saved['collection_name'] ?></a>
-                        <?php } ?>
-                        <!-- bookmark trigger -->
-                        <div class="pr-4 w-100">
-                            <hr>
-                            <button class="btn btn-primary bookmark_trigger<?= $round_count ?>" data-book_id="<?= $saved['book_id'] ?>">
-                                <i class="fas fa-bookmark bookmark_icon"></i>
-                                <span class="bookmark_trigger_text font-arial"> unsave book</span>
-                            </button>
+                            <!-- bookmark trigger -->
+                            <div class="pr-4 w-100">
+                                <hr>
+                                <button class="btn btn-primary bookmark_trigger<?= $round_count ?>" data-book_id="<?= $saved['book_id'] ?>">
+                                    <i class="fas fa-bookmark bookmark_icon"></i>
+                                    <span class="bookmark_trigger_text font-arial"> unsave book</span>
+                                </button>
 
-                            <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" title="<?= $saved['date'] ?>" style="float:right;cursor:default;"><?= $saved['date'] ?></span>
+                                <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" title="<?= $saved['date'] ?>" style="float:right;cursor:default;"><?= $saved['date'] ?></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php $i++;
-                }
-                if ($num_rows == 5 &&  $this->session->userdata('count_all_saved_list') != $i) { ?>
-                <div class="load-more text-center justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
-                    <!-- <img src="<?php echo base_url('assets/img/loading.gif'); ?>" /> -->
+                <?php $i++;
+                    }
+                    if ($num_rows == 5 &&  $this->session->userdata('count_all_saved_list') != $i) { ?>
+                    <div class="load-more text-center justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
+                        <!-- <img src="<?php echo base_url('assets/img/loading.gif'); ?>" /> -->
 
-                    <div class="spinner-border text-primary mr-3" role="status">
-                        <span class="sr-only">Loading...</span>
+                        <div class="spinner-border text-primary mr-3" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Loading...
                     </div>
-                    Loading...
-                </div>
-            <?php } else { ?>
+                <?php } else { ?>
+                    <div class="load-more pt-5" lastID="0">
+                    </div>
+                <?php } ?>
+
+            <?php } else if ($all_num_rows == 0) { ?>
+
                 <div class="load-more pt-5" lastID="0">
+                    <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
+                    <div class="text-muted text-center">Save a book to get started!</div>
+                    <div class="position:relative text-center">
+                        <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:65rem" alt="">
+                    </div>
+                </div>
+
+            <?php } else if ($num_rows == 0) { ?>
+                <div class="load-more pt-5" lastID="0">
+
                 </div>
             <?php } ?>
 
-        <?php } else if ($all_num_rows == 0) { ?>
-
-            <div class="load-more pt-5" lastID="0">
-                <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
-                <div class="text-muted text-center">Save a book to get started!</div>
-                <div class="position:relative text-center">
-                    <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:65rem" alt="">
-                </div>
+            <?php if ($showheader == true) { ?>
             </div>
-
-        <?php } else if ($num_rows == 0) { ?>
-            <div class="load-more pt-5" lastID="0">
-
-            </div>
-        <?php } ?>
-
-        <?php if ($showheader == true) { ?>
         </div>
     </div>
     <!-- create collection modal -->
@@ -466,7 +472,7 @@
                 'book_id': book_id,
             };
             var parent = this_elm.parents('.book_detail_content ');
-            var count_all_saved_list = $('#count_all_saved_list').html();
+            var count_all_saved_list = $('.count_all_saved_list').html();
             var count_saved_list = $('.count_saved_list').html();
 
             $.ajax({
@@ -489,13 +495,21 @@
                         parent.find('.removed_item').html("");
                         bookmark_trigger_count--;
 
+
                         this_elm.find('i').removeClass("far");
                         this_elm.find('i').addClass("fas");
                         this_elm.find('span').html(" unsave book");
                         count_saved_list++;
                         count_all_saved_list++;
                         $('.count_saved_list').html(count_saved_list);
-                        $('#count_all_saved_list').html(count_all_saved_list);
+                        $('.count_all_saved_list').html(count_all_saved_list);
+
+                        // count left side change
+                        var url_string = window.location.href;
+                        var url = new URL(url_string);
+                        var collection_name_param = url.searchParams.get("collection") ? url.searchParams.get("collection") : " ";
+                        if (collection_name_param != " ")
+                            $('#' + collection_name_param).html(Number($('#' + collection_name_param).html()) + 1);
 
                     } else if (data == "removed") {
                         toastBookmarkUnsaved();
@@ -511,7 +525,15 @@
                         count_all_saved_list--;
 
                         $('.count_saved_list').html(count_saved_list);
-                        $('#count_all_saved_list').html(count_all_saved_list);
+                        $('.count_all_saved_list').html(count_all_saved_list);
+
+                        // count left side change
+                        var url_string = window.location.href;
+                        var url = new URL(url_string);
+                        var collection_name_param = url.searchParams.get("collection") ? url.searchParams.get("collection") : " ";
+                        if (collection_name_param != " ")
+                            $('#' + collection_name_param).html(Number($('#' + collection_name_param).html()) - 1);
+
                     }
                 }
             })
@@ -583,6 +605,9 @@
             $('#title_collection_name').prop('title', collection_name_param);
             $('#title_collection_edit').html("<i class='fas fa-ellipsis-h'></i>");
             $('#edit_collection_name_input_saved').val(collection_name_param);
+            $('#'+collection_name_param2).removeClass("badge-secondary");
+            $('#'+collection_name_param2).addClass("badge-light");
+
         }
 
 

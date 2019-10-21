@@ -1203,10 +1203,6 @@ li.select2-results__option {
 	color: #fff !important;
 }
 
-#create_collection_saved {
-	padding-left: 2rem
-}
-
 #title_collection_name {
 	position: relative;
 	max-width:30rem;
@@ -1230,4 +1226,15 @@ li.select2-results__option {
 
 #title_collection_edit:hover{
 	color: #506b84 !important;
+}
+
+#collection_col_wrapper::after{
+    position: absolute;
+    background-color: #0000000a;
+    content: "";
+    min-width: 1px;
+	height: 100%;
+	min-height:80vh;
+    top: 0px;
+    left: 16rem;
 }

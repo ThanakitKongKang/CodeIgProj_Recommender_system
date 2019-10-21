@@ -597,11 +597,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 },
                 success: function(data) {
                     $('#create_collection_modal').modal('hide');
-                    var post_data_add = {
-                        'book_id': book_id,
-                        'collection_name': collection_name,
-                    };
-                    add_to_collection_ajax(post_data_add, collection_name);
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                    if (data == "duplicate") {
+                        toastCreateCollection_duplicate(collection_name);
+                    } else {
+                        var post_data_add = {
+                            'book_id': book_id,
+                            'collection_name': collection_name,
+                        };
+                        add_to_collection_ajax(post_data_add, collection_name);
+                    }
                 }
             })
         });

@@ -112,7 +112,16 @@ class Bookmark_model extends BaseModel
         $sql = "SELECT collection_name FROM `saved_book_collection` where username = ?";
         $query = $this->db->query($sql, array($username));
         if ($query->num_rows() > 0) {
-            $array = json_decode(json_encode($query->result()), True);
+            $i = 0;
+            $sql_count = "SELECT COUNT(book_id) as count FROM `saved_book` where username = ? and collection_name = ?";
+            foreach ($query->result_array() as $row) {
+                $query2 = $this->db->query($sql_count, array($username, $row["collection_name"]));
+                $count_result = $query2->row();
+                $array[$i]["collection_name"] = $row["collection_name"];
+                $array[$i]["count_this_collection"] = $count_result->count;
+                $i++;
+                echo $count_result;
+            }
             return $array;
         } else {
             return FALSE;

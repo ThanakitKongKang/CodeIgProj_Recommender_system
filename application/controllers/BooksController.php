@@ -185,7 +185,7 @@ class BooksController extends CI_Controller
             $data["collection_get"] = $collection_get;
 
             $data["collection_name"] = $this->bookmark_model->get_collection_by_username($username);
-
+            $data["all_saved_count"] = 
             $this->load->view('./header', $header);
             $this->load->view('books/saved', $data);
             $this->load->view('footer');
@@ -315,7 +315,7 @@ class BooksController extends CI_Controller
             $string_html = "";
             foreach ($collection as $cl) {
                 if ($cl["collection_name"] == $collection_name_in["collection_name"]) {
-                    $string_html .= "<div data-cn='" . $cl["collection_name"] . "' class='dropdown-item text-secondary collection_remove_to_default'>" . $cl["collection_name"] . "<i class='fas fa-check-circle text-primary float-right pt-1'></i></div>";
+                    $string_html .= "<div data-cn='" . $cl["collection_name"] . "' title='Click to remove from current collection.' class='dropdown-item text-secondary collection_remove_to_default'>" . $cl["collection_name"] . "<i class='fas fa-check-circle text-primary float-right pt-1'></i></div>";
                 } else {
                     $string_html .= "<div class='dropdown-item collection_select'>" . $cl["collection_name"] . "</div>";
                 }
