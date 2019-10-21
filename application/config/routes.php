@@ -60,40 +60,6 @@ $route['translate_uri_dashes'] = FALSE;
 $route['welcome'] = 'Welcome';
 /*
 | -------------------------------------------------------------------------
-| CONTACTS
-| -------------------------------------------------------------------------
-*/
-$route['contacts'] = 'contacts';
-$route['create'] = 'contacts/create';
-$route['store'] = 'contacts/store';
-$route['edit/:id'] = 'contacts/edit';
-$route['update/:id'] = 'contacts/update';
-$route['delete/:id'] = 'contacts/delete';
-$routes['users'] = 'welcome/users';
-/*
-| -------------------------------------------------------------------------
-| ACTIVE RECORD
-| -------------------------------------------------------------------------
-*/
-$route['ar'] = 'activerecordcontroller';
-$route['ar/insert'] = 'activerecordcontroller/store_order';
-$route['ar/update'] = 'activerecordcontroller/update_order';
-/*
-| -------------------------------------------------------------------------
-| AUTHORS : Page Navigation
-| -------------------------------------------------------------------------
-*/
-$route['authors/(:num)'] = 'authors';
-/*
-| -------------------------------------------------------------------------
-| SESSION FLASH DATA
-| -------------------------------------------------------------------------
-*/
-$route['flash_index'] = 'SessionController';
-$route['flash_message'] = 'SessionController/flash_message';
-
-/*
-| -------------------------------------------------------------------------
 | FILE UPLOAD
 | -------------------------------------------------------------------------
 */
@@ -107,15 +73,6 @@ $route['store-image'] = 'imageuploadcontroller/store';
 $route['signup'] = 'SessionController/signup';
 $route['login'] = 'SessionController/login';
 $route['logout'] = 'SessionController/logout';
-/*
-| -------------------------------------------------------------------------
-| START
-| -------------------------------------------------------------------------
-*/
-$route['books/pagination'] = 'BooksController/pagination';
-$route['books/pagination/(:num)'] = 'BooksController/pagination';
-
-
 /*
 | -------------------------------------------------------------------------
 | INDEX

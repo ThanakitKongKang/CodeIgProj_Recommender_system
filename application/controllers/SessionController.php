@@ -33,14 +33,14 @@ class SessionController extends CI_Controller
                     'field' => 'username',
                     'rules' => 'required',
                     'errors' => array(
-                        'required' => 'กรุณากรอกชื่อผู้ใช้.',
+                        'required' => 'username is required.',
                     ),
                 ),
                 array(
                     'field' => 'password',
                     'rules' => 'required',
                     'errors' => array(
-                        'required' => 'กรุณากรอกรหัสผ่าน.',
+                        'required' => 'password is required.',
                     ),
                 )
             );
@@ -76,7 +76,7 @@ class SessionController extends CI_Controller
                     <?php
                 } else if ($data == FALSE) {
                     $data['title'] = "Login";
-                    $data["feedback"] = "ชื่อผู้ใช้หรือรหัสผ่านผิด";
+                    $data["feedback"] = "Username or Password wrong!";
                     $this->load->view('sessions/login', $data);
                 }
             }
@@ -117,37 +117,37 @@ class SessionController extends CI_Controller
                 'field' => 'username',
                 'rules' => 'required|min_length[3]|max_length[24]|callback_username_check',
                 'errors' => array(
-                    'required' => 'กรุณากรอกชื่อผู้ใช้.',
+                    'required' => 'username is required.',
                 ),
             ),
             array(
                 'field' => 'password',
                 'rules' => 'required',
                 'errors' => array(
-                    'required' => 'กรุณากรอกรหัสผ่าน.',
+                    'required' => 'password is required.',
                 ),
             ),
             array(
                 'field' => 'passconf',
                 'rules' => 'trim|required|matches[password]',
                 'errors' => array(
-                    'required' => 'กรุณายืนยันรหัสผ่าน.',
-                    'matches' => 'รหัสผ่านไม่ตรงกัน',
-                    'trim' => 'รหัสผ่านไม่ตรงกัน',
+                    'required' => 'please confirm your password.',
+                    'matches' => 'password does not match',
+                    'trim' => 'password does not match',
                 ),
             ),
             array(
                 'field' => 'firstname',
                 'rules' => 'required',
                 'errors' => array(
-                    'required' => 'กรุณากรอกชื่อ.',
+                    'required' => 'firsname is required.',
                 ),
             ),
             array(
                 'field' => 'lastname',
                 'rules' => 'required',
                 'errors' => array(
-                    'required' => 'กรุณากรอกนามสกุล.',
+                    'required' => 'lastname is required.',
                 ),
             ),
         );
@@ -181,7 +181,7 @@ class SessionController extends CI_Controller
         $username_exists = $this->users_model->check_exist($str);
 
         if ($username_exists != FALSE) {
-            $this->form_validation->set_message('username_check', 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว');
+            $this->form_validation->set_message('username_check', 'username already taken');
             return FALSE;
         } else if ($username_exists == FALSE) {
             return TRUE;

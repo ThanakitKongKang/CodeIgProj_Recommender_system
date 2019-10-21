@@ -46,13 +46,13 @@
                         <!-- <h3 class="card-title text-center mt-2">Login</h3> -->
                         <form method="post" class="form-signin" action="<?= site_url('login') ?>">
                             <div class="form-label-group">
-                                <input type="text" class="form-control <?php if (!empty(form_error('username'))) echo "border border-danger"; ?>" placeholder="ชื่อผู้ใช้" name="username" id="username" value="<?php echo set_value('username'); ?>">
+                                <input type="text" class="form-control <?php if (!empty(form_error('username'))) echo "border border-danger"; ?>" placeholder="username" name="username" id="username" value="<?php echo set_value('username'); ?>">
                                 <!-- <label for="inputUsername">Username</label> -->
                                 <?php if (!empty(form_error('username'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('username') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" class="form-control <?php if (!empty(form_error('password'))) echo "border border-danger"; ?>" placeholder="รหัสผ่าน" name="password" id="password" value="<?php echo set_value('password'); ?>">
+                                <input type="password" class="form-control <?php if (!empty(form_error('password'))) echo "border border-danger"; ?>" placeholder="password" name="password" id="password" value="<?php echo set_value('password'); ?>">
                                 <!-- <label for="inputPassword">Password</label> -->
                                 <?php if (!empty(form_error('password'))) { ?><a tabindex="0" class="text-danger error_message" role="button" data-toggle="popover" data-trigger="focus" title="ข้อผิดพลาด" data-content="<?= form_error('password') ?>"><i class="far fa-times-circle"></i></a> <?php } ?>
                             </div>

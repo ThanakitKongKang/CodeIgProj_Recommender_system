@@ -1205,36 +1205,36 @@ li.select2-results__option {
 
 #title_collection_name {
 	position: relative;
-	max-width:30rem;
+	max-width: 30rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: inline-block;
 	white-space: nowrap;
-	top:0.75rem;
+	top: 0.75rem;
 	text-transform: none;
-	
+
 }
 
 #title_collection_edit {
-	position:relative;
-	top:1rem;
+	position: relative;
+	top: 1rem;
 	float: right;
 	color: #44597c78 !important;
 	cursor: pointer;
 	text-decoration: none !important;
 }
 
-#title_collection_edit:hover{
+#title_collection_edit:hover {
 	color: #506b84 !important;
 }
 
-#collection_col_wrapper::after{
-    position: absolute;
-    background-color: #0000000a;
-    content: "";
-    min-width: 1px;
+#collection_col_wrapper::after {
+	position: absolute;
+	background-color: #0000000a;
+	content: "";
+	min-width: 1px;
 	height: 100%;
-	min-height:80vh;
-    top: 0px;
-    left: 16rem;
+	min-height: 80vh;
+	top: 0px;
+	left: 16rem;
 }
