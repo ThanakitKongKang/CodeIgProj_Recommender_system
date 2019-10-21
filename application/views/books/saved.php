@@ -9,7 +9,7 @@
         <h1 class="display-4 page_title_header page_title_header_no_after">Saved Item
             <span id="title_collection_name" title="" class="small align-self-center text-secondary"></span>
             <span class="badge badge-secondary count_saved_list"><?= $all_num_rows ?></span>
-            <span id="title_collection_edit" class="small align-self-center" data-toggle='modal' data-target='#edit_collection_modal_saved'></span>
+            <span id="title_collection_edit" class="small align-self-center" data-toggle='modal' data-target='#edit_collection_modal_saved' title='Edit collection name'></span>
         </h1>
 
         <div class="row mb-5">
@@ -104,7 +104,7 @@
                     <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
                     <div class="text-muted text-center">Save a book to get started!</div>
                     <div class="position:relative text-center">
-                        <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:65rem" alt="">
+                        <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:50rem" alt="">
                     </div>
                 </div>
 

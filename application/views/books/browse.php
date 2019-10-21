@@ -357,6 +357,7 @@
         $('#popup_menu_rate').click(function(e) {
             $('#popup_menu').hide();
         });
+        
         // bookmarker
         $('#popup_menu_bookmark').click('.bookmark_trigger', function(e) {
             var this_elm = $(this).find('.bookmark_trigger');
@@ -383,7 +384,7 @@
 
                     } else if (data == "removed") {
                         toastBookmarkUnsaved();
-                        
+
                         this_elm.find('i').removeClass("fas");
                         this_elm.find('i').addClass("far");
                         this_elm.find('span').html(" save book");
