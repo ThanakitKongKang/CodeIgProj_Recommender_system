@@ -372,6 +372,9 @@ class BooksController extends CI_Controller
         $username = $this->session->userdata('user')['username'];
         $collection_name = $this->input->post('collection_name');
         $this->bookmark_model->delete_collection_by_id($collection_name, $username);
+
+        // update count all saved list to session
+        $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($username, "count"));
     }
 
     function remove_from_collection()

@@ -19,7 +19,7 @@
                                                                                                                                                                                         else echo "badge-secondary"; ?> float-right" style="font-size:1em"><?= $this->session->userdata('count_all_saved_list') ?></span></a>
                     <?php if (($collection_name != FALSE)) {
                             foreach ($collection_name as $cl) { ?>
-                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?><span class="badge badge-secondary float-right" style="font-size:1em" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
+                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?><span class="badge badge-secondary float-right" style="font-size:1em" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
 
                     <?php }
                         } ?>
@@ -228,7 +228,7 @@
         });
 
         function appendCollectionName(collection_name) {
-            var string_html = '<a class="nav-item nav-link" href="<?= base_url() ?>saved?collection=' + collection_name + '">' + collection_name + '</a>';
+            var string_html = '<a class="nav-item nav-link" href="<?= base_url() ?>saved?collection=' + collection_name + '">' + collection_name + ' <span class="badge badge-secondary float-right" style="font-size:1em" id="' + collection_name + '">0</span></a>';
             $("#collection_wrapper .nav-item:last").before(string_html);
         }
 
@@ -368,6 +368,15 @@
                                 window.location.href = "<?= base_url() ?>saved";
                                 clearInterval(interval);
                             }, 1000);
+
+                             // calculate count to saved_count_all
+                             var current_count = Number ($('.count_all_saved_list').html());
+                            var to_be_removed = Number ($('#' + collection_name).html());
+                            $('.count_all_saved_list').html(current_count - to_be_removed);
+
+                            //remove collection element
+                            $('#nav_' + collection_name).remove();
+                            $('#title_collection_name').remove();
                         },
                     })
                 } else {
@@ -605,9 +614,8 @@
             $('#title_collection_name').prop('title', collection_name_param);
             $('#title_collection_edit').html("<i class='fas fa-ellipsis-h'></i>");
             $('#edit_collection_name_input_saved').val(collection_name_param);
-            $('#'+collection_name_param2).removeClass("badge-secondary");
-            $('#'+collection_name_param2).addClass("badge-light");
-
+            $('#' + collection_name_param2).removeClass("badge-secondary");
+            $('#' + collection_name_param2).addClass("badge-light");
         }
 
 

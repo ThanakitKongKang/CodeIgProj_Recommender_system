@@ -630,6 +630,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         'cursor': 'default'
                     });
                     toastSavedToCollection(collection_name);
+
+                    // saved page nav count change if any possible
                 }
             })
         }
