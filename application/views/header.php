@@ -655,6 +655,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             }
         }
+        $(document).ready(function() {
+            var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+            if (isMobile) {
+                alert("this opened in mobile");
+            }
+        });
     </script>
 
 
