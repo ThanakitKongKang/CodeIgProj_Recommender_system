@@ -68,7 +68,7 @@
                         ?>
                         <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
                                 <div class="row h-100">
-                                    <div class="col-4 hover_img_col2">
+                                    <div class="col-4 hover_img_col2" style="height: 7.875rem;">
 
                                         <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
 
@@ -109,7 +109,7 @@
                         ?>
                         <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
                                 <div class="row">
-                                    <div class="col-4 hover_img_col2">
+                                    <div class="col-4 hover_img_col2" style="height: 7.875rem;">
 
                                         <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
 

@@ -44,8 +44,8 @@
                     <div class="position-absolute w-100" style="top:8rem;padding-right:1.75rem;">
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
-                        <div class="pb-2 font-arial font-weight-bolder"> <?= $book_detail['book_name'] ?></div>
-                        <div class="book_detail_text pt-1">Category : <a class="link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
+                        <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>"  id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
+                        <div class="book_detail_text pt-1"><span class="small">Category : </span><a class="link small" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
                     </div>
 
@@ -70,7 +70,7 @@
                     <div class="pt-5 pr-5" id="similar_book_content">
                         <?php foreach ($recommend_list_detail as $book) { ?>
                             <div class="col-4 hover_img_similar_book_content">
-                                <div>
+                                <div class="position-relative">
                                     <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
                                     <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
                                 </div>
