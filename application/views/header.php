@@ -67,11 +67,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- numeral -->
     <script src="<?= base_url() ?>/assets/js/numeral.min.js"></script>
 
+    <!-- select search -->
+    <link href="<?= base_url() ?>/assets/css/select2.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/stylesheet.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/footer.css">
 
-    <!-- select search -->
-    <link href="<?= base_url() ?>/assets/css/select2.min.css" rel="stylesheet" />
+    <!-- responsive css -->
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_1024.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_768.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_450.css">
+
+
 
 </head>
 
@@ -83,7 +90,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <div class="col-3">
+                    <div class="">
                         <a class="navbar-brand" href="<?= base_url() ?>">
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
                             <span style="font-family:sans-serif;font-size:1.5rem">D-Book</span>
@@ -92,7 +99,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <!-- Search -->
-                    <div class="col-5">
+                    <div class="mx-auto">
                         <form class="form-inline" id="search_form" style="margin:0rem;" action="<?= base_url() ?>search/result">
                             <input class="form-control mr-sm-1" style="width:100%" type="search" name="q" autocomplete="off" placeholder="Search" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
@@ -103,7 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </form>
 
                     </div>
-                    <div class="col-4">
+                    <div class="">
                         <ul class="navbar-nav ml-auto nav-menu">
                             <li class="nav-item <?php if (isset($home)) echo $home; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>
@@ -134,7 +141,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <?php
                             } else { ?>
-                                <li class="nav-item dropdown ml-auto">
+                                <li class="nav-item dropdown">
                                     <div class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </div>
@@ -656,10 +663,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
         }
         $(document).ready(function() {
-            var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
-            if (isMobile) {
-                alert("Mobile phone display is not supported for now, We Recommend using a computer");
-            }
+            // var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+            // if (isMobile) {
+            //     alert("Mobile phone display is not supported for now, We Recommend using a computer");
+            // }
         });
     </script>
 

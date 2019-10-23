@@ -1,0 +1,124 @@
+@media only screen and (max-width: 450px) {
+	.card_img {
+		height: 8rem;
+	}
+
+	.rating-xs {
+		font-size: 10px;
+	}
+
+	#popup_menu {
+		left: 19% !important;
+	}
+
+	#save_collection_menu {
+		left: 52% !important;
+	}
+
+	#similar_book_arrow_left,
+	#similar_book_arrow_right {
+		top: 58rem;
+		opacity: 0.5
+	}
+
+	#rate_modal .modal-body {
+		margin-left: 5rem !important;
+	}
+
+	.page_title_header {
+		font-size: 2rem;
+		margin-top: 1rem;
+	}
+
+	.page_title_header::before {
+		top: 4px;
+	}
+
+	#add_course_modal_trigger {
+		font-size: 0.75rem;
+	}
+
+	#delete_course {
+		font-size: 0.75rem;
+
+	}
+
+	.select2.select2-container.select2-container--default {
+		width: 100% !important;
+	}
+
+	.select2-selection__choice {
+		width: 100%;
+	}
+
+	.select2-selection__choice .selected_course {
+		width: 97%;
+	}
+
+	.content_header {
+		font-size: 0.75rem;
+	}
+
+	.course_row>div {
+		font-size: 0.75rem;
+	}
+
+	.collection_wrapper_mobile {
+		display: flex !important;
+		margin-top: 2rem;
+	}
+
+	.collection_wrapper_desktop {
+		display: none
+	}
+
+	.nav_user {
+		font-size: 0.75rem;
+	}
+
+	#saved_list {
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+
+
+	.removed_item {
+		left: 14rem !important;
+	}
+
+	#title_collection_name {
+		display: none;
+	}
+
+	.empty_saved_book_img>img {
+		max-width: 21rem !important;
+	}
+
+	.book_detail_content_rating_history>div:first-child {
+		padding: 0;
+	}
+
+	.book_detail_content.book_detail_content_rating_history {
+		height: 7rem;
+	}
+
+	.book_detail_content_rating_history .book_detail_content_rating_history_name {
+		font-size: 0.75rem;
+	}
+
+	.author_text_rating_history {
+		font-size: 0.75rem;
+
+	}
+
+	.book_detail_content_rating_history>div:last-child {
+		font-size: 0.75rem;
+	}
+
+	.book_detail_content_rating_history div:not(.rating-stars) {
+		padding-left: 3px;
+		padding-right: 3px;
+
+	}
+
+}

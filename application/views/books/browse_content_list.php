@@ -1,11 +1,11 @@
 <div class="row no-gutters animation_enter_softly">
     <?php if (($content_list != FALSE)) {
         foreach ($content_list as $content) { ?>
-            <div class="col-4">
-                <div class="py-3" style="width:21.5rem;">
-                    <div class="card card_hover_img" style="width: 21.5rem;">
+            <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;">
+                <div class="py-3">
+                    <div class="card card_hover_img">
                         <a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>">
-                            <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.PNG" style="height:28rem"></a>
+                            <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.PNG"></a>
                         <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" class="stretched-link"></a></div>
                         <div class="card-body pb-0 pt-2" style="height:8rem;">
                             <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $content["book_type"]))) ?>"><span><?= $content['book_type'] ?></span></a>
@@ -76,7 +76,7 @@
                 if ((scroll_value >= height) && (lastID != 0) && num_rows == 9 && call == 0) {
                     // console.log(scroll_value + " >= " + height + " AND lastID : " + lastID + " num_rows : " + num_rows + " call : " + call + " i : " + <?= $i ?>);
                     call = 1;
-                    var category = $('#mid-title').html();
+                    var category = $('#mid-title_browse').html();
                     var post_data = {
                         'start': lastID,
                         'i': i,

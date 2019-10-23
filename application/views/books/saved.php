@@ -1,6 +1,6 @@
 <?php if ($showheader == true) { ?>
     <div class="container">
-        <nav class="nav nav-pills justify-content-end font-arial">
+        <nav class="nav nav-pills justify-content-end font-arial nav_user">
             <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
             <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
             <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
@@ -12,18 +12,29 @@
             <span id="title_collection_edit" class="small align-self-center" data-toggle='modal' data-target='#edit_collection_modal_saved' title='Edit collection name'></span>
         </h1>
 
+        <div class="nav nav-pills font-arial collection_wrapper_mobile" id="collection_wrapper" style="display:none">
+            <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved</a>
+            <?php if (($collection_name != FALSE)) {
+                    foreach ($collection_name as $cl) { ?>
+                    <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?></a>
+
+            <?php }
+                } ?>
+            <a id='create_collection_saved' class='nav-item nav-link text-secondary position-relative' href data-toggle='modal' data-target='#create_collection_modal_saved'><i class='fas fa-plus-circle'></i> Create Collection</a>
+        </div>
+
         <div class="row mb-5">
-            <div class="col-3 mt-3 pr-5" id="collection_col_wrapper">
+            <div class="col-3 mt-3 pr-5 collection_wrapper_desktop" id="collection_col_wrapper">
                 <div class="nav nav-pills font-arial flex-column" id="collection_wrapper">
-                    <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved
+                    <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?> position-relative" href="<?= base_url() ?>saved"><span>All saved</span>
                         <span class="count_all_saved_list badge  <?php if (isset($all_saved)) echo "badge-light";
-                                                                        else echo "badge-secondary"; ?> float-right" style="font-size:1em"><?= $this->session->userdata('count_all_saved_list') ?>
+                                                                        else echo "badge-secondary"; ?>" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;"><?= $this->session->userdata('count_all_saved_list') ?>
                         </span>
                     </a>
                     <?php if (($collection_name != FALSE)) { ?>
                         <hr class="w-100 my-2">
                         <?php foreach ($collection_name as $cl) { ?>
-                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?><span class="badge badge-secondary float-right" style="font-size:1em" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
+                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?> position-relative" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><span><?= $cl["collection_name"] ?></span><span class="badge badge-secondar" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
 
                     <?php }
                         } ?>
@@ -37,14 +48,14 @@
 
             <?php if (($saved_list != FALSE)) {
                 foreach ($saved_list as $saved) { ?>
-                    <div class="row bg-light py-3 book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
-                        <div class="col pl-4" style="max-width:11rem;">
+                    <div class="row bg-light py-3 book_detail_content_saved mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                        <div class="col-sm pl-4 mx-auto" style="max-width:11rem;">
                             <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
                                 <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
                             </a>
                         </div>
                         <!-- RATE section -->
-                        <div class="col">
+                        <div class="col-sm">
                             <div>
                                 <?php if ($saved['count_rate'] != 0) { ?>
                                     <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
@@ -67,7 +78,7 @@
                                 <a class="float-right link move_to_another_collection" title="Move item to another collection" data-book_id="<?= $saved['book_id'] ?>" href><i class="fas fa-ellipsis-h"></i></a>
                             </div>
                             <!-- BOOK detail section -->
-                            <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
+                            <div class="my-2 font-arial font-weight-bolder book_detail_content_saved_name"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
                             <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
                             <div class="book_detail_text pt-1 mb-3">Author : <?= $saved['author'] ?></div>
                             <span class="removed_item position-absolute text-primary" style="top:9.5rem;left:16rem;"></span>
@@ -107,7 +118,7 @@
                 <div class="load-more pt-5" lastID="0">
                     <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
                     <div class="text-muted text-center">Save a book to get started!</div>
-                    <div class="position:relative text-center">
+                    <div class="position:relative text-center empty_saved_book_img">
                         <img src="<?= base_url() ?>assets/img/fogg-list-is-empty.png" style="max-width:50rem" alt="">
                     </div>
                 </div>
@@ -484,7 +495,7 @@
             var bookmark_data = {
                 'book_id': book_id,
             };
-            var parent = this_elm.parents('.book_detail_content ');
+            var parent = this_elm.parents('.book_detail_content_saved ');
             var count_all_saved_list = $('.count_all_saved_list').html();
             var count_saved_list = $('.count_saved_list').html();
 

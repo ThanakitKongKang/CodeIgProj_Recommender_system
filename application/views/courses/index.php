@@ -1,5 +1,5 @@
 <div class="container">
-    <nav class="nav nav-pills justify-content-end font-arial">
+    <nav class="nav nav-pills justify-content-end font-arial nav_user">
         <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
         <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
         <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
@@ -9,22 +9,22 @@
     <div id="course_content" class="mt-4">
         <!-- content header -->
         <div class="row justify-content-end mx-0 w-100" style="height:5rem;position: relative;background: linear-gradient(to left, #0062E6, #33AEFF);">
-            <div class="col-8"></div>
-            <div class="col-4 align-self-center text-right font-arial">
+            <div class="col-6"></div>
+            <div class="col-6 align-self-center text-right font-arial">
                 <button class="btn btn-danger font-weight-bold text-white" style="display:none" id="delete_course"><i class="fas fa-trash pr-3 fa-xs"></i>Remove</button>
                 <button class="btn btn-light font-weight-bold text-primary" data-toggle="modal" data-target="#course_registeration" id="add_course_modal_trigger"><i class="fas fa-plus pr-3 fa-xs"></i>Add a course</button>
             </div>
         </div>
 
         <!-- content -->
-        <div class="row mx-0 font-arial" style="min-height:40rem;border-bottom-left-radius: 7.5px;border-bottom-right-radius: 7.5px;border:1px solid #4c5a673d;background:#d0e8ff3d">
+        <div class="row mx-0 font-arial course_content_wrapper" style="min-height:40rem;border-bottom-left-radius: 7.5px;border-bottom-right-radius: 7.5px;border:1px solid #4c5a673d;background:#d0e8ff3d">
             <div class="col-12" id="content_to_append">
                 <?php if ($course_registered != FALSE) { ?>
                     <div class="row py-3 font-weight-bold font-arial content_header" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">
                         <div class="col-1"></div>
                         <div class="col-2">ID</div>
-                        <div class="col-7">Name</div>
-                        <div class="col-2">Date added</div>
+                        <div class="col-6">Name</div>
+                        <div class="col-3">Date added</div>
                     </div>
                     <?php foreach ($course_registered as $course) : ?>
                         <div class="row bg-white py-3 course_row">
@@ -32,12 +32,12 @@
                                 <input type="checkbox" class="checkbox" style="transform: scale(1.5);">
                             </div>
                             <div class="col-2 align-self-center content_course_id" data-course_id="<?= $course['course_id'] ?>"><?= $course['course_id'] ?></div>
-                            <div class="col-7">
+                            <div class="col-6">
                                 <div> <?= $course['course_name_en'] ?></div>
                                 <div class="font-kanit"><?= $course['course_name_th'] ?></div>
                             </div>
                             <!-- monment js -->
-                            <div class="col-2 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $course['date'] ?>" title="<?= $course['date'] ?>"><?= $course['date'] ?></div>
+                            <div class="col-3 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $course['date'] ?>" title="<?= $course['date'] ?>"><?= $course['date'] ?></div>
 
                         </div>
                     <?php endforeach;

@@ -1,0 +1,67 @@
+@media only screen and (max-width: 1024px) {
+	.card_img {
+		height: 22rem;
+	}
+
+	.text-col-2-name>a {
+		-webkit-line-clamp: 2;
+	}
+
+	#navbarNavDropdown-browse>ul>li>a {
+		font-size: 1rem;
+	}
+
+	#app_mid_title>div>img {
+		position: absolute;
+		max-width: 6rem;
+		left: 44%;
+		top: -1rem;
+	}
+
+	#mid-title_browse {
+		width: 100%;
+		font-size: 2rem;
+		margin-top: 3rem;
+	}
+
+	.book_detail_content:not(.book_detail_content_index)>div>div {
+		padding-left: 0 !important;
+	}
+
+	.book_detail_content:not(.book_detail_content_index) hr {
+		margin: 0.5rem;
+	}
+
+	.book_detail_content:not(.book_detail_content_index) {
+		height: 21rem;
+	}
+
+	#similar_book_arrow_left,
+	#similar_book_arrow_right {
+		top: 29.5rem;
+		opacity: 0.5
+	}
+
+	.empty_saved_book_img>img {
+		max-width: 42rem !important;
+	}
+
+	.collection_wrapper_desktop>div>a {
+		width: 13rem;
+	}
+
+	.collection_wrapper_desktop>div>a>span:first-child {
+		width: 10rem;
+	}
+
+	#collection_col_wrapper::after {
+		left: 14.5rem;
+	}
+
+	.book_detail_content.book_detail_content_rating_history {
+		height: 12rem;
+    }
+    .book_detail_content_rating_history_name{
+        -webkit-line-clamp: 3;
+    }
+}

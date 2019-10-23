@@ -1,6 +1,6 @@
 <?php if ($showheader == true) { ?>
     <div class="container">
-        <nav class="nav nav-pills justify-content-end font-arial">
+        <nav class="nav nav-pills justify-content-end font-arial nav_user">
             <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
             <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
             <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
@@ -13,7 +13,7 @@
 
         <?php if (($rating_history_list != FALSE)) {
             foreach ($rating_history_list as $rating_history) { ?>
-                <div class="row bg-light py-3 book_detail_content animated_book_detail_content mt-3" style="border-radius:1rem;border:1px solid #0000000d">
+                <div class="row bg-light py-3 book_detail_content animated_book_detail_content book_detail_content_rating_history mt-3" style="border-radius:1rem;border:1px solid #0000000d">
 
                     <div class="col pl-3" style="max-width: 9rem;">
                         <a href="<?= base_url() ?>book/<?= $rating_history['book_id'] ?>">
@@ -22,8 +22,8 @@
                     </div>
                     <!-- BOOK detail section -->
                     <div class="col-5">
-                        <div class="pb-2 font-arial font-weight-bolder"> <a href="<?= base_url() ?>book/<?= $rating_history['book_id'] ?>" class="link"><?= $rating_history['book_name'] ?></a></div>
-                        <div class="book_detail_text pt-1"><a class="book_detail_text link" style="color:#6c757d" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $rating_history["book_type"]))) ?>"><span><i class="fas fa-tag"></i> <?= $rating_history['book_type'] ?></span></a></div>
+                        <div class="mb-2 font-arial font-weight-bolder book_detail_content_rating_history_name"> <a href="<?= base_url() ?>book/<?= $rating_history['book_id'] ?>" class="link"><?= $rating_history['book_name'] ?></a></div>
+                        <div class="book_detail_text pt-1"><a class="book_detail_text author_text_rating_history link" style="color:#6c757d" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $rating_history["book_type"]))) ?>"><span><i class="fas fa-tag"></i> <?= $rating_history['book_type'] ?></span></a></div>
                     </div>
 
                     <!-- RATE section -->

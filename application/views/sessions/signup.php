@@ -24,6 +24,10 @@
     <script src="<?= base_url() ?>/assets/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/all.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/login.css">
+        <!-- responsive css -->
+        <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_1024.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_768.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_450.css">
 
 </head>
 

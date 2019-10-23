@@ -1,19 +1,19 @@
 <div class="container">
     <div class="row">
         <!-- pdf -->
-        <div class="d-inline-block col" style="height: 90vh!important;width:40vw!important">
+        <div class="d-inline-block col-sm" style="height: 90vh!important;width:40vw!important">
             <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
 
         </div>
         <!-- right section -->
-        <div class="pl-5 col position-relative">
-            <div class="row" style="height:22rem">
+        <div class="pl-5 col-sm position-relative">
+            <div class="row">
                 <div class="col pt-3">
                     <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG">
                 </div>
 
-                <div class="col bg-light pt-3 book_detail_content" style="border-radius:1rem;">
+                <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;">
                     <!-- RATE section -->
                     <div>
                         <div style="padding-left:2.5rem">
@@ -41,10 +41,10 @@
                         <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
                     </div>
                     <!-- BOOK detail section -->
-                    <div class="position-absolute w-100" style="top:8rem;padding-right:1.75rem;">
+                    <div class="w-100">
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
-                        <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>"  id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
+                        <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>" id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
                         <div class="book_detail_text pt-1"><span class="small">Category : </span><a class="link small" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
                     </div>
@@ -109,6 +109,11 @@
     <?php } ?>
 
     $(document).ready(function() {
+        var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+        if (isMobile) {
+            alert("Mobile phone display is not supported , Unable to read an E-book, We Recommend using a desktop");
+        }
+
         var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>
             var not_login = false;

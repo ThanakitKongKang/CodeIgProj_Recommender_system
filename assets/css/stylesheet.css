@@ -2,17 +2,17 @@
 @font-face {
 	font-family: 'Kanit';
 	/* localhost */
-	src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
+	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf"); */
 	/* webhost */
-	/* src: url("https://kkubooksrecommender.online/assets/_etc/Kanit-Regular.ttf"); */
+	src: url("https://kkubooksrecommender.online/assets/_etc/Kanit-Regular.ttf");
 }
 
 @font-face {
 	font-family: 'Oswald';
 	/* localhost */
-	src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf");
+	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf"); */
 	/* webhost */
-	/* src: url("https://kkubooksrecommender.online/assets/_etc/Oswald-Regular.ttf"); */
+	src: url("https://kkubooksrecommender.online/assets/_etc/Oswald-Regular.ttf");
 
 }
 
@@ -168,10 +168,6 @@ body {
 	border-color: #007bff;
 }
 
-/* index */
-#top {
-	height: 37.6rem;
-}
 
 #mid {
 	background-color: #f9f9f9;
@@ -179,7 +175,6 @@ body {
 }
 
 #img-col-1 {
-	height: 29rem;
 	width: 100%;
 	z-index: -1;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
@@ -195,8 +190,7 @@ body {
 
 
 .img-book {
-	height: 23rem;
-	width: 17rem;
+	width: 80%;
 	object-fit: cover;
 	box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25)
 }
@@ -254,7 +248,8 @@ body {
 
 /* #top .col {} */
 
-#mid-title {
+#mid-title,
+#mid-title_browse {
 	color: #353535;
 	font-weight: 700;
 	line-height: 1.3;
@@ -457,12 +452,12 @@ body {
 }
 
 .overlay {
-	margin-left: 15px;
+	/* margin-left: 15px; */
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 22rem;
-	height: 29rem;
+	width: 100%;
+	height: 100%;
 	background-color: rgba(0, 0, 0, 0);
 	transition: background-color 0.5s ease;
 }
@@ -486,9 +481,9 @@ body {
 	color: white;
 	text-shadow: 1px 1px 2px black;
 	/* width: 500px; */
-	left: 4rem;
+	left: 13%;
 	padding: 2rem;
-	top: 4rem;
+	top: 20%;
 	opacity: 0;
 	transition: opacity .35s ease;
 }
@@ -571,12 +566,12 @@ body {
 }
 
 .overlay_mid:not(.ellipsis_menu_trigger_mid) {
-	margin-left: 3rem;
+	/* margin-left: 3rem; */
 	position: absolute;
-	top: 3rem;
-	left: 0;
-	width: 17rem;
-	height: 23rem;
+	top: 0;
+	left: 2.3rem;
+	width: 80%;
+	height: 100%;
 	opacity: 0;
 	background-color: rgba(0, 0, 0, 0);
 	transition: opacity 0.5s ease;
@@ -613,7 +608,8 @@ body {
 
 
 
-.book_detail_content {
+.book_detail_content,
+.book_detail_content_saved {
 	border: 1px solid #0000000d;
 	-webkit-transition: box-shadow .25s;
 	transition: box-shadow .25s;
@@ -622,14 +618,15 @@ body {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0);
 }
 
-.book_detail_content:hover {
+.book_detail_content:hover,
+.book_detail_content_saved:hover {
 	transition-delay: 0ms;
 	-webkit-transition-delay: 0ms;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-
 }
 
-.book_detail_content.animated_book_detail_content:hover {
+.book_detail_content.animated_book_detail_content:hover,
+.book_detail_content_saved.animated_book_detail_content:hover {
 	-webkit-animation: slide-top .5s cubic-bezier(.25, .46, .45, .94) both;
 	animation: slide-top .5s cubic-bezier(.25, .46, .45, .94) both;
 }
@@ -985,6 +982,7 @@ body {
 .card_img {
 	width: 100%;
 	object-fit: cover;
+	height: 28rem;
 }
 
 .live_search_result_option {
@@ -1196,6 +1194,7 @@ li.select2-results__option {
 	padding: 0.5rem;
 	padding-left: 0.75rem;
 	cursor: default;
+
 }
 
 .save_collection_menu:active div div {
@@ -1235,12 +1234,78 @@ li.select2-results__option {
 	height: 100%;
 	min-height: 80vh;
 	top: 0px;
-	left: 16rem;
+	left: 17rem;
 }
 
 #book_detail_section_name {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#img_mid_title {
+	max-width: 8rem;
+	top: 1rem;
+	right: 1rem;
+}
+
+.content_browse_row {
+	margin-right: 1.5rem;
+}
+
+#app_mid_title>div>img {
+	max-width: 8rem;
+	height: 8rem;
+	transform: scaleX(-1);
+}
+
+#modal_label {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.book_detail_content_saved_name {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.collection_wrapper_desktop>div>a {
+	width: 15rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.collection_wrapper_desktop>div>a>span:first-child {
+	width: 12rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.book_detail_content_rating_history_name {
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.author_text_rating_history{
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;

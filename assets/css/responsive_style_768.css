@@ -1,0 +1,159 @@
+@media only screen and (max-width: 768px) {
+
+	/* For mobile phones: */
+	[class*="col-"] {
+		width: 100%;
+	}
+
+	[class*="overlay"] {
+		opacity: 0 !important;
+	}
+
+	.hover_img_content,
+	.hover_img_content_mid {
+		opacity: 0 !important;
+	}
+
+	.hover_img {
+		min-height: 0;
+	}
+
+	.text-col-2-type {
+		font-size: 0.7rem;
+	}
+
+	.text-col-2-name {
+		font-size: 0.9rem;
+	}
+
+	#mid-title {
+		font-size: 2rem;
+	}
+
+	#img_mid_title {
+		display: none;
+	}
+
+	.img-col-2 {
+		max-height: 9rem;
+	}
+
+	.card_img {
+		height: 18rem;
+	}
+
+	.content_browse_row {
+		margin-right: 0.5rem;
+	}
+
+	.card_body_type {
+		font-size: 0.5rem;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		display: block;
+	}
+
+	.card-title {
+		font-size: 0.75rem;
+	}
+
+	.text-card-author {
+		font-size: 0.5rem;
+		right: 0.5rem;
+		bottom: 0.5rem;
+	}
+
+	.card-body {
+		padding: 0.5rem
+	}
+
+	.rater_star_grid {
+		bottom: 1.5rem;
+		left: 0.8rem;
+	}
+
+	.rating-xs {
+		font-size: 16px;
+	}
+
+	.text-col-2-name>a {
+		-webkit-line-clamp: 3;
+	}
+
+	#navbarNavDropdown-browse>ul>li>a {
+		font-size: 1rem;
+	}
+
+	#app_mid_title>div>img {
+		position: absolute;
+		max-width: 4rem;
+		left: 40%;
+		top: -1rem;
+	}
+
+	#mid-title_browse {
+		width: 100%;
+		font-size: 2rem;
+		margin-top: 3rem;
+	}
+
+	.overlay_card {
+		height: 50%;
+	}
+
+	#similar_book_arrow_left,
+	#similar_book_arrow_right {
+		top: 29rem;
+		opacity: 0.5
+	}
+
+	.card-signin {
+		min-height: 50vh;
+	}
+
+	.card-signin .card-img-left {
+		width: 40%;
+	}
+
+	.zero_course img {
+		max-width: 20rem !important;
+	}
+
+	.course_content_wrapper {
+		min-height: 20rem !important;
+	}
+
+	.removed_item {
+		top: 10.5rem !important;
+		left: 11rem !important;
+		font-size: 0.75rem;
+	}
+
+	.collection_wrapper_desktop {
+		padding-right: 0;
+	}
+
+	.empty_saved_book_img>img {
+		max-width: 36rem !important;
+	}
+
+	.collection_wrapper_desktop>div>a {
+		width: 9rem;
+	}
+
+	.collection_wrapper_desktop>div>a>span:first-child {
+		width: 7rem;
+	}
+
+	#collection_col_wrapper::after {
+		left: 10.5rem;
+	}
+
+	.book_detail_content.book_detail_content_rating_history {
+		height: 10rem;
+    }
+    .book_detail_content_rating_history_name{
+        -webkit-line-clamp: 2;
+    }
+}
