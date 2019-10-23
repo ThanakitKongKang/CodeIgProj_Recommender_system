@@ -2,17 +2,17 @@
 @font-face {
 	font-family: 'Kanit';
 	/* localhost */
-	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf"); */
+	src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
 	/* webhost */
-	src: url("https://kkubooksrecommender.online/assets/_etc/Kanit-Regular.ttf");
+	/* src: url("https://kkubooksrecommender.online/assets/_etc/Kanit-Regular.ttf"); */
 }
 
 @font-face {
 	font-family: 'Oswald';
 	/* localhost */
-	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf"); */
+	src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf");
 	/* webhost */
-	src: url("https://kkubooksrecommender.online/assets/_etc/Oswald-Regular.ttf");
+	/* src: url("https://kkubooksrecommender.online/assets/_etc/Oswald-Regular.ttf"); */
 
 }
 
@@ -1255,7 +1255,8 @@ li.select2-results__option {
 	margin-right: 1.5rem;
 }
 
-#app_mid_title>div>img {
+#app_mid_title>div>img,
+#app_mid_title_search_result>div>img {
 	max-width: 8rem;
 	height: 8rem;
 	transform: scaleX(-1);
@@ -1303,10 +1304,14 @@ li.select2-results__option {
 	text-overflow: ellipsis;
 }
 
-.author_text_rating_history{
+.author_text_rating_history {
 	display: -webkit-box;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+#iframe_gg_form {
+	min-height: 120rem;
 }

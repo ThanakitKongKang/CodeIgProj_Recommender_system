@@ -34,7 +34,7 @@
                     <?php if (($collection_name != FALSE)) { ?>
                         <hr class="w-100 my-2">
                         <?php foreach ($collection_name as $cl) { ?>
-                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?> position-relative" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><span><?= $cl["collection_name"] ?></span><span class="badge badge-secondar" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
+                            <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?> position-relative" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><span><?= $cl["collection_name"] ?></span><span class="badge badge-secondary" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
 
                     <?php }
                         } ?>
@@ -115,7 +115,7 @@
 
             <?php } else if ($all_num_rows == 0) { ?>
 
-                <div class="load-more pt-5" lastID="0">
+                <div class="load-more pt-5 zero_saved" lastID="0">
                     <h1 class="font-weight-lighter text-center font-arial">You haven't saved <i class="far fa-bookmark"></i> any item</h1>
                     <div class="text-muted text-center">Save a book to get started!</div>
                     <div class="position:relative text-center empty_saved_book_img">

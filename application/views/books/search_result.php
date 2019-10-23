@@ -1,9 +1,9 @@
 <div class="container">
     <div class="container">
-        <div id="app_mid_title">
+        <div id="app_mid_title_search_result">
             <template>
                 <div class="position-relative row">
-                    <img :src="img_url" style="height:8rem;">
+                    <img :src="img_url">
                     <h1 id="mid-title" class="display-4 font-arial pt-5 text-uppercase" style="left:4rem;">{{title}}</h1>
                 </div>
             </template>
@@ -13,14 +13,14 @@
             <hr>
             <div class="row">
                 <!-- Search result total -->
-                <div class="col-4 pt-2 the_border_right">
+                <div class="col-sm-4 pt-2 the_border_right">
                     <div class="query_text">
                         <?= $total_rows ?> item<?php if ($total_rows > 1) echo "s"; ?> found for "<?= $query ?>"
                     </div>
                 </div>
 
 
-                <div class="col-6 the_border_right">
+                <div class="col-sm-6 the_border_right">
                     <!-- Filter 1 -->
                     <div class="btn-group pr-2">
                         <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle small no_overflow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="category_text">
@@ -59,13 +59,13 @@
                     <!-- Filter clear -->
                     <div class="btn-group pr-2 float-right">
                         <button type="button" class="btn btn-outline-danger" id="filter_clear" style="display:none">
-                            <i class="fas fa-times"></i> Clear
+                            <i class="fas fa-times"></i> <span>Clear</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Sort rate -->
-                <div class="text-right col-2">
+                <div class="text-right col-sm-2">
 
                     <div class="btn-group">
                         <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_sort_rate">
@@ -85,28 +85,28 @@
         </div>
         <!-- Search Result -->
         <?php if (!empty($books)) { ?>
-            <div class="row no-gutters">
+            <div class="row no-gutters justify-content-center">
                 <?php foreach ($books as $book) : ?>
 
-                    <div class="col-4">
-                        <div class="py-3" style="width:21.5rem;">
-                            <div class="card card_hover_img" style="width: 21.5rem;">
+                    <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;">
+                        <div class="py-3">
+                            <div class="card card_hover_img">
                                 <a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>">
-                                    <img class="w-100" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.PNG" style="height:28rem"></a>
+                                    <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.PNG"></a>
                                 <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" class="stretched-link"></a></div>
                                 <div class="card-body pb-0 pt-2" style="height:8rem;">
-                                    <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book->book_type))) ?>"><span><?= $book->book_type ?></span></a>
+                                    <a class="card_body_type ctg card_body_type_search_result" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book->book_type))) ?>"><span><?= $book->book_type ?></span></a>
                                     <?php if ($this->session->userdata('logged_in')) { ?>
                                         <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $book->book_id ?>" data-book_name="<?= $book->book_name ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
                                     <?php } ?>
-                                    <div class="card-title text-col-2-name pt-1"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>"><?= $book->book_name ?></a></div>
-                                    <div class="rater_star_grid">
+                                    <div class="card-title text-col-2-name search_result_name pt-1"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>"><?= $book->book_name ?></a></div>
+                                    <div class="rater_star_grid rater_search_result">
                                         <input value="<?= $book->b_rate ?>" class="rater_star" title="">
                                     </div>
                                     <?php if ($book->count_rate != 0) { ?>
                                         <span class="position-absolute small font-arial text-info" style="bottom:1.1rem;left:8.5rem;width:2rem;">(<?= $book->count_rate ?> <i class="fas fa-user fa-xs"></i>)</span>
                                     <?php } ?>
-                                    <div class="text-card-author font-italic text-secondary" title="<?= $book->author ?>"><?= $book->author ?></div>
+                                    <div class="text-card-author text-card-author_search_result font-italic text-secondary" title="<?= $book->author ?>"><?= $book->author ?></div>
                                 </div>
                             </div>
                         </div>
@@ -454,15 +454,25 @@
                 }
             })
         });
-        
+
         $('#popup_menu_rate').click(function(e) {
             $('#popup_menu').hide();
         });
 
     });
 
+    $('.rater_star_modal').rating({
+        'showCaption': true,
+        'stars': '5',
+        'min': '0',
+        'max': '5',
+        'step': '0.5',
+        'size': 'md',
+        'clearCaption': '0',
+    });
+
     var mid_title = new Vue({
-        el: '#app_mid_title',
+        el: '#app_mid_title_search_result',
         data: {
             title: '<?= str_replace("-", " ", $search) ?>',
             img_url: '<?= base_url() ?>assets/img/<?= $search ?>.png'

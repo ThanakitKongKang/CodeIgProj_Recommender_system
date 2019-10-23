@@ -33,13 +33,14 @@ class SearchController extends CI_Controller
         $config["uri_segment"] = 3;
         $config['use_page_numbers'] = TRUE;
         $config['reuse_query_string'] = true;
+
         $this->pagination->initialize($config);
 
         // //config this NUMBER when path changed
         // $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
         $data["links"] = $this->pagination->create_links();
+  
 
         $data['books'] = $this->books_model->search_books($config["per_page"], $page, $query, $sort_rate, $category, $author);
         $data['author_list'] = $this->books_model->search_books_get_author($query, $sort_rate, $category);

@@ -93,7 +93,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="">
                         <a class="navbar-brand" href="<?= base_url() ?>">
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                            <span style="font-family:sans-serif;font-size:1.5rem">D-Book</span>
+                            <span style="font-family:sans-serif;font-size:1.5rem">CS-Book</span>
 
                         </a>
                     </div>
@@ -145,7 +145,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </div>
-                                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <div class="dropdown-menu" aria-labelledby="userDropdown" id="userDropdown_show">
                                         <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your course</a>
                                         <a class="dropdown-item <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
                                         <a class="dropdown-item <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating history</a>
@@ -327,7 +327,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             Toast.fire({
                 title: 'Logged in successfully !',
                 type: 'success',
-                confirmButtonText: 'ตกลง',
             })
         <?php
         }
@@ -343,7 +342,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             Toast.fire({
                 title: 'Registered successfully !',
                 type: 'success',
-                confirmButtonText: 'ตกลง',
             })
         <?php }
         if ($this->session->userdata('flash_logout')) { ?>
@@ -357,7 +355,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             Toast.fire({
                 title: 'Logged out successfully !',
                 type: 'success',
-                confirmButtonText: 'ตกลง',
             })
         <?php
         }
@@ -372,7 +369,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             Toast.fire({
                 title: 'You\'re already Logged in !',
                 type: 'info',
-                confirmButtonText: 'ตกลง',
             })
 
         <?php } ?>

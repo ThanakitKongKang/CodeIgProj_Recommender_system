@@ -231,11 +231,11 @@
                                     ' <input type="checkbox" class="checkbox" style="transform: scale(1.5);">' +
                                     '</div>' +
                                     '<div class="col-2 align-self-center content_course_id" data-course_id="' + entry["id"] + '">' + entry["id"] + '</div>' +
-                                    '<div class="col-7">' +
+                                    '<div class="col-6">' +
                                     '<div>' + entry["course_name_en"] + '</div>' +
                                     '<div class="font-kanit">' + entry["course_name_th"] + '</div>' +
                                     '</div>' +
-                                    '<div class="col-2 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="' + dateTime + '" title="' + dateTime + '">' + dateTime + '</div>' +
+                                    '<div class="col-3 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="' + dateTime + '" title="' + dateTime + '">' + dateTime + '</div>' +
                                     '</div>';
                                 $("#content_to_append > div").first().after(string_html);
                                 refreshTime();
@@ -325,8 +325,8 @@
                 $("#content_to_append").append(' <div class="row py-3 font-weight-bold font-arial content_header" style="color:#004480b5;border-bottom:1px solid #4c5a673d;">' +
                     '<div class="col-1"></div>' +
                     '<div class="col-2">ID</div>' +
-                    '<div class="col-7">Name</div>' +
-                    '<div class="col-2">Date added</div>' +
+                    '<div class="col-6">Name</div>' +
+                    '<div class="col-3">Date added</div>' +
                     '</div>');
 
                 // remove zero course png

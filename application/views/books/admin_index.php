@@ -640,7 +640,8 @@
                             'min': '0',
                             'max': '5',
                             'step': '0.5',
-                            'size': 'sm',
+                            'size': 'md',
+                            'clearCaption': '0',
                         });
 
                         $('.rater_star_col2').rating({

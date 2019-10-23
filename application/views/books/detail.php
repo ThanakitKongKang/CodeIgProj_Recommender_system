@@ -1,19 +1,19 @@
 <div class="container">
     <div class="row">
         <!-- pdf -->
-        <div class="d-inline-block col-sm" style="height: 90vh!important;width:40vw!important">
+        <div class="d-inline-block col-sm p-0 bg-light detail_pdf_section" style="height: 90vh!important;width:40vw!important">
             <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
-
+            <div class="display-4 text-secondary" id="detail_undesktop" style="display:none">Content is only available on desktop</div>
         </div>
         <!-- right section -->
-        <div class="pl-5 col-sm position-relative">
+        <div class="pl-5 col-sm position-relative detail_book_detail_section">
             <div class="row">
-                <div class="col pt-3">
+                <div class="col-sm pt-3">
                     <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG">
                 </div>
 
-                <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;">
+                <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;height: 23rem;">
                     <!-- RATE section -->
                     <div>
                         <div style="padding-left:2.5rem">
@@ -109,10 +109,10 @@
     <?php } ?>
 
     $(document).ready(function() {
-        var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
-        if (isMobile) {
-            alert("Mobile phone display is not supported , Unable to read an E-book, We Recommend using a desktop");
-        }
+        // var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+        // if (isMobile) {
+        //     alert("Mobile phone display is not supported , Unable to read an E-book, We Recommend using a desktop");
+        // }
 
         var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>

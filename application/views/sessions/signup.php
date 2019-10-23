@@ -1,6 +1,7 @@
 <head>
     <title><?= $title ?></title>
     <link rel="icon" href="<?= base_url() ?>/assets/_etc/library.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>/assets/css/bootstrap.min.css">
@@ -46,7 +47,7 @@
                         </div>
 
                         <div class="justify-content-center d-flex">
-                            <img src="<?= base_url() ?>/assets/img/kingdom-4.png" width="100" height="100" class="d-inline-block align-top" alt="">
+                            <img src="<?= base_url() ?>/assets/img/kingdom-4.png" width="100" height="100" class="d-inline-block align-top white_sign_bg" alt="">
                         </div>
                         <!-- <h3 class="card-title text-center mt-2">Login</h3> -->
                         <form method="post" class="form-signup" action="<?= site_url('signup') ?>">
