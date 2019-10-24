@@ -212,20 +212,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <script type="text/javascript">
         // scroll hide header
-        var prevScrollpos = window.pageYOffset;
-        window.onscroll = function() {
-            var currentScrollPos = window.pageYOffset;
-            // console.log(prevScrollpos + " : " + currentScrollPos)
-            if (prevScrollpos > currentScrollPos) {
-                document.getElementById("navbar").style.top = "0";
-                console.log("1")
+        var isMobile_index = window.matchMedia("only screen and (max-width: 1024px)").matches;
+        if (!isMobile_index) {
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+                var currentScrollPos = window.pageYOffset;
+                // console.log(prevScrollpos + " : " + currentScrollPos)
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("navbar").style.top = "0";
 
-            } else if (prevScrollpos != 75) {
-                document.getElementById("navbar").style.top = "-75px";
-                console.log("2")
+                } else if (prevScrollpos != 75) {
+                    document.getElementById("navbar").style.top = "-75px";
 
+                }
+                prevScrollpos = currentScrollPos;
             }
-            prevScrollpos = currentScrollPos;
+
         }
 
         function checkTypingLength(typing) {

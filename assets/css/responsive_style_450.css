@@ -336,7 +336,7 @@
 @media only screen and (max-width: 375px) {
 
 	.detail_book_detail_section {
-		min-height: 200vh;
+		min-height: 240vh;
 	}
 
 	.rater_star_grid .rating-xs {
