@@ -10,6 +10,7 @@
         <div id="rating_history_content" class="mt-4">
         <?php } ?>
 
+        
 
         <?php if (($rating_history_list != FALSE)) {
             foreach ($rating_history_list as $rating_history) { ?>
@@ -29,7 +30,7 @@
                     <!-- RATE section -->
                     <div class="col-2 text-center">
                         <div>
-                            <input value="<?= $rating_history['b_rate'] ?>" class="rater_star" title="">
+                            <input value="<?= $rating_history['rate'] ?>" class="rater_star" title="">
                         </div>
                     </div>
 
@@ -99,8 +100,8 @@
         var call = 0
         var all_num_rows = <?= $all_num_rows ?>;
 
-        console.log(all_num_rows);
-        console.log(num_rows);
+        // console.log(all_num_rows);
+        // console.log(num_rows);
 
         $(window).scroll(function() {
             var lastID = $('.load-more').attr('lastID');

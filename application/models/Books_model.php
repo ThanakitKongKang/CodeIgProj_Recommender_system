@@ -247,21 +247,21 @@ class Books_model extends BaseModel
 
     function update_all_books_bayesian_rate()
     {
+
         // update all each book that rated
         $sql = "SELECT DISTINCT book_id FROM `rate`";
         $query = $this->db->query($sql);
-        $books_id = json_decode(json_encode($query->row()), True);
-
+        $books_id = json_decode(json_encode($query->result()), True);
         foreach ($books_id as $book_id) {
             $sql = "SELECT (count(book_id)/count(DISTINCT book_id)) as avg_num_votes,
             SUM(rate)/COUNT(book_id) as avg_rating,
             (SELECT COUNT(book_id) FROM rate WHERE book_id = ?) as this_num_votes,
             (SELECT ROUND(SUM(rate)/COUNT(book_id),2) FROM rate WHERE book_id = ?) as this_rating  
             FROM `rate`";
-            $query = $this->db->query($sql, array($book_id, $book_id));
+            $query = $this->db->query($sql, array($book_id["book_id"], $book_id["book_id"]));
             $array = json_decode(json_encode($query->row()), True);
             $bayesian_average = (($array['avg_num_votes'] * $array['avg_rating']) + ($array['this_num_votes'] * $array['this_rating'])) / ($array['avg_num_votes'] + $array['this_num_votes']);
-            $this->db->where('book_id', $book_id);
+            $this->db->where('book_id', $book_id["book_id"]);
             $this->db->set('b_rate', $bayesian_average, FALSE);
             $this->db->update($this->table);
         }

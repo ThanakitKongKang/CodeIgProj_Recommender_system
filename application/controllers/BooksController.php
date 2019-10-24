@@ -185,8 +185,8 @@ class BooksController extends CI_Controller
             $data["collection_get"] = $collection_get;
 
             $data["collection_name"] = $this->bookmark_model->get_collection_by_username($username);
-            $data["all_saved_count"] = 
-            $this->load->view('./header', $header);
+            $data["all_saved_count"] =
+                $this->load->view('./header', $header);
             $this->load->view('books/saved', $data);
             $this->load->view('footer');
         } else {

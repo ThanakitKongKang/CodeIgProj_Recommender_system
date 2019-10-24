@@ -85,8 +85,12 @@
 		left: 14.5rem;
 	}
 
+	#rating_history_content .rating-xs {
+		font-size: 24px;
+	}
+
 	.book_detail_content.book_detail_content_rating_history {
-		height: 12rem;
+		height: 12rem!important;
 	}
 
 	.book_detail_content_rating_history_name {
@@ -136,6 +140,10 @@
 
 	.card-signin {
 		min-height: 70vh;
+	}
+
+	#detail_rate_mobile{
+		display:inline!important;
 	}
 
 }

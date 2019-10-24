@@ -113,7 +113,7 @@
 	}
 
 	.book_detail_content.book_detail_content_rating_history {
-		height: 7rem;
+		height: 6rem !important;
 	}
 
 	.book_detail_content_rating_history .book_detail_content_rating_history_name {
@@ -121,8 +121,12 @@
 	}
 
 	.author_text_rating_history {
-		font-size: 0.75rem;
+		font-size: 0.6rem;
 
+	}
+
+	#navbarNavDropdown button {
+		margin-top: 0.5rem;
 	}
 
 	.book_detail_content_rating_history>div:last-child {
@@ -307,7 +311,7 @@
 		margin-right: auto;
 		width: 92%;
 		margin-top: 2rem;
-		height: 24rem!important;
+		height: 24rem !important;
 	}
 
 	.book_detail_content .rating-sm {
@@ -323,7 +327,9 @@
 		top: 62rem;
 	}
 
-
+	#rating_history_content .rating-xs {
+		font-size: 11px;
+	}
 }
 
 

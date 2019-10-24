@@ -60,6 +60,13 @@
                                 ?><i class="far fa-bookmark" id="bookmark_icon"></i>
                             <?php echo "<span class='save_text font-arial'> save book</span>";
                             } ?></button>
+
+                        <?php if ($this->session->userdata('logged_in')) { ?>
+                            <button class="btn btn-warning rate_modal_trigger popup_menu_item mt-2" id="detail_rate_mobile" style="display:none" data-toggle="modal" data-target="#rate_modal">
+
+                            </button>
+                        <?php } ?>
+
                     </div>
 
                 </div>
@@ -100,6 +107,29 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade slide-bottom" id="rate_modal" tabindex="-1" role="dialog" aria-labelledby="rate_modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_label">Rate <?= $book['book_name'] ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin-left:8rem;">
+                <input value="<?= $user_rate['rate'] ?>" class="rater_star_modal" title="" data-show-clear="false">
+                <input value="<?= $book['book_id'] ?>" id="modal_book_id" title="" type="hidden">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" style="display:none;" data-book_id="<?= $book['book_id'] ?>" class="btn btn-primary rate_trigger">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     <?php if (!empty($recommend_list_detail)) { ?>
         var similar_book_detail_width = $("#similar_book_detail").get(0);
@@ -109,34 +139,67 @@
     <?php } ?>
 
     $(document).ready(function() {
-        // var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
-        // if (isMobile) {
-        //     alert("Mobile phone display is not supported , Unable to read an E-book, We Recommend using a desktop");
-        // }
-
         var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>
             var not_login = false;
         <?php } ?>
-        $('.rater_star').rating({
-            'stars': '5',
-            'min': '0',
-            'max': '5',
-            'step': '0.5',
-            'size': 'sm',
-            containerClass: 'text-center',
-            displayOnly: not_login,
-            showCaption: false,
-            showClear: false,
-        });
+
+        var isMobile = window.matchMedia("only screen and (max-width: 1024px)").matches;
+
+        if (isMobile) {
+            // alert("Mobile phone display is not supported , Unable to read an E-book, We Recommend using a desktop");
+            $('.rater_star').rating({
+                'stars': '5',
+                'min': '0',
+                'max': '5',
+                'step': '0.5',
+                'size': 'sm',
+                containerClass: 'text-center',
+                displayOnly: true,
+                showCaption: false,
+                showClear: false,
+            });
+
+            $('.rater_star_modal').rating({
+                'showCaption': true,
+                'stars': '5',
+                'min': '0',
+                'max': '5',
+                'step': '0.5',
+                'size': 'md',
+                'clearCaption': '0',
+            });
+
+        } else if (!isMobile) {
+            $('.rater_star').rating({
+                'stars': '5',
+                'min': '0',
+                'max': '5',
+                'step': '0.5',
+                'size': 'sm',
+                containerClass: 'text-center',
+                displayOnly: not_login,
+                showCaption: false,
+                showClear: false,
+            });
+        }
+
         if (not_login) {
             // rater
             $('.rating-stars').click(function(e) {
                 please_login();
             });
+
         } else {
             // rater
-            var default_rating = $('.rating-input').val();
+            var default_rating = ($('.rating-input').val());
+            if (default_rating == "") {
+                $('#detail_rate_mobile').html('<i class="far fa-star"></i> <span class="rate_text">rate</span>');
+            } else {
+                $('#detail_rate_mobile').html('<i class="fas fa-star"></i> <span class="rate_text">update</span>');
+            }
+            console.log(default_rating);
+
             // bookmarker
             $('.rating-stars').on("click", rating_change);
 
@@ -219,13 +282,69 @@
                 }
             })
         }
+        $('.rater_star_modal').on('rating:change', function(event, value, caption) {
+            $('.rate_trigger').show();
+        });
+
+        $('.rate_trigger').click(function(e) {
+            var rate_value = $('.rater_star_modal').rating().val();
+            var rating = {
+                'rating': rate_value,
+                'book_id': $('#book_id').val(),
+            };
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/rateBook",
+                data: rating,
+                async: true,
+                success: function(data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    Toast.fire({
+                        title: 'Rated successfully !',
+                        type: 'success',
+                    });
+                    $('#rate_modal').modal('hide');
+                    $('.rating-stars').rating('update', rate_value);
+
+                    $('.rating-stars').rating('refresh', {
+                        showClear: false,
+                        showCaption: false
+                    });
+                    $('.rater_star_modal').rating('refresh', {
+                        showClear: false,
+                        showCaption: true
+                    });
+
+                    if (default_rating == "") {
+                        $('#span_rating_text').html("based on 1 user");
+                        $('#rate_avg_user').html(Number($('#rate_avg_user').html()) + 1);
+                        default_rating = 1;
+                    }
+                    $('#rate_avg').html(data);
+                    $('#your_rate').html(rate_value);
+
+                    $('#span_rating').removeClass("badge-secondary");
+                    $('#span_rating').addClass("badge-warning");
+
+                    $('#detail_rate_mobile').html('<i class="fas fa-star"></i> <span class="rate_text">update</span>');
+                }
+            })
+
+        });
+
 
         function please_login() {
             Swal.fire({
-                title: 'ไม่สามารถทำรายการได้!',
-                html: '<div>กรุณา<a href="<?= base_url() ?>login">เข้าสู่ระบบ</a></div>',
+                title: 'Create an account or log in!',
+                html: '<div><a href="<?= base_url() ?>login">Login</a></div>',
                 type: 'error',
-                confirmButtonText: 'เข้าสู่ระบบ',
+                confirmButtonText: 'Login',
                 // timer: 1500
             }).then((result) => {
                 if (result.value) {

@@ -68,7 +68,7 @@
 		overflow: hidden;
 		white-space: nowrap;
 		display: inline-block;
-		max-width:10rem;
+		max-width: 10rem;
 	}
 
 	.card-title {
@@ -123,6 +123,10 @@
 	#navbarNavDropdown-browse>ul>li>a {
 		font-size: 1rem;
 		display: inline-block;
+	}
+
+	#navbarNavDropdown button {
+		margin-top: 1rem;
 	}
 
 	#app_mid_title>div>img {
@@ -192,8 +196,12 @@
 		left: 10.5rem;
 	}
 
+	#rating_history_content .rating-xs {
+		font-size: 20px;
+	}
+
 	.book_detail_content.book_detail_content_rating_history {
-		height: 10rem;
+		height: 10rem !important;
 	}
 
 	.book_detail_content_rating_history_name {

@@ -134,7 +134,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <li class="nav-item pl-2 mt-1">
                                     <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">LOG IN</button></a>
                                 </li>
-                                <li class="nav-item pl-3 mt-1">
+                                <li class="nav-item pl-2 mt-1">
                                     <a href="<?= base_url() ?>signup" class="different_a"><button class="btn btn-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">SIGN UP</button></a>
                                 </li>
 
@@ -218,8 +218,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             // console.log(prevScrollpos + " : " + currentScrollPos)
             if (prevScrollpos > currentScrollPos) {
                 document.getElementById("navbar").style.top = "0";
-            } else if (prevScrollpos != 0) {
+                console.log("1")
+
+            } else if (prevScrollpos != 75) {
                 document.getElementById("navbar").style.top = "-75px";
+                console.log("2")
+
             }
             prevScrollpos = currentScrollPos;
         }
