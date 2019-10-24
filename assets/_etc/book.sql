@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 24, 2019 at 01:48 AM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Host: 127.0.0.1:3306
+-- Generation Time: Oct 24, 2019 at 01:56 AM
+-- Server version: 10.2.27-MariaDB
+-- PHP Version: 7.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookdb`
+-- Database: `u745097565_bookdb`
 --
 
 -- --------------------------------------------------------
@@ -211,7 +211,9 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (166, 'Jan Murphy', 'Color A Practical Guide to Color and Its Uses in Art', 'Human computer interaction', NULL, NULL, 0),
 (167, 'Patti Mollica', 'Special Subjects_ Basic Color Theory_ An Introduction to Color for Beginning Artists', 'Human computer interaction', NULL, NULL, 0),
 (168, 'Bride M. Whelan', 'The Complete Color Harmony_ Expert Color Information for Professional Color Results', 'Human computer interaction', NULL, NULL, 0),
-(169, 'Joseph stoddard', 'Expressive Painting_ Tips and Techniques for Practical Applications in Watercolor, Including Color Theory, Color Mixing, and Understanding Color Relationships', 'Human computer interaction', NULL, NULL, 0);
+(169, 'Joseph stoddard', 'Expressive Painting_ Tips and Techniques for Practical Applications in Watercolor, Including Color Theory, Color Mixing, and Understanding Color Relationships', 'Human computer interaction', NULL, NULL, 0),
+(170, 'Jeff johnson', 'Designing with the Mind in Mind', 'Human computer interaction', NULL, NULL, 0),
+(171, 'Luke wroblewski', 'Web Form Design Filling in the Blanks', 'Human computer interaction', NULL, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -231,7 +233,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
