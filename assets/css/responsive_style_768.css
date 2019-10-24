@@ -150,10 +150,8 @@
 		height: 50%;
 	}
 
-	#similar_book_arrow_left,
-	#similar_book_arrow_right {
-		top: 29rem;
-		opacity: 0.5
+	.book_detail_content:not(.book_detail_content_index) {
+		height: 22rem !important;
 	}
 
 	.card-signin .card-img-left {

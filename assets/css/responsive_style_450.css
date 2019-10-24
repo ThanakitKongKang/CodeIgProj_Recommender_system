@@ -15,12 +15,6 @@
 		left: 52% !important;
 	}
 
-	#similar_book_arrow_left,
-	#similar_book_arrow_right {
-		top: 70rem;
-		opacity: 0.5
-	}
-
 	#similar_book_detail {
 		position: absolute !important;
 		top: 62rem;
@@ -299,6 +293,7 @@
 
 	.detail_pdf_section {
 		display: none !important;
+		
 	}
 
 	.detail_book_detail_section {
@@ -316,10 +311,6 @@
 
 	.book_detail_content .rating-sm {
 		font-size: 30px;
-	}
-
-	#similar_book_arrow_left {
-		left: 0rem;
 	}
 
 	#similar_book_title {

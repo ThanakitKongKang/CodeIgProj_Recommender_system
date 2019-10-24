@@ -16,7 +16,7 @@
                 <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;height: 23rem;">
                     <!-- RATE section -->
                     <div>
-                        <div style="padding-left:2.5rem">
+                        <div class="text-center">
                             <?php if ($book_detail['count_rate'] != 0) { ?>
                                 <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
                                         <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
@@ -45,7 +45,7 @@
                         <hr>
                         <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                         <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>" id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
-                        <div class="book_detail_text pt-1"><span class="small">Category : </span><a class="link small" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
+                        <div class="book_detail_text pt-1"><span class="">Category : </span><a class="link " href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
                         <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
                     </div>
 
@@ -342,7 +342,6 @@
         function please_login() {
             Swal.fire({
                 title: 'Create an account or log in!',
-                html: '<div><a href="<?= base_url() ?>login">Login</a></div>',
                 type: 'error',
                 confirmButtonText: 'Login',
                 // timer: 1500
