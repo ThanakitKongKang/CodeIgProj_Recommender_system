@@ -1,4 +1,4 @@
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 760px) {
 
 	/* For mobile phones: */
 	[class*="col-"] {
@@ -110,7 +110,7 @@
 
 	#text-col-2-author_col1 {
 		right: 2rem;
-		font-size:0.75rem;
+		font-size: 0.75rem;
 		max-width: 3rem;
 	}
 
@@ -332,4 +332,7 @@
 		right: 2rem;
 	}
 
+	.img_similar_book_content {
+		height: 11rem;
+	}
 }

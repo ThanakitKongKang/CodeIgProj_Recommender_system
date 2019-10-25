@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- responsive css -->
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_1024.css">
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_768.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_760.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_450.css">
 
 

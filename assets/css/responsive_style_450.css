@@ -370,6 +370,11 @@
 		top: 0.5rem;
 		right: 1rem;
 	}
+
+	.img_similar_book_content {
+		height: 9rem;
+	}
+
 }
 
 
@@ -390,6 +395,10 @@
 
 	.book_detail_content .rating-sm {
 		font-size: 20px;
+	}
+
+	.img_similar_book_content {
+		height: 9rem;
 	}
 }
 

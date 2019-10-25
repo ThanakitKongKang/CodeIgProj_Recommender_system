@@ -78,7 +78,7 @@
                         <?php foreach ($recommend_list_detail as $book) { ?>
                             <div class="col-4 hover_img_similar_book_content">
                                 <div class="position-relative">
-                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
+                                    <img class="img-col-2 img_similar_book_content" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
                                     <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
                                 </div>
                                 <div class="hover_img_content_similar text-center">
@@ -137,6 +137,13 @@
             $("#similar_book_arrow_right").hide();
         }
     <?php } ?>
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        $('#detail_pdf_section object').hide();
+        $('#detail_undesktop').show();
+
+        
+    }
 
     $(document).ready(function() {
         var not_login = true;
