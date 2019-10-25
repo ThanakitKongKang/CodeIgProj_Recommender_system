@@ -123,10 +123,6 @@
 		-webkit-line-clamp: 3;
 	}
 
-	#iframe_gg_form {
-		/* min-height: 155rem; */
-	}
-
 	#book_detail_content_col1 {
 		position: absolute;
 		width: 18.5rem;

@@ -378,10 +378,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 type: 'info',
             })
 
+            // HCI EVENT
         <?php }
         if ($this->session->userdata('not_enough_hci')) { ?>
             var data = <?= $this->session->userdata('not_enough_hci_progress') ?>;
-            console.log(data);
             var width = (data / 10) * 100;
             Swal.fire({
                 title: 'ให้คะแนนหนังสือในหมวด HCI ยังไม่ครบ ไม่สามารถทำแบบประเมินได้!',
@@ -391,7 +391,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             })
         <?php } ?>
 
-        // HCI EVENT
+
         function hciprogress(book_id) {
             var post_data = {
                 'book_id': book_id,
@@ -403,6 +403,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 async: true,
                 success: function(data) {
                     if (data != "") {
+                        var width = (data / 10) * 100;
+
                         if (data < 10) {
                             const Toast = Swal.mixin({
                                 toast: true,
@@ -410,14 +412,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 showConfirmButton: false,
                                 timer: 3000
                             });
-                            var width = (data / 10) * 100;
                             Toast.fire({
                                 title: 'ให้คะแนนหนังสือในหมวด HCI สำเร็จ!',
                                 footer: '<div class="progress w-100"><div class="progress-bar bg-success progress-bar-striped progress-bar-animated active" style="width:' + width + '%" role="progressbar" aria-valuenow="' + data + '" aria-valuemin="0 " aria-valuemax="10">' + data + '</div></div>',
                                 type: 'success',
                             })
                         } else if (data >= 10) {
-                            var width = (data / 10) * 100;
                             Swal.fire({
                                 title: 'ให้คะแนนหนังสือในหมวด HCI ครบแล้ว!',
                                 html: '<div class="progress w-100"><div class="progress-bar bg-success progress-bar-striped progress-bar-animated active" style="width:' + width + '%" role="progressbar" aria-valuenow="' + data + '" aria-valuemin="0 " aria-valuemax="10">' + data + '</div></div>',
