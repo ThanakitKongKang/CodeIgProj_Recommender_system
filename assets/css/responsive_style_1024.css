@@ -49,7 +49,7 @@
 	#app_mid_title_browse>div>img {
 		position: absolute;
 		max-width: 6rem;
-		left: 43%;
+		left: 45%;
 		top: -1rem;
 	}
 
@@ -162,7 +162,7 @@
 	}
 
 	.card-signin {
-		min-height: 70vh;
+		min-height: 85vh;
 	}
 
 	#detail_rate_mobile {

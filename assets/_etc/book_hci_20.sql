@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2019 at 03:00 AM
+-- Generation Time: Oct 25, 2019 at 06:52 AM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -128,25 +128,25 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (83, 'Leif Mejbro', 'Spectral Theory', 'Calculus', NULL, NULL, 0),
 (84, 'Edward Stull', 'UX Fundamentals for Non-UX Professionals User Experience Principles for Managers, Writers, Designers, and Developers', 'Human computer interaction', NULL, NULL, 0),
 (85, 'Jaime Levy', 'UX Strategy', 'Human computer interaction', NULL, NULL, 0),
-(87, 'Eric Ries', 'Lean UX Applying Lean Principles to Improve User Experience', 'Human computer interaction', NULL, NULL, 0),
-(88, 'Eric Ries', 'UX for Lean Startups_Faster, Smarter User Experience Research and Design', 'Human computer interaction', NULL, NULL, 0),
-(89, 'Jesmond Allen', 'Smashing UX Design Foundations for Designing Online User Experiences', 'Human computer interaction', NULL, NULL, 0),
-(90, 'Steve Krug', 'Dont Make Me Think A Common Sense Approach to Web Usability', 'Human computer interaction', NULL, NULL, 0),
-(92, 'W. Craig Tomlin', 'UX Optimization Combining Behavioral UX and Usability Testing Data to Optimize Websites', 'Human computer interaction', NULL, NULL, 0),
-(95, 'Don norman', 'The Design of Everyday Things Revised and Expanded Edition', 'Human computer interaction', NULL, NULL, 0),
-(97, 'Russ unger', 'A Project Guide to UX Design for User Experience Designers in the Field or in the Making 2nd edition', 'Human computer interaction', NULL, NULL, 0),
-(101, 'Susan M. Weinschenk', '100 Things Every Designer Needs to Know About People ', 'Human computer interaction', NULL, NULL, 0),
-(104, 'David Benyon', 'Designing Interactive Systems A Comprehensive Guide to HCI, UX and Interaction Design', 'Human computer interaction', NULL, NULL, 0),
-(105, 'Rex Hartson', 'The UX Book Process and Guidelines for Ensuring a Quality User Experience', 'Human computer interaction', NULL, NULL, 0),
-(108, 'David Travis', 'Think Like a UX Researcher How to Observe Users, Influence Design, and Shape Business Strategy', 'Human computer interaction', NULL, NULL, 0),
-(119, 'Jenny Preece', 'Interaction Design - Beyond Human-Computer Interaction, 4th Edition', 'Human computer interaction', NULL, NULL, 0),
-(120, 'Jenny Preece', 'Interaction Design Beyond Human-Computer Interaction, 5th Edition', 'Human computer interaction', NULL, NULL, 0),
-(126, 'Jesse James Garrett', 'The Elements of User Experience. User-Centered Design for the Web and Beyond', 'Human computer interaction', NULL, NULL, 0),
-(131, 'Ginny Redish', 'Storytelling for User Experience  Crafting Stories for Better Design', 'Human computer interaction', NULL, NULL, 0),
-(133, 'James Lang', 'Researching UX User Research', 'Human computer interaction', NULL, NULL, 0),
-(134, 'Sitepoint', 'Analytics Tools for Optimizing UX', 'Human computer interaction', NULL, NULL, 0),
-(170, 'Jeff johnson', 'Designing with the Mind in Mind', 'Human computer interaction', NULL, NULL, 0),
-(171, 'Luke wroblewski', 'Web Form Design Filling in the Blanks', 'Human computer interaction', NULL, NULL, 0);
+(86, 'Eric Ries', 'Lean UX Applying Lean Principles to Improve User Experience', 'Human computer interaction', NULL, NULL, 0),
+(87, 'Eric Ries', 'UX for Lean Startups_Faster, Smarter User Experience Research and Design', 'Human computer interaction', NULL, NULL, 0),
+(88, 'Jesmond Allen', 'Smashing UX Design Foundations for Designing Online User Experiences', 'Human computer interaction', NULL, NULL, 0),
+(89, 'Steve Krug', 'Dont Make Me Think A Common Sense Approach to Web Usability', 'Human computer interaction', NULL, NULL, 0),
+(90, 'W. Craig Tomlin', 'UX Optimization Combining Behavioral UX and Usability Testing Data to Optimize Websites', 'Human computer interaction', NULL, NULL, 0),
+(91, 'Don norman', 'The Design of Everyday Things Revised and Expanded Edition', 'Human computer interaction', NULL, NULL, 0),
+(92, 'Russ unger', 'A Project Guide to UX Design for User Experience Designers in the Field or in the Making 2nd edition', 'Human computer interaction', NULL, NULL, 0),
+(93, 'Susan M. Weinschenk', '100 Things Every Designer Needs to Know About People ', 'Human computer interaction', NULL, NULL, 0),
+(94, 'David Benyon', 'Designing Interactive Systems A Comprehensive Guide to HCI, UX and Interaction Design', 'Human computer interaction', NULL, NULL, 0),
+(95, 'Rex Hartson', 'The UX Book Process and Guidelines for Ensuring a Quality User Experience', 'Human computer interaction', NULL, NULL, 0),
+(96, 'David Travis', 'Think Like a UX Researcher How to Observe Users, Influence Design, and Shape Business Strategy', 'Human computer interaction', NULL, NULL, 0),
+(97, 'Jenny Preece', 'Interaction Design - Beyond Human-Computer Interaction, 4th Edition', 'Human computer interaction', NULL, NULL, 0),
+(98, 'Jenny Preece', 'Interaction Design Beyond Human-Computer Interaction, 5th Edition', 'Human computer interaction', NULL, NULL, 0),
+(99, 'Jesse James Garrett', 'The Elements of User Experience. User-Centered Design for the Web and Beyond', 'Human computer interaction', NULL, NULL, 0),
+(100, 'Ginny Redish', 'Storytelling for User Experience  Crafting Stories for Better Design', 'Human computer interaction', NULL, NULL, 0),
+(101, 'James Lang', 'Researching UX User Research', 'Human computer interaction', NULL, NULL, 0),
+(102, 'Sitepoint', 'Analytics Tools for Optimizing UX', 'Human computer interaction', NULL, NULL, 0),
+(103, 'Jeff johnson', 'Designing with the Mind in Mind', 'Human computer interaction', NULL, NULL, 0),
+(104, 'Luke wroblewski', 'Web Form Design Filling in the Blanks', 'Human computer interaction', NULL, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -166,7 +166,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
