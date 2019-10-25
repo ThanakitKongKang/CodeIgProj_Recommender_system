@@ -156,3 +156,6 @@ $route['books/delete_collection'] = 'BooksController/delete_collection';
 */
 
 $route['form'] = 'BooksController/form';
+
+// HCI_EVENT
+$route['books/progress_hci'] = 'BooksController/progress_hci';

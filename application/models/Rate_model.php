@@ -88,7 +88,16 @@ class Rate_model extends BaseModel
         $this->db->where('book_id', $book_id);
         $this->db->where('username', $username);
         $this->db->set('rate', $rate, FALSE);
-        $this->db->set('date', "'".$date."'", FALSE);
+        $this->db->set('date', "'" . $date . "'", FALSE);
         $this->db->update($this->table);
+    }
+
+    // HCI EVENT
+    public function progress_rate_hci($username)
+    {
+        $sql = 'SELECT book.book_id,rate,date,COUNT(book.book_id) as progress FROM `rate`,book WHERE username = ? AND rate.book_id = book.book_id AND book.book_type = "Human computer interaction"';
+        $query = $this->db->query($sql, array($username));
+        $array = json_decode(json_encode($query->row()), True);
+        return $array;
     }
 }

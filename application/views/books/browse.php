@@ -1,7 +1,7 @@
 <div class="row">
     <!-- Current title -->
     <div class="container">
-        <div id="app_mid_title" class="animation_enter text-center">
+        <div id="app_mid_title_browse" class="animation_enter text-center">
             <template>
                 <div class="position-relative row">
                     <img :src="img_url" class="mr-4">
@@ -48,7 +48,7 @@
      -->
 
     <div id="content_list" class="animation_enter_softly">
-        <div class="row no-gutters">
+        <div class="row no-gutters justify-content-center" style="margin-left:0.5rem;">
             <?php if (($content_list != FALSE)) {
                 foreach ($content_list as $content) { ?>
                     <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;">
@@ -162,7 +162,8 @@
     });
     $(document).ready(function() {
         // console.log(<?= $page ?>);
-        var category = mid_title.title.replace(" ", "-");
+        var regex = new RegExp(" ", "g");
+        var category = mid_title.title.replace(regex, "-");
         $('#' + category).addClass("hovered");
 
         // console.log("i: " + <?= $i ?>);
@@ -337,6 +338,7 @@
                 data: rating,
                 async: true,
                 success: function(data) {
+                    
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -348,8 +350,13 @@
                         title: 'Rated successfully !',
                         type: 'success',
                     });
+                    // HCI EVENT
+                    hciprogress($('#modal_book_id').val());
+
                     $('#rate_modal').modal('hide');
                     global_book_id = 0;
+
+                  
                 }
             })
         });
@@ -357,7 +364,7 @@
         $('#popup_menu_rate').click(function(e) {
             $('#popup_menu').hide();
         });
-        
+
         // bookmarker
         $('#popup_menu_bookmark').click('.bookmark_trigger', function(e) {
             var this_elm = $(this).find('.bookmark_trigger');
@@ -397,7 +404,7 @@
         });
     });
     var mid_title = new Vue({
-        el: '#app_mid_title',
+        el: '#app_mid_title_browse',
         data: {
             title: '<?= $page ?>',
             img_url: '<?= base_url() ?>assets/img/<?= $page ?>.svg'

@@ -153,10 +153,16 @@ body {
 	position: absolute;
 	bottom: 1rem;
 	right: 0.7rem;
-	z-index:1000;
+	z-index: 1000;
 }
 
 .input-group>.form-control {
 	border-top-right-radius: 2rem !important;
-	border-bottom-right-radius:  2rem !important;
+	border-bottom-right-radius: 2rem !important;
+}
+
+
+.drop_shadow_sign {
+	-webkit-filter: drop-shadow(5px 10px 10px rgba(0, 0, 0, 0.3));
+	filter: drop-shadow(5px 10px 10px rgba(0, 0, 0, 0.3));
 }

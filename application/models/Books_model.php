@@ -101,7 +101,7 @@ class Books_model extends BaseModel
     public function search_live_soundex($typing)
     {
 
-        $sql = "SELECT book_name FROM book WHERE soundex_match(?, book_name, ' ') LIMIT 10";
+        $sql = "SELECT book_id,book_name FROM book WHERE soundex_match(?, book_name, ' ') LIMIT 10";
         $query = $this->db->query($sql, array($typing));
 
         if ($query->num_rows() > 0) {
@@ -194,7 +194,9 @@ class Books_model extends BaseModel
         $category = $this->input->post('category');
         $this->db->where('book_type', $category);
         $this->db->limit(48);
+        $this->db->order_by('b_rate', 'DESC');
         $this->db->select('*');
+
         $query = $this->db->get($this->table);
         return $query->result();
     }

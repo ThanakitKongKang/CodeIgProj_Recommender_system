@@ -46,6 +46,13 @@
 		top: -1rem;
 	}
 
+	#app_mid_title_browse>div>img {
+		position: absolute;
+		max-width: 6rem;
+		left: 43%;
+		top: -1rem;
+	}
+
 	#mid-title_browse {
 		width: 100%;
 		font-size: 2rem;
@@ -60,7 +67,9 @@
 		padding-left: 0 !important;
 	}
 
-	.book_detail_content:not(.book_detail_content_index) hr {
+	.hover_img_content,
+	.hover_img_content_mid {
+		opacity: 0 !important;
 	}
 
 	.book_detail_content:not(.book_detail_content_index) {
@@ -115,7 +124,7 @@
 	}
 
 	#iframe_gg_form {
-		min-height: 140rem;
+		min-height: 200rem;
 	}
 
 	#book_detail_content_col1 {
@@ -129,6 +138,7 @@
 
 	#text-col-2-author_col1 {
 		right: -7rem;
+		max-width: 4rem;
 	}
 
 	.rating-xs {
@@ -161,6 +171,10 @@
 
 	#detail_rate_mobile {
 		display: inline !important;
+	}
+
+	span.user_rated_this_1,span.user_rated_this {
+		display:none;
 	}
 
 }

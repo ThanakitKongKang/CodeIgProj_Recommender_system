@@ -402,7 +402,6 @@ class BooksController extends CI_Controller
                 'rate' =>  $rate,
                 'date' => date('Y-m-d H:i:s'),
             );
-
             $this->rate_model->insert($rate_data);
             $rate_avg = $this->books_model->update_book_rate($bookid, $rate);
         } else {
@@ -411,7 +410,22 @@ class BooksController extends CI_Controller
             $this->rate_model->update_rate($bookid, $username, $rate, $date);
             $rate_avg = $this->books_model->update_book_rate_exists($bookid);
         }
+
+
         echo number_format($rate_avg, 1);
+    }
+
+    // HCI EVENT
+    function progress_hci()
+    {
+        $bookid =  $this->input->post('book_id');
+        $username = $this->session->userdata('user')['username'];
+
+        $book_type = $this->books_model->get_by_id($bookid);
+        if ($book_type["book_type"] == "Human computer interaction") {
+            $progress = $this->rate_model->progress_rate_hci($username);
+            echo $progress["progress"];
+        }
     }
 
     function getBookRateByUser()
@@ -621,15 +635,27 @@ class BooksController extends CI_Controller
 
     /*
     | -------------------------------------------------------------------------
-    | form
+    | google form hci event
     | -------------------------------------------------------------------------
     */
     public function form()
     {
-        $header['title'] = 'Form';
-        $this->load->view('./header', $header);
-        $this->load->view('form');
-        $this->load->view('footer');
+        $this->check_auth('form');
+
+        $username = $this->session->userdata('user')['username'];
+        $progress = $this->rate_model->progress_rate_hci($username);
+
+        if ($progress["progress"] < 10) {
+            $this->session->set_flashdata('not_enough_hci', TRUE);
+            $this->session->set_flashdata('not_enough_hci_progress', $progress["progress"]);
+            redirect(base_url('browse/human-computer-interaction'));
+
+        } else {
+            $header['title'] = 'Form';
+            $this->load->view('./header', $header);
+            $this->load->view('form');
+            $this->load->view('footer');
+        }
     }
     /*
     | -------------------------------------------------------------------------

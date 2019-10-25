@@ -39,7 +39,7 @@
                     <div class="text-col-1-footer">
                         <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
                         <?php if ($final_recommend_list[0]['count_rate'] != 0) { ?>
-                            <span class="position-absolute font-arial text-info" title="<?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?> rated this" style="bottom:0.25rem;left:10rem;width:10rem;">(<?= $final_recommend_list[0]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                            <span class="position-absolute font-arial text-info user_rated_this_1" title="<?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?> rated this" style="bottom:0.25rem;left:10rem;width:10rem;">(<?= $final_recommend_list[0]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
                         <?php } ?>
                         <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
 
@@ -80,7 +80,7 @@
                                 <div class="text-col-2-footer w-100">
                                     <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
                                     <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
-                                        <span class="position-absolute small font-arial text-info" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                        <span class="position-absolute small font-arial text-info user_rated_this" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
                                     <?php } ?>
                                     <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
                                     <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
@@ -121,7 +121,7 @@
                                 <div class="text-col-2-footer w-100">
                                     <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
                                     <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
-                                        <span class="position-absolute small font-arial text-info" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                        <span class="position-absolute small font-arial text-info user_rated_this" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
                                     <?php } ?>
                                     <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
                                     <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
@@ -514,8 +514,13 @@
                         title: 'Rated successfully !',
                         type: 'success',
                     });
+
+                    // HCI EVENT
+                    hciprogress($('#modal_book_id').val());
+
                     $('#rate_modal').modal('hide');
                     global_book_id = 0;
+
                 }
             })
         });

@@ -18,10 +18,7 @@
 	}
 
 
-	.hover_img_content,
-	.hover_img_content_mid {
-		opacity: 0 !important;
-	}
+
 
 	.hover_img {
 		min-height: 0;
@@ -113,6 +110,7 @@
 
 	#text-col-2-author_col1 {
 		right: 2rem;
+		font-size:0.75rem;
 		max-width: 3rem;
 	}
 
@@ -123,13 +121,16 @@
 	#navbarNavDropdown-browse>ul>li>a {
 		font-size: 1rem;
 		display: inline-block;
+		height: 32px;
+		padding-top: 0.2rem;
 	}
+
 
 	#navbarNavDropdown button {
 		margin-top: 1rem;
 	}
 
-	#app_mid_title>div>img {
+	#app_mid_title>div>img #app_mid_title_browse>div>img {
 		position: absolute;
 		max-width: 4rem;
 		left: 45%;
@@ -326,4 +327,13 @@
 		margin-left: auto !important;
 		margin-right: auto !important;
 	}
+
+	.text-img-rate {
+		right: 2rem;
+	}
+
+	#iframe_gg_form {
+		min-height: 185rem;
+	}
+
 }

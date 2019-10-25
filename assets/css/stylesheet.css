@@ -13,7 +13,6 @@
 	/* src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf"); */
 	/* webhost */
 	src: url("https://kkubooksrecommender.online/assets/_etc/Oswald-Regular.ttf");
-
 }
 
 .font-oswald {
@@ -215,8 +214,8 @@ body {
 .text-img-rate {
 	position: absolute;
 	font-size: 0.75rem;
-	top: 3.5rem;
-	right: 3.5rem;
+	top: 1rem;
+	right: 3rem;
 	color: white;
 	padding: 0.5rem;
 }
@@ -425,7 +424,7 @@ body {
 
 #text-col-2-author_col1 {
 	right: -10rem;
-	max-width: 10rem;
+	max-width: 7rem;
 }
 
 .text-col-2-footer {
@@ -1256,7 +1255,8 @@ li.select2-results__option {
 }
 
 #app_mid_title>div>img,
-#app_mid_title_search_result>div>img {
+#app_mid_title_search_result>div>img,
+#app_mid_title_browse>div>img {
 	max-width: 8rem;
 	height: 8rem;
 	transform: scaleX(-1);
@@ -1313,5 +1313,5 @@ li.select2-results__option {
 }
 
 #iframe_gg_form {
-	min-height: 120rem;
+	min-height: 185rem;
 }

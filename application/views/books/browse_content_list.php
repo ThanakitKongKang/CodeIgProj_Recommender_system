@@ -1,4 +1,4 @@
-<div class="row no-gutters animation_enter_softly">
+<div class="row no-gutters animation_enter_softly justify-content-center" style="margin-left:0.5rem;">
     <?php if (($content_list != FALSE)) {
         foreach ($content_list as $content) { ?>
             <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;">

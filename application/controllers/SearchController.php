@@ -40,7 +40,7 @@ class SearchController extends CI_Controller
         // $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $data["links"] = $this->pagination->create_links();
-  
+
 
         $data['books'] = $this->books_model->search_books($config["per_page"], $page, $query, $sort_rate, $category, $author);
         $data['author_list'] = $this->books_model->search_books_get_author($query, $sort_rate, $category);
@@ -76,7 +76,7 @@ class SearchController extends CI_Controller
             echo "<div class='live_search_panel font-arial'> title";
             echo "</div>";
             foreach ($results as $result) {
-                echo "<a class='dropdown-item-search live_search_result_option' href>";
+                echo "<a class='dropdown-item-search live_search_result_option' data-book_id='" . $result['book_id'] . "' href>";
                 echo $result['book_name'];
                 echo "</a>";
             }
@@ -84,7 +84,7 @@ class SearchController extends CI_Controller
             echo "<div class='live_search_panel font-arial'> title";
             echo "</div>";
             foreach ($results_not_soundex as $result) {
-                echo "<a class='dropdown-item-search live_search_result_option' href>";
+                echo "<a class='dropdown-item-search live_search_result_option' data-book_id='" . $result['book_id'] . "' href>";
                 echo $result['book_name'];
                 echo "</a>";
             }

@@ -232,6 +232,8 @@
                         $(this_elm).removeClass("disabled");
                         $(this_elm).on("click", rating_change);
 
+                        // HCI EVENT
+                        hciprogress($('#book_id').val());
                     }
                 })
             }
@@ -309,6 +311,11 @@
                         title: 'Rated successfully !',
                         type: 'success',
                     });
+
+                    // HCI EVENT
+                    hciprogress($('#book_id').val());
+
+
                     $('#rate_modal').modal('hide');
                     $('.rating-stars').rating('update', rate_value);
 
@@ -333,6 +340,8 @@
                     $('#span_rating').addClass("badge-warning");
 
                     $('#detail_rate_mobile').html('<i class="fas fa-star"></i> <span class="rate_text">update</span>');
+
+
                 }
             })
 

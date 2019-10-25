@@ -249,7 +249,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             e.preventDefault();
             $('#input-search').val($(this).html());
             $('#livesearch').hide();
-            $('#search_form').submit();
+            window.location.href = '<?= base_url() ?>book/' + $(this).data("book_id");
+            // $('#search_form').submit();
 
         });
 
@@ -377,7 +378,60 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 type: 'info',
             })
 
+        <?php }
+        if ($this->session->userdata('not_enough_hci')) { ?>
+            var data = <?= $this->session->userdata('not_enough_hci_progress') ?>;
+            console.log(data);
+            var width = (data / 10) * 100;
+            Swal.fire({
+                title: 'ให้คะแนนหนังสือในหมวด HCI ยังไม่ครบ ไม่สามารถทำแบบประเมินได้!',
+                html: '<div class="progress w-100"><div class="progress-bar bg-warning progress-bar-striped progress-bar-animated active" style="width:' + width + '%" role="progressbar" aria-valuenow="' + data + '" aria-valuemin="0 " aria-valuemax="10">' + data + '</div></div>',
+                type: 'warning',
+                showConfirmButton: false,
+            })
         <?php } ?>
+
+        // HCI EVENT
+        function hciprogress(book_id) {
+            var post_data = {
+                'book_id': book_id,
+            };
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>books/progress_hci",
+                data: post_data,
+                async: true,
+                success: function(data) {
+                    if (data != "") {
+                        if (data < 10) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                            var width = (data / 10) * 100;
+                            Toast.fire({
+                                title: 'ให้คะแนนหนังสือในหมวด HCI สำเร็จ!',
+                                footer: '<div class="progress w-100"><div class="progress-bar bg-success progress-bar-striped progress-bar-animated active" style="width:' + width + '%" role="progressbar" aria-valuenow="' + data + '" aria-valuemin="0 " aria-valuemax="10">' + data + '</div></div>',
+                                type: 'success',
+                            })
+                        } else if (data >= 10) {
+                            var width = (data / 10) * 100;
+                            Swal.fire({
+                                title: 'ให้คะแนนหนังสือในหมวด HCI ครบแล้ว!',
+                                html: '<div class="progress w-100"><div class="progress-bar bg-success progress-bar-striped progress-bar-animated active" style="width:' + width + '%" role="progressbar" aria-valuenow="' + data + '" aria-valuemin="0 " aria-valuemax="10">' + data + '</div></div>',
+                                footer: '<a href="<?= base_url() ?>form" class="text-decoration-none text-center btn btn-primary">ไปที่แบบประเมิน.</a>',
+                                type: 'success',
+                                showConfirmButton: false,
+                            })
+                        }
+
+                    }
+                }
+            })
+        }
+
         $('html').click(function() {
             // have to add all trigger to appear that shit
             if (!$("#stop-timer").hasClass("hovered") && !$(".move_to_another_collection").hasClass("hovered")) {

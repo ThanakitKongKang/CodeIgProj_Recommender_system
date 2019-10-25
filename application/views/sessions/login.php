@@ -46,7 +46,7 @@
                             <a href="javascript:history.go(-1)" class="link text-secondary"><i class="fas fa-times fa-lg"></i></a>
                         </div>
                         <div class="justify-content-center d-flex">
-                            <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="100" height="100" class="d-inline-block align-top" alt="">
+                            <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="100" height="100" class="d-inline-block align-top drop_shadow_sign" alt="">
                         </div>
                         <!-- <h3 class="card-title text-center mt-2">Login</h3> -->
                         <form method="post" class="form-signin" action="<?= site_url('login') ?>">
