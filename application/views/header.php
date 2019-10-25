@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- responsive css -->
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_1024.css">
-    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_760.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_768.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_450.css">
 
 
@@ -85,7 +85,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top pb-0" id="navbar">
-            <div class="container">
+            <div class="container justify-content-end">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

@@ -113,18 +113,18 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_label">Rate <?= $book['book_name'] ?></h5>
+                <h5 class="modal-title" id="modal_label">Rate <?= $book_detail['book_name'] ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="margin-left:8rem;">
                 <input value="<?= $user_rate['rate'] ?>" class="rater_star_modal" title="" data-show-clear="false">
-                <input value="<?= $book['book_id'] ?>" id="modal_book_id" title="" type="hidden">
+                <input value="<?= $book_detail['book_id'] ?>" id="modal_book_id" title="" type="hidden">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" style="display:none;" data-book_id="<?= $book['book_id'] ?>" class="btn btn-primary rate_trigger">Submit</button>
+                <button type="button" style="display:none;" data-book_id="<?= $book_detail['book_id'] ?>" class="btn btn-primary rate_trigger">Submit</button>
             </div>
         </div>
     </div>
@@ -205,7 +205,6 @@
             } else {
                 $('#detail_rate_mobile').html('<i class="fas fa-star"></i> <span class="rate_text">update</span>');
             }
-            console.log(default_rating);
 
             // bookmarker
             $('.rating-stars').on("click", rating_change);
