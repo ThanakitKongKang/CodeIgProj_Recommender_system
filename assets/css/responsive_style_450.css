@@ -9,8 +9,8 @@
 
 	#mid-title_browse {
 		font-size: 1.5rem;
-		padding-left:2rem;
-		padding-right:2rem;
+		padding-left: 2rem;
+		padding-right: 2rem;
 	}
 
 	#popup_menu {
@@ -88,7 +88,7 @@
 
 	#text-col-2-author_col1 {
 		max-width: 5rem;
-		font-size:0.9rem;
+		font-size: 0.9rem;
 	}
 
 	.text-col-2-author {
@@ -155,7 +155,8 @@
 	}
 
 	#iframe_gg_form {
-		min-height: 200rem;
+		/* min-height: 150rem; */
+		height: 736px;
 	}
 
 	#book_detail_content_col1 {
@@ -364,10 +365,10 @@
 		font-size: 11px;
 	}
 
-	.text-img-rate{
+	.text-img-rate {
 		font-size: 0.6rem;
 		top: 0.5rem;
-		right:1rem;
+		right: 1rem;
 	}
 }
 
@@ -387,7 +388,20 @@
 		font-size: 10px;
 	}
 
-	.book_detail_content .rating-sm{
-		font-size:20px;
+	.book_detail_content .rating-sm {
+		font-size: 20px;
+	}
+}
+
+
+@media only screen and (max-width: 320px) {
+
+	.card-signin div div img {
+		display: none !important;
+	}
+
+	.form-signin {
+		width: 15rem;
+		top: auto;
 	}
 }

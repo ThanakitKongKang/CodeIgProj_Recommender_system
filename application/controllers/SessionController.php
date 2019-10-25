@@ -69,11 +69,8 @@ class SessionController extends CI_Controller
                     $this->session->set_userdata('user', $sessionArr);
                     $this->session->set_userdata('logged_in', TRUE);
                     $this->session->set_flashdata('flash_success', TRUE);
-                    ?>
-                    <script type="text/javascript">
-                        window.history.go(-2);
-                    </script>
-                    <?php
+                    redirect(base_url());
+                    
                 } else if ($data == FALSE) {
                     $data['title'] = "Login";
                     $data["feedback"] = "Username or Password wrong!";
@@ -85,7 +82,7 @@ class SessionController extends CI_Controller
             <script type="text/javascript">
                 window.history.go(-1);
             </script>
-            <?php
+<?php
             $this->session->set_flashdata('already_logged_in', TRUE);
         }
     }
