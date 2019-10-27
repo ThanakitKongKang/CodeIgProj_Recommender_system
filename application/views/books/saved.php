@@ -408,9 +408,10 @@
 
         function appearCollection_move(book_id, rect) {
             $('#save_collection_menu').css({
-                "top": (rect.top - 100),
-                "left": (rect.left - 0),
+                "top": (rect.top - 80),
+                "left": (rect.left - 250),
             });
+
             var formData = {
                 'book_id': book_id,
             };
@@ -539,7 +540,7 @@
                         toastBookmarkUnsaved();
 
                         parent.addClass("opacity");
-                        parent.find('.removed_item').html("Removed from a saved list");
+                        parent.find('.removed_item').html("Removed from saved list");
                         bookmark_trigger_count++;
 
                         this_elm.find('i').removeClass("fas");

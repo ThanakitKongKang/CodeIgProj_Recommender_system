@@ -141,8 +141,6 @@
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         $('#detail_pdf_section object').hide();
         $('#detail_undesktop').show();
-
-        
     }
 
     $(document).ready(function() {

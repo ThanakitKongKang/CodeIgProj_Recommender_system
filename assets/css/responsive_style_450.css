@@ -413,6 +413,19 @@
 		margin-left: 0.25rem;
 	}
 
+	.footer {
+		height: 17rem;
+	}
+
+	.footer__addr {
+		padding-top: 0rem;
+	}
+
+	.footer .legal p {
+		width: auto;
+	}
+
+
 }
 
 
@@ -453,6 +466,10 @@
 		height: 30px;
 	}
 
+	.footer .legal p {
+		width: 100%;
+	}
+
 }
 
 
@@ -490,5 +507,9 @@
 
 	.card_img {
 		height: 6rem;
+	}
+
+	.footer {
+		height: 19rem;
 	}
 }
