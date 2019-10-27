@@ -167,4 +167,34 @@
 	.img_similar_book_content {
 		height: 17rem;
 	}
+
+	.overlay_card {
+		height: 73%;
+	}
+
+	.text-col-2-name>a {
+		margin-right: 1rem;
+		font-size: 0.85rem
+	}
+
+	.custom_dropleft .dropdown-menu {
+		right: -35%;
+		left: auto;
+	}
+
+	.custom_navbar_toggler {
+		margin-right: auto;
+	}
+
+	.custom_navbar_toggler .navbar-brand {
+		margin-bottom: 0rem;
+		padding-top: 0rem;
+		padding-bottom: 0rem;
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	.custom_navbar_toggler {
+		display: none;
+	}
 }

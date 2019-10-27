@@ -17,8 +17,9 @@
 		width: 14rem;
 	}
 
-
-
+	.overlay_card {
+		height: 69%;
+	}
 
 	.hover_img {
 		min-height: 0;
@@ -29,7 +30,7 @@
 	}
 
 	.text-col-2-name {
-		font-size: 0.9rem;
+		font-size: 0.75rem;
 	}
 
 	.text-col-2-author {
@@ -52,7 +53,7 @@
 	}
 
 	.card_img {
-		height: 18rem;
+		height: 16rem;
 	}
 
 	.content_browse_row {
@@ -306,7 +307,7 @@
 	#livesearch {
 		left: -1rem;
 		max-width: 17rem;
-		top: 11.2rem;
+		top: 6rem;
 	}
 
 	#live_search_result_container a {
@@ -334,5 +335,17 @@
 
 	.img_similar_book_content {
 		height: 11rem;
+	}
+
+	.text-col-2-name>a {
+		margin-right: 1rem;
+	}
+
+	#navbarNavDropdown .navbar-brand {
+		display: none;
+	}
+
+	.navbar_search.custom_navbar_toggler .input-search {
+		margin-bottom: 0;
 	}
 }

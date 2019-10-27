@@ -86,9 +86,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top pb-0" id="navbar">
             <div class="container justify-content-end">
+                <div class="custom_navbar_toggler">
+                    <a class="navbar-brand" href="<?= base_url() ?>">
+                        <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                        <span style="font-family:sans-serif;font-size:1.5rem">CS-Book</span>
+
+                    </a>
+                </div>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <div class="">
                         <a class="navbar-brand" href="<?= base_url() ?>">
@@ -99,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <!-- Search -->
-                    <div class="mx-auto">
+                    <div class="mx-auto navbar_search">
                         <form class="form-inline" id="search_form" style="margin:0rem;" action="<?= base_url() ?>search/result">
                             <input class="form-control mr-sm-1" style="width:100%" type="search" name="q" autocomplete="off" placeholder="Search" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
@@ -108,8 +117,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                             </div>
                         </form>
-
                     </div>
+
                     <div class="">
                         <ul class="navbar-nav ml-auto nav-menu">
                             <li class="nav-item <?php if (isset($home)) echo $home; ?>">
@@ -141,7 +150,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <?php
                             } else { ?>
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown custom_dropleft">
                                     <div class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </div>
