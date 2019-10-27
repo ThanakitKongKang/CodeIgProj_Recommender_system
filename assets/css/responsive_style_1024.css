@@ -191,6 +191,14 @@
 		padding-top: 0rem;
 		padding-bottom: 0rem;
 	}
+
+	.content_browse_row {
+		margin-right: 0.5rem;
+		margin-left: 0.5rem;
+	}
+	#app_mid_title_search_result>div>img{
+		max-width: fit-content;
+	}
 }
 
 @media only screen and (min-width: 992px) {

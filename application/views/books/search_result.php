@@ -85,7 +85,7 @@
         </div>
         <!-- Search Result -->
         <?php if (!empty($books)) { ?>
-            <div class="row no-gutters justify-content-center">
+            <div class="row no-gutters">
                 <?php foreach ($books as $book) : ?>
 
                     <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;">
