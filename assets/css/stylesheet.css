@@ -1202,7 +1202,10 @@ li.select2-results__option {
 	padding: 0.5rem;
 	padding-left: 0.75rem;
 	cursor: default;
-
+	width: 9rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .save_collection_menu:active div div {

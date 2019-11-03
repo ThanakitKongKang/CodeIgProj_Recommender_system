@@ -407,9 +407,10 @@
         });
 
         function appearCollection_move(book_id, rect) {
+            // var x414 = window.matchMedia("(max-width: 414px)");
             $('#save_collection_menu').css({
                 "top": (rect.top - 80),
-                "left": (rect.left - 250),
+                "left": (rect.left - 150),
             });
 
             var formData = {
@@ -421,6 +422,7 @@
                 async: true,
                 data: formData,
                 beforeSend: function() {
+                    $('#collection_menu').html("");
                     $(".load_collection_menu").show();
                 },
                 success: function(data) {

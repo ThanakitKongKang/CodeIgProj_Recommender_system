@@ -207,7 +207,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 
     <div id="save_collection_menu" class="position-absolute bg-white slide-bottom" style="display:none;">
-        <div class="load_collection_menu text-center justify-content-center my-5" style="display: none;">
+        <div class="load_collection_menu text-center justify-content-center py-3 px-4" style="display: none;">
             <div class="spinner-border text-primary mr-3" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -598,6 +598,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 url: "<?php echo base_url(); ?>books/get_collection_by_username",
                 async: true,
                 beforeSend: function() {
+                    $('#collection_menu').html("");
                     $(".load_collection_menu").show();
                 },
                 success: function(data) {
