@@ -2,7 +2,7 @@
 @font-face {
 	font-family: 'Kanit';
 	/* localhost */
-	src: url("/CodeIgProj_Recommender_system/assets/_etc/Kanit-Regular.ttf");
+	src: url("../_etc/Kanit-Regular.ttf");
 	/* webhost */
 	/* src: url("https://kkubooksrecommender.online/assets/_etc/Kanit-Regular.ttf"); */
 }
@@ -10,7 +10,7 @@
 @font-face {
 	font-family: 'Oswald';
 	/* localhost */
-	src: url("/CodeIgProj_Recommender_system/assets/_etc/Oswald-Regular.ttf");
+	src: url("../_etc/Oswald-Regular.ttf");
 	/* webhost */
 	/* src: url("https://kkubooksrecommender.online/assets/_etc/Oswald-Regular.ttf"); */
 }
@@ -1339,4 +1339,10 @@ li.select2-results__option {
 	top: 23rem;
 	left: 0rem;
 	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* temporary */
+span.user_rated_this_1,
+span.user_rated_this {
+	display: none;
 }

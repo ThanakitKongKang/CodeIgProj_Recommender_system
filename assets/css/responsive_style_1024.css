@@ -1,3 +1,10 @@
+@media only screen and (width: 1366px),
+(width: 1360px) {
+	.signin_decoration img {
+		max-width: 4rem !important;
+	}
+}
+
 @media only screen and (max-width: 1024px) {
 	.card_img {
 		height: 22rem;
@@ -196,7 +203,8 @@
 		margin-right: 0.5rem;
 		margin-left: 0.5rem;
 	}
-	#app_mid_title_search_result>div>img{
+
+	#app_mid_title_search_result>div>img {
 		max-width: fit-content;
 	}
 }

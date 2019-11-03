@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2019 at 06:52 AM
+-- Generation Time: Nov 03, 2019 at 06:11 AM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -131,7 +131,7 @@ INSERT INTO `book` (`book_id`, `author`, `book_name`, `book_type`, `content`, `b
 (86, 'Eric Ries', 'Lean UX Applying Lean Principles to Improve User Experience', 'Human computer interaction', NULL, NULL, 0),
 (87, 'Eric Ries', 'UX for Lean Startups_Faster, Smarter User Experience Research and Design', 'Human computer interaction', NULL, NULL, 0),
 (88, 'Jesmond Allen', 'Smashing UX Design Foundations for Designing Online User Experiences', 'Human computer interaction', NULL, NULL, 0),
-(89, 'Steve Krug', 'Dont Make Me Think A Common Sense Approach to Web Usability', 'Human computer interaction', NULL, NULL, 0),
+(89, 'Steve Krug', 'Don\'t Make Me Think A Common Sense Approach to Web Usability', 'Human computer interaction', NULL, NULL, 0),
 (90, 'W. Craig Tomlin', 'UX Optimization Combining Behavioral UX and Usability Testing Data to Optimize Websites', 'Human computer interaction', NULL, NULL, 0),
 (91, 'Don norman', 'The Design of Everyday Things Revised and Expanded Edition', 'Human computer interaction', NULL, NULL, 0),
 (92, 'Russ unger', 'A Project Guide to UX Design for User Experience Designers in the Field or in the Making 2nd edition', 'Human computer interaction', NULL, NULL, 0),
