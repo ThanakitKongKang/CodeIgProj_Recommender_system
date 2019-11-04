@@ -953,8 +953,11 @@ body {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-#live_search_result_container>.dropdown-item {
-	width: 25rem;
+#live_search_result_container>.dropdown-item,
+#live_search_result_container>.dropdown-item-search {
+	width: 17rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 

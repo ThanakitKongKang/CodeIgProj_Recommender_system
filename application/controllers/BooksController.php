@@ -19,7 +19,7 @@ class BooksController extends CI_Controller
         'until', 'up', 'very', 'was', 'wasn\'t', 'we', 'we\'d', 'we\'ll', 'we\'re', 'we\'ve', 'were', 'weren\'t', 'what', 'what\'s',
         'when', 'when\'s', 'where', 'where\'s', 'which', 'while', 'who', 'who\'s', 'whom', 'why', 'why\'s', 'with', 'won\'t', 'would',
         'wouldn\'t', 'you', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve', 'your', 'yours', 'yourself', 'yourselves', '-', 'I', 'II', 'III',
-        'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'The', 'A', '_', '\'s',
+        'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'The', 'A', '_', 'st', 'nd', 'th', 'edition', 'Volume', '\'s',
     ];
 
     public function __construct()
@@ -220,6 +220,7 @@ class BooksController extends CI_Controller
 
     public function testmode()
     {
+
         $data['books_name'] = $this->books_model->get_name_all();
         // TF
         $data['words_segment'] = array();
@@ -239,15 +240,20 @@ class BooksController extends CI_Controller
         $transformer = new TfIdfTransformer($data['tf_no_stopwords']);
         $transformer->transform($data['tf_no_stopwords']);
 
-        // cosine similarity 
-        $data['cosineSim'] = array();
-        // $data['cosineSim'] = $this->cosine($data['tf_no_stopwords'][84], $data['tf_no_stopwords'][85]);
-        array_push($data['cosineSim'], $this->cosine($data['tf_no_stopwords'][33], $data['tf_no_stopwords'][35]));
-        array_push($data['cosineSim'], $this->cosine($data['tf_no_stopwords'][34], $data['tf_no_stopwords'][35]));
-        array_push($data['cosineSim'], $this->cosine($data['tf_no_stopwords'][84], $data['tf_no_stopwords'][85]));
-        // $a = [1, 1, 1, 1, 1, 0];
-        // $b = [1, 1, 1, 1, 0, 1];
-        // $data['cosineSim'] = $this->cosine($a, $b);
+        // cosine similarity
+        $data['cosineCheck1'] = $this->input->post('cosineCheck1');
+        $data['cosineCheck2'] = $this->input->post('cosineCheck2');
+        if (!empty($data['cosineCheck1']) && !empty($data['cosineCheck2'])) {
+            // $data['cosineSim'] = array();
+            // array_push(
+            //     $data['cosineSim'],
+            //     $this->cosine(
+            //         $data['tf_no_stopwords'][$data['cosineCheck1']],
+            //         $data['tf_no_stopwords'][$data['cosineCheck2']]
+            //     )
+            // );
+            $data['cosineSim'] = $this->cosine($data['tf_no_stopwords'][$data['cosineCheck1']-1], $data['tf_no_stopwords'][$data['cosineCheck2']-1]);
+        }
 
         $header["title"] = "Test mode";
         $this->load->view('./header', $header);
@@ -649,7 +655,6 @@ class BooksController extends CI_Controller
             $this->session->set_flashdata('not_enough_hci', TRUE);
             $this->session->set_flashdata('not_enough_hci_progress', $progress["progress"]);
             redirect(base_url('browse/human-computer-interaction'));
-
         } else {
             $header['title'] = 'Form';
             $this->load->view('./header', $header);
