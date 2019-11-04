@@ -1352,3 +1352,8 @@ span.user_rated_this_1,
 span.user_rated_this {
 	display: none;
 }
+
+
+.dropdown-item.active, .dropdown-item:active{
+	color:#fff!important;
+}

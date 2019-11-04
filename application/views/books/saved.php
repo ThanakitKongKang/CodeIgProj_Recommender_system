@@ -430,7 +430,7 @@
                     var hr_html = "<hr class='m-0'>";
                     var create_html = "<div id='create_collection' class='dropdown-item small text-secondary' data-toggle='modal' data-target='#create_collection_modal' data-book_id='" + book_id + "'><i class='fas fa-plus-circle'></i> Create Collection</div>";
                     if (data == "zero") {
-                        $('#collection_menu').html("<div class='text-secondary text-center font-arial'>You haven't create any collection.</div>" + hr_html + create_html);
+                        $('#collection_menu').html("<div class='text-secondary text-center font-arial' title='You have not created any collection'>No collection</div>" + hr_html + create_html);
                     } else {
                         $('#collection_menu').html(data + hr_html + create_html);
                     }
