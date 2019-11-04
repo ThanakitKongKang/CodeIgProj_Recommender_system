@@ -17,7 +17,7 @@
 		left: 19% !important;
 	}
 
-	
+
 
 	#similar_book_detail {
 		position: absolute !important;
@@ -390,7 +390,8 @@
 	}
 
 	#livesearch {
-		top: 7rem;
+		top: 6.5rem;
+		left: 4rem;
 	}
 
 	.custom_navbar_toggler .navbar-brand span {
@@ -423,6 +424,9 @@
 		width: auto;
 	}
 
+	#livesearch {
+		left: 2.5rem;
+	}
 
 }
 
@@ -468,6 +472,10 @@
 		width: 100%;
 	}
 
+	#livesearch {
+		left: 2.5rem;
+	}
+
 }
 
 
@@ -509,5 +517,16 @@
 
 	.footer {
 		height: 19rem;
+	}
+
+	#livesearch {
+		top: 6.5rem;
+		max-width: 14rem;
+		left: 2rem;
+	}
+
+	#live_search_result_container>.dropdown-item,
+	#live_search_result_container>.dropdown-item-search {
+		width: 14rem;
 	}
 }

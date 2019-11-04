@@ -337,8 +337,6 @@
                     $('#popup_menu').hide();
                 }
             }
-
-
         });
 
         $('#dropdown-category-toggle').click(function(e) {

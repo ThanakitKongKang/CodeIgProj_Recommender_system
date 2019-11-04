@@ -933,11 +933,11 @@ body {
 }
 
 #livesearch {
-	position: relative;
+	position: fixed;
 	top: 3rem;
 	z-index: 1031;
-	left: -3rem;
-	max-width: 25rem;
+	left: 39%;
+	max-width: 20rem;
 }
 
 #live_search_result_container {

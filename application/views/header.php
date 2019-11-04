@@ -229,10 +229,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 // console.log(prevScrollpos + " : " + currentScrollPos)
                 if (prevScrollpos > currentScrollPos) {
                     document.getElementById("navbar").style.top = "0";
-
                 } else if (prevScrollpos != 75) {
                     document.getElementById("navbar").style.top = "-75px";
-
+                    $('#livesearch').hide();
                 }
                 prevScrollpos = currentScrollPos;
             }
@@ -281,7 +280,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         });
 
         // lose focus
-        $('#input-search').focusout(function(e) {
+        $('#input-search').on('focusout', function(e) {
             if (!$("#livesearch").hasClass("hovered")) {
                 $('#livesearch').hide();
             }
