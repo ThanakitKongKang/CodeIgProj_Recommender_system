@@ -119,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </form>
                     </div>
 
-                    <div class="">
+                    <div class="" style="width: 21rem;">
                         <ul class="navbar-nav ml-auto nav-menu">
                             <li class="nav-item <?php if (isset($home)) echo $home; ?>">
                                 <a class="nav-link" href="<?= base_url() ?>">Home <span class="sr-only">(current)</span></a>

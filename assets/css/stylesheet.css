@@ -1,3 +1,6 @@
+
+
+
 /* header */
 @font-face {
 	font-family: 'Kanit';
@@ -936,7 +939,7 @@ body {
 	position: fixed;
 	top: 3rem;
 	z-index: 1031;
-	left: 39%;
+	left: 37%;
 	max-width: 20rem;
 }
 

@@ -1,6 +1,30 @@
-@media only screen and (min-width: 2000px) {
+@media only screen and (min-width: 2400px) {
 	#livesearch {
-		left: 40.3%;
+		left: calc(39.5% + 1vw);
+	}
+}
+
+@media only screen and (max-width: 2200px) {
+	#livesearch {
+		left: 38.5%;
+	}
+}
+
+@media only screen and (max-width: 2000px) {
+	#livesearch {
+		left: 37.25%;
+	}
+}
+
+@media only screen and (max-width: 1800px) {
+	#livesearch {
+		left: 35.75%;
+	}
+}
+
+@media only screen and (max-width: 1500px) {
+	#livesearch {
+		left: 32.75%;
 	}
 }
 
@@ -11,7 +35,19 @@
 	}
 
 	#livesearch {
-		left: 35%;
+		left: 32%;
+	}
+}
+
+@media only screen and (max-width: 1260px) {
+	#livesearch {
+		left: 29.75%;
+	}
+}
+
+@media only screen and (max-width: 1100px) {
+	#livesearch {
+		left: 26.75%;
 	}
 }
 
@@ -150,7 +186,7 @@
 	}
 
 	#livesearch {
-		left: 20rem;
+		left: 17.5rem;
 		max-width: 17rem;
 	}
 
