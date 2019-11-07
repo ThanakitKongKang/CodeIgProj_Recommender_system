@@ -52,6 +52,10 @@
 }
 
 @media only screen and (max-width: 1024px) {
+	#nav_right_header {
+		width: auto;
+	}
+
 	.card_img {
 		height: 22rem;
 	}

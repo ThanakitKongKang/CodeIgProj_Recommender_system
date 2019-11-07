@@ -1360,3 +1360,7 @@ span.user_rated_this {
 .dropdown-item.active, .dropdown-item:active{
 	color:#fff!important;
 }
+
+#nav_right_header{
+	width:21rem;
+}
