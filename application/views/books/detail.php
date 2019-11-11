@@ -1,7 +1,8 @@
 <div class="container">
+    <div class="btn btn-outline-secondary mb-3" style="cursor:pointer" onclick="window.history.back()"><i class="fas fa-arrow-left"></i> Back</div>
     <div class="row">
         <!-- pdf -->
-        <div class="d-inline-block col-sm p-0 bg-light detail_pdf_section" style="height: 90vh!important;width:40vw!important">
+        <div class="d-inline-block col-sm p-0 detail_pdf_section" style="height: 90vh!important;width:40vw!important">
             <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
             </object>
             <div class="display-4 text-secondary" id="detail_undesktop" style="display:none">Content is only available on desktop</div>
