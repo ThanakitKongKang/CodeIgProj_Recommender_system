@@ -252,7 +252,14 @@ class BooksController extends CI_Controller
             //         $data['tf_no_stopwords'][$data['cosineCheck2']]
             //     )
             // );
-            $data['cosineSim'] = $this->cosine($data['tf_no_stopwords'][$data['cosineCheck1']-1], $data['tf_no_stopwords'][$data['cosineCheck2']-1]);
+            $data['cosineSim'] = $this->cosine($data['tf_no_stopwords'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]);
+
+            // debug
+            $data['dotproduct'] = $this->dot_product($data['tf_no_stopwords'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]);
+            $data['tf_no_stopwords'][$data['cosineCheck1'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords'][$data['cosineCheck1'] - 1]);
+            $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords'][$data['cosineCheck2'] - 1]);
+            $data['magnitude'] = ($data['tf_no_stopwords'][$data['cosineCheck1'] - 1]['MAGNITUDE'] *  $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]['MAGNITUDE']);
+        
         }
 
         $header["title"] = "Test mode";
@@ -944,6 +951,7 @@ class BooksController extends CI_Controller
         // echo "<br>magnitude a : " . self::magnitude($a);
         // echo "<br>magnitude b : " . self::magnitude($b);
         // echo "<br>magnitude a*b : " . self::magnitude($a) * self::magnitude($b);
+        // echo "<br>dotproduct ab : " . self::dot_product($a, $b);
         // echo "</div>";
 
         return self::dot_product($a, $b) / (self::magnitude($a) * self::magnitude($b));

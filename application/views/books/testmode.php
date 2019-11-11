@@ -8,8 +8,13 @@
     if (!empty($cosineCheck1)) {
         echo "<div class='container font-arial'><h4>cosine similarity between [$cosineCheck1] and [$cosineCheck2] is : $cosineSim</h4>";
         echo "</div>";
-        print("<pre>[$cosineCheck1] " . print_r($tf_no_stopwords[$cosineCheck1 - 1], true) . "</pre>");
-        print("<pre>[$cosineCheck2] " . print_r($tf_no_stopwords[$cosineCheck2 - 1], true) . "</pre>");
+        echo "<div class='container font-arial text-secondary'><h5>Dot product : $dotproduct</h5>";
+        echo "</div>";
+        echo "<div class='container font-arial text-secondary'><h5>Magnitude : $magnitude</h5>";
+        echo "</div>";
+
+        print("<pre class='text-primary'>[$cosineCheck1] " . print_r($tf_no_stopwords[$cosineCheck1 - 1], true) . "</pre>");
+        print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords[$cosineCheck2 - 1], true) . "</pre>");
     }
 
     echo "<div class='container mt-5'><h4>books_name retrieving</h4>";
