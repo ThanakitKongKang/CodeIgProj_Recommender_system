@@ -238,7 +238,7 @@
                         $(this_elm).on("click", rating_change);
 
                         // HCI EVENT
-                        hciprogress($('#book_id').val());
+                        // hciprogress($('#book_id').val());
                     }
                 })
             }
@@ -318,7 +318,7 @@
                     });
 
                     // HCI EVENT
-                    hciprogress($('#book_id').val());
+                    // hciprogress($('#book_id').val());
 
 
                     $('#rate_modal').modal('hide');

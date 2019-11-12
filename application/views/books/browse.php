@@ -351,7 +351,7 @@
                         type: 'success',
                     });
                     // HCI EVENT
-                    hciprogress($('#modal_book_id').val());
+                    // hciprogress($('#modal_book_id').val());
 
                     $('#rate_modal').modal('hide');
                     global_book_id = 0;

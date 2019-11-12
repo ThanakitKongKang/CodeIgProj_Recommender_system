@@ -161,7 +161,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->
 
                                         <hr class="my-2">
-                                        <a class="dropdown-item" href="<?= base_url() ?>logout">Log Out</a>
+                                        <a class="dropdown-item" href="https://drive.google.com/drive/u/1/folders/1Ko-rcBT1rPSri_Ph4-FYnA-cDXolZNAB?fbclid=IwAR3a77DeDMKYQo39VJAFEowWZTl-guMjsM0spsblyLZQ_Hx4JOEdeGeyjwI"><i class="fas fa-question-circle pr-2 text-secondary"></i>Help</a>
+                                        <a class="dropdown-item" href="<?= base_url() ?>logout"><i class="fas fa-sign-out-alt pr-2 text-secondary"></i>Log Out</a>
                                     </div>
                                 </li>
 

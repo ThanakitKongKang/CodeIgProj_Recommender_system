@@ -69,9 +69,9 @@ class SessionController extends CI_Controller
                     $this->session->set_userdata('user', $sessionArr);
                     $this->session->set_userdata('logged_in', TRUE);
                     $this->session->set_flashdata('flash_success', TRUE);
-                    // redirect(base_url());
+                    redirect(base_url());
                     // hci event
-                    redirect(base_url('browse/human-computer-interaction'));
+                    // redirect(base_url('browse/human-computer-interaction'));
                 } else if ($data == FALSE) {
                     $data['title'] = "Login";
                     $data["feedback"] = "Username or Password wrong!";
@@ -171,9 +171,9 @@ class SessionController extends CI_Controller
             $this->session->set_userdata('user', $sessionArr);
             $this->session->set_userdata('logged_in', TRUE);
             $this->session->set_flashdata('register_success', TRUE);
-            // redirect(base_url());
+            redirect(base_url());
             // hci event
-            redirect(base_url('browse/human-computer-interaction'));
+            // redirect(base_url('browse/human-computer-interaction'));
         }
     }
     public function username_check($str)
