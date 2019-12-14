@@ -23,7 +23,7 @@
                             <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
                             <div class="small"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div>
                         </div>
-                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
                         <div class="hover_img_content_name"><?= $final_recommend_list[0]['book_name'] ?></div>
                         <div class="small">field : <?= $final_recommend_list[0]['book_type'] ?></div>
                         <div class="small py-2">author : <?= $final_recommend_list[0]['author'] ?></div>
@@ -218,12 +218,13 @@
                                         <div class="small py-2">field : <?= $top['book_type'] ?></div>
                                         <div class="small py-2" title="<?= $top['author'] ?>">author : <?= $top['author'] ?></div>
                                         <div class="mt-5 text-center">
-                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
                                             <?php if ($top['count_rate'] != 0) { ?>
                                                 <!-- HARD CODE rater star -->
                                                 <div class="rating-container rating-sm rating-animate is-display-only">
                                                     <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
-                                                    <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $top['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
+                                                    <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span>
+                                                    <span class="filled-stars" style="width:<?php echo $top['b_rate'] * 20 ?>%"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
                                                 </div>
                                                 <div class="small"><?= number_format($top['b_rate'], 1) ?>/5.0 rated by <?= $top['count_rate'] ?> user<?php if ($top['count_rate'] > 1) echo "s"; ?></div>
                                             <?php } ?>
@@ -260,7 +261,7 @@
                                     <div class="small py-2">author : {{ book.author }}</div>
 
                                     <div class="mt-5 text-center">
-                                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
                                         <div v-if="book.count_rate !== '0'">
                                             <div class="rating-container rating-sm rating-animate is-display-only">
                                                 <!-- HARD CODE rater star for Vue.js -->

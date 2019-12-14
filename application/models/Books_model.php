@@ -184,6 +184,7 @@ class Books_model extends BaseModel
     {
         $this->db->select('book_type');
         $this->db->distinct();
+        $this->db->order_by('book_type', 'ASC');
         $query = $this->db->get($this->table);
         $array = json_decode(json_encode($query->result()), True);
         return $array;

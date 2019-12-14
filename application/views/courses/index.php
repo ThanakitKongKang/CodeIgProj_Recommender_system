@@ -29,7 +29,7 @@
                     <?php foreach ($course_registered as $course) : ?>
                         <div class="row bg-white py-3 course_row">
                             <div class="col-1 align-self-center text-center checkbox_div">
-                                <input type="checkbox" class="checkbox" style="transform: scale(1.5);">
+                                <input type="checkbox" class="checkbox" style="transform: scale(1.5);z-index:0">
                             </div>
                             <div class="col-2 align-self-center content_course_id" data-course_id="<?= $course['course_id'] ?>"><?= $course['course_id'] ?></div>
                             <div class="col-6">

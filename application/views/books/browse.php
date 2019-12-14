@@ -16,7 +16,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse col-12" id="navbarNavDropdown-browse">
-                <ul class="navbar-nav nav-menu">
+                <ul class="navbar-nav nav-menu" style="white-space: nowrap;overflow-x: auto;-webkit-overflow-scrolling: touch;">
 
                     <?php
                     foreach ($category_list as $category) {
@@ -31,6 +31,7 @@
                         <li class="nav-item">
                             <a class="nav-link ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $category["book_type"]))) ?>" id="<?= strtolower(ucwords(str_replace(" ", "-", $category["book_type"]))) ?>" data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
                         </li>
+                       
                     <?php
                     }
                     ?>
@@ -338,7 +339,7 @@
                 data: rating,
                 async: true,
                 success: function(data) {
-                    
+
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -356,7 +357,7 @@
                     $('#rate_modal').modal('hide');
                     global_book_id = 0;
 
-                  
+
                 }
             })
         });

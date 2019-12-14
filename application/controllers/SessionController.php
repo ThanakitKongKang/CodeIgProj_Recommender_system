@@ -64,8 +64,10 @@ class SessionController extends CI_Controller
                         'lastname' => $data[0]->last_name
                     );
                     $this->load->model('bookmark_model');
+                    $this->load->model('rate_model');
 
                     $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($data[0]->username, "count"));
+                    $this->session->set_userdata('count_all_rating_history', $this->rate_model->get_all_num_rows_username($data[0]->username));
                     $this->session->set_userdata('user', $sessionArr);
                     $this->session->set_userdata('logged_in', TRUE);
                     $this->session->set_flashdata('flash_success', TRUE);

@@ -423,8 +423,7 @@ class BooksController extends CI_Controller
             $this->rate_model->update_rate($bookid, $username, $rate, $date);
             $rate_avg = $this->books_model->update_book_rate_exists($bookid);
         }
-
-
+        $this->session->set_userdata('count_all_rating_history', $this->rate_model->get_all_num_rows_username($username));
         echo number_format($rate_avg, 1);
     }
 
