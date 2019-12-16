@@ -16,10 +16,10 @@
         print("<pre class='text-primary'>[$cosineCheck1] " . print_r($tf_no_stopwords2[$cosineCheck1 - 1], true) . "</pre>");
         print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords2[$cosineCheck2 - 1], true) . "</pre>");
     }
- 
-     echo "<div class='container mt-5'><h4>course_registered</h4>";
-     print("<pre>" . print_r($course_registered, true) . "</pre>");
-     echo "</div>";
+
+    echo "<div class='container mt-5'><h4>course_registered</h4>";
+    print("<pre>" . print_r($course_registered, true) . "</pre>");
+    echo "</div>";
 
     echo "<div class='container mt-5'><h4>course_registered_keyword</h4>";
     print("<pre>" . print_r($course_registered_keyword, true) . "</pre>");
@@ -50,4 +50,42 @@
     // echo "</div>";
 
     ?>
+
+    <div class="center bg-light m-5 p-5 text-center" data-slick='{"slidesToShow": 5, "slidesToScroll": 5}'>
+        <?php for ($i = 1; $i <= 10; $i++) {
+            echo "<div><h3>$i</h3></h3></div>";
+        } ?>
+    </div>
 </div>
+<script>
+    
+    $(document).ready(function() {
+        $('.center').slick({
+            lazyLoad: 'ondemand',
+            centerMode: true,
+            centerPadding: '60px',
+            slidesToShow: 5,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            responsive: [{
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>

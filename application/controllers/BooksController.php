@@ -278,16 +278,26 @@ class BooksController extends CI_Controller
                 'human' => 1,
                 'computer' => 1,
                 'interaction' => 1,
+                'interactive' => 1,
                 'design' => 1,
+                'designing' => 1,
+                'ux' => 1,
+                'ui' => 1,
+                'user interface' => 1,
+                'user experience' => 1,
+                'user experiences' => 1,
+                'ux/ui' => 1,
             ),
+
             'SC312006' => array(
                 'analysis' => 1,
                 'algorithm' => 1,
                 'algorithms' => 1,
             ),
+
             '000101' => array(
-                'English' => 1,
-                'Language' => 1,
+                'english' => 1,
+                'language' => 1,
             ),
         );
 

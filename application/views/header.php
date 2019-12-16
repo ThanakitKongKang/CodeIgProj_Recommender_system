@@ -78,6 +78,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_768.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_450.css">
 
+    <!-- slick carousel -->
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/slick/slick-theme.css" />
 
 
 </head>
@@ -219,7 +222,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
-
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/slick/slick.min.js"></script>
     <script type="text/javascript">
         // scroll hide header
         var isMobile_index = window.matchMedia("only screen and (max-width: 1024px)").matches;
@@ -390,7 +393,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             // HCI EVENT
         <?php }
         if ($this->session->userdata('not_enough_hci')) { ?>
-            var data = <?= $this->session->userdata('not_enough_hci_progress') ?>;
+            var data = <?= $this->session->userdata('not_enough_hci_progress') ?>"";
             var width = (data / 10) * 100;
             Swal.fire({
                 title: 'ให้คะแนนหนังสือในหมวด HCI ยังไม่ครบ ไม่สามารถทำแบบประเมินได้!',
@@ -728,12 +731,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             }
         }
-        $(document).ready(function() {
-            // var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
-            // if (isMobile) {
-            //     alert("Mobile phone display is not supported for now, We Recommend using a computer");
-            // }
-        });
+     
     </script>
 
 
