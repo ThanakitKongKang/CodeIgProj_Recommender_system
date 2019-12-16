@@ -8,6 +8,7 @@ class CoursesController extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url', 'form');
+        $this->load->model('books_model');
         $this->load->model('course_model');
         $this->load->model('registered_course_model');
     }
@@ -58,5 +59,52 @@ class CoursesController extends CI_Controller
         );
 
         $this->registered_course_model->delete_registered_course($post_data);
+    }
+
+    public function dot_product($a, $b)
+    {
+        $dot_product = 0;
+
+        foreach ($a as $key_a => $value_a) {
+            if (array_key_exists($key_a, $b)) {
+                $dot_product += $a[$key_a] * $b[$key_a];
+                // echo "<br>true " . $key_a;
+            } else {
+                // echo "<br>false " . $key_a;
+            }
+        }
+        // echo "<br>dot_product : ".$dot_product;
+        return $dot_product;
+
+        // $products = array_map(function ($a, $b) {
+        //     // echo "<br>array_map : " . $a * $b;
+        //     return $a * $b;
+        // }, $a, $b);
+        // return array_reduce($products, function ($a, $b) {
+        //     return $a + $b;
+        // });
+
+    }
+    public function magnitude($point)
+    {
+        $squares = array_map(function ($x) {
+            return pow($x, 2);
+        }, $point);
+        return sqrt(array_reduce($squares, function ($a, $b) {
+            return $a + $b;
+        }));
+    }
+
+    public function cosine($a, $b)
+    {
+        // echo "<div class='container'><h4>watcher</h4>";
+        // echo "<br><br>";
+        // echo "<br>magnitude a : " . self::magnitude($a);
+        // echo "<br>magnitude b : " . self::magnitude($b);
+        // echo "<br>magnitude a*b : " . self::magnitude($a) * self::magnitude($b);
+        // echo "<br>dotproduct ab : " . self::dot_product($a, $b);
+        // echo "</div>";
+
+        return self::dot_product($a, $b) / (self::magnitude($a) * self::magnitude($b));
     }
 }

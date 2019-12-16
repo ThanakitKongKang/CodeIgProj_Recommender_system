@@ -29,6 +29,7 @@ class BooksController extends CI_Controller
 
         $this->load->model('books_model');
         $this->load->model('rate_model');
+        $this->load->model('course_model');
         $this->load->model('bookmark_model');
         $this->load->library("pagination");
     }
@@ -97,7 +98,7 @@ class BooksController extends CI_Controller
 
         /*
         | -------------------------------------------------------------------------
-        | Content-based recommendation
+        | Content-based recommendation : similar book
         | -------------------------------------------------------------------------
         */
         $data['books_name'] = $this->books_model->get_name_all();
@@ -110,18 +111,24 @@ class BooksController extends CI_Controller
         // Stop words removal
         $stopWords = array_flip(self::$stopWords);
         $data['tf_no_stopwords'] = array();
+
         foreach ($data['words_segment'] as $word_segment) {
             array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
         }
-        $transformer = new TfIdfTransformer($data['tf_no_stopwords']);
-        $transformer->transform($data['tf_no_stopwords']);
+
+        foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+            $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+        }
+
+        $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+        $transformer->transform($data['tf_no_stopwords2']);
 
         // cosine similarity 
         $data['cosineSim'] = array();
         $i = 0;
         $bookid--;
         foreach ($data['books_name'] as $book_name) {
-            $data['cosineSim'][$i + 1] =  $this->cosine($data['tf_no_stopwords'][$bookid], $data['tf_no_stopwords'][$i]);
+            $data['cosineSim'][$i + 1] =  $this->cosine($data['tf_no_stopwords2'][$bookid], $data['tf_no_stopwords2'][$i]);
             $i++;
         }
         // $data['cosineSim'][2] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][2]);
@@ -229,7 +236,6 @@ class BooksController extends CI_Controller
         }
 
         // Stop words removal
-
         $stopWords = array_flip(self::$stopWords);
         $data['tf_no_stopwords'] = array();
         foreach ($data['words_segment'] as $word_segment) {
@@ -237,30 +243,103 @@ class BooksController extends CI_Controller
             // print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
         }
 
-        $transformer = new TfIdfTransformer($data['tf_no_stopwords']);
-        $transformer->transform($data['tf_no_stopwords']);
+        // change key to lowercase
+        foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+            $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+        }
+
+        // IDF
+        $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+        $transformer->transform($data['tf_no_stopwords2']);
+
 
         // cosine similarity
         $data['cosineCheck1'] = $this->input->post('cosineCheck1');
         $data['cosineCheck2'] = $this->input->post('cosineCheck2');
-        if (!empty($data['cosineCheck1']) && !empty($data['cosineCheck2'])) {
-            // $data['cosineSim'] = array();
-            // array_push(
-            //     $data['cosineSim'],
-            //     $this->cosine(
-            //         $data['tf_no_stopwords'][$data['cosineCheck1']],
-            //         $data['tf_no_stopwords'][$data['cosineCheck2']]
-            //     )
-            // );
-            $data['cosineSim'] = $this->cosine($data['tf_no_stopwords'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]);
 
-            // debug
-            $data['dotproduct'] = $this->dot_product($data['tf_no_stopwords'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]);
-            $data['tf_no_stopwords'][$data['cosineCheck1'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords'][$data['cosineCheck1'] - 1]);
-            $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords'][$data['cosineCheck2'] - 1]);
-            $data['magnitude'] = ($data['tf_no_stopwords'][$data['cosineCheck1'] - 1]['MAGNITUDE'] *  $data['tf_no_stopwords'][$data['cosineCheck2'] - 1]['MAGNITUDE']);
-        
+        if (!empty($data['cosineCheck1']) && !empty($data['cosineCheck2'])) {
+
+            $data['cosineSim'] = $this->cosine($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]);
+
+            // debugger
+            $data['dotproduct'] = $this->dot_product($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]);
+            $data['tf_no_stopwords2'][$data['cosineCheck1'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1]);
+            $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]);
+            $data['magnitude'] = ($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1]['MAGNITUDE'] *  $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]['MAGNITUDE']);
         }
+
+        // start recommend by registered course
+        $username = $this->session->userdata('user')['username'];
+        $data['course_registered'] = $this->course_model->get_course_registered($username);
+
+        // course_registered_keyword sets
+        $data['course_registered_keyword'] = array(
+            'SC312002' => array(
+                'human' => 1,
+                'computer' => 1,
+                'interaction' => 1,
+                'design' => 1,
+            ),
+            'SC312006' => array(
+                'analysis' => 1,
+                'algorithm' => 1,
+                'algorithms' => 1,
+            ),
+            '000101' => array(
+                'English' => 1,
+                'Language' => 1,
+            ),
+        );
+
+
+        // get course keywords by user's registered courses's id
+        $data['item'] = array();
+        $i = 0;
+        foreach ($data['course_registered'] as $id_registered => $result_registered) {
+            foreach ($data['course_registered_keyword'] as $id_courses => $result_courses) {
+                if ($result_registered['course_id'] == $id_courses) {
+                    foreach ($result_courses as $id => $result) {
+                        $data['item'][$id_courses][$id] = 1;
+                    }
+                    $i++;
+                }
+            }
+        }
+
+        // cosine similarity 
+        $data['cosineSim_course'] = array();
+        $k = 0;
+        foreach ($data['item'] as $item_key => $item) {
+            foreach ($data['books_name'] as $book_name) {
+                $data['cosineSim_course'][$item_key][$k + 1] =  $this->cosine($data['item'][$item_key], $data['tf_no_stopwords2'][$k]);
+                $k++;
+            }
+            $k = 0;
+        }
+
+        // remove 0 similarity from array 
+        // and
+        // get content based books detail
+        foreach ($data['cosineSim_course'] as $key => $cosineSim) {
+            foreach ($cosineSim as $subCosine_key => $subCosine) {
+                if ($subCosine == 0 || is_nan($subCosine)) {
+                    unset($data['cosineSim_course'][$key][$subCosine_key]);
+                } else {
+                    $data['recommend_list_detail_course'][$key][$subCosine_key] = $this->books_model->get_by_id($subCosine_key);
+                    $data['recommend_list_detail_course'][$key][$subCosine_key]['match'] = $subCosine;
+                }
+            }
+        }
+
+        // sort by similarity score
+        foreach ($data['recommend_list_detail_course'] as $key => $value) {
+            $match = array_column($data['recommend_list_detail_course'][$key], 'match');
+            array_multisort($match, SORT_DESC, $data['recommend_list_detail_course'][$key]);
+        }
+
+
+        // chopping to get only 12 items
+        // $data['recommend_list_detail_course'] = (array_slice($data['recommend_list_detail_course'], 0, 12));
 
         $header["title"] = "Test mode";
         $this->load->view('./header', $header);

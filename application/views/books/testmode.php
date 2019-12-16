@@ -13,21 +13,41 @@
         echo "<div class='container font-arial text-secondary'><h5>Magnitude : $magnitude</h5>";
         echo "</div>";
 
-        print("<pre class='text-primary'>[$cosineCheck1] " . print_r($tf_no_stopwords[$cosineCheck1 - 1], true) . "</pre>");
-        print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords[$cosineCheck2 - 1], true) . "</pre>");
+        print("<pre class='text-primary'>[$cosineCheck1] " . print_r($tf_no_stopwords2[$cosineCheck1 - 1], true) . "</pre>");
+        print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords2[$cosineCheck2 - 1], true) . "</pre>");
     }
+ 
+     echo "<div class='container mt-5'><h4>course_registered</h4>";
+     print("<pre>" . print_r($course_registered, true) . "</pre>");
+     echo "</div>";
 
-    echo "<div class='container mt-5'><h4>books_name retrieving</h4>";
-    print("<pre>" . print_r($books_name, true) . "</pre>");
+    echo "<div class='container mt-5'><h4>course_registered_keyword</h4>";
+    print("<pre>" . print_r($course_registered_keyword, true) . "</pre>");
     echo "</div>";
 
-    echo "<div class='container'><h4>Term Frequency</h4>";
-    print("<pre>" . print_r($words_segment, true) . "</pre>");
+    echo "<div class='container mt-5'><h4>course keywords by user's registered courses's id</h4>";
+    print("<pre>" . print_r($item, true) . "</pre>");
     echo "</div>";
 
-    echo "<div class='container'><h4>tf_no_stopwords</h4>";
-    print("<pre>" . print_r($tf_no_stopwords, true) . "</pre>");
+    echo "<div class='container mt-5'><h4>cosineSim_course</h4>";
+    print("<pre>" . print_r($cosineSim_course, true) . "</pre>");
     echo "</div>";
+
+    echo "<div class='container mt-5'><h4>recommend_list_detail_course</h4>";
+    print("<pre>" . print_r($recommend_list_detail_course, true) . "</pre>");
+    echo "</div>";
+
+    // echo "<div class='container mt-5'><h4>books_name retrieving</h4>";
+    // print("<pre>" . print_r($books_name, true) . "</pre>");
+    // echo "</div>";
+
+    // echo "<div class='container'><h4>Term Frequency</h4>";
+    // print("<pre>" . print_r($words_segment, true) . "</pre>");
+    // echo "</div>";
+
+    // echo "<div class='container'><h4>tf_no_stopwords</h4>";
+    // print("<pre>" . print_r($tf_no_stopwords2, true) . "</pre>");
+    // echo "</div>";
 
     ?>
 </div>

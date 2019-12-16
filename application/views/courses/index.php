@@ -7,6 +7,7 @@
 
     <h1 class="display-4 page_title_header page_title_header_no_after">Your Course</h1>
     <div id="course_content" class="mt-4">
+    
         <!-- content header -->
         <div class="row justify-content-end mx-0 w-100" style="height:5rem;position: relative;background: linear-gradient(to left, #0062E6, #33AEFF);">
             <div class="col-6"></div>
@@ -15,7 +16,6 @@
                 <button class="btn btn-light font-weight-bold text-primary" data-toggle="modal" data-target="#course_registeration" id="add_course_modal_trigger"><i class="fas fa-plus pr-3 fa-xs"></i>Add a course</button>
             </div>
         </div>
-
         <!-- content -->
         <div class="row mx-0 font-arial course_content_wrapper" style="min-height:40rem;border-bottom-left-radius: 7.5px;border-bottom-right-radius: 7.5px;border:1px solid #4c5a673d;background:#d0e8ff3d">
             <div class="col-12" id="content_to_append">
