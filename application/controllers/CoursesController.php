@@ -26,6 +26,15 @@ class CoursesController extends CI_Controller
         $this->load->view('footer');
     }
 
+    function seemore()
+    {
+        $header = "In progress";
+        $this->load->view('./header', $header);
+        $this->load->view('inprogress');
+        $this->load->view('footer');
+    }
+
+
     function select_search()
     {
         $typing = $this->input->get('q');

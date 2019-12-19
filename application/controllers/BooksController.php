@@ -331,6 +331,13 @@ class BooksController extends CI_Controller
         // and
         // get content based books detail
         foreach ($data['cosineSim_course'] as $key => $cosineSim) {
+            $course_detail = $this->course_model->get_course_by_id($key);
+            $data['recommend_list_detail_course'][$key] = array(
+                'course_id' => $course_detail[0]->course_id,
+                'course_name_th' => $course_detail[0]->course_name_th,
+                'course_name_en' => $course_detail[0]->course_name_en,
+            );
+
             foreach ($cosineSim as $subCosine_key => $subCosine) {
                 if ($subCosine == 0 || is_nan($subCosine)) {
                     unset($data['cosineSim_course'][$key][$subCosine_key]);
@@ -608,11 +615,125 @@ class BooksController extends CI_Controller
             $data['final_recommend_list'] = false;
         }
 
+
         $data['top_rated'] = $this->books_model->get_top_rated();
         $data['category_list'] = $this->books_model->get_cateory_list();
 
         $header['title'] = 'Book Recommendation';
         $data['books'] = $this->books_model->get_all();
+
+        // rec course
+        // start recommend by registered course
+        $data['course_registered'] = $this->course_model->get_course_registered($username);
+        if (!empty($data['course_registered'])) {
+            $data['books_name'] = $this->books_model->get_name_all();
+            // TF
+            $data['words_segment'] = array();
+            foreach ($data['books_name'] as $book_name) {
+                array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+            }
+
+            // Stop words removal
+            $stopWords = array_flip(self::$stopWords);
+            $data['tf_no_stopwords'] = array();
+            foreach ($data['words_segment'] as $word_segment) {
+                array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+                // print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+            }
+
+            // change key to lowercase
+            foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+                $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+            }
+
+            // IDF
+            $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+            $transformer->transform($data['tf_no_stopwords2']);
+
+            // course_registered_keyword sets
+            $data['course_registered_keyword'] = array(
+                'SC312002' => array(
+                    'human' => 1,
+                    'computer' => 1,
+                    'interaction' => 1,
+                    'interactive' => 1,
+                    'design' => 1,
+                    'designing' => 1,
+                    'ux' => 1,
+                    'ui' => 1,
+                    'user interface' => 1,
+                    'user experience' => 1,
+                    'user experiences' => 1,
+                    'ux/ui' => 1,
+                ),
+
+                'SC312006' => array(
+                    'analysis' => 1,
+                    'algorithm' => 1,
+                    'algorithms' => 1,
+                ),
+
+                '000101' => array(
+                    'english' => 1,
+                    'language' => 1,
+                ),
+            );
+
+
+            // get course keywords by user's registered courses's id
+            $data['item'] = array();
+            $i = 0;
+            foreach ($data['course_registered'] as $id_registered => $result_registered) {
+                foreach ($data['course_registered_keyword'] as $id_courses => $result_courses) {
+                    if ($result_registered['course_id'] == $id_courses) {
+                        foreach ($result_courses as $id => $result) {
+                            $data['item'][$id_courses][$id] = 1;
+                        }
+                        $i++;
+                    }
+                }
+            }
+
+            // cosine similarity 
+            $data['cosineSim_course'] = array();
+            $k = 0;
+            foreach ($data['item'] as $item_key => $item) {
+                foreach ($data['books_name'] as $book_name) {
+                    $data['cosineSim_course'][$item_key][$k + 1] =  $this->cosine($data['item'][$item_key], $data['tf_no_stopwords2'][$k]);
+                    $k++;
+                }
+                $k = 0;
+            }
+
+            // remove 0 similarity from array 
+            // and
+            // get content based books detail
+            // get course detail
+            foreach ($data['cosineSim_course'] as $key => $cosineSim) {
+                $course_detail = $this->course_model->get_course_by_id($key);
+                $data['recommend_list_detail_course'][$key] = array("detail" => array(
+                    'course_id' => $course_detail[0]->course_id,
+                    'course_name_th' => $course_detail[0]->course_name_th,
+                    'course_name_en' => $course_detail[0]->course_name_en,
+                ));
+                foreach ($cosineSim as $subCosine_key => $subCosine) {
+                    if ($subCosine == 0 || is_nan($subCosine)) {
+                        unset($data['cosineSim_course'][$key][$subCosine_key]);
+                    } else {
+                        $data['recommend_list_detail_course'][$key][$subCosine_key] = $this->books_model->get_by_id($subCosine_key);
+                        $data['recommend_list_detail_course'][$key][$subCosine_key]['match'] = $subCosine;
+                    }
+                }
+            }
+
+            // sort by similarity score
+            foreach ($data['recommend_list_detail_course'] as $key => $value) {
+                $match = array_column($data['recommend_list_detail_course'][$key], 'match');
+                array_multisort($match, SORT_DESC, $data['recommend_list_detail_course'][$key]);
+            }
+        } else {
+            $data['recommend_list_detail_course'] = false;
+        }
 
         $header['home'] = 'active';
         $this->load->view('./header', $header);

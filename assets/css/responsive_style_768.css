@@ -349,4 +349,8 @@
 	.navbar_search.custom_navbar_toggler .input-search {
 		margin-bottom: 0;
 	}
+
+	.cover_rec_course {
+		height: 10rem;
+	}
 }

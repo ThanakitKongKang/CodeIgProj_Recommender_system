@@ -8,6 +8,21 @@ class Course_model extends BaseModel
         parent::__construct();
     }
 
+    public function get_course_by_id($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where('course_id', $id);
+        $this->db->limit(1);
+
+        $qry =  $this->db->get();
+        if ($qry->num_rows() == 1) {
+            return $qry->result();
+        } else {
+            return FALSE;
+        }
+    }
+
     public function get_course_registered($username)
     {
         $sql = "SELECT * FROM registered_course,course

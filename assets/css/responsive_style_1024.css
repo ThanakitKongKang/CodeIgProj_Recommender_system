@@ -257,6 +257,10 @@
 	#app_mid_title_search_result>div>img {
 		max-width: fit-content;
 	}
+
+	.cover_rec_course {
+		height: 14rem;
+	}
 }
 
 @media only screen and (min-width: 992px) {

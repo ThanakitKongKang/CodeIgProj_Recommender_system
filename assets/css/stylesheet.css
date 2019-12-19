@@ -1371,3 +1371,97 @@ span.user_rated_this {
 .color_secondary {
 	color: #6c757d;
 }
+
+#rec_course {
+	position: relative;
+}
+
+.cover_rec_course {
+	max-width: 100%;
+	object-fit: cover;
+	height: 18rem;
+}
+
+.slick-arrow {}
+
+.slick_index {
+	border-radius: 1rem;
+}
+
+.slick_wrapper_index {
+	margin-right: 1rem;
+	position: relative;
+}
+
+.text-col-2-name.name_slick>a {
+	margin-right: 0;
+}
+
+.slick_title_index {
+	margin-left: 6rem;
+	position: relative;
+	text-transform: uppercase;
+	position: relative;
+	top: 3rem;
+	z-index: 1;
+	-webkit-transition: .25s;
+	transition: .25s;
+	-webkit-transition-delay: .1s;
+	transition-delay: .1s;
+}
+
+.slick_title_index::before {
+	position: absolute;
+	background-color: #007bff;
+	content: "";
+	min-width: 50px;
+	height: 15px;
+	top: 4px;
+	left: -4rem;
+}
+
+.slick_more_text {
+	opacity: 0;
+	font-size: 0.75rem;
+	position: relative;
+	left: -5rem;
+	-webkit-transition: .25s;
+	transition: .25s;
+	-webkit-transition-delay: .1s;
+	transition-delay: .1s;
+}
+
+.slick_more_text_icon {
+	position: relative;
+	font-size: 0.9rem;
+	left: 0rem;
+	opacity: 1;
+	-webkit-transition: .5s;
+	transition: .5s;
+	-webkit-transition-delay: .1s;
+	transition-delay: .1s;
+}
+
+.slick_title_index:hover .slick_more_text {
+	opacity: 1;
+	left: -1rem;
+	font-weight: 600;
+}
+
+.slick_title_index:hover .slick_more_text_icon {
+	left: 3rem;
+	font-size: 0.75rem;
+
+}
+
+.slick_title_index>a:hover {
+	color: #757575 !important;
+}
+
+.slick_index .slick-dots {
+	bottom: 10px;
+}
+
+.slick_index .slick-list {
+	margin-top: 1rem;
+}

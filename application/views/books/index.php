@@ -56,9 +56,8 @@
         </div>
         <div class="col-sm-4" id="col-2">
             <!-- another 4 recommended items -->
-            <?php
-            for ($i = 1; $i < 5; $i++) {
-                ?>
+            <?php for ($i = 1; $i < 5; $i++) {
+            ?>
                 <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
                         <div class="row h-100">
                             <div class="col-4 hover_img_col2" style="height: 7.875rem;">
@@ -91,15 +90,13 @@
                     <?php } ?>
 
                 </div>
-            <?php
-            }
+            <?php }
             ?>
         </div>
         <div class="col-sm-4" id="col-3">
             <!-- another 4 recommended items -->
-            <?php
-            for ($i = 5; $i < 9; $i++) {
-                ?>
+            <?php for ($i = 5; $i < 9; $i++) {
+            ?>
                 <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
                         <div class="row">
                             <div class="col-4 hover_img_col2" style="height: 7.875rem;">
@@ -132,13 +129,40 @@
                     <?php } ?>
 
                 </div>
-            <?php
-            }
+            <?php }
             ?>
         </div>
     </div>
 
 </div>
+<!-- rec_course -->
+<?php if ($recommend_list_detail_course != FALSE) { ?>
+    <div id="rec_course" class="mt-5 container p-0">
+        <?php foreach ($recommend_list_detail_course as $rec_course) { ?>
+            <div class="slick_title_index font-arial text-muted font-weight-bold">
+                <a href="<?= base_url() ?>seemore/<?= $rec_course["detail"]["course_id"] ?>" class="link">
+                    <?= $rec_course["detail"]["course_name_en"] ?>
+                    <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
+                    <span class="font-apple slick_more_text">See all</span>
+                </a>
+            </div>
+
+            <div class="slick_index pl-4 py-5 bg-light">
+                <?php foreach ($rec_course as $key => $sub_rec_course) { ?>
+                    <?php if ($key != "detail") { ?>
+                        <div class="slick_wrapper_index">
+                            <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_course['book_id'] ?>.PNG" />
+                            <a class="text-col-2-type ctg" style="font-size:0.75rem" data-ctg="<?= $sub_rec_course["book_type"] ?>"><span><?= $sub_rec_course['book_type'] ?></span></a>
+                            <div class="text-col-2-name name_slick" style="font-size:0.75rem"> <a href="<?= base_url() ?>book/<?= $sub_rec_course['book_id'] ?>" title="<?= $sub_rec_course['book_name'] ?>"><?= $sub_rec_course['book_name'] ?></a></div>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
+
+            </div>
+        <?php } ?>
+    </div>
+<?php } ?>
+
 <div id="mid" class="mt-5">
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-light pb-0 w-100" style="border-bottom: 1px solid #CCC6BA;">
@@ -166,18 +190,15 @@
         <div class="position-relative text-center">
             <div id="dropdown-category-menu" style="display: none;">
                 <div class="row no-gutters">
-                    <?php
-                    foreach ($category_list as $category) {
-                        ?>
+                    <?php foreach ($category_list as $category) { ?>
                         <div class="col-sm-3 category mb-3">
                             <a class="nav-link link" data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
                         </div>
-                    <?php
-                    }
-                    ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>
+
         <!-- Current title -->
         <div id="app_mid_title" class="animation_enter">
             <template>
@@ -200,9 +221,7 @@
         <template id="top_rated_contents" v-if="category === 'toprated'">
             <div class="animation_enter the_mid_content" id="toprate-div">
                 <div class="row no-gutters text-center">
-                    <?php
-                    foreach ($top_rated as $top) {
-                        ?>
+                    <?php foreach ($top_rated as $top) { ?>
                         <div class="col-4 mb-4 align-self-center">
                             <div class="hover_img_mid position-relative">
                                 <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
@@ -224,7 +243,7 @@
                                                 <div class="rating-container rating-sm rating-animate is-display-only">
                                                     <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
                                                     <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span>
-                                                    <span class="filled-stars" style="width:<?php echo $top['b_rate'] * 20 ?>%"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
+                                                        <span class="filled-stars" style="width:<?php echo $top['b_rate'] * 20 ?>%"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
                                                 </div>
                                                 <div class="small"><?= number_format($top['b_rate'], 1) ?>/5.0 rated by <?= $top['count_rate'] ?> user<?php if ($top['count_rate'] > 1) echo "s"; ?></div>
                                             <?php } ?>
@@ -233,11 +252,8 @@
                                 </div>
                             </div>
                         </div>
-                    <?php
-                    }
-                    ?>
+                    <?php } ?>
                 </div>
-
             </div>
         </template>
 
@@ -321,7 +337,45 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.slick_index').each(function(index) {
+            var randomSpeed = 1000 * (index + 1);
+            $(this).slick({
+                lazyLoad: 'ondemand',
+                pauseOnHover:true,
+                centerMode: false,
+                centerPadding: '60px',
+                slidesToShow: 5,
+                slidesToScroll: 3,
+                autoplay: true,
+                autoplaySpeed: randomSpeed,
+                infinite: true,
+                dots: true,
+                adaptiveHeight: true,
+                arrows: false,
+                responsive: [{
+                        breakpoint: 768,
+                        settings: {
+                            dots: false,
+                            arrows: false,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 3,
 
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            dots: false,
+                            arrows: false,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 1,
+                        }
+                    }
+                ]
+            });
+        });
 
         $(document).on('click', 'a[href^="#"]', function(e) {
             e.preventDefault();
@@ -605,6 +659,7 @@
                 }
             })
         });
+
 
     });
 
