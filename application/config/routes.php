@@ -57,7 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 | ABOUT
 | -------------------------------------------------------------------------
 */
-$route['welcome'] = 'Welcome';
+$route['welcome'] = 'BooksController/welcome';
 /*
 | -------------------------------------------------------------------------
 | FILE UPLOAD

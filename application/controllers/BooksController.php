@@ -693,6 +693,7 @@ class BooksController extends CI_Controller
                     }
                 }
             }
+            $data['course_count'] = $i;
 
             // cosine similarity 
             $data['cosineSim_course'] = array();
@@ -877,6 +878,14 @@ class BooksController extends CI_Controller
             $this->load->view('form');
             $this->load->view('footer');
         }
+    }
+    public function welcome()
+    {
+        $header['title'] = 'welcome';
+        $this->load->view('./header', $header);
+
+        $this->load->view('welcome_message');
+        $this->load->view('footer');
     }
     /*
     | -------------------------------------------------------------------------

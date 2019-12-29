@@ -28,7 +28,22 @@ class CoursesController extends CI_Controller
 
     function seemore()
     {
-        $header = "In progress";
+        $data['get_url'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : "all";
+        $data['page'] = str_replace("-", " ", $data['get_url']);
+        $data['round_count'] = 1;
+        $data['i'] = 0;
+        $data['category_list'] = $this->books_model->get_cateory_list();
+
+        $data['content_list'] = $this->books_model->get_content_list_dynamic(9, 0, "rows", $data['page']);
+        $data['num_rows'] = $this->books_model->get_content_list_dynamic(9, 0, "count", $data['page']);
+        $data['all_num_rows'] = $this->books_model->get_all_num_rows_by_category($data['page']);
+
+        if ($data['all_num_rows'] == false) {
+            $data['all_num_rows'] = 0;
+            $data['page'] = "404-Page-Not-Found";
+        }
+
+        $header["title"] = "Course - " . $data['page'];
         $this->load->view('./header', $header);
         $this->load->view('inprogress');
         $this->load->view('footer');

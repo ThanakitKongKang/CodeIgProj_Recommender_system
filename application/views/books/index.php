@@ -1,301 +1,318 @@
-<div class="container">
-    <div id="top" class="row">
-        <div class="col-sm-4" id="col-1">
+<div>
+    <div class="container">
+        <div id="top" class="row">
+            <div class="col-sm-4" id="col-1">
+                <?php
+                if (!$final_recommend_list) echo "recommended list is empty";
+                else { ?>
+                    <div class="hover_img position-relative">
 
-            <?php
-            if (!$final_recommend_list) echo "recommended list is empty";
-            else { ?>
-                <div class="hover_img position-relative">
+                        <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.PNG">
 
-                    <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.PNG">
+                        <!-- <div id="text-col-1"></div> -->
 
-                    <!-- <div id="text-col-1"></div> -->
+                        <div class="overlay"><a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"> </a></div>
 
-                    <div class="overlay"><a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" class="stretched-link"> </a></div>
-
-                    <!-- <div class="hover_img_button">
+                        <!-- <div class="hover_img_button">
                         <a class="btn btn-primary bookmark_trigger"><i class="far fa-bookmark"></i></a>
 
                     </div> -->
 
-                    <div class="hover_img_content text-center">
-                        <div class="">
-                            <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
-                            <div class="small"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div>
+                        <div class="hover_img_content text-center">
+                            <div class="">
+                                <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
+                                <div class="small"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div>
+                            </div>
+                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
+                            <div class="hover_img_content_name"><?= $final_recommend_list[0]['book_name'] ?></div>
+                            <div class="small">field : <?= $final_recommend_list[0]['book_type'] ?></div>
+                            <div class="small py-2">author : <?= $final_recommend_list[0]['author'] ?></div>
                         </div>
-                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
-                        <div class="hover_img_content_name"><?= $final_recommend_list[0]['book_name'] ?></div>
-                        <div class="small">field : <?= $final_recommend_list[0]['book_type'] ?></div>
-                        <div class="small py-2">author : <?= $final_recommend_list[0]['author'] ?></div>
                     </div>
-                </div>
 
-                <div class="my-3 bg-light book_detail_content book_detail_content_index" id="book_detail_content_col1">
-                    <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[0]["book_type"] ?>"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
-                    <?php if ($this->session->userdata('logged_in')) { ?>
-                        <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[0]["book_id"] ?>" data-book_name="<?= $final_recommend_list[0]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
-                    <?php } ?>
-                    <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
-                    <div class="text-col-1-footer">
-                        <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
-                        <?php if ($final_recommend_list[0]['count_rate'] != 0) { ?>
-                            <span class="position-absolute font-arial text-info user_rated_this_1" title="<?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?> rated this" style="bottom:0.25rem;left:10rem;width:10rem;">(<?= $final_recommend_list[0]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                    <div class="my-3 bg-light book_detail_content book_detail_content_index" id="book_detail_content_col1">
+                        <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[0]["book_type"] ?>"><span><?= $final_recommend_list[0]['book_type'] ?></span></a>
+                        <?php if ($this->session->userdata('logged_in')) { ?>
+                            <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[0]["book_id"] ?>" data-book_name="<?= $final_recommend_list[0]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
                         <?php } ?>
-                        <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
+                        <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[0]['book_id'] ?>" title="<?= $final_recommend_list[0]['book_name'] ?>"><?= $final_recommend_list[0]['book_name'] ?></a></div>
+                        <div class="text-col-1-footer">
+                            <input value="<?= $final_recommend_list[0]['b_rate'] ?>" class="rater_star" title="">
+                            <?php if ($final_recommend_list[0]['count_rate'] != 0) { ?>
+                                <span class="position-absolute font-arial text-info user_rated_this_1" title="<?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?> rated this" style="bottom:0.25rem;left:10rem;width:10rem;">(<?= $final_recommend_list[0]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                            <?php } ?>
+                            <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[0]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[0]['count_rate'] ?> user<?php if ($final_recommend_list[0]['count_rate'] != 1) echo "s";  ?></div> -->
 
 
-                        <div class="text-col-2-author font-italic text-secondary" id="text-col-2-author_col1" title="<?= $final_recommend_list[0]['author'] ?>"><?= $final_recommend_list[0]['author'] ?></div>
+                            <div class="text-col-2-author font-italic text-secondary" id="text-col-2-author_col1" title="<?= $final_recommend_list[0]['author'] ?>"><?= $final_recommend_list[0]['author'] ?></div>
+                        </div>
+
                     </div>
 
-                </div>
 
 
-
-            <?php } ?>
-
-        </div>
-        <div class="col-sm-4" id="col-2">
-            <!-- another 4 recommended items -->
-            <?php for ($i = 1; $i < 5; $i++) {
-            ?>
-                <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
-                        <div class="row h-100">
-                            <div class="col-4 hover_img_col2" style="height: 7.875rem;">
-
-                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
-
-
-                                <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
-
-                                <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
-                            </div>
-
-                            <div class="col-8 text-col-2 bg-light book_detail_content book_detail_content_index" style="border-radius:1rem;">
-                                <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
-                                <?php if ($this->session->userdata('logged_in')) { ?>
-                                    <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[$i]["book_id"] ?>" data-book_name="<?= $final_recommend_list[$i]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
-                                <?php } ?>
-                                <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
-                                <div class="text-col-2-footer w-100">
-                                    <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
-                                    <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
-                                        <span class="position-absolute small font-arial text-info user_rated_this" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
-                                    <?php } ?>
-                                    <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
-                                    <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    <?php } ?>
-
-                </div>
-            <?php }
-            ?>
-        </div>
-        <div class="col-sm-4" id="col-3">
-            <!-- another 4 recommended items -->
-            <?php for ($i = 5; $i < 9; $i++) {
-            ?>
-                <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
-                        <div class="row">
-                            <div class="col-4 hover_img_col2" style="height: 7.875rem;">
-
-                                <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
-
-
-                                <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
-
-                                <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
-                            </div>
-
-                            <div class="col-8 text-col-2 bg-light book_detail_content book_detail_content_index" style="border-radius:1rem;">
-                                <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
-                                <?php if ($this->session->userdata('logged_in')) { ?>
-                                    <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[$i]["book_id"] ?>" data-book_name="<?= $final_recommend_list[$i]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
-                                <?php } ?>
-                                <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
-                                <div class="text-col-2-footer w-100">
-                                    <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
-                                    <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
-                                        <span class="position-absolute small font-arial text-info user_rated_this" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
-                                    <?php } ?>
-                                    <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
-                                    <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    <?php } ?>
-
-                </div>
-            <?php }
-            ?>
-        </div>
-    </div>
-
-</div>
-<!-- rec_course -->
-<?php if ($recommend_list_detail_course != FALSE) { ?>
-    <div id="rec_course" class="mt-5 container p-0">
-        <?php foreach ($recommend_list_detail_course as $rec_course) { ?>
-            <div class="slick_title_index font-arial text-muted font-weight-bold">
-                <a href="<?= base_url() ?>seemore/<?= $rec_course["detail"]["course_id"] ?>" class="link">
-                    <?= $rec_course["detail"]["course_name_en"] ?>
-                    <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
-                    <span class="font-apple slick_more_text">See all</span>
-                </a>
-            </div>
-
-            <div class="slick_index pl-4 py-5 bg-light">
-                <?php foreach ($rec_course as $key => $sub_rec_course) { ?>
-                    <?php if ($key != "detail") { ?>
-                        <div class="slick_wrapper_index">
-                            <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_course['book_id'] ?>.PNG" />
-                            <a class="text-col-2-type ctg" style="font-size:0.75rem" data-ctg="<?= $sub_rec_course["book_type"] ?>"><span><?= $sub_rec_course['book_type'] ?></span></a>
-                            <div class="text-col-2-name name_slick" style="font-size:0.75rem"> <a href="<?= base_url() ?>book/<?= $sub_rec_course['book_id'] ?>" title="<?= $sub_rec_course['book_name'] ?>"><?= $sub_rec_course['book_name'] ?></a></div>
-                        </div>
-                    <?php } ?>
                 <?php } ?>
 
             </div>
-        <?php } ?>
-    </div>
-<?php } ?>
+            <div class="col-sm-4" id="col-2">
+                <!-- another 4 recommended items -->
+                <?php for ($i = 1; $i < 5; $i++) {
+                ?>
+                    <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
+                            <div class="row h-100">
+                                <div class="col-4 hover_img_col2" style="height: 7.875rem;">
 
-<div id="mid" class="mt-5">
-    <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-light pb-0 w-100" style="border-bottom: 1px solid #CCC6BA;">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-index" aria-controls="navbarNavDropdown2" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse col-12 justify-content-center" id="navbarNavDropdown-index">
-                    <ul class="navbar-nav nav-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" id="top-rated">Top rated books <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item dropdown" id="dropdown-category-toggle">
-                            <a class="nav-link dropdown-toggle" id="dropdown-category">
-                                Category
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
+
+
+                                    <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
+
+                                    <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
+                                </div>
+
+                                <div class="col-8 text-col-2 bg-light book_detail_content book_detail_content_index" style="border-radius:1rem;">
+                                    <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
+                                    <?php if ($this->session->userdata('logged_in')) { ?>
+                                        <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[$i]["book_id"] ?>" data-book_name="<?= $final_recommend_list[$i]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
+                                    <?php } ?>
+                                    <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
+                                    <div class="text-col-2-footer w-100">
+                                        <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
+                                        <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
+                                            <span class="position-absolute small font-arial text-info user_rated_this" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                        <?php } ?>
+                                        <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
+                                        <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <?php } ?>
+
+                    </div>
+                <?php }
+                ?>
             </div>
-        </nav>
-    </div>
-    <div id="mid-content" class="container">
-        <!-- Category -->
-        <div class="position-relative text-center">
-            <div id="dropdown-category-menu" style="display: none;">
-                <div class="row no-gutters">
-                    <?php foreach ($category_list as $category) { ?>
-                        <div class="col-sm-3 category mb-3">
-                            <a class="nav-link link" data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
-                        </div>
-                    <?php } ?>
-                </div>
+            <div class="col-sm-4" id="col-3">
+                <!-- another 4 recommended items -->
+                <?php for ($i = 5; $i < 9; $i++) {
+                ?>
+                    <div class="py-3"><?php if (isset($final_recommend_list[$i]['book_name'])) { ?>
+                            <div class="row">
+                                <div class="col-4 hover_img_col2" style="height: 7.875rem;">
+
+                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
+
+
+                                    <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
+
+                                    <!-- <div class="hover_img_button_col2"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
+                                </div>
+
+                                <div class="col-8 text-col-2 bg-light book_detail_content book_detail_content_index" style="border-radius:1rem;">
+                                    <a class="text-col-2-type ctg" data-ctg="<?= $final_recommend_list[$i]["book_type"] ?>"><span><?= $final_recommend_list[$i]['book_type'] ?></span></a>
+                                    <?php if ($this->session->userdata('logged_in')) { ?>
+                                        <a class="ellipsis_menu ellipsis_menu_trigger" data-book_id="<?= $final_recommend_list[$i]["book_id"] ?>" data-book_name="<?= $final_recommend_list[$i]["book_name"] ?>"><i class="fas fa-chevron-down fa-xs"></i></a>
+                                    <?php } ?>
+                                    <div class="text-col-2-name"> <a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" title="<?= $final_recommend_list[$i]['book_name'] ?>"><?= $final_recommend_list[$i]['book_name'] ?></a></div>
+                                    <div class="text-col-2-footer w-100">
+                                        <input value="<?= $final_recommend_list[$i]['b_rate'] ?>" class="rater_star_col2" title="">
+                                        <?php if ($final_recommend_list[$i]['count_rate'] != 0) { ?>
+                                            <span class="position-absolute small font-arial text-info user_rated_this" title="<?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s"; ?> rated this" style="bottom:0.05rem;left:7rem;width:2rem;">(<?= $final_recommend_list[$i]['count_rate'] ?> <i class="fas fa-user fa-xs"></i>)</span>
+                                        <?php } ?>
+                                        <!-- <div class="small pl-1 badge badge-secondary"><?= number_format($final_recommend_list[$i]['b_rate'], 1) ?>/5.0 rated by <?= $final_recommend_list[$i]['count_rate'] ?> user<?php if ($final_recommend_list[$i]['count_rate'] != 1) echo "s";  ?></div> -->
+                                        <div class="text-col-2-author font-italic text-secondary" title="<?= $final_recommend_list[$i]['author'] ?>"><?= $final_recommend_list[$i]['author'] ?></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <?php } ?>
+
+                    </div>
+                <?php }
+                ?>
             </div>
         </div>
+    </div>
 
-        <!-- Current title -->
-        <div id="app_mid_title" class="animation_enter">
-            <template>
-                <div class="position-relative">
-                    <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
-                    <img class="position-absolute" id="img_mid_title" :src="img_url">
+    <!-- rec_course -->
+    <?php if ($recommend_list_detail_course != FALSE) { ?>
+        <div id="rec_course" class="mt-5 container p-0">
+            <?php foreach ($recommend_list_detail_course as $rec_course) { ?>
+                <div class="slick_title_index font-arial text-muted font-weight-bold" id="slick_<?= $rec_course["detail"]["course_id"] ?>">
+                    <a href="<?= base_url() ?>seemore/<?= $rec_course["detail"]["course_id"] ?>" class="link">
+                        <?= $rec_course["detail"]["course_name_en"] ?>
+                        <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
+                        <span class="font-apple slick_more_text">See all</span>
+                    </a>
                 </div>
-                <hr class="mb-5 w-25" style="border: 0;border-top: 3px solid #007bff;">
-                <div class="load-more justify-content-center my-5 text-center" style="display: none!important;">
-                    <div class="spinner-border text-primary mr-3" role="status">
-                        <span class="sr-only">Loading...</span>
+
+                <div class="slick_index pl-4 py-5 bg-light">
+                    <?php foreach ($rec_course as $key => $sub_rec_course) { ?>
+                        <?php if ($key != "detail") { ?>
+                            <div class="slick_wrapper_index">
+                                <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_course['book_id'] ?>.PNG" />
+                                <a class="text-col-2-type ctg" style="font-size:0.75rem" data-ctg="<?= $sub_rec_course["book_type"] ?>"><span><?= $sub_rec_course['book_type'] ?></span></a>
+                                <div class="text-col-2-name name_slick" style="font-size:0.75rem"> <a href="<?= base_url() ?>book/<?= $sub_rec_course['book_id'] ?>" title="<?= $sub_rec_course['book_name'] ?>"><?= $sub_rec_course['book_name'] ?></a></div>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+
+                </div>
+            <?php } ?>
+        </div>
+    <?php } ?>
+
+    <div id="mid" class="mt-5">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light pb-0 w-100" style="border-bottom: 1px solid #CCC6BA;">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-index" aria-controls="navbarNavDropdown2" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse col-12 justify-content-center" id="navbarNavDropdown-index">
+                        <ul class="navbar-nav nav-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" id="top-rated">Top rated books <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item dropdown" id="dropdown-category-toggle">
+                                <a class="nav-link dropdown-toggle" id="dropdown-category">
+                                    Category
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    Loading...
+                </div>
+            </nav>
+        </div>
+        <div id="mid-content" class="container">
+            <!-- Category -->
+            <div class="position-relative text-center">
+                <div id="dropdown-category-menu" style="display: none;">
+                    <div class="row no-gutters">
+                        <?php foreach ($category_list as $category) { ?>
+                            <div class="col-sm-3 category mb-3">
+                                <a class="nav-link link" data-ctg="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current title -->
+            <div id="app_mid_title" class="animation_enter">
+                <template>
+                    <div class="position-relative">
+                        <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
+                        <img class="position-absolute" id="img_mid_title" :src="img_url">
+                    </div>
+                    <hr class="mb-5 w-25" style="border: 0;border-top: 3px solid #007bff;">
+                    <div class="load-more justify-content-center my-5 text-center" style="display: none!important;">
+                        <div class="spinner-border text-primary mr-3" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        Loading...
+                    </div>
+                </template>
+            </div>
+
+
+            <!-- Top rated -->
+            <template id="top_rated_contents" v-if="category === 'toprated'">
+                <div class="animation_enter the_mid_content" id="toprate-div">
+                    <div class="row no-gutters text-center">
+                        <?php foreach ($top_rated as $top) { ?>
+                            <div class="col-4 mb-4 align-self-center">
+                                <div class="hover_img_mid position-relative">
+                                    <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
+                                    <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.PNG">
+                                    <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
+
+                                    <a class="overlay_mid" href="<?= base_url() ?>book/<?= $top['book_id'] ?>"></a>
+
+                                    <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
+                                    <div class="hover_img_content_mid text-center">
+                                        <a href="<?= base_url() ?>book/<?= $top['book_id'] ?>" class="text-decoration-none text-white stretched-link">
+                                            <div class="py-2"><?= $top['book_name'] ?></div>
+                                            <div class="small py-2">field : <?= $top['book_type'] ?></div>
+                                            <div class="small py-2" title="<?= $top['author'] ?>">author : <?= $top['author'] ?></div>
+                                            <div class="mt-5 text-center">
+                                                <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
+                                                <?php if ($top['count_rate'] != 0) { ?>
+                                                    <!-- HARD CODE rater star -->
+                                                    <div class="rating-container rating-sm rating-animate is-display-only">
+                                                        <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
+                                                        <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span>
+                                                            <span class="filled-stars" style="width:<?php echo $top['b_rate'] * 20 ?>%"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
+                                                    </div>
+                                                    <div class="small"><?= number_format($top['b_rate'], 1) ?>/5.0 rated by <?= $top['count_rate'] ?> user<?php if ($top['count_rate'] > 1) echo "s"; ?></div>
+                                                <?php } ?>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
                 </div>
             </template>
-        </div>
 
-
-        <!-- Top rated -->
-        <template id="top_rated_contents" v-if="category === 'toprated'">
-            <div class="animation_enter the_mid_content" id="toprate-div">
-                <div class="row no-gutters text-center">
-                    <?php foreach ($top_rated as $top) { ?>
-                        <div class="col-4 mb-4 align-self-center">
+            <!-- items by category -->
+            <template id="category_contents" v-if="category === 'category'">
+                <div class="animation_enter the_mid_content" id="category_contents_body">
+                    <div class="row no-gutters text-center">
+                        <div class="col-4 mb-4 align-self-center" v-for="book in books">
                             <div class="hover_img_mid position-relative">
-                                <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
-                                <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.PNG">
-                                <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
+                                <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
+                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" />
+                                <!-- <span class="text-img"> {{ book.book_name }}</span> -->
 
-                                <a class="overlay_mid" href="<?= base_url() ?>book/<?= $top['book_id'] ?>"></a>
+                                <a class="overlay_mid" v-bind:href="'<?= base_url() ?>book/'+book.book_id+''"></a>
 
                                 <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
                                 <div class="hover_img_content_mid text-center">
-                                    <a href="<?= base_url() ?>book/<?= $top['book_id'] ?>" class="text-decoration-none text-white stretched-link">
-                                        <div class="py-2"><?= $top['book_name'] ?></div>
-                                        <div class="small py-2">field : <?= $top['book_type'] ?></div>
-                                        <div class="small py-2" title="<?= $top['author'] ?>">author : <?= $top['author'] ?></div>
+                                    <a v-bind:href="'<?= base_url() ?>book/'+book.book_id+''" class="text-decoration-none text-white stretched-link">
+                                        <div class="py-2">{{ book.book_name }}</div>
+                                        <div class="small py-2">field : {{ book.book_type }}</div>
+                                        <div class="small py-2">author : {{ book.author }}</div>
+
                                         <div class="mt-5 text-center">
                                             <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
-                                            <?php if ($top['count_rate'] != 0) { ?>
-                                                <!-- HARD CODE rater star -->
+                                            <div v-if="book.count_rate !== '0'">
                                                 <div class="rating-container rating-sm rating-animate is-display-only">
-                                                    <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
-                                                    <div class="rating-stars" title="<?= $top['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span>
-                                                        <span class="filled-stars" style="width:<?php echo $top['b_rate'] * 20 ?>%"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $top['b_rate'] ?>" class="rating-input" title=""></div>
+                                                    <!-- HARD CODE rater star for Vue.js -->
+                                                    <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rating-input" title=""></div>
                                                 </div>
-                                                <div class="small"><?= number_format($top['b_rate'], 1) ?>/5.0 rated by <?= $top['count_rate'] ?> user<?php if ($top['count_rate'] > 1) echo "s"; ?></div>
-                                            <?php } ?>
+
+                                                <!-- <input v-bind:value="book.b_rate" class="rater_star" title="" /> -->
+                                                <div class="small">{{ book.b_rate }}/5.0 rated by {{ book.count_rate }} user(s)</div>
+                                            </div>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    <?php } ?>
-                </div>
-            </div>
-        </template>
-
-        <!-- items by category -->
-        <template id="category_contents" v-if="category === 'category'">
-            <div class="animation_enter the_mid_content" id="category_contents_body">
-                <div class="row no-gutters text-center">
-                    <div class="col-4 mb-4 align-self-center" v-for="book in books">
-                        <div class="hover_img_mid position-relative">
-                            <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
-                            <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" />
-                            <!-- <span class="text-img"> {{ book.book_name }}</span> -->
-
-                            <a class="overlay_mid" v-bind:href="'<?= base_url() ?>book/'+book.book_id+''"></a>
-
-                            <!-- <div class="hover_img_button_mid"><a href="#" class="btn btn-primary"><i class="far fa-bookmark"></i></a></div> -->
-                            <div class="hover_img_content_mid text-center">
-                                <a v-bind:href="'<?= base_url() ?>book/'+book.book_id+''" class="text-decoration-none text-white stretched-link">
-                                    <div class="py-2">{{ book.book_name }}</div>
-                                    <div class="small py-2">field : {{ book.book_type }}</div>
-                                    <div class="small py-2">author : {{ book.author }}</div>
-
-                                    <div class="mt-5 text-center">
-                                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
-                                        <div v-if="book.count_rate !== '0'">
-                                            <div class="rating-container rating-sm rating-animate is-display-only">
-                                                <!-- HARD CODE rater star for Vue.js -->
-                                                <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rating-input" title=""></div>
-                                            </div>
-
-                                            <!-- <input v-bind:value="book.b_rate" class="rater_star" title="" /> -->
-                                            <div class="small">{{ book.b_rate }}/5.0 rated by {{ book.count_rate }} user(s)</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </template>
+            </template>
+        </div>
     </div>
+</div>
+
+<!-- NAV -->
+<div id="list-example" class="list-group">
+    <a class="list-group-item list-group-item-action" href="#top"> <i class="fas fa-circle fa-xs"></i><span>Top</span></a>
+    <?php if ($recommend_list_detail_course != FALSE) {
+    ?>
+        <?php foreach ($recommend_list_detail_course as $rec_course) {
+        ?>
+            <a class="list-group-item list-group-item-action sidenav_index" href="#slick_<?= $rec_course["detail"]["course_id"] ?>">
+                <i class="fas fa-circle fa-xs"></i><span><?= $rec_course["detail"]["course_id"] ?></span>
+            </a>
+        <?php
+        } ?>
+    <?php } ?>
+    <a class="list-group-item list-group-item-action" href="#mid"> <i class="fas fa-circle fa-xs"></i><span>Highlight</span></a>
 </div>
 
 <!-- Modal -->
@@ -341,7 +358,7 @@
             var randomSpeed = 1000 * (index + 1);
             $(this).slick({
                 lazyLoad: 'ondemand',
-                pauseOnHover:true,
+                pauseOnHover: true,
                 centerMode: false,
                 centerPadding: '60px',
                 slidesToShow: 5,

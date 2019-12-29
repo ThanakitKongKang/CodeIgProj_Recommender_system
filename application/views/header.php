@@ -17,20 +17,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 
     <!-- jquery -->
-    <script type="text/javascript" src="<?= base_url() ?>/assets/js/jquery-3.4.1.slim.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/jquery-3.4.1.min.js"></script>
     <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
 
     <!-- vue -->
-    <script src="<?= base_url() ?>/assets/js/vue.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/vue.min.js"></script>
 
     <!-- js -->
-    <script src="<?= base_url() ?>/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/popper.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
-    <script src="<?= base_url() ?>/assets/js/tether.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/tether.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script> -->
-    <script src="<?= base_url() ?>/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/bootstrap.min.js"></script>
 
 
     <!-- font -->
@@ -40,9 +38,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /> -->
 
     <!-- datatables -->
-    <script src="<?= base_url() ?>/assets/js/datatables.min.js"></script>
-    <script src="<?= base_url() ?>/assets/js/jquery.dataTables.min.js"></script>
-    <script src="<?= base_url() ?>/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/datatables.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/dataTables.bootstrap4.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/dataTables.bootstrap4.min.css">
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/fh-3.1.4/kt-2.5.0/r-2.2.2/sc-2.0.0/datatables.min.js"></script> -->
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
@@ -51,21 +49,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" /> -->
 
     <!-- alert -->
-    <script src="<?= base_url() ?>/assets/js/sweetalert2.all.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/sweetalert2.all.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script> -->
 
     <!-- cookie -->
-    <script src="<?= base_url() ?>/assets/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/jquery.cookie.js"></script>
 
     <!-- star rating -->
     <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>/assets/css/star-rating.min.css">
-    <script src="<?= base_url() ?>/assets/js/star-rating.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/star-rating.min.js"></script>
 
     <!-- moment -->
-    <script src="<?= base_url() ?>/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/moment.min.js"></script>
 
     <!-- numeral -->
-    <script src="<?= base_url() ?>/assets/js/numeral.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/numeral.min.js"></script>
 
     <!-- select search -->
     <link href="<?= base_url() ?>/assets/css/select2.min.css" rel="stylesheet" />
@@ -85,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#list-example" data-offset="100">
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white fixed-top pb-0" id="navbar">
             <div class="container justify-content-end">
@@ -335,7 +333,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         // Swal alerts
         <?php
         if ($this->session->userdata('flash_success')) {
-            ?>
+        ?>
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -350,7 +348,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php
         }
         if ($this->session->userdata('register_success')) {
-            ?>
+        ?>
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -393,7 +391,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             // HCI EVENT
         <?php }
         if ($this->session->userdata('not_enough_hci')) { ?>
-            var data = <?= $this->session->userdata('not_enough_hci_progress') ?>"";
+            var data = <?= $this->session->userdata('not_enough_hci_progress') ?> "";
             var width = (data / 10) * 100;
             Swal.fire({
                 title: 'ให้คะแนนหนังสือในหมวด HCI ยังไม่ครบ ไม่สามารถทำแบบประเมินได้!',
@@ -731,7 +729,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             }
         }
-     
     </script>
 
 
