@@ -1505,3 +1505,10 @@ span.user_rated_this_1, span.user_rated_this {
 #list-example::-webkit-scrollbar-thumb {
     display: none;
 }
+
+.anchor{
+    display: block;
+    height: 40px; /*same height as header*/
+    margin-top: -40px; /*same height as header*/
+    visibility: hidden;
+  }

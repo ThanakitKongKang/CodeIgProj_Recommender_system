@@ -1,5 +1,6 @@
 <div>
     <div class="container">
+        <span class="anchor" id="anchor_top"></span>
         <div id="top" class="row">
             <div class="col-sm-4" id="col-1">
                 <?php
@@ -139,7 +140,8 @@
     <?php if ($recommend_list_detail_course != FALSE) { ?>
         <div id="rec_course" class="mt-5 container p-0">
             <?php foreach ($recommend_list_detail_course as $rec_course) { ?>
-                <div class="slick_title_index font-arial text-muted font-weight-bold" id="slick_<?= $rec_course["detail"]["course_id"] ?>">
+                <span class="anchor" id="slick_<?= $rec_course["detail"]["course_id"] ?>"></span>
+                <div class="slick_title_index font-arial text-muted font-weight-bold">
                     <a href="<?= base_url() ?>seemore/<?= $rec_course["detail"]["course_id"] ?>" class="link">
                         <?= $rec_course["detail"]["course_name_en"] ?>
                         <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
@@ -162,7 +164,7 @@
             <?php } ?>
         </div>
     <?php } ?>
-
+    <span class="anchor" id="anchor_mid"></span>
     <div id="mid" class="mt-5">
         <div class="row">
             <nav class="navbar navbar-expand-lg navbar-light pb-0 w-100" style="border-bottom: 1px solid #CCC6BA;">
@@ -301,7 +303,7 @@
 
 <!-- NAV -->
 <div id="list-example" class="list-group">
-    <a class="list-group-item list-group-item-action" href="#top"> <i class="fas fa-circle fa-xs"></i><span>Top</span></a>
+    <a class="list-group-item list-group-item-action" href="#anchor_top"> <i class="fas fa-circle fa-xs"></i><span>Top</span></a>
     <?php if ($recommend_list_detail_course != FALSE) {
     ?>
         <?php foreach ($recommend_list_detail_course as $rec_course) {
@@ -312,7 +314,7 @@
         <?php
         } ?>
     <?php } ?>
-    <a class="list-group-item list-group-item-action" href="#mid"> <i class="fas fa-circle fa-xs"></i><span>Highlight</span></a>
+    <a class="list-group-item list-group-item-action" href="#anchor_mid"> <i class="fas fa-circle fa-xs"></i><span>Highlight</span></a>
 </div>
 
 <!-- Modal -->
