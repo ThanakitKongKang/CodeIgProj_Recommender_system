@@ -161,3 +161,10 @@ $route['form'] = 'BooksController/form';
 
 // HCI_EVENT
 // $route['books/progress_hci'] = 'BooksController/progress_hci';
+
+/*
+| -------------------------------------------------------------------------
+| REST API
+| -------------------------------------------------------------------------
+*/
+$route['crsrec'] = 'BooksController/delete_collection';

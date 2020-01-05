@@ -33,7 +33,92 @@ class BooksController extends CI_Controller
         $this->load->model('bookmark_model');
         $this->load->library("pagination");
     }
+    /*
+    | -------------------------------------------------------------------------
+    | index
+    | -------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        // array declaring
+        $data['recommend_matched'] = array();
+        $data['recommend_averaged'] = array();
+        $data['recommend_flattened'] = array();
+        $data['recommend_list'] = array();
+        $data['recommend_list_bookname'] = array();
+        $data['final_recommend_list'] = array();
+        $data['target_books'] = array();
 
+        //should be top rated by currently user
+        // $data['target_books'] = ['Certified Management Accountant (CMA), Part 2','Trading the Decentralization of the Financial Systems','High Performance Python (from Training at EuroPython 2011)','Red Tea Detox'];
+        $username = $this->session->userdata('user')['username'];
+        $data['raw_target_books'] = $this->rate_model->get_rate_by_username($username);
+
+        // get current user preferenced books
+        foreach ($data['raw_target_books'] as $user_book) {
+            $data['target_books'][] = $user_book['book_name'];
+        }
+
+        $data['raw_books'] = $this->rate_model->get_rate();
+        $data['books'] = $this->flip_array($data['raw_books']);
+        $result = $this->transformPreferences($data['books']);
+        foreach ($data['target_books'] as $user_book) {
+            array_push($data['recommend_matched'], $this->matchItems($result, $user_book));
+        }
+
+        $data['recommend_averaged'] = $this->array_average($data['recommend_matched']);
+        $data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+        $data['target_books_flipped']  = array_flip($data['target_books']);
+        // remove items that user given a rate
+        $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        //   sort by matching value desc
+        arsort($data['recommend_list']);
+
+        $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
+        if (sizeof($data['recommend_list_bookname']) < 9) {
+            $data['full_list_bookname'] = array(9);
+            $size = sizeof($data['recommend_list_bookname']);
+            $need = 9 - $size;
+            $data['list_bookname_to_merge'] = $this->books_model->get_random_book($need, $data['recommend_list_bookname']);
+            $i = 0;
+            for ($size; $size < 9; $size++) {
+                $data['recommend_list_bookname'][$size] =  $data['list_bookname_to_merge'][$i]["book_name"];
+                $i++;
+            }
+        }
+
+        // get item details from their name
+        foreach ($data['recommend_list_bookname'] as $row_recommend) {
+            $data['recommend_list_detail'][] = $this->books_model->get_by_name($row_recommend);
+        }
+        if (!empty($data['recommend_list_detail'])) {
+            $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
+
+            // push match score into result array
+            $i = 0;
+            foreach ($data['recommend_list'] as $row_recommend) {
+                $data['final_recommend_list'][$i]["match"] = $row_recommend;
+                $i++;
+            }
+        } else {
+            $data['final_recommend_list'] = false;
+        }
+
+
+        $data['top_rated'] = $this->books_model->get_top_rated();
+        $data['category_list'] = $this->books_model->get_cateory_list();
+
+        $header['title'] = 'Book Recommendation';
+        $data['books'] = $this->books_model->get_all();
+
+        $data['recommend_list_detail_course'] = $this->getCourseRecommend($username);
+
+        $header['home'] = 'active';
+        $this->load->view('./header', $header);
+        $this->load->view('books/index', $data);
+        $this->load->view('footer');
+    }
     /*
     | -------------------------------------------------------------------------
     | browse
@@ -543,204 +628,7 @@ class BooksController extends CI_Controller
         $isRated = $this->rate_model->get_rate_user_book($username, $bookid);
         echo $isRated["rate"];
     }
-    /*
-    | -------------------------------------------------------------------------
-    | index
-    | -------------------------------------------------------------------------
-    */
-    public function index()
-    {
-        // array declaring
-        $data['recommend_matched'] = array();
-        $data['recommend_averaged'] = array();
-        $data['recommend_flattened'] = array();
-        $data['recommend_list'] = array();
-        $data['recommend_list_bookname'] = array();
-        $data['final_recommend_list'] = array();
-        $data['target_books'] = array();
 
-        //should be top rated by currently user
-        // $data['target_books'] = ['Certified Management Accountant (CMA), Part 2','Trading the Decentralization of the Financial Systems','High Performance Python (from Training at EuroPython 2011)','Red Tea Detox'];
-        $username = $this->session->userdata('user')['username'];
-        $data['raw_target_books'] = $this->rate_model->get_rate_by_username($username);
-
-        // get current user preferenced books
-        foreach ($data['raw_target_books'] as $user_book) {
-            $data['target_books'][] = $user_book['book_name'];
-        }
-
-        $data['raw_books'] = $this->rate_model->get_rate();
-        $data['books'] = $this->flip_array($data['raw_books']);
-        $result = $this->transformPreferences($data['books']);
-        foreach ($data['target_books'] as $user_book) {
-            array_push($data['recommend_matched'], $this->matchItems($result, $user_book));
-        }
-
-        $data['recommend_averaged'] = $this->array_average($data['recommend_matched']);
-        $data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
-
-        $data['target_books_flipped']  = array_flip($data['target_books']);
-        // remove items that user given a rate
-        $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
-        //   sort by matching value desc
-        arsort($data['recommend_list']);
-
-        $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
-        if (sizeof($data['recommend_list_bookname']) < 9) {
-            $data['full_list_bookname'] = array(9);
-            $size = sizeof($data['recommend_list_bookname']);
-            $need = 9 - $size;
-            $data['list_bookname_to_merge'] = $this->books_model->get_random_book($need, $data['recommend_list_bookname']);
-            $i = 0;
-            for ($size; $size < 9; $size++) {
-                $data['recommend_list_bookname'][$size] =  $data['list_bookname_to_merge'][$i]["book_name"];
-                $i++;
-            }
-        }
-
-        // get item details from their name
-        foreach ($data['recommend_list_bookname'] as $row_recommend) {
-            $data['recommend_list_detail'][] = $this->books_model->get_by_name($row_recommend);
-        }
-        if (!empty($data['recommend_list_detail'])) {
-            $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
-
-            // push match score into result array
-            $i = 0;
-            foreach ($data['recommend_list'] as $row_recommend) {
-                $data['final_recommend_list'][$i]["match"] = $row_recommend;
-                $i++;
-            }
-        } else {
-            $data['final_recommend_list'] = false;
-        }
-
-
-        $data['top_rated'] = $this->books_model->get_top_rated();
-        $data['category_list'] = $this->books_model->get_cateory_list();
-
-        $header['title'] = 'Book Recommendation';
-        $data['books'] = $this->books_model->get_all();
-
-        // rec course
-        // start recommend by registered course
-        $data['course_registered'] = $this->course_model->get_course_registered($username);
-        if (!empty($data['course_registered'])) {
-            $data['books_name'] = $this->books_model->get_name_all();
-            // TF
-            $data['words_segment'] = array();
-            foreach ($data['books_name'] as $book_name) {
-                array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
-            }
-
-            // Stop words removal
-            $stopWords = array_flip(self::$stopWords);
-            $data['tf_no_stopwords'] = array();
-            foreach ($data['words_segment'] as $word_segment) {
-                array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
-                // print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
-            }
-
-            // change key to lowercase
-            foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
-                $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
-            }
-
-            // IDF
-            $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
-            $transformer->transform($data['tf_no_stopwords2']);
-
-            // course_registered_keyword sets
-            $data['course_registered_keyword'] = array(
-                'SC312002' => array(
-                    'human' => 1,
-                    'computer' => 1,
-                    'interaction' => 1,
-                    'interactive' => 1,
-                    'design' => 1,
-                    'designing' => 1,
-                    'ux' => 1,
-                    'ui' => 1,
-                    'user interface' => 1,
-                    'user experience' => 1,
-                    'user experiences' => 1,
-                    'ux/ui' => 1,
-                ),
-
-                'SC312006' => array(
-                    'analysis' => 1,
-                    'algorithm' => 1,
-                    'algorithms' => 1,
-                ),
-
-                '000101' => array(
-                    'english' => 1,
-                    'language' => 1,
-                ),
-            );
-
-
-            // get course keywords by user's registered courses's id
-            $data['item'] = array();
-            $i = 0;
-            foreach ($data['course_registered'] as $id_registered => $result_registered) {
-                foreach ($data['course_registered_keyword'] as $id_courses => $result_courses) {
-                    if ($result_registered['course_id'] == $id_courses) {
-                        foreach ($result_courses as $id => $result) {
-                            $data['item'][$id_courses][$id] = 1;
-                        }
-                        $i++;
-                    }
-                }
-            }
-            $data['course_count'] = $i;
-
-            // cosine similarity 
-            $data['cosineSim_course'] = array();
-            $k = 0;
-            foreach ($data['item'] as $item_key => $item) {
-                foreach ($data['books_name'] as $book_name) {
-                    $data['cosineSim_course'][$item_key][$k + 1] =  $this->cosine($data['item'][$item_key], $data['tf_no_stopwords2'][$k]);
-                    $k++;
-                }
-                $k = 0;
-            }
-
-            // remove 0 similarity from array 
-            // and
-            // get content based books detail
-            // get course detail
-            foreach ($data['cosineSim_course'] as $key => $cosineSim) {
-                $course_detail = $this->course_model->get_course_by_id($key);
-                $data['recommend_list_detail_course'][$key] = array("detail" => array(
-                    'course_id' => $course_detail[0]->course_id,
-                    'course_name_th' => $course_detail[0]->course_name_th,
-                    'course_name_en' => $course_detail[0]->course_name_en,
-                ));
-                foreach ($cosineSim as $subCosine_key => $subCosine) {
-                    if ($subCosine == 0 || is_nan($subCosine)) {
-                        unset($data['cosineSim_course'][$key][$subCosine_key]);
-                    } else {
-                        $data['recommend_list_detail_course'][$key][$subCosine_key] = $this->books_model->get_by_id($subCosine_key);
-                        $data['recommend_list_detail_course'][$key][$subCosine_key]['match'] = $subCosine;
-                    }
-                }
-            }
-
-            // sort by similarity score
-            foreach ($data['recommend_list_detail_course'] as $key => $value) {
-                $match = array_column($data['recommend_list_detail_course'][$key], 'match');
-                array_multisort($match, SORT_DESC, $data['recommend_list_detail_course'][$key]);
-            }
-        } else {
-            $data['recommend_list_detail_course'] = false;
-        }
-
-        $header['home'] = 'active';
-        $this->load->view('./header', $header);
-        $this->load->view('books/index', $data);
-        $this->load->view('footer');
-    }
     /*
     | -------------------------------------------------------------------------
     | admin_index
@@ -1173,5 +1061,124 @@ class BooksController extends CI_Controller
         // echo "</div>";
 
         return self::dot_product($a, $b) / (self::magnitude($a) * self::magnitude($b));
+    }
+
+    public function getCourseRecommend($username)
+    {
+        // rec course
+        // start recommend by registered course
+        $data['course_registered'] = $this->course_model->get_course_registered($username);
+        if (!empty($data['course_registered'])) {
+            $data['books_name'] = $this->books_model->get_name_all();
+            // TF
+            $data['words_segment'] = array();
+            foreach ($data['books_name'] as $book_name) {
+                array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+            }
+
+            // Stop words removal
+            $stopWords = array_flip(self::$stopWords);
+            $data['tf_no_stopwords'] = array();
+            foreach ($data['words_segment'] as $word_segment) {
+                array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+                // print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+            }
+
+            // change key to lowercase
+            foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+                $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+            }
+
+            // IDF
+            $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+            $transformer->transform($data['tf_no_stopwords2']);
+
+            // course_registered_keyword sets
+            $data['course_registered_keyword'] = array(
+                'SC312002' => array(
+                    'human' => 1,
+                    'computer' => 1,
+                    'interaction' => 1,
+                    'interactive' => 1,
+                    'design' => 1,
+                    'designing' => 1,
+                    'ux' => 1,
+                    'ui' => 1,
+                    'user interface' => 1,
+                    'user experience' => 1,
+                    'user experiences' => 1,
+                    'ux/ui' => 1,
+                ),
+
+                'SC312006' => array(
+                    'analysis' => 1,
+                    'algorithm' => 1,
+                    'algorithms' => 1,
+                ),
+
+                '000101' => array(
+                    'english' => 1,
+                    'language' => 1,
+                ),
+            );
+
+
+            // get course keywords by user's registered courses's id
+            $data['item'] = array();
+            $i = 0;
+            foreach ($data['course_registered'] as $id_registered => $result_registered) {
+                foreach ($data['course_registered_keyword'] as $id_courses => $result_courses) {
+                    if ($result_registered['course_id'] == $id_courses) {
+                        foreach ($result_courses as $id => $result) {
+                            $data['item'][$id_courses][$id] = 1;
+                        }
+                        $i++;
+                    }
+                }
+            }
+            $data['course_count'] = $i;
+
+            // cosine similarity 
+            $data['cosineSim_course'] = array();
+            $k = 0;
+            foreach ($data['item'] as $item_key => $item) {
+                foreach ($data['books_name'] as $book_name) {
+                    $data['cosineSim_course'][$item_key][$k + 1] =  $this->cosine($data['item'][$item_key], $data['tf_no_stopwords2'][$k]);
+                    $k++;
+                }
+                $k = 0;
+            }
+
+            // remove 0 similarity from array 
+            // and
+            // get content based books detail
+            // get course detail
+            foreach ($data['cosineSim_course'] as $key => $cosineSim) {
+                $course_detail = $this->course_model->get_course_by_id($key);
+                $data['recommend_list_detail_course'][$key] = array("detail" => array(
+                    'course_id' => $course_detail[0]->course_id,
+                    'course_name_th' => $course_detail[0]->course_name_th,
+                    'course_name_en' => $course_detail[0]->course_name_en,
+                ));
+                foreach ($cosineSim as $subCosine_key => $subCosine) {
+                    if ($subCosine == 0 || is_nan($subCosine)) {
+                        unset($data['cosineSim_course'][$key][$subCosine_key]);
+                    } else {
+                        $data['recommend_list_detail_course'][$key][$subCosine_key] = $this->books_model->get_by_id($subCosine_key);
+                        $data['recommend_list_detail_course'][$key][$subCosine_key]['match'] = $subCosine;
+                    }
+                }
+            }
+
+            // sort by similarity score
+            foreach ($data['recommend_list_detail_course'] as $key => $value) {
+                $match = array_column($data['recommend_list_detail_course'][$key], 'match');
+                array_multisort($match, SORT_DESC, $data['recommend_list_detail_course'][$key]);
+            }
+        } else {
+            $data['recommend_list_detail_course'] = false;
+        }
+
+        return  $data['recommend_list_detail_course'];
     }
 }

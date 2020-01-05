@@ -1427,8 +1427,8 @@ span.user_rated_this_1, span.user_rated_this {
 #list-example>a {
     position: relative;
     left: 4rem;
-    -webkit-transition: .5s;
-    transition: .5s;
+    -webkit-transition: .25s;
+    transition: .25s;
     -webkit-transition-delay: .1s;
     transition-delay: .1s;
 }
@@ -1445,21 +1445,22 @@ span.user_rated_this_1, span.user_rated_this {
     font-size: 0.8rem;
     border: 0;
     opacity: 0.25;
+    background-color: transparent;
 }
 
 .list-group-item>i {
     padding-right: 0.5rem;
     font-size: 0.5rem;
-    -webkit-transition: .5s;
-    transition: .5s;
+    -webkit-transition: .25s;
+    transition: .25s;
     -webkit-transition-delay: .1s;
     transition-delay: .1s;
 }
 
 .list-group-item>span {
     opacity: 0;
-    -webkit-transition: .5s;
-    transition: .5s;
+    -webkit-transition: .25s;
+    transition: .25s;
     -webkit-transition-delay: .1s;
     transition-delay: .1s;
 }
