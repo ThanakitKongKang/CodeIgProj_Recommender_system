@@ -48,11 +48,11 @@
     | -------------------------------------------------------------------------
      -->
 
-    <div id="content_list" class="animation_enter_softly">
+    <div id="content_list" >
         <div class="row no-gutters" style="margin-left:0.5rem;">
             <?php if (($content_list != FALSE)) {
                 foreach ($content_list as $content) { ?>
-                    <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;">
+                    <div class="col-sm-4 align-self-center content_browse_row" style="max-width: 30.333333%;" data-aos="fade-up">
                         <div class="py-3">
                             <div class="card card_hover_img">
                                 <a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>">

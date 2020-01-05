@@ -1,7 +1,6 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-require_once 'BooksController.php';
 
 class CoursesController extends CI_Controller
 {
@@ -29,37 +28,23 @@ class CoursesController extends CI_Controller
 
     function seemore()
     {
-        $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "all";
-        $data['round_count'] = 1;
-        $data['i'] = 0;
-
-        $data['content_list'] = $this->books_model->get_content_list_dynamic(9, 0, "rows", $data['page']);
-        $data['num_rows'] = $this->books_model->get_content_list_dynamic(9, 0, "count", $data['page']);
-        $data['all_num_rows'] = $this->books_model->get_all_num_rows_by_category($data['page']);
-
-        $username = $this->session->userdata('user')['username'];
-        $url = base_url() . 'crsrec';
-
-        //Use Curl for making the REST API
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, TRUE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-        $data['recommend_list_detail_course'] = curl_exec($ch);
+        $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "none";
         $page = $data['get_url'];
+        $data['recommend_list_detail_course'] = $this->getCourseRecommend();
+
+        // get only requested course
         $data['recommend_list_detail_course'] = array_filter($data['recommend_list_detail_course'], function ($array_key) use ($page) {
             return $array_key == $page;
         }, ARRAY_FILTER_USE_KEY);
 
-        if ($data['all_num_rows'] == false) {
+        if ($data['get_url'] == "none") {
             $data['all_num_rows'] = 0;
             $data['page'] = "404-Page-Not-Found";
         }
 
-        $header["title"] = "Course - " . $data['page'];
+        $header["title"] = "Course - " . $data['get_url'];
         $this->load->view('./header', $header);
-        $this->load->view('courses/seemore');
+        $this->load->view('courses/seemore', $data);
         $this->load->view('footer');
     }
 

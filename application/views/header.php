@@ -80,6 +80,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/slick/slick-theme.css" />
 
+    <!-- AOS -->
+    <link href="<?= base_url() ?>/assets/css/aos.css" rel="stylesheet">
+    <script src="<?= base_url() ?>/assets/js/aos.js"></script>
 
 </head>
 
@@ -222,6 +225,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/slick/slick.min.js"></script>
     <script type="text/javascript">
+        AOS.init();
+
         // scroll hide header
         var isMobile_index = window.matchMedia("only screen and (max-width: 1024px)").matches;
         if (!isMobile_index) {

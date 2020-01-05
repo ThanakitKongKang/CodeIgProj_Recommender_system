@@ -167,4 +167,4 @@ $route['form'] = 'BooksController/form';
 | REST API
 | -------------------------------------------------------------------------
 */
-$route['crsrec'] = 'BooksController/delete_collection';
+$route['crsrec'] = 'BooksController/getCourseRecommend';
