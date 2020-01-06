@@ -28,18 +28,31 @@ class CoursesController extends CI_Controller
 
     function seemore()
     {
+        $this->check_auth('seemore');
         $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "none";
         $page = $data['get_url'];
-        $data['recommend_list_detail_course'] = $this->getCourseRecommend();
+        $data["isCourseExists"] = $this->course_model->get_course_by_id($data['get_url']);
 
-        // get only requested course
-        $data['recommend_list_detail_course'] = array_filter($data['recommend_list_detail_course'], function ($array_key) use ($page) {
-            return $array_key == $page;
-        }, ARRAY_FILTER_USE_KEY);
-
-        if ($data['get_url'] == "none") {
+        if ($data['isCourseExists'] == FALSE) {
             $data['all_num_rows'] = 0;
             $data['page'] = "404-Page-Not-Found";
+            $data["title_mfy"] = "";
+            $data["title_main"] = "Page not found!";
+        } else {
+            $data['recommend_list_detail_course'] = $this->getCourseRecommend();
+
+            // get only requested course
+            $data['recommend_list_detail_course'] = array_filter($data['recommend_list_detail_course'], function ($array_key) use ($page) {
+                return $array_key == $page;
+            }, ARRAY_FILTER_USE_KEY);
+            if ($data['recommend_list_detail_course'] != FALSE) {
+                $data["title_mfy"] = "<i class='fas fa-heart pr-3'></i>Made for you";
+                $data["title_main"] = $data["recommend_list_detail_course"][$data["get_url"]]["detail"]["course_name_en"] . '';
+            } else {
+                $data['isCourseExists'] = FALSE;
+                $data["title_mfy"] = "";
+                $data["title_main"] = "Page not found!";
+            }
         }
 
         $header["title"] = "Course - " . $data['get_url'];

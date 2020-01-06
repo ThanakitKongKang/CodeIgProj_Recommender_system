@@ -3,10 +3,10 @@
     <div class="container">
         <div class="animation_enter text-center">
             <div class="position-relative row">
-                <h5 class="text-muted font-apple"><i class="fas fa-heart pr-3"></i>Made for you</h5>
+                <h5 class="text-muted font-apple"><?= $title_mfy ?></h5>
             </div>
             <div class="position-relative row">
-                <h1 class="display-4 page_title_header page_title_header_no_after  font-arial"><?= $recommend_list_detail_course[$get_url]["detail"]["course_name_en"] ?></h1>
+                <h1 class="display-4 page_title_header page_title_header_no_after font-arial"><?= $title_main ?></h1>
             </div>
 
         </div>
@@ -21,10 +21,10 @@
     | content
     | -------------------------------------------------------------------------
      -->
-
-    <div id="content_list">
-        <div class="row no-gutters" style="margin-left:0.5rem;">
-            <?php if (($get_url != "none")) {
+    <?php if (($isCourseExists != FALSE)) { ?>
+        <div id="content_list">
+            <div class="row no-gutters" style="margin-left:0.5rem;">
+                <?php
                 foreach ($recommend_list_detail_course as $rec_course) { ?>
 
                     <?php foreach ($rec_course as $key => $content) { ?>
@@ -58,10 +58,20 @@
                     <?php } ?>
 
                 <?php } ?>
+            </div>
         </div>
-    <?php } ?>
-    </div>
+    <?php } else { ?>
+        <div class="w-50 mx-auto" role="alert">
+            <div class="text-center">
+                <img src="<?= base_url() ?>assets/img/404-Page-Not-Found.svg" alt="" class="w-50">
+            </div>
+            <div class="alert alert-secondary ">
+                SORRY BT THEP PAGE YOU ARE LOOKING FOR DOES NOT EXIST, HAVE BEEN REMOVED. NAME CHANGED OR IS TEMPORARILY UNAVAILABLE
+            </div>
+            <a href="<?= base_url() ?>" class="btn btn-primary">GO TO HOMEPAGE</a>
+        </div>
 
+    <?php } ?>
 
 </div>
 <!-- Modal -->

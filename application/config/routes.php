@@ -131,7 +131,9 @@ $route['course'] = 'CoursesController';
 $route['course/select_search'] = 'CoursesController/select_search';
 $route['course/add_course'] = 'CoursesController/add_course';
 $route['course/delete_course'] = 'CoursesController/delete_course';
+$route['seemore'] = 'CoursesController/seemore';
 $route['seemore/(:any)'] = 'CoursesController/seemore';
+
 
 /*
 | -------------------------------------------------------------------------

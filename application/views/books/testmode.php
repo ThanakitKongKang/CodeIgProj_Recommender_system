@@ -48,8 +48,8 @@
     // echo "<div class='container'><h4>tf_no_stopwords</h4>";
     // print("<pre>" . print_r($tf_no_stopwords2, true) . "</pre>");
     // echo "</div>";
-
     ?>
+
     <?php
     foreach ($recommend_list_detail_course as $rec_course) { ?>
         <div class="center bg-light m-5 p-5 text-center" data-slick='{"slidesToShow": 5, "slidesToScroll": 5}'>
