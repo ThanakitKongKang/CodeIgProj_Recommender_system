@@ -15,7 +15,7 @@ class CommentsController extends CI_Controller
     {
         $bookid = $this->input->get('book_id');
         $commentsArray = $this->comments_model->get_comments_of_book($bookid);
-        
+
         // {
         //     "id": 3,
         //     "parent": null,
@@ -32,6 +32,14 @@ class CommentsController extends CI_Controller
         //     "user_has_upvoted": true,
         //     "is_new": false
         //  },
+        // var usersArray = [
+        //     {
+        //        id: 1,
+        //        fullname: "Current User",
+        //        email: "current.user@viima.com",
+        //        profile_picture_url: "https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png"
+        //     },
+        //  ]
 
         // assign created by current user and isAdmin to array
         $username = $this->session->userdata('user')['username'];
@@ -40,6 +48,7 @@ class CommentsController extends CI_Controller
             $commentsArray[$i]["creator"] = $sub_cm["fullname"];
             $commentsArray[$i]["created_by_current_user"] = false;
             $commentsArray[$i]["created_by_admin"] = false;
+            $commentsArray[$i]["user_has_upvoted"] = false;
 
             // is current user
             if ($sub_cm["fullname"] ==  $username) {
@@ -50,7 +59,10 @@ class CommentsController extends CI_Controller
                 $commentsArray[$i]["created_by_admin"] = true;
             }
             // is liked by current user
-            
+            if ($this->comments_liking_model->isUserLiked($bookid, $sub_cm["id"], $username)) {
+                $commentsArray[$i]["user_has_upvoted"] = true;
+            }
+
 
             $i++;
         }
@@ -78,7 +90,13 @@ class CommentsController extends CI_Controller
 
     public function delete()
     {
+        $cid = $this->input->post('id');
+        $book_id = $this->input->post('book_id');
+        // delete from comment and comment liking
+        $this->comments_liking_model->delete_related_comment($book_id, $cid);
+        $this->comments_model->delete_comment($book_id, $cid);
     }
+
     public function upvote()
     {
     }

@@ -9,6 +9,7 @@ class Comments_model extends BaseModel
     }
     public function get_comments_of_book($bookid)
     {
+
         $this->db->where('book_id', $bookid);
         $this->db->select('id,created,content,fullname,upvote_count');
         $this->db->from($this->table);
@@ -20,5 +21,12 @@ class Comments_model extends BaseModel
         } else {
             return FALSE;
         }
+    }
+
+    public function delete_comment($book_id, $comment_id)
+    {
+        $this->db->where('id', $comment_id);
+        $this->db->where('book_id', $book_id);
+        $this->db->delete($this->table);
     }
 }

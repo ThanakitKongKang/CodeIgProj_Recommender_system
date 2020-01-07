@@ -162,6 +162,7 @@
             profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
             // ajax get admin and logged_in status
             defaultNavigationSortKey: 'popularity',
+            enableNavigation: true,
             roundProfilePictures: true,
             forceResponsive: true,
             currentUserIsAdmin: false,
@@ -203,11 +204,19 @@
                 });
             },
             deleteComment: function(commentJSON, success, error) {
-                console.log(commentJSON);
+                var data = {
+                    'id': commentJSON.id,
+                    'book_id': arr[5],
+                };
+                console.log(data);
+
                 $.ajax({
-                    type: 'delete',
-                    url: "<?php echo base_url(); ?>comment/delete" + commentJSON.id,
-                    success: success,
+                    type: 'post',
+                    url: "<?php echo base_url(); ?>comment/delete",
+                    data: data,
+                    success: function() {
+                        success();
+                    },
                     error: error
                 });
             },
@@ -239,6 +248,10 @@
                 }
             }
         });
+        // trigger popular in dropdown to sort by popularity properly
+        setTimeout(function() {
+            $(".navigation-wrapper ul.dropdown li[data-sort-key='popularity']").trigger("click");
+        }, 100);
 
         $('.backbutton').on("click", function(e) {
             var currentUrl = window.location.href;
