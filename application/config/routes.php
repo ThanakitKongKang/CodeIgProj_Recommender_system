@@ -155,6 +155,17 @@ $route['books/edit_collection_name'] = 'BooksController/edit_collection_name';
 $route['books/delete_collection'] = 'BooksController/delete_collection';
 /*
 | -------------------------------------------------------------------------
+| COMMENT
+| -------------------------------------------------------------------------
+*/
+$route['comment/get'] = 'CommentsController/get';
+$route['comment/post'] = 'CommentsController/post';
+$route['comment/delete'] = 'CommentsController/delete';
+$route['comment/upvote'] = 'CommentsController/upvote';
+
+
+/*
+| -------------------------------------------------------------------------
 | google form
 | -------------------------------------------------------------------------
 */

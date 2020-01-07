@@ -84,6 +84,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link href="<?= base_url() ?>/assets/css/aos.css" rel="stylesheet">
     <script src="<?= base_url() ?>/assets/js/aos.js"></script>
 
+    <!-- jQuery comments -->
+    <link href="<?= base_url() ?>/assets/css/jquery-comments.css" rel="stylesheet">
+    <script src="<?= base_url() ?>/assets/js/jquery-comments.min.js"></script>
+
 </head>
 
 <body data-spy="scroll" data-target="#list-example" data-offset="100">

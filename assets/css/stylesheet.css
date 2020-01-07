@@ -845,7 +845,7 @@ body {
 	border-bottom-left-radius: 2rem !important;
 }
 
-#similar_book_title {
+.detail_wrapper_title {
 	left: 3.5rem;
 	font-size: 1rem;
 	z-index: 10;
@@ -856,7 +856,7 @@ body {
 	color: rgba(0, 0, 0, .7);
 }
 
-#similar_book_title:hover {
+.detail_wrapper_title:hover {
 	color: rgba(0, 0, 0, .5) !important;
 }
 
@@ -1371,6 +1371,12 @@ span.user_rated_this {
 	height: 18rem;
 }
 
+.wrapper_style {
+	border-radius: 1rem;
+	border: 1px solid #0000000d;
+	background-color: #f9f9f9;
+}
+
 .slick_index {
 	border: 0.5px solid #0000000d;
 	border-radius: 1rem;
@@ -1557,4 +1563,9 @@ span.user_rated_this {
 	margin-top: -40px;
 	/*same height as header*/
 	visibility: hidden;
+}
+
+#comments-container>.data-container {
+	max-height: 25rem;
+	overflow-y: auto;
 }

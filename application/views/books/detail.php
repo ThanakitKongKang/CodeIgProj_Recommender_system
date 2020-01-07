@@ -73,8 +73,8 @@
                 </div>
             </div>
             <?php if (!empty($recommend_list_detail)) { ?>
-                <div class="position-absolute font-apple" id="similar_book_title">Similar to</div>
-                <div class="row py-3 mt-3 position-relative" id="similar_book_detail" style="border-radius:0.25rem;border:1px solid #0000000d;background-color:#f9f9f9">
+                <div class="position-absolute font-apple detail_wrapper_title">Similar to</div>
+                <div class="row py-3 mt-3 position-relative wrapper_style" id="similar_book_detail">
                     <div class="pt-5 pr-5" id="similar_book_content">
                         <?php foreach ($recommend_list_detail as $book) { ?>
                             <div class="col-4 hover_img_similar_book_content">
@@ -105,6 +105,13 @@
                 <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_left"><i class="text-white fas fa-chevron-left fa-lg pr-2" style="z-index:1"></i></div>
                 <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_right"><i class="text-white fas fa-chevron-right fa-lg  pl-2" style="z-index:1"></i></div>
             <?php } ?>
+            <!-- Comment section -->
+            <div class="position-absolute font-apple detail_wrapper_title">Reviews</div>
+
+            <div class="row py-3 mt-3 position-relative wrapper_style">
+                <div id="comments-container" class="w-100 px-4 pt-5 font-apple"></div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -145,6 +152,94 @@
     }
 
     $(document).ready(function() {
+        // Comment function
+        var str = window.location.href;
+        var arr = str.split('/');
+        var book_id = {
+            'book_id': arr[5],
+        };
+        $('#comments-container').comments({
+            profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+            // ajax get admin and logged_in status
+            defaultNavigationSortKey: 'popularity',
+            roundProfilePictures: true,
+            forceResponsive: true,
+            currentUserIsAdmin: false,
+            readOnly: false,
+            enableReplying: false,
+            enableEditing: true,
+            enableAttachments: false,
+            enableDeleting: true,
+            currentUserId: "admin",
+            timeFormatter: function(time) {
+                return moment(time).fromNow();
+            },
+            getComments: function(success, error) {
+                $.ajax({
+                    type: 'get',
+                    url: "<?php echo base_url(); ?>comment/get",
+                    data: book_id,
+                    success: function(commentsArray) {
+                        if (commentsArray != "nocm") {
+                            console.log(JSON.parse(commentsArray))
+                            success(JSON.parse(commentsArray));
+                        } else {
+                            success([]);
+                        }
+                    },
+                    error: error
+                });
+            },
+            postComment: function(commentJSON, success, error) {
+                commentJSON["book_id"] = arr[5];
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo base_url(); ?>comment/post",
+                    data: commentJSON,
+                    success: function(comment) {
+                        success(commentJSON)
+                    },
+                    error: error
+                });
+            },
+            deleteComment: function(commentJSON, success, error) {
+                console.log(commentJSON);
+                $.ajax({
+                    type: 'delete',
+                    url: "<?php echo base_url(); ?>comment/delete" + commentJSON.id,
+                    success: success,
+                    error: error
+                });
+            },
+            upvoteComment: function(commentJSON, success, error) {
+                var commentURL = "<?php echo base_url(); ?>comment/" + commentJSON.id;
+                var upvotesURL = commentURL + '/upvote/';
+
+                if (commentJSON.userHasUpvoted) {
+                    $.ajax({
+                        type: 'post',
+                        url: upvotesURL,
+                        data: {
+                            comment: commentJSON.id
+                        },
+                        success: function() {
+                            success(commentJSON)
+                        },
+                        error: error
+                    });
+                } else {
+                    $.ajax({
+                        type: 'delete',
+                        url: upvotesURL + upvoteId,
+                        success: function() {
+                            success(commentJSON)
+                        },
+                        error: error
+                    });
+                }
+            }
+        });
+
         $('.backbutton').on("click", function(e) {
             var currentUrl = window.location.href;
             window.history.back();
