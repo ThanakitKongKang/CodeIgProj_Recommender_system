@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="btn btn-outline-secondary mb-3" style="cursor:pointer" onclick="window.history.back()"><i class="fas fa-arrow-left"></i> Back</div>
+    <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer"><i class="fas fa-arrow-left"></i> Back</div>
     <div class="row">
         <!-- pdf -->
         <div class="d-inline-block col-sm p-0 detail_pdf_section" style="height: 90vh!important;width:40vw!important">
@@ -58,7 +58,7 @@
                                 <i class="fas fa-bookmark" id="bookmark_icon"></i>
                             <?php echo "<span class='save_text font-arial'> unsave book</span>";
                             } else {
-                                ?><i class="far fa-bookmark" id="bookmark_icon"></i>
+                            ?><i class="far fa-bookmark" id="bookmark_icon"></i>
                             <?php echo "<span class='save_text font-arial'> save book</span>";
                             } ?></button>
 
@@ -145,6 +145,16 @@
     }
 
     $(document).ready(function() {
+        if (document.referrer == "") {
+            $('.backbutton').css('cursor', 'not-allowed');
+            $('.backbutton').css('opacity', .65);
+        } else {
+            $('.backbutton').attr('title', document.referrer);
+        }
+        $('.backbutton').on("click", function(e) {
+            window.location.href = document.referrer;
+        });
+
         var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>
             var not_login = false;
