@@ -1,5 +1,5 @@
 <div>
-    <div class="container">
+    <div class="container animation_fadeIn">
         <span class="anchor" id="anchor_top"></span>
         <div id="top" class="row">
             <div class="col-sm-4" id="col-1">

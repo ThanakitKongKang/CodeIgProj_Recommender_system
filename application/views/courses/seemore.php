@@ -23,7 +23,7 @@
      -->
     <?php if (($isCourseExists != FALSE)) { ?>
         <div id="content_list">
-            <div class="row no-gutters" style="margin-left:0.5rem;">
+            <div class="row no-gutters col-12 mx-auto">
                 <?php
                 foreach ($recommend_list_detail_course as $rec_course) { ?>
 
@@ -61,12 +61,12 @@
             </div>
         </div>
     <?php } else { ?>
-        <div class="w-50 mx-auto" role="alert">
+        <div class="col-md-6 col-sm-12 mx-auto" role="alert">
             <div class="text-center">
-                <img src="<?= base_url() ?>assets/img/404-Page-Not-Found.svg" alt="" class="w-50">
+                <img src="<?= base_url() ?>assets/img/404-Page-Not-Found.svg" alt="" class="col-md-6 col-sm-12">
             </div>
             <div class="alert alert-secondary ">
-                SORRY BT THEP PAGE YOU ARE LOOKING FOR DOES NOT EXIST, HAVE BEEN REMOVED. NAME CHANGED OR IS TEMPORARILY UNAVAILABLE
+                SORRY, BUT THE PAGE YOU ARE LOOKING FOR DOES NOT EXIST, HAVE BEEN REMOVED, NAME CHANGED OR IS TEMPORARILY UNAVAILABLE
             </div>
             <a href="<?= base_url() ?>" class="btn btn-primary">GO TO HOMEPAGE</a>
         </div>
