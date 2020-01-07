@@ -145,15 +145,25 @@
     }
 
     $(document).ready(function() {
+        $('.backbutton').on("click", function(e) {
+            var currentUrl = window.location.href;
+            window.history.back();
+            setTimeout(function() {
+                // if location was not changed in 100 ms, then there is no history back
+                if (currentUrl === window.location.href) {
+                    window.location.href = document.referrer;
+                }
+            }, 100);
+        });
+
         if (document.referrer == "") {
             $('.backbutton').css('cursor', 'not-allowed');
             $('.backbutton').css('opacity', .65);
+            $('.backbutton').unbind("click");
         } else {
             $('.backbutton').attr('title', document.referrer);
         }
-        $('.backbutton').on("click", function(e) {
-            window.location.href = document.referrer;
-        });
+
 
         var not_login = true;
         <?php if ($this->session->userdata('logged_in')) { ?>
