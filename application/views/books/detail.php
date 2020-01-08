@@ -158,6 +158,7 @@
         var book_id = {
             'book_id': arr[5],
         };
+
         $('#comments-container').comments({
             profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
             // ajax get admin and logged_in status
@@ -166,12 +167,11 @@
             roundProfilePictures: true,
             forceResponsive: true,
             currentUserIsAdmin: false,
-            readOnly: false,
+            readOnly: !isLogged_in,
             enableReplying: false,
             enableEditing: true,
             enableAttachments: false,
             enableDeleting: true,
-            currentUserId: "admin",
             timeFormatter: function(time) {
                 return moment(time).fromNow();
             },
@@ -182,7 +182,6 @@
                     data: book_id,
                     success: function(commentsArray) {
                         if (commentsArray != "nocm") {
-                            console.log(JSON.parse(commentsArray))
                             success(JSON.parse(commentsArray));
                         } else {
                             success([]);
@@ -192,6 +191,7 @@
                 });
             },
             postComment: function(commentJSON, success, error) {
+                console.log(commentJSON.id)
                 commentJSON["book_id"] = arr[5];
                 $.ajax({
                     type: 'post',
@@ -208,8 +208,6 @@
                     'id': commentJSON.id,
                     'book_id': arr[5],
                 };
-                console.log(data);
-
                 $.ajax({
                     type: 'post',
                     url: "<?php echo base_url(); ?>comment/delete",
@@ -221,31 +219,19 @@
                 });
             },
             upvoteComment: function(commentJSON, success, error) {
-                var commentURL = "<?php echo base_url(); ?>comment/" + commentJSON.id;
-                var upvotesURL = commentURL + '/upvote/';
-
-                if (commentJSON.userHasUpvoted) {
-                    $.ajax({
-                        type: 'post',
-                        url: upvotesURL,
-                        data: {
-                            comment: commentJSON.id
-                        },
-                        success: function() {
-                            success(commentJSON)
-                        },
-                        error: error
-                    });
-                } else {
-                    $.ajax({
-                        type: 'delete',
-                        url: upvotesURL + upvoteId,
-                        success: function() {
-                            success(commentJSON)
-                        },
-                        error: error
-                    });
-                }
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo base_url(); ?>comment/upvote",
+                    data: {
+                        "id": commentJSON.id,
+                        "book_id": arr[5],
+                        "upvote_count": commentJSON.upvote_count,
+                    },
+                    success: function() {
+                        success(commentJSON)
+                    },
+                    error: error
+                });
             }
         });
         // trigger popular in dropdown to sort by popularity properly

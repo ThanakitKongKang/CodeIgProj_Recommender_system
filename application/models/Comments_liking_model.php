@@ -41,4 +41,12 @@ class Comments_liking_model extends BaseModel
 
         return $count;
     }
+
+    public function remove_upvote($book_id, $comment_id, $username)
+    {
+        $this->db->where('comment_id', $comment_id);
+        $this->db->where('book_id', $book_id);
+        $this->db->where('username', $username);
+        $this->db->delete($this->table);
+    }
 }

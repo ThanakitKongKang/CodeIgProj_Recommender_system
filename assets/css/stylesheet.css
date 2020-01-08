@@ -1569,3 +1569,52 @@ span.user_rated_this {
 	max-height: 25rem;
 	overflow-y: auto;
 }
+
+.comment-wrapper {
+	padding-top: 1rem !important;
+}
+
+.comment[class*="by"]>.comment-wrapper>.name>span {
+	padding: .25em .4em;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25rem;
+	text-overflow: ellipsis;
+}
+
+.comment.by-current-user>.comment-wrapper>.name>span {
+	color: #fff;
+	background-color: #6c757d;
+}
+
+.comment.by-admin>.comment-wrapper>.name>span {
+	background-color: #ffbc00;
+}
+
+.comment-wrapper>.name>span {
+	color: #000000ab;
+	font-size: 0.85rem;
+}
+
+.comment-wrapper>.wrapper>.content {
+	padding-top: 0.8rem;
+	padding-bottom: 0.8rem;
+}
+
+.profile-picture {
+	transform: scale(0.6);
+	margin-top: 0.5rem;
+}
+
+.comment-wrapper .actions>.edit {
+	font-size: 0.8rem !important;
+	float: right;
+}
+
+.comment-wrapper .actions>.separator {
+	display: none;
+}
+
+.upvote-count {
+	font-family: Arial, Helvetica, sans-serif;
+}

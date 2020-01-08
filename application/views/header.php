@@ -230,6 +230,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/slick/slick.min.js"></script>
     <script type="text/javascript">
         AOS.init();
+        var isLogged_in = false;
+        <?php
+        if ($this->session->userdata('logged_in')) { ?>
+            isLogged_in = !isLogged_in;
+        <?php } ?>
 
         // scroll hide header
         var isMobile_index = window.matchMedia("only screen and (max-width: 1024px)").matches;

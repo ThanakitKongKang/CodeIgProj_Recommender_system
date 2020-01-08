@@ -29,4 +29,13 @@ class Comments_model extends BaseModel
         $this->db->where('book_id', $book_id);
         $this->db->delete($this->table);
     }
+
+    public function update_upvote_count($book_id, $comment_id, $upvote_count)
+    {
+        $this->db->where('id', $comment_id);
+        $this->db->where('book_id', $book_id);
+        // false = escape parameter
+        $this->db->set('upvote_count', $upvote_count, FALSE);
+        $this->db->update($this->table);
+    }
 }
