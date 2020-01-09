@@ -91,6 +91,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- switchbox -->
     <link href="<?= base_url() ?>/assets/css/switchbox.min.css" rel="stylesheet">
 
+    <!-- dashboard -->
+    <link href="<?= base_url() ?>/assets/css/dashboard.css" rel="stylesheet">
+
+
 
 
 
@@ -175,6 +179,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->
 
                                         <hr class="my-2">
+                                        <?php if ($this->session->userdata('user')['username'] == "admin") { ?>
+                                            <h6 class="dropdown-header">Admin</h6>
+                                            <a class="dropdown-item <?php if (isset($dashboard)) echo $dashboard; ?>" href="<?= base_url() ?>dashboard">Dashboard</a>
+                                            <hr class="my-2">
+                                        <?php  } ?>
                                         <a class="dropdown-item" href="https://drive.google.com/drive/u/1/folders/1Ko-rcBT1rPSri_Ph4-FYnA-cDXolZNAB?fbclid=IwAR3a77DeDMKYQo39VJAFEowWZTl-guMjsM0spsblyLZQ_Hx4JOEdeGeyjwI"><i class="fas fa-question-circle pr-2 color_secondary"></i>Help</a>
                                         <a class="dropdown-item" href="<?= base_url() ?>logout"><i class="fas fa-sign-out-alt pr-2 color_secondary"></i>Log Out</a>
                                     </div>
@@ -240,15 +249,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         var isLogged_in = false;
         var username = false;
+        var isAdmin = false;
         <?php
         if ($this->session->userdata('logged_in')) { ?>
             isLogged_in = !isLogged_in;
-            username = " " + "<?= $this->session->userdata('user')['username']; ?>" + " ";
-        <?php } ?>
+            username = "" + "<?= $this->session->userdata('user')['username']; ?>" + "";
 
+        <?php } ?>
+        if (username == "admin") isAdmin = true;
         // scroll hide header
         var isMobile_index = window.matchMedia("only screen and (max-width: 1024px)").matches;
-        if (!isMobile_index) {
+        var dashboard = false;
+        <?php if (isset($dashboard)) { ?>
+            dashboard = true;
+        <?php } ?>
+        if (!isMobile_index && !dashboard) {
             var prevScrollpos = window.pageYOffset;
             window.onscroll = function() {
                 var currentScrollPos = window.pageYOffset;

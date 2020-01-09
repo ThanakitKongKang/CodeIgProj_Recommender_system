@@ -164,6 +164,20 @@ $route['comment/delete'] = 'CommentsController/delete';
 $route['comment/upvote'] = 'CommentsController/upvote';
 $route['comment/edit'] = 'CommentsController/edit';
 $route['comment/toggle_function'] = 'CommentsController/toggle_function';
+/*
+| -------------------------------------------------------------------------
+| DASHBOARD
+| -------------------------------------------------------------------------
+*/
+$route['dashboard'] = 'DashboardController';
+$route['dashboard/book/insert'] = 'DashboardController/insertbook_page';
+$route['dashboard/book/manage'] = 'DashboardController/book_manage_page';
+
+$route['dashboard/user/manage'] = 'DashboardController/user_manage_page';
+$route['dashboard/user/comment_manage'] = 'DashboardController/user_comment_manage_page';
+
+
+
 
 
 
