@@ -108,7 +108,10 @@
             <!-- Comment section -->
             <div class="position-absolute font-apple detail_wrapper_title">Reviews</div>
 
+
+
             <div class="row py-3 mt-3 position-relative wrapper_style">
+                <input id="comment_toggle" type="checkbox" data-on="Enabled" data-off="Disabled">
                 <div id="comments-container" class="w-100 px-4 pt-5 font-apple"></div>
             </div>
 
@@ -158,99 +161,122 @@
         var book_id = {
             'book_id': arr[5],
         };
+        var isCommentEnabled = false;
+        <?php if ($isCommentEnabled) { ?>
+            isCommentEnabled = true;
+        <?php } ?>
+        if (isCommentEnabled) {
+            $('#comments-container').comments({
+                // profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                // ajax get admin and logged_in status
+                defaultNavigationSortKey: 'popularity',
+                enableNavigation: true,
+                roundProfilePictures: true,
+                forceResponsive: true,
+                currentUserIsAdmin: false,
+                readOnly: !isLogged_in,
+                youText: username,
+                enableReplying: false,
+                enableEditing: true,
+                enableAttachments: false,
+                enableDeleting: true,
+                timeFormatter: function(time) {
+                    return moment(time).fromNow();
+                },
+                getComments: function(success, error) {
+                    $.ajax({
+                        type: 'get',
+                        url: "<?php echo base_url(); ?>comment/get",
+                        data: book_id,
+                        success: function(commentsArray) {
+                            if (commentsArray != "nocm") {
+                                success(JSON.parse(commentsArray));
+                            } else {
+                                success([]);
+                            }
+                        },
+                        error: error
+                    });
+                },
+                postComment: function(commentJSON, success, error) {
+                    commentJSON["book_id"] = arr[5];
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo base_url(); ?>comment/post",
+                        data: commentJSON,
+                        success: function(comment) {
+                            success(commentJSON)
+                        },
+                        error: error
+                    });
+                },
+                deleteComment: function(commentJSON, success, error) {
+                    var data = {
+                        'id': commentJSON.id,
+                        'book_id': arr[5],
+                    };
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo base_url(); ?>comment/delete",
+                        data: data,
+                        success: function() {
+                            success();
+                        },
+                        error: error
+                    });
+                },
+                upvoteComment: function(commentJSON, success, error) {
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo base_url(); ?>comment/upvote",
+                        data: {
+                            "id": commentJSON.id,
+                            "book_id": arr[5],
+                            "upvote_count": commentJSON.upvote_count,
+                        },
+                        success: function() {
+                            success(commentJSON)
+                        },
+                        error: error
+                    });
+                },
+                // update
+                putComment: function(commentJSON, success, error) {
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo base_url(); ?>comment/edit",
+                        data: {
+                            "id": commentJSON.id,
+                            "book_id": arr[5],
+                            "content": commentJSON.content,
+                        },
+                        success: function(comment) {
+                            success(commentJSON)
+                        },
+                        error: error
+                    });
+                }
+            });
+        } else {
+            $('#comments-container').comments({
+                // profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                // ajax get admin and logged_in status
+                enableNavigation: false,
+                roundProfilePictures: true,
+                forceResponsive: true,
+                currentUserIsAdmin: false,
+                readOnly: true,
+                youText: username,
+                enableReplying: false,
+                enableEditing: false,
+                enableAttachments: false,
+                enableDeleting: false,
+                noCommentsText: 'Comments are disabled',
+                noCommentsIconURL: '<?= base_url() ?>assets/img/comment-slash-solid.svg',
 
-        $('#comments-container').comments({
-            // profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
-            // ajax get admin and logged_in status
-            defaultNavigationSortKey: 'popularity',
-            enableNavigation: true,
-            roundProfilePictures: true,
-            forceResponsive: true,
-            currentUserIsAdmin: false,
-            readOnly: !isLogged_in,
-            youText: username,
-            enableReplying: false,
-            enableEditing: true,
-            enableAttachments: false,
-            enableDeleting: true,
-            timeFormatter: function(time) {
-                return moment(time).fromNow();
-            },
-            getComments: function(success, error) {
-                $.ajax({
-                    type: 'get',
-                    url: "<?php echo base_url(); ?>comment/get",
-                    data: book_id,
-                    success: function(commentsArray) {
-                        if (commentsArray != "nocm") {
-                            success(JSON.parse(commentsArray));
-                        } else {
-                            success([]);
-                        }
-                    },
-                    error: error
-                });
-            },
-            postComment: function(commentJSON, success, error) {
-                console.log(commentJSON.id)
-                commentJSON["book_id"] = arr[5];
-                $.ajax({
-                    type: 'post',
-                    url: "<?php echo base_url(); ?>comment/post",
-                    data: commentJSON,
-                    success: function(comment) {
-                        success(commentJSON)
-                    },
-                    error: error
-                });
-            },
-            deleteComment: function(commentJSON, success, error) {
-                var data = {
-                    'id': commentJSON.id,
-                    'book_id': arr[5],
-                };
-                $.ajax({
-                    type: 'post',
-                    url: "<?php echo base_url(); ?>comment/delete",
-                    data: data,
-                    success: function() {
-                        success();
-                    },
-                    error: error
-                });
-            },
-            upvoteComment: function(commentJSON, success, error) {
-                $.ajax({
-                    type: 'post',
-                    url: "<?php echo base_url(); ?>comment/upvote",
-                    data: {
-                        "id": commentJSON.id,
-                        "book_id": arr[5],
-                        "upvote_count": commentJSON.upvote_count,
-                    },
-                    success: function() {
-                        success(commentJSON)
-                    },
-                    error: error
-                });
-            },
-            // update
-            putComment: function(commentJSON, success, error) {
-                $.ajax({
-                    type: 'post',
-                    url: "<?php echo base_url(); ?>comment/edit",
-                    data: {
-                        "id": commentJSON.id,
-                        "book_id": arr[5],
-                        "content": commentJSON.content,
-                    },
-                    success: function(comment) {
-                        success(commentJSON)
-                    },
-                    error: error
-                });
-            }
-        });
+            });
+        }
+
         // trigger popular in dropdown to sort by popularity properly
         setTimeout(function() {
             $(".navigation-wrapper ul.dropdown li[data-sort-key='popularity']").trigger("click");

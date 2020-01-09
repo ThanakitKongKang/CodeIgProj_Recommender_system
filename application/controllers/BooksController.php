@@ -16,6 +16,7 @@ class BooksController extends CI_Controller
         $this->load->model('rate_model');
         $this->load->model('course_model');
         $this->load->model('bookmark_model');
+        $this->load->model('comments_enabling_model');
         $this->load->library("pagination");
     }
     /*
@@ -227,8 +228,8 @@ class BooksController extends CI_Controller
 
         // chopping to get only 12 items
         $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
-
-
+        $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
+        
         $header["title"] = $data['book_detail']['book_name'];
         $this->load->view('./header', $header);
         $this->load->view('books/detail', $data);

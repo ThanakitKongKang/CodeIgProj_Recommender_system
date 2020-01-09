@@ -10,6 +10,7 @@ class CommentsController extends CI_Controller
         $this->load->helper('url');
         $this->load->model('comments_model');
         $this->load->model('comments_liking_model');
+        $this->load->model('comments_enabling_model');
     }
     public function get()
     {
