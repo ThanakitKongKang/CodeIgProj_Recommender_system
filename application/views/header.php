@@ -88,8 +88,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link href="<?= base_url() ?>/assets/css/jquery-comments.css" rel="stylesheet">
     <script src="<?= base_url() ?>/assets/js/jquery-comments.min.js"></script>
 
+    <!-- switchbox -->
+    <link href="<?= base_url() ?>/assets/css/switchbox.min.css" rel="stylesheet">
 
-    
+
+
 
 </head>
 
@@ -233,6 +236,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/slick/slick.min.js"></script>
     <script type="text/javascript">
         AOS.init();
+
+
         var isLogged_in = false;
         var username = false;
         <?php

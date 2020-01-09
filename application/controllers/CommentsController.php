@@ -134,4 +134,26 @@ class CommentsController extends CI_Controller
         echo $book_id;
         echo $content;
     }
+
+    public function toggle_function()
+    {
+        $book_id = $this->input->post('book_id');
+        $isChecked = $this->input->post('isChecked');
+        if ($isChecked == "true") {
+            $isChecked = 1;
+        } else {
+            $isChecked = 0;
+        }
+        if ($this->comments_enabling_model->isExists($book_id)) {
+            $this->comments_enabling_model->toggle($book_id, $isChecked);
+        } else {
+            $post_data = array(
+                'book_id' =>  $book_id,
+                'status' => $isChecked,
+            );
+            $this->comments_enabling_model->insert($post_data);
+        }
+
+        echo $isChecked;
+    }
 }
