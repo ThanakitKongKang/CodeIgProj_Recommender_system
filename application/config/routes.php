@@ -162,6 +162,8 @@ $route['comment/get'] = 'CommentsController/get';
 $route['comment/post'] = 'CommentsController/post';
 $route['comment/delete'] = 'CommentsController/delete';
 $route['comment/upvote'] = 'CommentsController/upvote';
+$route['comment/edit'] = 'CommentsController/edit';
+
 
 
 /*

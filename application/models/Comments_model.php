@@ -11,7 +11,7 @@ class Comments_model extends BaseModel
     {
 
         $this->db->where('book_id', $bookid);
-        $this->db->select('id,created,content,fullname,upvote_count');
+        $this->db->select('id,created,modified,content,fullname,upvote_count');
         $this->db->from($this->table);
 
         $query = $this->db->get();
@@ -36,6 +36,15 @@ class Comments_model extends BaseModel
         $this->db->where('book_id', $book_id);
         // false = escape parameter
         $this->db->set('upvote_count', $upvote_count, FALSE);
+        $this->db->update($this->table);
+    }
+
+    public function update($comment_id, $book_id, $content, $modified)
+    {
+        $this->db->where('id', $comment_id);
+        $this->db->where('book_id', $book_id);
+        $this->db->set('modified', $modified);
+        $this->db->set('content', $content);
         $this->db->update($this->table);
     }
 }

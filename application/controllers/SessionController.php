@@ -71,20 +71,7 @@ class SessionController extends CI_Controller
                     $this->session->set_userdata('user', $sessionArr);
                     $this->session->set_userdata('logged_in', TRUE);
                     $this->session->set_flashdata('flash_success', TRUE);
-?>
-                    <script type="text/javascript">
-                        window.history.back();
-                        setTimeout(function() {
-                            // if location was not changed in 100 ms, then there is no history back
-                            if (currentUrl === window.location.href) {
-                                <?php
-                                redirect(base_url());
-                                ?>
-                            }
-                        }, 100);
-                    </script>
-            <?php
-                    // redirect(base_url());
+                    redirect(base_url());
                     // hci event
                     // redirect(base_url('browse/human-computer-interaction'));
                 } else if ($data == FALSE) {
@@ -94,7 +81,7 @@ class SessionController extends CI_Controller
                 }
             }
         } else {
-            ?>
+?>
             <script type="text/javascript">
                 window.history.go(-1);
             </script>

@@ -231,9 +231,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script type="text/javascript">
         AOS.init();
         var isLogged_in = false;
+        var username = false;
         <?php
         if ($this->session->userdata('logged_in')) { ?>
             isLogged_in = !isLogged_in;
+            username = " " + "<?= $this->session->userdata('user')['username']; ?>" + " ";
         <?php } ?>
 
         // scroll hide header
@@ -405,7 +407,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             // HCI EVENT
         <?php }
         if ($this->session->userdata('not_enough_hci')) { ?>
-            var data = <?= $this->session->userdata('not_enough_hci_progress') ?> "";
+            var data = "" + "<?= $this->session->userdata('not_enough_hci_progress') ?>" + "";
             var width = (data / 10) * 100;
             Swal.fire({
                 title: 'ให้คะแนนหนังสือในหมวด HCI ยังไม่ครบ ไม่สามารถทำแบบประเมินได้!',

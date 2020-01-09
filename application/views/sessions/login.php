@@ -43,7 +43,7 @@
 
                     <div class="card-body">
                         <div class="position-absolute" style="right:2rem;top:1rem;">
-                            <a href="javascript:history.go(-1)" class="link text-secondary"><i class="fas fa-times fa-lg"></i></a>
+                            <a class="link text-secondary backbutton" href=""><i class="fas fa-times fa-lg"></i></a>
                         </div>
                         <div class="justify-content-center d-flex">
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="100" height="100" class="d-inline-block align-top drop_shadow_sign" alt="">
@@ -86,6 +86,18 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.backbutton').on("click", function(e) {
+            e.preventDefault();
+            var currentUrl = window.location.href;
+            window.history.back();
+            setTimeout(function() {
+                // if location was not changed in 100 ms, then there is no history back
+                if (currentUrl === window.location.href) {
+                    window.location.href = document.referrer;
+                }
+            }, 100);
+        });
+
         $('[data-toggle="popover"]').popover({
             trigger: "click hover",
             placement: "right"

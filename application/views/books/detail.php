@@ -160,7 +160,7 @@
         };
 
         $('#comments-container').comments({
-            profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+            // profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
             // ajax get admin and logged_in status
             defaultNavigationSortKey: 'popularity',
             enableNavigation: true,
@@ -168,6 +168,7 @@
             forceResponsive: true,
             currentUserIsAdmin: false,
             readOnly: !isLogged_in,
+            youText: username,
             enableReplying: false,
             enableEditing: true,
             enableAttachments: false,
@@ -228,6 +229,22 @@
                         "upvote_count": commentJSON.upvote_count,
                     },
                     success: function() {
+                        success(commentJSON)
+                    },
+                    error: error
+                });
+            },
+            // update
+            putComment: function(commentJSON, success, error) {
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo base_url(); ?>comment/edit",
+                    data: {
+                        "id": commentJSON.id,
+                        "book_id": arr[5],
+                        "content": commentJSON.content,
+                    },
+                    success: function(comment) {
                         success(commentJSON)
                     },
                     error: error

@@ -1618,3 +1618,11 @@ span.user_rated_this {
 .upvote-count {
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+#comments-container .send.save {
+	border-radius: 0.25rem;
+}
+
+.comment-wrapper>.wrapper>.content>.edited {
+	font-size: 0.8rem !important;
+}

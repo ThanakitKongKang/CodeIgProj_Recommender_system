@@ -76,10 +76,12 @@ class CommentsController extends CI_Controller
     public function post()
     {
         $username = $this->session->userdata('user')['username'];
+        $date = date('Y-m-d H:i:s');
         $post_data = array(
             // 'id' => $this->input->post('id'),
             'book_id' => $this->input->post('book_id'),
-            'created' => date('Y-m-d H:i:s'),
+            'created' => $date,
+            'modified' => $date,
             'content' => $this->input->post('content'),
             'upvote_count' => 0,
             'fullname' => $username,
@@ -119,4 +121,16 @@ class CommentsController extends CI_Controller
         echo $upvote_count;
     }
 
+    public function edit()
+    {
+        $cid = $this->input->post('id');
+        $book_id = $this->input->post('book_id');
+        $content = $this->input->post('content');
+        $modified = date('Y-m-d H:i:s');
+
+        $this->comments_model->update($cid, $book_id, $content, $modified);
+        echo $cid;
+        echo $book_id;
+        echo $content;
+    }
 }
