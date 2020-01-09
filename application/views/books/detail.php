@@ -195,8 +195,9 @@
                     enableReplying: false,
                     enableEditing: true,
                     enableAttachments: false,
+                    enableEditing: true,
                     enableDeleting: true,
-                    editText: 'Edit/Delete',
+                    editText: 'Manage',
                     timeFormatter: function(time) {
                         return moment(time).fromNow();
                     },
@@ -207,6 +208,8 @@
                             data: book_id,
                             success: function(commentsArray) {
                                 if (commentsArray != "nocm") {
+                                    console.log(JSON.parse(commentsArray))
+
                                     success(JSON.parse(commentsArray));
                                 } else {
                                     success([]);
@@ -299,6 +302,16 @@
                 });
             }
         }
+
+        if (isAdmin) {
+            $(document).on('click', '#comments-container>div>ul>li>div>div', function(e) {
+                setTimeout(function() {
+                    $(document).find('.update.save').hide();
+                    $(document).find('.textarea').attr("disabled", true);
+                }, 10);
+            });
+        }
+
 
         function comment_nav_refresh() {
             // trigger popular in dropdown to sort by popularity properly

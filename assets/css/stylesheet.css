@@ -1637,3 +1637,7 @@ span.user_rated_this {
 	right: 1rem;
 	top: 1.5rem;
 }
+
+.dropdown-header {
+	padding-left: 1rem;
+}

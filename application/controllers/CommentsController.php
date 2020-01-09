@@ -45,9 +45,11 @@ class CommentsController extends CI_Controller
         // assign created by current user and isAdmin to array
         $username = $this->session->userdata('user')['username'];
         $i = 0;
+        $isAdmin = false;
+        if ($username == "admin") $isAdmin = true;
         foreach ($commentsArray  as $key => $sub_cm) {
             $commentsArray[$i]["creator"] = $sub_cm["fullname"];
-            $commentsArray[$i]["created_by_current_user"] = false;
+            $commentsArray[$i]["created_by_current_user"] = $isAdmin;
             $commentsArray[$i]["created_by_admin"] = false;
             $commentsArray[$i]["user_has_upvoted"] = false;
 
