@@ -169,12 +169,16 @@ $route['comment/toggle_function'] = 'CommentsController/toggle_function';
 | DASHBOARD
 | -------------------------------------------------------------------------
 */
-$route['dashboard'] = 'DashboardController';
-$route['dashboard/book/insert'] = 'DashboardController/insertbook_page';
+$route['dashboard'] = 'DashboardController/book_manage_page';
 $route['dashboard/book/manage'] = 'DashboardController/book_manage_page';
+$route['dashboard/book/insert'] = 'DashboardController/insert_book_page';
 
 $route['dashboard/user/manage'] = 'DashboardController/user_manage_page';
 $route['dashboard/user/comment_manage'] = 'DashboardController/user_comment_manage_page';
+
+$route['dashboard/course/manage'] = 'DashboardController/course_manage_page';
+
+
 
 
 

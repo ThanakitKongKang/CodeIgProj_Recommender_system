@@ -180,7 +180,7 @@
 
         // modal trigger
         $("#add_course_modal_trigger").on("click", function(event) {
-            if ($(this).hasClass("disabled")) {
+            if ($(this).hasClass("style_disabled")) {
                 event.stopPropagation();
             } else {
                 $('#course_registeration').modal("show");
@@ -220,11 +220,11 @@
                             data: formData,
 
                             beforeSend: function() {
-                                $('#add_course_modal_trigger').addClass("disabled");
+                                $('#add_course_modal_trigger').addClass("style_disabled");
                             },
                             success: function(data) {
                                 add_content_count_check();
-                                $('#add_course_modal_trigger').removeClass("disabled");
+                                $('#add_course_modal_trigger').removeClass("style_disabled");
                                 // show added course
                                 var string_html = '<div class="row bg-white py-3 course_row">' +
                                     '<div class="col-1 align-self-center text-center checkbox_div">' +
@@ -286,7 +286,7 @@
                             data: formData,
 
                             beforeSend: function() {
-                                $('#delete_course').addClass("disabled");
+                                $('#delete_course').addClass("style_disabled");
                             },
                             success: function(data) {
                                 remove_content_count_check();
@@ -294,7 +294,7 @@
                                 var elem = $('[data-course_id=' + entry + ']');
                                 elem.parent().remove();
 
-                                $('#delete_course').removeClass("disabled");
+                                $('#delete_course').removeClass("style_disabled");
                             }
                         })
                     });

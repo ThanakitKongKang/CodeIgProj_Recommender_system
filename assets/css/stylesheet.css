@@ -984,7 +984,7 @@ body {
 	color: #fff !important;
 }
 
-.disabled {
+.style_disabled {
 	pointer-events: all !important;
 	cursor: wait !important;
 }

@@ -509,11 +509,11 @@
                 async: true,
                 beforeSend: function() {
                     $(this_elm).off('click');
-                    $(this_elm).addClass("disabled");
+                    $(this_elm).addClass("style_disabled");
                 },
                 success: function(data) {
                     $(this_elm).on('click', bookmark_triggered);
-                    $(this_elm).removeClass("disabled");
+                    $(this_elm).removeClass("style_disabled");
 
                     if (data == "inserted") {
                         toastBookmarkSaved(book_id);

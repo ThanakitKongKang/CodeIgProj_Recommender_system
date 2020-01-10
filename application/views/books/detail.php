@@ -278,7 +278,9 @@
                     },
                     refresh: function() {
                         $('#comments-container').addClass('rendered');
-                        $('#comments-container').removeClass('read-only');
+                        if (isLogged_in) {
+                            $('#comments-container').removeClass('read-only');
+                        }
                         comment_nav_refresh();
                     }
                 });
@@ -307,7 +309,9 @@
             $(document).on('click', '#comments-container>div>ul>li>div>div', function(e) {
                 setTimeout(function() {
                     $(document).find('.update.save').hide();
-                    $(document).find('.textarea').attr("disabled", true);
+                    $(document).find('.comment-wrapper').find('.textarea').css("opacity", "0.5");
+                    $(document).find('.comment-wrapper').find('.textarea').css("cursor", "default");
+                    $(document).find('.comment-wrapper').find('.textarea').attr("contenteditable", false);
                 }, 10);
             });
         }
@@ -441,7 +445,7 @@
                     data: rating,
                     async: true,
                     beforeSend: function() {
-                        $(this_elm).addClass("disabled");
+                        $(this_elm).addClass("style_disabled");
                     },
                     success: function(data) {
                         if (default_rating == "") {
@@ -453,7 +457,7 @@
                         $('#your_rate').html($('.rating-input').val());
                         $('#span_rating').removeClass("badge-secondary");
                         $('#span_rating').addClass("badge-warning");
-                        $(this_elm).removeClass("disabled");
+                        $(this_elm).removeClass("style_disabled");
                         $(this_elm).on("click", rating_change);
 
                         // HCI EVENT
@@ -479,11 +483,11 @@
                 async: true,
                 beforeSend: function() {
                     $(this_elm).off('click');
-                    $(this_elm).addClass("disabled");
+                    $(this_elm).addClass("style_disabled");
                 },
                 success: function(data) {
                     $(this_elm).on('click', bookmark_triggered);
-                    $(this_elm).removeClass("disabled");
+                    $(this_elm).removeClass("style_disabled");
 
                     if (data == "login") {
                         please_login();

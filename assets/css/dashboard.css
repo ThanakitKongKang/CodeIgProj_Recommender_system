@@ -46,7 +46,7 @@
 .main-menu {
 	z-index: 1;
 	background: #212121;
-	border-right: 1px solid #e5e5e5;
+	/* border-right: 1px solid #e5e5e5; */
 	position: fixed;
 	top: 50px;
 	bottom: 0;
@@ -174,4 +174,9 @@ a:focus {
 
 .nav_dashboard>ul {
 	margin-top: 3rem;
+}
+
+#fullpage {
+	height: 100%;
+	position: relative;
 }

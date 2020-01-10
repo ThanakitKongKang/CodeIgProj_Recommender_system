@@ -351,4 +351,18 @@ class Books_model extends BaseModel
 
         return $bayesian_average;
     }
+
+    public function getAll()
+    {
+        $this->db->select('*');
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
 }
