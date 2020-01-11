@@ -98,7 +98,7 @@
             info: true,
             pageLength: 10,
             processing: true,
-            order: [0, 'asc'],
+            order: [0, 'desc'],
             deferRender: true,
             ajax: {
                 url: "<?= base_url() ?>api/book/get",
@@ -246,6 +246,7 @@
             var book_id = {
                 book_id: Number($('#book_id').val()),
             };
+            $('#book_edit_modal').modal('hide');
 
             Swal.fire({
                 title: 'Confirm ?',
@@ -270,7 +271,6 @@
                                 type: 'success',
                             })
                             table.ajax.reload();
-                            $('#book_edit_modal').modal('hide');
 
                         }
                     })
@@ -280,5 +280,9 @@
                 }
             })
         }
+
+        $('#book_edit_modal').on('hidden.bs.modal', function() {
+            $('#tbodyData_book tr.selected').removeClass("selected");
+        })
     });
 </script>

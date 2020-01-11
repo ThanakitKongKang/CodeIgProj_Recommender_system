@@ -12,7 +12,7 @@
 	text-align: center;
 	vertical-align: middle;
 	font-size: 20px;
-	-webkit-transition: .25s;
+	-webkit-transition: .1s;
 	transition: .25s;
 	-webkit-transition-delay: .1s;
 	transition-delay: .1s;
@@ -24,7 +24,7 @@
 	left: 5rem;
 	position: relative;
 	opacity: 0;
-	-webkit-transition: .25s;
+	-webkit-transition: .1s;
 	transition: .25s;
 	-webkit-transition-delay: .1s;
 	transition-delay: .1s;
@@ -147,7 +147,8 @@ a:focus {
 .no-touch .dashboard-page .nav_dashboard.dashboard-menu ul li:hover a,
 .dashboard-page .nav_dashboard.dashboard-menu ul li.active a {
 	color: #fff;
-	background-color: #5fa2db;
+	background: linear-gradient(to left, #0062E6, #33AEFF);
+
 }
 
 .area {
@@ -191,4 +192,9 @@ a:focus {
 #tbodyData_book tr td:nth-child(5),
 #tbodyData_book tr td:nth-child(6) {
 	text-align: center;
+}
+
+thead tr {
+	background: linear-gradient(to left, #0062E6, #33AEFF);
+	color: #fff;
 }
