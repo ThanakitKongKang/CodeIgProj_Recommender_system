@@ -180,3 +180,15 @@ a:focus {
 	height: 100%;
 	position: relative;
 }
+
+#tbodyData_book>tr.selected {
+	color: #fff;
+	background: linear-gradient(to left, #0062E6, #33AEFF);
+}
+
+#tbodyData_book tr td:nth-child(1),
+#tbodyData_book tr td:nth-child(4),
+#tbodyData_book tr td:nth-child(5),
+#tbodyData_book tr td:nth-child(6) {
+	text-align: center;
+}

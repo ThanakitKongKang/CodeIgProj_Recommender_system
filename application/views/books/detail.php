@@ -1,125 +1,137 @@
 <div class="container">
-    <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer"><i class="fas fa-arrow-left"></i> Back</div>
-    <div class="row">
-        <!-- pdf -->
-        <div class="d-inline-block col-sm p-0 detail_pdf_section" style="height: 90vh!important;width:40vw!important">
-            <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
-            </object>
-            <div class="display-4 text-secondary" id="detail_undesktop" style="display:none">Content is only available on desktop</div>
-        </div>
-        <!-- right section -->
-        <div class="pl-5 col-sm position-relative detail_book_detail_section">
-            <div class="row">
-                <div class="col-sm pt-3">
-                    <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG">
-                </div>
-
-                <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;height: 23rem;">
-                    <!-- RATE section -->
-                    <div>
-                        <div class="text-center">
-                            <?php if ($book_detail['count_rate'] != 0) { ?>
-                                <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
-                                        <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
-                                            <?= number_format($book_detail['b_rate'], 1); ?>
-                                        </span>
-                                        <span class="small" style="color: #6b6b6b;">/5</span></span>
-                                </span>
-                                <span class="small text-secondary">based on <span id="rate_avg_user"><?= $book_detail['count_rate'] ?></span> user<?php if ($book_detail['count_rate'] != 1) echo "s";  ?> </span>
-
-                            <?php } else { ?>
-                                <span class="badge badge-secondary" style="font-size: 1rem;" id="span_rating"><span class="font-arial">
-                                        <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
-                                            0
-                                        </span>
-                                        <span class="small">/5</span></span>
-                                </span>
-                                <span class="small text-secondary" id="span_rating_text">Be the first who rate this!</span>
-                            <?php } ?>
-                        </div>
-                        <hr>
-                        <div class="font-arial text-center font-italic text-secondary small">You rated this : <span id="your_rate"><?= $user_rate['rate'] ?></span></div>
-                        <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
-                    </div>
-                    <!-- BOOK detail section -->
-                    <div class="w-100">
-                        <hr>
-                        <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
-                        <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>" id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
-                        <div class="book_detail_text pt-1"><span class="">Category : </span><a class="link " href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
-                        <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
-                    </div>
-
-                    <!-- bookmark trigger -->
-                    <div class="position-absolute w-100 text-center" style="bottom:1rem;padding-right:1.75rem;">
-                        <hr class="mb-2">
-                        <button class="btn btn-primary bookmark_trigger mt-2">
-                            <?php if ($bookmark == TRUE) { ?>
-                                <i class="fas fa-bookmark" id="bookmark_icon"></i>
-                            <?php echo "<span class='save_text font-arial'> unsave book</span>";
-                            } else {
-                            ?><i class="far fa-bookmark" id="bookmark_icon"></i>
-                            <?php echo "<span class='save_text font-arial'> save book</span>";
-                            } ?></button>
-
-                        <?php if ($this->session->userdata('logged_in')) { ?>
-                            <button class="btn btn-warning rate_modal_trigger popup_menu_item mt-2" id="detail_rate_mobile" style="display:none" data-toggle="modal" data-target="#rate_modal">
-
-                            </button>
-                        <?php } ?>
-
-                    </div>
-
-                </div>
+    <?php if ($book_detail != FALSE) { ?>
+        <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer"><i class="fas fa-arrow-left"></i> Back</div>
+        <div class="row">
+            <!-- pdf -->
+            <div class="d-inline-block col-sm p-0 detail_pdf_section" style="height: 90vh!important;width:40vw!important">
+                <object data="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" type="application/pdf" width="100%" height="100%">
+                </object>
+                <div class="display-4 text-secondary" id="detail_undesktop" style="display:none">Content is only available on desktop</div>
             </div>
-            <?php if (!empty($recommend_list_detail)) { ?>
-                <div class="position-absolute font-apple detail_wrapper_title">Similar to</div>
-                <div class="row py-3 mt-3 position-relative wrapper_style" id="similar_book_detail">
-                    <div class="pt-5 pr-5" id="similar_book_content">
-                        <?php foreach ($recommend_list_detail as $book) { ?>
-                            <div class="col-4 hover_img_similar_book_content">
-                                <div class="position-relative">
-                                    <img class="img-col-2 img_similar_book_content" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
-                                    <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
-                                </div>
-                                <div class="hover_img_content_similar text-center">
-                                    <div class="py-2 hover_similar_book_title mb-2" style="white-space:normal"><?= $book['book_name'] ?></div>
-                                    <div class="small pt-1 overlay_similar_content font-arial">field : <?= $book['book_type'] ?></div>
-                                    <div class="small pt-1 overlay_similar_content font-arial" title="<?= $book['author'] ?>">author : <?= $book['author'] ?></div>
-                                    <div class="mt-4 text-center">
-                                        <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
-                                        <?php if ($book['count_rate'] != 0) { ?>
-                                            <!-- HARD CODE rater star -->
-                                            <div class="rating-container rating-xs rating-animate is-display-only">
-                                                <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
-                                                <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $book['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $book['b_rate'] ?>" class="rating-input" title=""></div>
-                                            </div>
-                                            <div class="small"><?= number_format($book['b_rate'], 1) ?>/5.0 rated by <?= $book['count_rate'] ?> user<?php if ($book['count_rate'] > 1) echo "s"; ?></div>
-                                        <?php } ?>
+            <!-- right section -->
+            <div class="pl-5 col-sm position-relative detail_book_detail_section">
+                <div class="row">
+                    <div class="col-sm pt-3">
+                        <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG">
+                    </div>
+
+                    <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;height: 23rem;">
+                        <!-- RATE section -->
+                        <div>
+                            <div class="text-center">
+                                <?php if ($book_detail['count_rate'] != 0) { ?>
+                                    <span class="badge badge-warning" style="font-size: 1rem;"><span class="font-arial">
+                                            <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
+                                                <?= number_format($book_detail['b_rate'], 1); ?>
+                                            </span>
+                                            <span class="small" style="color: #6b6b6b;">/5</span></span>
+                                    </span>
+                                    <span class="small text-secondary">based on <span id="rate_avg_user"><?= $book_detail['count_rate'] ?></span> user<?php if ($book_detail['count_rate'] != 1) echo "s";  ?> </span>
+
+                                <?php } else { ?>
+                                    <span class="badge badge-secondary" style="font-size: 1rem;" id="span_rating"><span class="font-arial">
+                                            <span style="letter-spacing: 1px;" class="font-weight-bold" id="rate_avg">
+                                                0
+                                            </span>
+                                            <span class="small">/5</span></span>
+                                    </span>
+                                    <span class="small text-secondary" id="span_rating_text">Be the first who rate this!</span>
+                                <?php } ?>
+                            </div>
+                            <hr>
+                            <div class="font-arial text-center font-italic text-secondary small">You rated this : <span id="your_rate"><?= $user_rate['rate'] ?></span></div>
+                            <input value="<?= $user_rate['rate'] ?>" class="rater_star" title="">
+                        </div>
+                        <!-- BOOK detail section -->
+                        <div class="w-100">
+                            <hr>
+                            <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
+                            <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>" id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
+                            <div class="book_detail_text pt-1"><span class="">Category : </span><a class="link " href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
+                            <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
+                        </div>
+
+                        <!-- bookmark trigger -->
+                        <div class="position-absolute w-100 text-center" style="bottom:1rem;padding-right:1.75rem;">
+                            <hr class="mb-2">
+                            <button class="btn btn-primary bookmark_trigger mt-2">
+                                <?php if ($bookmark == TRUE) { ?>
+                                    <i class="fas fa-bookmark" id="bookmark_icon"></i>
+                                <?php echo "<span class='save_text font-arial'> unsave book</span>";
+                                } else {
+                                ?><i class="far fa-bookmark" id="bookmark_icon"></i>
+                                <?php echo "<span class='save_text font-arial'> save book</span>";
+                                } ?></button>
+
+                            <?php if ($this->session->userdata('logged_in')) { ?>
+                                <button class="btn btn-warning rate_modal_trigger popup_menu_item mt-2" id="detail_rate_mobile" style="display:none" data-toggle="modal" data-target="#rate_modal">
+
+                                </button>
+                            <?php } ?>
+
+                        </div>
+
+                    </div>
+                </div>
+                <?php if (!empty($recommend_list_detail)) { ?>
+                    <div class="position-absolute font-apple detail_wrapper_title">Similar to</div>
+                    <div class="row py-3 mt-3 position-relative wrapper_style" id="similar_book_detail">
+                        <div class="pt-5 pr-5" id="similar_book_content">
+                            <?php foreach ($recommend_list_detail as $book) { ?>
+                                <div class="col-4 hover_img_similar_book_content">
+                                    <div class="position-relative">
+                                        <img class="img-col-2 img_similar_book_content" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
+                                        <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
+                                    </div>
+                                    <div class="hover_img_content_similar text-center">
+                                        <div class="py-2 hover_similar_book_title mb-2" style="white-space:normal"><?= $book['book_name'] ?></div>
+                                        <div class="small pt-1 overlay_similar_content font-arial">field : <?= $book['book_type'] ?></div>
+                                        <div class="small pt-1 overlay_similar_content font-arial" title="<?= $book['author'] ?>">author : <?= $book['author'] ?></div>
+                                        <div class="mt-4 text-center">
+                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                            <?php if ($book['count_rate'] != 0) { ?>
+                                                <!-- HARD CODE rater star -->
+                                                <div class="rating-container rating-xs rating-animate is-display-only">
+                                                    <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
+                                                    <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $book['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $book['b_rate'] ?>" class="rating-input" title=""></div>
+                                                </div>
+                                                <div class="small"><?= number_format($book['b_rate'], 1) ?>/5.0 rated by <?= $book['count_rate'] ?> user<?php if ($book['count_rate'] > 1) echo "s"; ?></div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php } ?>
+                            <?php } ?>
+                        </div>
                     </div>
-                </div>
-                <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_left"><i class="text-white fas fa-chevron-left fa-lg pr-2" style="z-index:1"></i></div>
-                <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_right"><i class="text-white fas fa-chevron-right fa-lg  pl-2" style="z-index:1"></i></div>
-            <?php } ?>
-            <!-- Comment section -->
-            <div class="position-absolute font-apple detail_wrapper_title">Reviews</div>
-            <div class="row py-3 mt-3 position-relative wrapper_style">
-                <?php if ($this->session->userdata('user')['username'] == "admin") { ?>
-                    <div class="switch-box is-info comment_toggle" title="enable/disable comment">
-                        <input id="info" class="switch-box-input" type="checkbox" />
-                        <label for="info" class="switch-box-slider"></label>
-                        <label for="info" class="switch-box-label"></label>
-                    </div>
+                    <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_left"><i class="text-white fas fa-chevron-left fa-lg pr-2" style="z-index:1"></i></div>
+                    <div class="position-absolute text-center similar_book_arrow" id="similar_book_arrow_right"><i class="text-white fas fa-chevron-right fa-lg  pl-2" style="z-index:1"></i></div>
                 <?php } ?>
-                <div id="comments-container" class="w-100 px-4 pt-5 font-apple"></div>
-            </div>
+                <!-- Comment section -->
+                <div class="position-absolute font-apple detail_wrapper_title">Reviews</div>
+                <div class="row py-3 mt-3 position-relative wrapper_style">
+                    <?php if ($this->session->userdata('user')['username'] == "admin") { ?>
+                        <div class="switch-box is-info comment_toggle" title="enable/disable comment">
+                            <input id="info" class="switch-box-input" type="checkbox" />
+                            <label for="info" class="switch-box-slider"></label>
+                            <label for="info" class="switch-box-label"></label>
+                        </div>
+                    <?php } ?>
+                    <div id="comments-container" class="w-100 px-4 pt-5 font-apple"></div>
+                </div>
 
+            </div>
         </div>
-    </div>
+    <?php } else { ?>
+        <div class="col-md-6 col-sm-12 mx-auto" role="alert">
+            <div class="text-center">
+                <img src="<?= base_url() ?>assets/img/404-Page-Not-Found.svg" alt="" class="col-md-6 col-sm-12">
+            </div>
+            <div class="alert alert-secondary ">
+                SORRY, BUT THE PAGE YOU ARE LOOKING FOR DOES NOT EXIST, HAVE BEEN REMOVED, NAME CHANGED OR IS TEMPORARILY UNAVAILABLE
+            </div>
+            <a href="<?= base_url() ?>" class="btn btn-primary">GO TO HOMEPAGE</a>
+        </div>
+    <?php } ?>
 </div>
 
 <!-- Modal -->

@@ -119,6 +119,14 @@ class CI_Controller
 			redirect('login');
 		}
 	}
+
+	public function check_auth_admin($page)
+	{
+		if ($this->session->userdata('user')['username'] != "admin") {
+			redirect(base_url());
+		}
+	}
+
 	public function dot_product($a, $b)
 	{
 		$dot_product = 0;

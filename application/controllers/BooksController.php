@@ -162,74 +162,74 @@ class BooksController extends CI_Controller
         $username = $this->session->userdata('user')['username'];
         $bookid = $this->uri->segment(2);
         $data['book_detail'] = $this->books_model->get_by_id($bookid);
+        if ($data['book_detail'] != FALSE) {
+            $data['user_rate'] = $this->rate_model->get_rate_user_book($this->session->userdata('user')['username'], $bookid);
 
-        $data['user_rate'] = $this->rate_model->get_rate_user_book($this->session->userdata('user')['username'], $bookid);
+            $data['bookmark'] = $this->bookmark_model->get_if_user_bookmarked($bookid, $username);
 
-        $data['bookmark'] = $this->bookmark_model->get_if_user_bookmarked($bookid, $username);
-
-        /*
+            /*
         | -------------------------------------------------------------------------
         | Content-based recommendation : similar book
         | -------------------------------------------------------------------------
         */
-        $data['books_name'] = $this->books_model->get_name_all();
-        // TF
-        $data['words_segment'] = array();
-        foreach ($data['books_name'] as $book_name) {
-            array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
-        }
-
-        // Stop words removal
-        $stopWords = array_flip(self::$stopWords);
-        $data['tf_no_stopwords'] = array();
-
-        foreach ($data['words_segment'] as $word_segment) {
-            array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
-        }
-
-        foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
-            $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
-        }
-
-        $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
-        $transformer->transform($data['tf_no_stopwords2']);
-
-        // cosine similarity 
-        $data['cosineSim'] = array();
-        $i = 0;
-        $bookid--;
-        foreach ($data['books_name'] as $book_name) {
-            $data['cosineSim'][$i + 1] =  $this->cosine($data['tf_no_stopwords2'][$bookid], $data['tf_no_stopwords2'][$i]);
-            $i++;
-        }
-        // $data['cosineSim'][2] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][2]);
-        // $data['cosineSim'][3] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][3]);
-        // $data['cosineSim'][4] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][4]);
-        // remove itself from array
-        unset($data['cosineSim'][$bookid + 1]);
-
-        // remove 0 similarity from array
-        foreach ($data['cosineSim'] as $key => $cosineSim) {
-            if ($cosineSim == 0 || is_nan($cosineSim)) {
-                unset($data['cosineSim'][$key]);
+            $data['books_name'] = $this->books_model->get_name_all();
+            // TF
+            $data['words_segment'] = array();
+            foreach ($data['books_name'] as $book_name) {
+                array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
             }
-        }
 
-        // get content based books detail
-        foreach ($data['cosineSim'] as $key => $value) {
-            $data['recommend_list_detail'][$key] = $this->books_model->get_by_id($key);
-        }
-        foreach ($data['cosineSim'] as $key => $value) {
-            $data['recommend_list_detail'][$key]['match'] = $value;
-        }
-        // sort by similarity score
-        $match = array_column($data['recommend_list_detail'], 'match');
-        array_multisort($match, SORT_DESC, $data['recommend_list_detail']);
+            // Stop words removal
+            $stopWords = array_flip(self::$stopWords);
+            $data['tf_no_stopwords'] = array();
 
-        // chopping to get only 12 items
-        $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
-        $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
-        
+            foreach ($data['words_segment'] as $word_segment) {
+                array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+            }
+
+            foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+                $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+            }
+
+            $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+            $transformer->transform($data['tf_no_stopwords2']);
+
+            // cosine similarity 
+            $data['cosineSim'] = array();
+            $i = 0;
+            $bookid--;
+            foreach ($data['books_name'] as $book_name) {
+                $data['cosineSim'][$i + 1] =  $this->cosine($data['tf_no_stopwords2'][$bookid], $data['tf_no_stopwords2'][$i]);
+                $i++;
+            }
+            // $data['cosineSim'][2] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][2]);
+            // $data['cosineSim'][3] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][3]);
+            // $data['cosineSim'][4] =  $this->cosine($data['tf_no_stopwords'][1], $data['tf_no_stopwords'][4]);
+            // remove itself from array
+            unset($data['cosineSim'][$bookid + 1]);
+
+            // remove 0 similarity from array
+            foreach ($data['cosineSim'] as $key => $cosineSim) {
+                if ($cosineSim == 0 || is_nan($cosineSim)) {
+                    unset($data['cosineSim'][$key]);
+                }
+            }
+
+            // get content based books detail
+            foreach ($data['cosineSim'] as $key => $value) {
+                $data['recommend_list_detail'][$key] = $this->books_model->get_by_id($key);
+            }
+            foreach ($data['cosineSim'] as $key => $value) {
+                $data['recommend_list_detail'][$key]['match'] = $value;
+            }
+            // sort by similarity score
+            $match = array_column($data['recommend_list_detail'], 'match');
+            array_multisort($match, SORT_DESC, $data['recommend_list_detail']);
+
+            // chopping to get only 12 items
+            $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
+            $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
+        }
         $header["title"] = $data['book_detail']['book_name'];
         $this->load->view('./header', $header);
         $this->load->view('books/detail', $data);
@@ -261,10 +261,10 @@ class BooksController extends CI_Controller
             $data['i'] = 0;
             $data['round_count'] = 1;
             $data["collection_get"] = $collection_get;
+            $this->session->set_userdata('count_all_saved_list', $data['all_num_rows']);
 
             $data["collection_name"] = $this->bookmark_model->get_collection_by_username($username);
-            $data["all_saved_count"] =
-                $this->load->view('./header', $header);
+            $this->load->view('./header', $header);
             $this->load->view('books/saved', $data);
             $this->load->view('footer');
         } else {
@@ -780,6 +780,7 @@ class BooksController extends CI_Controller
 
         $header['title'] = 'Rating history';
         $header['ratinghistory'] = "active";
+        $this->session->set_userdata('count_all_rating_history', $this->rate_model->get_all_num_rows_username($username));
 
         $this->load->view('./header', $header);
         $this->load->view('books/rating_history', $data);

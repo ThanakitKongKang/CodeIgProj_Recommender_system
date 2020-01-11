@@ -167,8 +167,12 @@ class Books_model extends BaseModel
         $this->db->select('*');
         $this->db->from('book');
         $query = $this->db->get();
-        $array = json_decode(json_encode($query->row()), True);
-        return $array;
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->row()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
     }
 
     public function get_top_rated()
@@ -363,6 +367,124 @@ class Books_model extends BaseModel
             return $array;
         } else {
             return FALSE;
+        }
+    }
+
+    public function book_update($id, $data)
+    {
+        $this->db->where('book_id', $id);
+        $this->db->update($this->table, $data);
+    }
+
+    public function book_delete($id)
+    {
+        $book_id = (int) $id;
+        // delete in book, 3 comments, rate, saved_book
+        $this->db->trans_begin();
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete($this->table);
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete("comment");
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete("comment_enabling");
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete('comment_liking');
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete('rate');
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete('saved_book');
+
+        $this->db->select('book_id');
+        $this->db->where('book_id >', $book_id);
+        $query = $this->db->get("book");
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            foreach ($array as $book) {
+                $this->db->where('book_id', $book["book_id"]);
+                $this->db->set('book_id', $book["book_id"] - 1);
+                $this->db->update("book");
+            }
+        }
+
+        $this->db->select('book_id');
+        $this->db->where('book_id >', $book_id);
+        $query = $this->db->get("comment");
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            foreach ($array as $book) {
+                $this->db->where('book_id', $book["book_id"]);
+                $this->db->set('book_id', $book["book_id"] - 1);
+                $this->db->update("comment");
+            }
+        }
+
+        $this->db->select('book_id');
+        $this->db->where('book_id >', $book_id);
+        $query = $this->db->get("comment_enabling");
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            foreach ($array as $book) {
+                $this->db->where('book_id', $book["book_id"]);
+                $this->db->set('book_id', $book["book_id"] - 1);
+                $this->db->update("comment");
+            }
+        }
+
+        $this->db->select('book_id');
+        $this->db->where('book_id >', $book_id);
+        $query = $this->db->get("comment_liking");
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            foreach ($array as $book) {
+                $this->db->where('book_id', $book["book_id"]);
+                $this->db->set('book_id', $book["book_id"] - 1);
+                $this->db->update("comment_liking");
+            }
+        }
+
+        $this->db->select('book_id');
+        $this->db->where('book_id >', $book_id);
+        $query = $this->db->get("rate");
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            foreach ($array as $book) {
+                $this->db->where('book_id', $book["book_id"]);
+                $this->db->set('book_id', $book["book_id"] - 1);
+                $this->db->update("rate");
+            }
+        }
+
+        $this->db->select('book_id');
+        $this->db->where('book_id >', $book_id);
+        $query = $this->db->get("saved_book");
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            foreach ($array as $book) {
+                $this->db->where('book_id', $book["book_id"]);
+                $this->db->set('book_id', $book["book_id"] - 1);
+                $this->db->update("saved_book");
+            }
+        }
+
+        // ALTER TABLE book AUTO_INCREMENT=?;
+        $this->db->select('book_id');
+        $this->db->order_by('book_id', 'DESC');
+        $this->db->limit(1);
+        $query = $this->db->get($this->table);
+        $last_book_id = json_decode(json_encode($query->row()), True);
+        $sql = "ALTER TABLE book AUTO_INCREMENT=?";
+        $query = $this->db->query($sql, array($last_book_id["book_id"] + 1));
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
         }
     }
 }
