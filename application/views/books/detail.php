@@ -88,7 +88,7 @@
                                         <div class="small pt-1 overlay_similar_content font-arial">field : <?= $book['book_type'] ?></div>
                                         <div class="small pt-1 overlay_similar_content font-arial" title="<?= $book['author'] ?>">author : <?= $book['author'] ?></div>
                                         <div class="mt-4 text-center">
-                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);}">
+                                            <hr class="my-2" style="border: 0;border-top: 1px solid rgb(255, 255, 255);">
                                             <?php if ($book['count_rate'] != 0) { ?>
                                                 <!-- HARD CODE rater star -->
                                                 <div class="rating-container rating-xs rating-animate is-display-only">

@@ -1,4 +1,10 @@
 <div id="fullpage" class="container">
+    <div class="switch-box is-info delete_toggle position-relative pl-3 py-3" title="enable/disable comment">
+        <input id="info" class="switch-box-input" type="checkbox">
+        <label for="info" class="switch-box-slider"></label>
+        <label for="info" class="switch-box-label small font-arial delete_toggle_label text-muted">Multiple delete</label>
+        <input id="multiple_delete_trigger" class="btn btn-secondary delete_toggle_label text-muted btn-sm" type="button" style="display:none" value="Multiple delete (0)">
+    </div>
     <table class="table table-bordered table-compact table-hover font-apple" id="books">
         <thead class="">
             <tr>
@@ -154,15 +160,120 @@
             }
         });
 
+        $('.delete_toggle #info').on("change", function(e) {
+            $('.delete_toggle_label').toggleClass("text-muted");
+            $('#multiple_delete_trigger').toggle();
+            var count_row = table.rows('.selected').data().length;
+            multiple_delete_trigger_refresh_count();
+            if (count_row > 0) {
+                table.$('tr.selected').removeClass('selected');
+            } else {
+                $('#multiple_delete_trigger').addClass("style_cursor_not_allowed");
+                $('#multiple_delete_trigger').addClass("btn-secondary");
+                $('#multiple_delete_trigger').removeClass("btn-danger");
+            }
+
+
+        });
+
         // edit modal popup caller
+        var flag_multi_delete = false;
         $('#books tbody').on('click', 'tr', function() {
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
+            var isChecked = $('.delete_toggle #info').prop("checked");
+            if (isChecked) {
+                $(this).toggleClass('selected');
+                var count_row = table.rows('.selected').data().length;
+                multiple_delete_trigger_refresh_count();
+                if (count_row > 0) {
+                    $('#multiple_delete_trigger').removeClass("style_cursor_not_allowed");
+                    $('#multiple_delete_trigger').removeClass("btn-secondary");
+                    $('#multiple_delete_trigger').addClass("btn-danger");
+                    flag_multi_delete = true;
+                } else {
+                    $('#multiple_delete_trigger').addClass("style_cursor_not_allowed");
+                    $('#multiple_delete_trigger').removeClass("btn-danger");
+                    $('#multiple_delete_trigger').addClass("btn-secondary");
+                    flag_multi_delete = false;
+                }
+            } else {
+                var elm = this;
+                editModalCaller(elm);
+            }
+        });
+
+        $('#multiple_delete_trigger').on('click', function() {
+
+            if (flag_multi_delete) {
+                var count_row = table.rows('.selected').data().length;
+                var data;
+                var isMulti = "this item?";
+                if (count_row > 1) {
+                    isMulti = "these items?"
+                }
+                Swal.fire({
+                    title: 'Are you sure you want to permanently remove ' + isMulti,
+                    html: "<div class='font-apple'>Book's related data will be removed, including : bookmarking, rating, commenting etc and <span class='text-danger'>you won't be able to revert this!</span></div>",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#cf3b3b',
+                    cancelButtonColor: '#a0a0a0',
+                    confirmButtonText: 'Remove',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.value) {
+                        var tmp_book_id;
+                        for (var i = 0; i < count_row; i++) {
+                            data = table.row('.selected').data();
+                            table.row('.selected').draw(false);
+
+                            if (Number(data["book_id"]) > tmp_book_id) {
+                                var book_id = {
+                                    book_id: Number(data["book_id"]--),
+                                };
+                                tmp_book_id = Number(data["book_id"]--);
+                            } else {
+                                var book_id = {
+                                    book_id: Number(data["book_id"]),
+                                };
+                                tmp_book_id = Number(data["book_id"]);
+                            }
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>/api/book/delete',
+                                data: book_id,
+                                success: function(data) {
+                                    Toast.fire({
+                                        title: 'Success !',
+                                        text: 'Saved changes',
+                                        type: 'success',
+                                    })
+                                    table.row('.selected').remove().draw(false);
+                                    multiple_delete_trigger_refresh_count();
+                                }
+                            })
+
+                        }
+                        table.ajax.reload();
+                    }
+                })
+            }
+        });
+
+        function multiple_delete_trigger_refresh_count() {
+            var count_row = table.rows('.selected').data().length;
+            $('#multiple_delete_trigger').val("Multiple delete (" + count_row + ")");
+
+        }
+
+        function editModalCaller(elm) {
+            var data = table.row(elm).data();
+            if ($(elm).hasClass('selected')) {
+                $(elm).removeClass('selected');
             } else {
                 table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
+                $(elm).addClass('selected');
             }
-            var data = table.row(this).data();
 
             $('.modal_book_info tbody tr:nth-child(1) td div input').val(data["book_id"]);
             $('.modal_book_info tbody tr:nth-child(2) td div input').val(data["book_name"]);
@@ -174,9 +285,8 @@
 
 
             $('#book_type').val(data["book_type"]);
-
             $('#book_edit_modal').modal('show');
-        });
+        }
 
         $('.edit_this_book_alert').on('click', function(e) {
             event.preventDefault();
@@ -187,8 +297,6 @@
             event.preventDefault();
             swalDeleteBookConfirm();
         })
-
-
 
 
         // table.row('.selected').remove().draw( false );

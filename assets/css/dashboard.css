@@ -206,3 +206,25 @@ thead tr {
 #preview_upload {
 	max-width: 15rem;
 }
+
+.dataTables_scroll {
+	box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+	margin-bottom: 2rem;
+}
+
+.upload_msg {
+	text-align: center;
+	padding: 50px;
+	padding-top: 17%;
+	font-size: 22px;
+	color: #aaa;
+	width: 312.5px;
+	height: 412.5px;
+	margin: 50px auto;
+	border: 1px solid #aaa;
+}
+
+.delete_toggle_label {
+	top: -7px;
+	position: relative;
+}

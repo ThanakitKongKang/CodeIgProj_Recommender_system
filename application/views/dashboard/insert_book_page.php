@@ -59,6 +59,9 @@
             </div>
 
             <div class="text-center" id="preview_upload_wrapper">
+                <div class="mx-auto upload_msg">
+                    Upload a file to start cropping
+                </div>
             </div>
 
             <div class="form-group row justify-content-center mt-5 mb-0">
@@ -97,39 +100,23 @@
             readFile(this);
         })
 
-        var upload_crop = $('#preview_upload_wrapper').croppie({
-            viewport: {
-                width: 312.5,
-                height: 412.5
-            },
-            boundary: {
-                width: 500,
-                height: 500
-            },
-            url: '<?= base_url() ?>assets/img/loading.gif',
-        });
-
-        $('.crop_image').click(function(event) {
-            upload_crop.croppie('result', {
-                type: 'canvas',
-                size: 'viewport'
-            }).then(function(response) {
-
-                $.ajax({
-                    url: "upload.php",
-                    type: "POST",
-                    data: {
-                        "image": response
-                    },
-                    success: function(data) {}
-                });
-            })
-        });
+        var upload_crop;
 
         function readFile(input) {
             if (input.files && input.files[0]) {
+                $('.upload_msg').hide();
                 var reader = new FileReader();
 
+                upload_crop = $('#preview_upload_wrapper').croppie({
+                    viewport: {
+                        width: 312.5,
+                        height: 412.5
+                    },
+                    boundary: {
+                        width: 500,
+                        height: 500
+                    },
+                });
                 reader.onload = function(e) {
                     $('#preview_upload_wrapper').croppie('bind', {
                         url: e.target.result
@@ -162,7 +149,6 @@
                     author: $('[name ="author"]').val(),
                     book_type: $('[name ="book_type"]').val(),
                 };
-                console.log($('[name ="book_type"]').val())
 
                 $.ajax({
                     type: 'POST',
@@ -181,10 +167,8 @@
                                 })
                                 document.getElementById("form_insert_book").reset();
                                 $('#inputGroupFile01').next('.custom-file-label').html("Choose file");
-
-                                upload_crop.croppie('bind', {
-                                    url: '<?= base_url() ?>assets/img/loading.gif',
-                                });
+                                $('.upload_msg').show();
+                                upload_crop.croppie('destroy')
                             }
                         })
                     }

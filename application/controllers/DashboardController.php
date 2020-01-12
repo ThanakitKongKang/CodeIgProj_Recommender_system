@@ -165,7 +165,6 @@ class DashboardController extends CI_Controller
         $last_book_id = $last_book_id["book_id"]++;
 
         $encodedstring = $this->input->post('image');
-        echo $encodedstring;
         $data = $encodedstring;
 
         if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {

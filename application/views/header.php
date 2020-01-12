@@ -41,7 +41,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/datatables.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/dataTables.fixedColumns.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>/assets/css/dataTables.bootstrap4.min.css">
+
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/fh-3.1.4/kt-2.5.0/r-2.2.2/sc-2.0.0/datatables.min.js"></script> -->
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
