@@ -76,6 +76,7 @@ class CommentsController extends CI_Controller
             echo json_encode($commentsArray);
         }
     }
+    
     public function post()
     {
         $username = $this->session->userdata('user')['username'];

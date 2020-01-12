@@ -35,7 +35,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book id</span>
                                 </div>
-                                <input type="text" class="form-control" id="book_id" readonly>
+                                <input type="text" class="form-control style_cursor_not_allowed" id="book_id" readonly title="Book'is can't be changed">
                             </div>
 
                         </td>
@@ -249,8 +249,8 @@
             $('#book_edit_modal').modal('hide');
 
             Swal.fire({
-                title: 'Confirm ?',
-                html: "Book's related data will be removed, including : bookmarking, rating, commenting etc.",
+                title: 'Are you sure you want to permanently remove this item?',
+                html: "<div class='font-apple'>Book's related data will be removed, including : bookmarking, rating, commenting etc and <span class='text-danger'>you won't be able to revert this!</span></div>",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#cf3b3b',

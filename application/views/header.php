@@ -50,6 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- alert -->
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/sweetalert2.all.min.js"></script>
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script> -->
 
     <!-- cookie -->
@@ -93,6 +94,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- dashboard -->
     <link href="<?= base_url() ?>/assets/css/dashboard.css" rel="stylesheet">
+
+    <!-- img upload crop -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js" integrity="sha256-bQTfUf1lSu0N421HV2ITHiSjpZ6/5aS6mUNlojIGGWg=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css" integrity="sha256-/n6IXDwJAYIh7aLVfRBdduQfdrab96XZR+YjG42V398=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css.map" />
 
 
 

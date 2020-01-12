@@ -7,7 +7,7 @@ class DashboardController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper('url');
+        $this->load->helper(array('form', 'url'));
         $this->load->model('books_model');
         $this->load->model('rate_model');
         $this->load->model('course_model');
@@ -43,6 +43,8 @@ class DashboardController extends CI_Controller
 
     public function insert_book_page()
     {
+        $data['category_list'] = $this->books_model->get_cateory_list();
+
         $header["title"] = "Dashboard";
 
         // active
@@ -134,6 +136,59 @@ class DashboardController extends CI_Controller
         // update rate.book_id
         // update saved_book.book_id
         $this->books_model->book_delete($book_id);
+
+        // delete book cover and book file
+        $file_pointer = "test.txt";
+
+        // Use unlink() function to delete a file  
+        if (!unlink($file_pointer)) {
+            echo ("$file_pointer cannot be deleted due to an error");
+        } else {
+            echo ("$file_pointer has been deleted");
+        }
+    }
+
+    public function book_insert()
+    {
+        $post_data = array(
+            'book_name' => $this->input->post('book_name'),
+            'author' =>  $this->input->post('author'),
+            'book_type' => $this->input->post('book_type'),
+        );
+
+        $this->books_model->insert($post_data);
+    }
+
+    public function book_cover_upload()
+    {
+        $last_book_id = $this->books_model->getLastID();
+        $last_book_id = $last_book_id["book_id"]++;
+
+        $encodedstring = $this->input->post('image');
+        echo $encodedstring;
+        $data = $encodedstring;
+
+        if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
+            $data = substr($data, strpos($data, ',') + 1);
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            if (!in_array($type, ['jpg', 'jpeg', 'png'])) {
+                throw new \Exception('invalid image type');
+            }
+
+            $data = base64_decode($data);
+
+            if ($data === false) {
+                throw new \Exception('base64_decode failed');
+            }
+        } else {
+            throw new \Exception('did not match data URI with image data');
+        }
+        file_put_contents("assets/book_covers/{$last_book_id}.PNG", $data);
+    }
+    
+    public function book_file_upload()
+    {
 
     }
 }

@@ -989,6 +989,11 @@ body {
 	cursor: wait !important;
 }
 
+.style_cursor_not_allowed {
+	pointer-events: all !important;
+	cursor: not-allowed !important;
+}
+
 .card_img {
 	width: 100%;
 	object-fit: cover;

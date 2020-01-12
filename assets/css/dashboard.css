@@ -148,7 +148,10 @@ a:focus {
 .dashboard-page .nav_dashboard.dashboard-menu ul li.active a {
 	color: #fff;
 	background: linear-gradient(to left, #0062E6, #33AEFF);
+}
 
+.bg_linear_theme {
+	background: linear-gradient(to left, #0062E6, #33AEFF);
 }
 
 .area {
@@ -180,6 +183,7 @@ a:focus {
 #fullpage {
 	height: 100%;
 	position: relative;
+	padding-left: 5rem;
 }
 
 #tbodyData_book>tr.selected {
@@ -197,4 +201,8 @@ a:focus {
 thead tr {
 	background: linear-gradient(to left, #0062E6, #33AEFF);
 	color: #fff;
+}
+
+#preview_upload {
+	max-width: 15rem;
 }

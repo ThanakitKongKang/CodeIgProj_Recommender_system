@@ -473,11 +473,7 @@ class Books_model extends BaseModel
         }
 
         // ALTER TABLE book AUTO_INCREMENT=?;
-        $this->db->select('book_id');
-        $this->db->order_by('book_id', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get($this->table);
-        $last_book_id = json_decode(json_encode($query->row()), True);
+        $last_book_id = $this->getLastID();
         $sql = "ALTER TABLE book AUTO_INCREMENT=?";
         $query = $this->db->query($sql, array($last_book_id["book_id"] + 1));
 
@@ -486,5 +482,15 @@ class Books_model extends BaseModel
         } else {
             $this->db->trans_commit();
         }
+    }
+
+    public function getLastID()
+    {
+        $this->db->select('book_id');
+        $this->db->order_by('book_id', 'DESC');
+        $this->db->limit(1);
+        $query = $this->db->get($this->table);
+        $last_book_id = json_decode(json_encode($query->row()), True);
+        return $last_book_id;
     }
 }
