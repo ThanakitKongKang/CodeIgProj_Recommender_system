@@ -125,7 +125,7 @@ class DashboardController extends CI_Controller
     public function book_delete()
     {
         $book_id = $this->input->post('book_id');
-
+        $book_name = $this->books_model->get_by_id($book_id);
         // save data and delete
 
         // delete in book, 3 comments, rate, saved_book
@@ -137,14 +137,23 @@ class DashboardController extends CI_Controller
         // update saved_book.book_id
         $this->books_model->book_delete($book_id);
 
+        $this->load->helper("file");
         // delete book cover and book file
-        $file_pointer = "test.txt";
+        $book_cover_file = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/book_covers/$book_id.PNG";
+        $book_file = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/book_files/" . $book_name["book_name"] . ".pdf";
 
         // Use unlink() function to delete a file  
-        if (!unlink($file_pointer)) {
-            echo ("$file_pointer cannot be deleted due to an error");
+        if (is_file($book_cover_file)) {
+            chmod($book_cover_file, 0777);
+            chmod($book_file, 0777);
+            unlink($book_file);
+            if (!unlink($book_cover_file)) {
+                echo ("$book_id cannot be deleted due to an error");
+            } else {
+                echo ("$book_id has been deleted");
+            }
         } else {
-            echo ("$file_pointer has been deleted");
+            echo "$book_id File does not exist";
         }
     }
 
@@ -159,11 +168,24 @@ class DashboardController extends CI_Controller
         $this->books_model->insert($post_data);
     }
 
+    public function isBookNameExists()
+    {
+        $book_name = $this->input->post('book_name');
+        $row = $this->books_model->get_by_name($book_name);
+
+        if ($row != null) {
+            echo "true";
+        }
+    }
+
     public function book_cover_upload()
     {
-        $last_book_id = $this->books_model->getLastID();
-        $last_book_id = $last_book_id["book_id"]++;
-
+        if ($this->input->post('is_new') == "true") {
+            $last_book_id = $this->books_model->getLastID();
+            $last_book_id = $last_book_id["book_id"]++;
+        } else {
+            $last_book_id = $this->input->post('book_id');
+        }
         $encodedstring = $this->input->post('image');
         $data = $encodedstring;
 
@@ -185,9 +207,31 @@ class DashboardController extends CI_Controller
         }
         file_put_contents("assets/book_covers/{$last_book_id}.PNG", $data);
     }
-    
+
     public function book_file_upload()
     {
+        ini_set('memory_limit', '500M');
+        ini_set('upload_max_filesize', '500M');
+        ini_set('post_max_size', '500M');
+        ini_set('max_input_time', 3600);
+        ini_set('max_execution_time', 3600);
 
+        $book_name = $this->input->post('name');
+
+        $target_file = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/book_files/";
+
+
+        if (0 < $_FILES['file']['error']) {
+            echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+        } else {
+            move_uploaded_file($_FILES['file']['tmp_name'], 'assets/book_files/' . $book_name . ".pdf");
+        }
+
+        echo "name : " . ($book_name) . "<br>";
+        echo "file : " . $_FILES['file']['name'] . "<br>";
+        echo "file : " . $_FILES['file']['tmp_name'] . "<br>";
+
+        echo "folder : " . $target_file . "<br>";
+        exit();
     }
 }

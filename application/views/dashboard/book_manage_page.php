@@ -3,7 +3,7 @@
         <input id="info" class="switch-box-input" type="checkbox">
         <label for="info" class="switch-box-slider"></label>
         <label for="info" class="switch-box-label small font-arial delete_toggle_label text-muted">Multiple delete</label>
-        <input id="multiple_delete_trigger" class="btn btn-secondary delete_toggle_label text-muted btn-sm" type="button" style="display:none" value="Multiple delete (0)">
+        <input id="multiple_delete_trigger" class="btn btn-secondary delete_toggle_label text-muted btn-sm" type="button" style="opacity:0;cursor:default" value="Multiple delete (0)">
     </div>
     <table class="table table-bordered table-compact table-hover font-apple" id="books">
         <thead class="">
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-body">
                 <button class="btn btn-danger delete_this_book_alert" title="Delete this book" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
-                <table class="modal_book_info w-75 mx-4">
+                <table class="modal_book_info w-100">
                     <tr>
                         <td>
                             <div class="input-group mb-3 w-25">
@@ -46,19 +46,21 @@
 
                         </td>
                     </tr>
+
                     <tr>
                         <td>
-                            <div class="input-group mb-3">
+                            <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book name</span>
                                 </div>
-                                <input type="text" class="form-control" id="book_name">
+                                <input type="text" class="form-control" id="book_name" name="book_name">
                             </div>
+                            <span class="ml-5 small pl-5 text-danger" style="display:none" id="name_exists_error">Book name already taken</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-3 mt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Author</span>
                                 </div>
@@ -81,14 +83,52 @@
                             </div>
                         </td>
                     </tr>
-                </table>
+                    <tr>
+                        <td>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Book file</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" required id="inputGroupFile02" name="book_file" aria-describedby="inputGroupFileAddon02" accept="application/pdf">
+                                    <label class="custom-file-label label_file" for="inputGroupFile02">Choose file</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
+                    <tr>
+                        <td>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Cover Image</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" required id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="image/jpeg, image/png">
+                                    <label class="custom-file-label label_cover" for="inputGroupFile01">Choose file</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="text-center">
+                                <img src="" id="old_img" style="max-width:10rem">
+                            </div>
+                            <div class="text-center small text-muted">(current cover image)</div>
+
+                        </td>
+                    </tr>
+                    <div class="text-center" id="preview_upload_wrapper">
+                        <div class="mx-auto upload_msg">
+                            Upload a new book cover to start cropping
+                        </div>
+                    </div>
+                </table>
             </div>
             <div class="edit_footer modal-footer">
                 <button type="button" onclick="" id="footer-submit" class="edit_this_book_alert btn btn-primary text-white" data-dismiss="modal">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
-
             </div>
         </div>
     </div>
@@ -162,18 +202,26 @@
 
         $('.delete_toggle #info').on("change", function(e) {
             $('.delete_toggle_label').toggleClass("text-muted");
-            $('#multiple_delete_trigger').toggle();
+            // update row cont
             var count_row = table.rows('.selected').data().length;
             multiple_delete_trigger_refresh_count();
+            // toggle opacity
+            if ($('#multiple_delete_trigger').css('opacity') === '0') {
+                $('#multiple_delete_trigger').css('opacity', '1', );
+                if (count_row == 0)
+                    $('#multiple_delete_trigger').addClass("style_cursor_not_allowed");
+            } else {
+                $('#multiple_delete_trigger').css('opacity', '0', );
+                $('#multiple_delete_trigger').removeClass("style_cursor_not_allowed");
+            }
+
             if (count_row > 0) {
                 table.$('tr.selected').removeClass('selected');
             } else {
-                $('#multiple_delete_trigger').addClass("style_cursor_not_allowed");
                 $('#multiple_delete_trigger').addClass("btn-secondary");
                 $('#multiple_delete_trigger').removeClass("btn-danger");
             }
-
-
+            flag_multi_delete = false;
         });
 
         // edit modal popup caller
@@ -182,19 +230,8 @@
             var isChecked = $('.delete_toggle #info').prop("checked");
             if (isChecked) {
                 $(this).toggleClass('selected');
-                var count_row = table.rows('.selected').data().length;
                 multiple_delete_trigger_refresh_count();
-                if (count_row > 0) {
-                    $('#multiple_delete_trigger').removeClass("style_cursor_not_allowed");
-                    $('#multiple_delete_trigger').removeClass("btn-secondary");
-                    $('#multiple_delete_trigger').addClass("btn-danger");
-                    flag_multi_delete = true;
-                } else {
-                    $('#multiple_delete_trigger').addClass("style_cursor_not_allowed");
-                    $('#multiple_delete_trigger').removeClass("btn-danger");
-                    $('#multiple_delete_trigger').addClass("btn-secondary");
-                    flag_multi_delete = false;
-                }
+
             } else {
                 var elm = this;
                 editModalCaller(elm);
@@ -202,7 +239,6 @@
         });
 
         $('#multiple_delete_trigger').on('click', function() {
-
             if (flag_multi_delete) {
                 var count_row = table.rows('.selected').data().length;
                 var data;
@@ -224,7 +260,7 @@
                         var tmp_book_id;
                         for (var i = 0; i < count_row; i++) {
                             data = table.row('.selected').data();
-                            table.row('.selected').draw(false);
+                            // table.row('.selected').draw(false);
 
                             if (Number(data["book_id"]) > tmp_book_id) {
                                 var book_id = {
@@ -242,6 +278,7 @@
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/book/delete',
                                 data: book_id,
+                                async: false,
                                 success: function(data) {
                                     Toast.fire({
                                         title: 'Success !',
@@ -253,6 +290,8 @@
                                 }
                             })
 
+
+
                         }
                         table.ajax.reload();
                     }
@@ -263,10 +302,23 @@
         function multiple_delete_trigger_refresh_count() {
             var count_row = table.rows('.selected').data().length;
             $('#multiple_delete_trigger').val("Multiple delete (" + count_row + ")");
+            if (count_row > 0) {
+                $('#multiple_delete_trigger').removeClass("style_cursor_not_allowed");
+                $('#multiple_delete_trigger').removeClass("btn-secondary");
+                $('#multiple_delete_trigger').addClass("btn-danger");
+                flag_multi_delete = true;
+            } else {
+                $('#multiple_delete_trigger').addClass("style_cursor_not_allowed");
+                $('#multiple_delete_trigger').removeClass("btn-danger");
+                $('#multiple_delete_trigger').addClass("btn-secondary");
+                flag_multi_delete = false;
+            }
 
         }
+        var old_book_name;
 
         function editModalCaller(elm) {
+
             var data = table.row(elm).data();
             if ($(elm).hasClass('selected')) {
                 $(elm).removeClass('selected');
@@ -274,17 +326,23 @@
                 table.$('tr.selected').removeClass('selected');
                 $(elm).addClass('selected');
             }
+            old_book_name = data["book_name"];
 
             $('.modal_book_info tbody tr:nth-child(1) td div input').val(data["book_id"]);
             $('.modal_book_info tbody tr:nth-child(2) td div input').val(data["book_name"]);
             $('.modal_book_info tbody tr:nth-child(3) td div input').val(data["author"]);
             $('.modal_book_info tbody tr:nth-child(4) td div input').val(data["book_type"]);
-            $('.modal_book_info tbody tr:nth-child(5) td div input').val(data["content"]);
-            $('.modal_book_info tbody tr:nth-child(6) td div input').val(data["b_rate"]);
-            $('.modal_book_info tbody tr:nth-child(7) td div input').val(data["count_rate"]);
 
-
+            $("#old_img").attr("src", "<?= base_url() ?>/assets/book_covers/" + data["book_id"] + ".PNG?" + new Date().getTime());
             $('#book_type').val(data["book_type"]);
+
+            $('#inputGroupFile01').next('.label_cover').html("Choose file");
+            $('#inputGroupFile01').val('');
+            $('#inputGroupFile02').next('.label_file').html("Choose file");
+            $('#inputGroupFile02').val('');
+
+
+
             $('#book_edit_modal').modal('show');
         }
 
@@ -309,45 +367,97 @@
         });
 
         function swalEditBookConfirm() {
-            var booksArray = {
-                book_id: Number($('#book_id').val()),
-                book_name: $('#book_name').val(),
-                author: $('#author').val(),
-                book_type: $('#book_type').val(),
-            };
+            if (!isNameExists) {
+                upload_crop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(response) {
+                    var booksArray = {
+                        book_id: Number($('#book_id').val()),
+                        book_name: $('#book_name').val(),
+                        author: $('#author').val(),
+                        book_type: $('#book_type').val(),
+                    };
 
-            Swal.fire({
-                title: 'Confirm ?',
-                html: "",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#a0a0a0',
-                confirmButtonText: 'Save',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.value) {
-                    var formData = booksArray
+                    var image = {
+                        image: response,
+                        is_new: false,
+                        book_id: Number($('#book_id').val()),
+                    };
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>/api/book/update',
-                        data: formData,
-                        success: function(data) {
-                            Toast.fire({
-                                title: 'Success !',
-                                text: 'Saved changes',
-                                type: 'success',
+                    var file_data = $('#inputGroupFile02').prop('files')[0];
+                    var form_data = new FormData();
+                    form_data.append('file', file_data);
+                    form_data.append('name', $('#book_name').val());
+
+                    Swal.fire({
+                        title: 'Confirm ?',
+                        html: "",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#a0a0a0',
+                        confirmButtonText: 'Save',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.value) {
+                            var formData = booksArray
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>/api/book/update',
+                                data: formData,
+                                success: function(data) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '<?= base_url() ?>api/book/cover_upload',
+                                        data: image,
+                                        success: function(data) {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '<?= base_url() ?>api/book/file_upload',
+                                                data: form_data,
+                                                contentType: false,
+                                                cache: false,
+                                                processData: false,
+                                                dataType: 'text',
+                                                success: function(data) {
+                                                    Toast.fire({
+                                                        title: 'Success !',
+                                                        text: 'Saved changes',
+                                                        type: 'success',
+                                                    })
+
+                                                    table.ajax.reload();
+                                                    $('#book_edit_modal').modal('hide');
+                                                    $('#inputGroupFile01').next('.label_cover').html("Choose file");
+                                                    $('#inputGroupFile01').val('');
+                                                    $('#inputGroupFile02').next('.label_file').html("Choose file");
+                                                    $('#inputGroupFile02').val('');
+                                                    $('.upload_msg').show();
+                                                    upload_crop.croppie('destroy')
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
                             })
-                            table.ajax.reload();
-                            $('#book_edit_modal').modal('hide');
+
+                        } else {
+                            $('#book_edit_modal').modal('show');
                         }
                     })
-
-                } else {
-                    $('#book_edit_modal').modal('show');
-                }
-            })
+                })
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Book name already taken!',
+                    onClose: () => {
+                        $('#book_edit_modal').modal('show');
+                        $('#book_name').focus();
+                    }
+                })
+            }
         }
 
         function swalDeleteBookConfirm() {
@@ -391,6 +501,82 @@
 
         $('#book_edit_modal').on('hidden.bs.modal', function() {
             $('#tbodyData_book tr.selected').removeClass("selected");
+            $('#preview_upload_wrapper').croppie('bind', {
+                url: "<?= base_url() ?>assets/img/no_img.png",
+                points: [77, 469, 280, 739]
+            });
         })
+
+        var isNameExists = false;
+        $('#book_name').on('keyup', function() {
+            var book_name = {
+                book_name: $('[name ="book_name"]').val(),
+            };
+            if (old_book_name != $('[name ="book_name"]').val()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>api/book/name_exists',
+                    data: book_name,
+                    success: function(data) {
+                        if (data == "true") {
+                            $('#book_name').addClass("bg-danger");
+                            $('#book_name').addClass("text-white");
+                            $('#name_exists_error').show();
+                            isNameExists = true;
+                        } else {
+                            $('#book_name').removeClass("bg-danger");
+                            $('#book_name').removeClass("text-white");
+                            $('#name_exists_error').hide();
+                            isNameExists = false;
+                        }
+                    }
+                })
+            }
+
+        });
+
+        $('#inputGroupFile01').on('change', function() {
+            //get the file name
+            var fileName = $(this).val();
+            //replace the "Choose a file" label
+            $(this).next('.label_cover').html(fileName);
+            readFile(this);
+        })
+
+
+        $('#inputGroupFile02').on('change', function() {
+            var fileName = $(this).val();
+            $(this).next('.label_file').html(fileName);
+        })
+
+        var upload_crop;
+        var isInit = false;
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                $('.upload_msg').hide();
+                var reader = new FileReader();
+                if (!isInit) {
+                    upload_crop = $('#preview_upload_wrapper').croppie({
+                        viewport: {
+                            width: 312.5,
+                            height: 412.5
+                        },
+                        boundary: {
+                            width: 500,
+                            height: 500
+                        },
+                    });
+                    isInit = true;
+                }
+                reader.onload = function(e) {
+                    $('#preview_upload_wrapper').croppie('bind', {
+                        url: e.target.result
+                    });
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
     });
 </script>

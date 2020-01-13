@@ -1,11 +1,12 @@
 <div id="fullpage" class="container">
-    <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">เพิ่มรายการสินค้าใหม่</h2>
+    <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">Add Book</h2>
     <form id="form_insert_book" method="post" enctype='multipart/form-data'>
         <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-9">
                     <input type="text" autocomplete="off" required class="form-control" name="book_name" id="book_name" placeholder="Book title..">
+                    <span class="small pl-3 text-danger" style="display:none" id="name_exists_error">Book name already taken</span>
                 </div>
             </div>
 
@@ -43,6 +44,19 @@
                     <input type="number" required step=0.01 min="1" class="form-control" name="product_cost" id="product_cost" placeholder="ราคาทุน/หน่วย">
                 </div>
             </div> -->
+            <div class="form-group row">
+                <label for="inputGroupFileAddon02" class="col-sm-2 col-form-label">Book file</label>
+                <div class="col-sm-9 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+                    </div>
+                    <div class="custom-file">
+
+                        <input type="file" class="custom-file-input" required id="inputGroupFile02" name="book_file" aria-describedby="inputGroupFileAddon02" accept="application/pdf">
+                        <label class="custom-file-label label_file" for="inputGroupFile02">Choose file</label>
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group row">
                 <label for="inputGroupFileAddon01" class="col-sm-2 col-form-label">Cover Image</label>
@@ -52,8 +66,8 @@
                     </div>
                     <div class="custom-file">
 
-                        <input type="file" class="custom-file-input" required id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        <input type="file" class="custom-file-input" required id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="image/jpeg, image/png">
+                        <label class="custom-file-label label_cover" for="inputGroupFile01">Choose file</label>
                     </div>
                 </div>
             </div>
@@ -96,27 +110,36 @@
             //get the file name
             var fileName = $(this).val();
             //replace the "Choose a file" label
-            $(this).next('.custom-file-label').html(fileName);
+            $(this).next('.label_cover').html(fileName);
             readFile(this);
         })
 
+
+        $('#inputGroupFile02').on('change', function() {
+            var fileName = $(this).val();
+            $(this).next('.label_file').html(fileName);
+        })
+
         var upload_crop;
+        var isInit = false;
 
         function readFile(input) {
             if (input.files && input.files[0]) {
                 $('.upload_msg').hide();
                 var reader = new FileReader();
-
-                upload_crop = $('#preview_upload_wrapper').croppie({
-                    viewport: {
-                        width: 312.5,
-                        height: 412.5
-                    },
-                    boundary: {
-                        width: 500,
-                        height: 500
-                    },
-                });
+                if (!isInit) {
+                    upload_crop = $('#preview_upload_wrapper').croppie({
+                        viewport: {
+                            width: 312.5,
+                            height: 412.5
+                        },
+                        boundary: {
+                            width: 500,
+                            height: 500
+                        },
+                    });
+                    isInit = true;
+                }
                 reader.onload = function(e) {
                     $('#preview_upload_wrapper').croppie('bind', {
                         url: e.target.result
@@ -132,49 +155,99 @@
             showConfirmButton: false,
             timer: 3000
         });
-
-        $("#form_insert_book").submit(function(e) {
-            e.preventDefault();
-
-            upload_crop.croppie('result', {
-                type: 'canvas',
-                size: 'viewport'
-            }).then(function(response) {
-                var image = {
-                    image: response
-                };
-
-                var booksArray = {
-                    book_name: $('[name ="book_name"]').val(),
-                    author: $('[name ="author"]').val(),
-                    book_type: $('[name ="book_type"]').val(),
-                };
-
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>api/book/insert',
-                    data: booksArray,
-                    success: function(data) {
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>api/book/cover_upload',
-                            data: image,
-                            success: function(data) {
-                                Toast.fire({
-                                    title: 'Success !',
-                                    text: 'Book has been inserted',
-                                    type: 'success',
-                                })
-                                document.getElementById("form_insert_book").reset();
-                                $('#inputGroupFile01').next('.custom-file-label').html("Choose file");
-                                $('.upload_msg').show();
-                                upload_crop.croppie('destroy')
-                            }
-                        })
+        var isNameExists = false;
+        $('#book_name').on('keyup', function() {
+            var book_name = {
+                book_name: $('[name ="book_name"]').val(),
+            };
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url() ?>api/book/name_exists',
+                data: book_name,
+                success: function(data) {
+                    if (data == "true") {
+                        $('#book_name').addClass("bg-danger");
+                        $('#book_name').addClass("text-white");
+                        $('#name_exists_error').show();
+                        isNameExists = true;
+                    } else {
+                        $('#book_name').removeClass("bg-danger");
+                        $('#book_name').removeClass("text-white");
+                        $('#name_exists_error').hide();
+                        isNameExists = false;
                     }
-                })
+                }
             })
         });
 
+        $("#form_insert_book").submit(function(e) {
+            e.preventDefault();
+            if (!isNameExists) {
+                upload_crop.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(response) {
+                    var booksArray = {
+                        book_name: $('[name ="book_name"]').val(),
+                        author: $('[name ="author"]').val(),
+                        book_type: $('[name ="book_type"]').val(),
+                    };
+
+                    var image = {
+                        image: response,
+                        is_new : true,
+                    };
+
+                    var file_data = $('#inputGroupFile02').prop('files')[0];
+                    var form_data = new FormData();
+                    form_data.append('file', file_data);
+                    form_data.append('name', $('[name ="book_name"]').val());
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?= base_url() ?>api/book/insert',
+                        data: booksArray,
+                        success: function(data) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>api/book/cover_upload',
+                                data: image,
+                                success: function(data) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '<?= base_url() ?>api/book/file_upload',
+                                        data: form_data,
+                                        contentType: false,
+                                        cache: false,
+                                        processData: false,
+                                        dataType: 'text',
+                                        success: function(data) {
+                                            Toast.fire({
+                                                title: 'Success !',
+                                                text: 'Book has been inserted',
+                                                type: 'success',
+                                            })
+                                            document.getElementById("form_insert_book").reset();
+                                            $('#inputGroupFile01').next('.label_cover').html("Choose file");
+                                            $('#inputGroupFile02').next('.label_file').html("Choose file");
+                                            $('.upload_msg').show();
+                                            upload_crop.croppie('destroy')
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                })
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Book name already taken!',
+                    footer: '<a href="<?= base_url() ?>dashboard/book/manage">Edit the book instead</a>'
+                })
+                $('#book_name').focus();
+            }
+        });
     });
 </script>

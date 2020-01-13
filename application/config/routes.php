@@ -183,6 +183,7 @@ $route['api/book/get'] = 'DashboardController/book_get';
 $route['api/book/update'] = 'DashboardController/book_update';
 $route['api/book/delete'] = 'DashboardController/book_delete';
 $route['api/book/insert'] = 'DashboardController/book_insert';
+$route['api/book/name_exists'] = 'DashboardController/isBookNameExists';
 $route['api/book/cover_upload'] = 'DashboardController/book_cover_upload';
 $route['api/book/file_upload'] = 'DashboardController/book_file_upload';
 
