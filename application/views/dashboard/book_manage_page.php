@@ -316,6 +316,8 @@
 
         }
         var old_book_name;
+        var isCoverChanged = false;
+        var isFileChanged = false;
 
         function editModalCaller(elm) {
 
@@ -368,85 +370,107 @@
 
         function swalEditBookConfirm() {
             if (!isNameExists) {
-                upload_crop.croppie('result', {
-                    type: 'canvas',
-                    size: 'viewport'
-                }).then(function(response) {
-                    var booksArray = {
-                        book_id: Number($('#book_id').val()),
-                        book_name: $('#book_name').val(),
-                        author: $('#author').val(),
-                        book_type: $('#book_type').val(),
-                    };
+                var image;
+                if (isCoverChanged) {
+                    upload_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function(response) {
+                        image = {
+                            image: response,
+                            is_new: false,
+                            book_id: Number($('#book_id').val()),
+                        };
+                    })
+                }
 
-                    var image = {
-                        image: response,
-                        is_new: false,
-                        book_id: Number($('#book_id').val()),
-                    };
+                Swal.fire({
+                    title: 'Confirm ?',
+                    html: "",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#a0a0a0',
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.value) {
+                        // update info
+                        var booksArray = {
+                            book_id: Number($('#book_id').val()),
+                            book_name: $('#book_name').val(),
+                            author: $('#author').val(),
+                            book_type: $('#book_type').val(),
+                        };
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>/api/book/update',
+                            data: booksArray,
+                            success: function(data) {
+                                $('#book_edit_modal').modal('hide');
 
-                    var file_data = $('#inputGroupFile02').prop('files')[0];
-                    var form_data = new FormData();
-                    form_data.append('file', file_data);
-                    form_data.append('name', $('#book_name').val());
+                            }
+                        })
 
-                    Swal.fire({
-                        title: 'Confirm ?',
-                        html: "",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#a0a0a0',
-                        confirmButtonText: 'Save',
-                        cancelButtonText: 'Cancel'
-                    }).then((result) => {
-                        if (result.value) {
-                            var formData = booksArray
+                        if (isCoverChanged) {
+                            // update cover
+
+
                             $.ajax({
                                 type: 'POST',
-                                url: '<?= base_url() ?>/api/book/update',
-                                data: formData,
+                                url: '<?= base_url() ?>api/book/cover_upload',
+                                data: image,
                                 success: function(data) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '<?= base_url() ?>api/book/cover_upload',
-                                        data: image,
-                                        success: function(data) {
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: '<?= base_url() ?>api/book/file_upload',
-                                                data: form_data,
-                                                contentType: false,
-                                                cache: false,
-                                                processData: false,
-                                                dataType: 'text',
-                                                success: function(data) {
-                                                    Toast.fire({
-                                                        title: 'Success !',
-                                                        text: 'Saved changes',
-                                                        type: 'success',
-                                                    })
 
-                                                    table.ajax.reload();
-                                                    $('#book_edit_modal').modal('hide');
-                                                    $('#inputGroupFile01').next('.label_cover').html("Choose file");
-                                                    $('#inputGroupFile01').val('');
-                                                    $('#inputGroupFile02').next('.label_file').html("Choose file");
-                                                    $('#inputGroupFile02').val('');
-                                                    $('.upload_msg').show();
-                                                    upload_crop.croppie('destroy')
-                                                }
-                                            })
-                                        }
-                                    })
+                                    $('#inputGroupFile01').next('.label_cover').html("Choose file");
+                                    $('#inputGroupFile01').val('');
+                                    $('.upload_msg').show();
+                                    upload_crop.croppie('destroy')
+                                    isInit = false;
+                                    $('#book_edit_modal').modal('hide');
+
                                 }
                             })
 
-                        } else {
-                            $('#book_edit_modal').modal('show');
                         }
-                    })
+
+                        if (isFileChanged) {
+                            // update file
+                            var file_data = $('#inputGroupFile02').prop('files')[0];
+                            var form_data = new FormData();
+                            form_data.append('file', file_data);
+                            form_data.append('name', $('#book_name').val());
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>api/book/file_upload',
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                dataType: 'text',
+                                success: function(data) {
+                                    $('#inputGroupFile02').next('.label_file').html("Choose file");
+                                    $('#inputGroupFile02').val('');
+                                    $('#book_edit_modal').modal('hide');
+
+                                }
+                            })
+                        }
+
+                        Toast.fire({
+                            title: 'Success !',
+                            text: 'Saved changes',
+                            type: 'success',
+                        })
+
+                        table.ajax.reload();
+
+                    } else {
+                        $('#book_edit_modal').modal('show');
+                    }
                 })
+
             } else {
                 Swal.fire({
                     type: 'error',
@@ -541,12 +565,14 @@
             //replace the "Choose a file" label
             $(this).next('.label_cover').html(fileName);
             readFile(this);
+            isCoverChanged = true;
         })
 
 
         $('#inputGroupFile02').on('change', function() {
             var fileName = $(this).val();
             $(this).next('.label_file').html(fileName);
+            isFileChanged = true;
         })
 
         var upload_crop;

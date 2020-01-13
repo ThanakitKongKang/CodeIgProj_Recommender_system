@@ -40,4 +40,18 @@ class Users_model extends BaseModel
             return FALSE;
         }
     }
+
+    public function getAll()
+    {
+        $this->db->select('*');
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
 }

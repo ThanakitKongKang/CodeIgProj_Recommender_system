@@ -186,6 +186,7 @@ class DashboardController extends CI_Controller
         } else {
             $last_book_id = $this->input->post('book_id');
         }
+
         $encodedstring = $this->input->post('image');
         $data = $encodedstring;
 
@@ -203,7 +204,7 @@ class DashboardController extends CI_Controller
                 throw new \Exception('base64_decode failed');
             }
         } else {
-            throw new \Exception('did not match data URI with image data');
+            throw new \Exception('did not match data URI with image data '.$data);
         }
         file_put_contents("assets/book_covers/{$last_book_id}.PNG", $data);
     }
