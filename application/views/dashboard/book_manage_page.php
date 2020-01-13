@@ -37,11 +37,14 @@
                 <table class="modal_book_info w-100">
                     <tr>
                         <td>
-                            <div class="input-group mb-3 w-25">
+                            <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book id</span>
                                 </div>
-                                <input type="text" class="form-control style_cursor_not_allowed" id="book_id" readonly title="Book'is can't be changed">
+                                <input type="text" class="form-control style_cursor_not_allowed" style="max-width: 8rem;" id="book_id" readonly title="Book'is can't be changed">
+                                <div class="switch-box is-info comment_toggle position-relative ml-5" title="enable/disable comment" style="top: 0.9rem;left: 1rem;">
+
+                                </div>
                             </div>
 
                         </td>
@@ -54,6 +57,7 @@
                                     <span class="input-group-text">Book name</span>
                                 </div>
                                 <input type="text" class="form-control" id="book_name" name="book_name">
+
                             </div>
                             <span class="ml-5 small pl-5 text-danger" style="display:none" id="name_exists_error">Book name already taken</span>
                         </td>
@@ -70,7 +74,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-3 toggle_addcategory">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Category</span>
                                 </div>
@@ -78,8 +82,8 @@
                                     <?php foreach ($category_list as $category) { ?>
                                         <option value="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></option>
                                     <?php } ?>
-
                                 </select>
+                                <a class="small pl-5 w-100 ml-5" style="display:block" href="#" id="addCategory">Add category ?</a>
                             </div>
                         </td>
                     </tr>
@@ -199,6 +203,24 @@
                 searchPlaceholder: "Search"
             }
         });
+        var tmp_booktype;
+        var tmp_old_booktype;
+        $(document).on('click', '.toggle_addcategory #addCategory', function() {
+            tmp_booktype = $('#book_type').html();
+            tmp_old_booktype = $('[name="book_type"]').val();
+            $('#book_type').remove();
+            $('#addCategory').remove();
+            $('.toggle_addcategory').append("<input type='text' autocomplete='off' required class='form-control' name='book_type' id='book_type2' placeholder='Category..'>");
+            $('.toggle_addcategory').append("<a class='small pl-5 w-100 ml-5' style='display:block' href='#' id='cancelAddCategory'>Cancel add category</a>")
+        })
+
+        $(document).on('click', '.toggle_addcategory #cancelAddCategory', function() {
+            $('#book_type2').remove();
+            $('#cancelAddCategory').remove();
+            $('.toggle_addcategory').append("<select class='custom-select' id='book_type' name='book_type' required>" + tmp_booktype + "</select>")
+            $('.toggle_addcategory').append("<a class='small pl-5 w-100 ml-5' style='display:block' href='#' id='addCategory'>Add category ?</a>")
+            $('[name="book_type"]').val(tmp_old_booktype);
+        })
 
         $('.delete_toggle #info').on("change", function(e) {
             $('.delete_toggle_label').toggleClass("text-muted");
@@ -298,6 +320,32 @@
                 })
             }
         });
+        $(document).on('change', '.comment_toggle #comment', function(each) {
+            var isChecked = $(this).prop("checked");
+            var post_data = {
+                'book_id': Number($('#book_id').val()),
+                'isChecked': isChecked,
+            };
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>comment/toggle_function",
+                data: post_data,
+                success: function(data) {
+                    let text;
+                    if (post_data["isChecked"]) {
+                        text = "enabled";
+                    } else {
+                        text = "disabled";
+                    }
+                    Toast.fire({
+                        title: 'Success !',
+                        text: post_data["book_id"] + '\'s comment function has been ' + text,
+                        type: 'success',
+                    })
+                },
+
+            });
+        });
 
         function multiple_delete_trigger_refresh_count() {
             var count_row = table.rows('.selected').data().length;
@@ -343,9 +391,28 @@
             $('#inputGroupFile02').next('.label_file').html("Choose file");
             $('#inputGroupFile02').val('');
 
+            var postData = {
+                book_id: data["book_id"],
+            };
 
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url() ?>/api/book/is_comment_enable',
+                data: postData,
+                success: function(data) {
+                    if (data) {
+                        $('.comment_toggle').append('<input id="comment" class="switch-box-input" type="checkbox" checked="checked"/><label for="comment" class="switch-box-slider mr-2"></label><label for="comment" class="switch-box-label small font-arial text-muted delete_toggle_label">Toggle comment function</label>')
+                        // $('.comment_toggle #comment').attr('checked', true);
 
-            $('#book_edit_modal').modal('show');
+                    } else {
+                        $('.comment_toggle').append('<input id="comment" class="switch-box-input" type="checkbox"/><label for="comment" class="switch-box-slider mr-2"></label><label for="comment" class="switch-box-label small font-arial text-muted delete_toggle_label">Toggle comment function</label>')
+                        // $('.comment_toggle #comment').attr('checked', false);
+
+                    }
+
+                    $('#book_edit_modal').modal('show');
+                }
+            })
         }
 
         $('.edit_this_book_alert').on('click', function(e) {
@@ -400,7 +467,7 @@
                             book_id: Number($('#book_id').val()),
                             book_name: $('#book_name').val(),
                             author: $('#author').val(),
-                            book_type: $('#book_type').val(),
+                            book_type: $('[name="book_type"]').val(),
                         };
                         $.ajax({
                             type: 'POST',
@@ -525,10 +592,13 @@
 
         $('#book_edit_modal').on('hidden.bs.modal', function() {
             $('#tbodyData_book tr.selected').removeClass("selected");
-            $('#preview_upload_wrapper').croppie('bind', {
-                url: "<?= base_url() ?>assets/img/no_img.png",
-                points: [77, 469, 280, 739]
-            });
+            $('.comment_toggle').html("")
+            if (isCoverChanged) {
+                $('#preview_upload_wrapper').croppie('bind', {
+                    url: "<?= base_url() ?>assets/img/no_img.png",
+                    points: [77, 469, 280, 739]
+                });
+            }
         })
 
         var isNameExists = false;

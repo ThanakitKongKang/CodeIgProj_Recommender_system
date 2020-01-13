@@ -204,7 +204,7 @@ class DashboardController extends CI_Controller
                 throw new \Exception('base64_decode failed');
             }
         } else {
-            throw new \Exception('did not match data URI with image data '.$data);
+            throw new \Exception('did not match data URI with image data ' . $data);
         }
         file_put_contents("assets/book_covers/{$last_book_id}.PNG", $data);
     }
@@ -234,5 +234,11 @@ class DashboardController extends CI_Controller
 
         echo "folder : " . $target_file . "<br>";
         exit();
+    }
+
+    public function isCommentEnabled()
+    {
+        $book_id = $this->input->post('book_id');
+        echo $this->comments_enabling_model->isEnabled($book_id);
     }
 }

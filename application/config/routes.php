@@ -186,6 +186,8 @@ $route['api/book/insert'] = 'DashboardController/book_insert';
 $route['api/book/name_exists'] = 'DashboardController/isBookNameExists';
 $route['api/book/cover_upload'] = 'DashboardController/book_cover_upload';
 $route['api/book/file_upload'] = 'DashboardController/book_file_upload';
+$route['api/book/is_comment_enable'] = 'DashboardController/isCommentEnabled';
+
 
 
 

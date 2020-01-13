@@ -98,9 +98,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link href="<?= base_url() ?>/assets/css/dashboard.css" rel="stylesheet">
 
     <!-- img upload crop -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js" integrity="sha256-bQTfUf1lSu0N421HV2ITHiSjpZ6/5aS6mUNlojIGGWg=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css" integrity="sha256-/n6IXDwJAYIh7aLVfRBdduQfdrab96XZR+YjG42V398=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.css.map" />
+    <script src="<?= base_url() ?>/assets/js/croppie.min.js" integrity="sha256-bQTfUf1lSu0N421HV2ITHiSjpZ6/5aS6mUNlojIGGWg=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/croppie.min.css" integrity="sha256-/n6IXDwJAYIh7aLVfRBdduQfdrab96XZR+YjG42V398=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/croppie.min.css.map" />
 
 
 
