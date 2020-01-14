@@ -188,6 +188,22 @@ $route['api/book/cover_upload'] = 'DashboardController/book_cover_upload';
 $route['api/book/file_upload'] = 'DashboardController/book_file_upload';
 $route['api/book/is_comment_enable'] = 'DashboardController/isCommentEnabled';
 
+$route['api/user/get'] = 'DashboardController/user_get';
+$route['api/user/update'] = 'DashboardController/user_update';
+$route['api/user/delete'] = 'DashboardController/user_delete';
+$route['api/user/name_exists'] = 'DashboardController/isUsernameExists';
+// $route['api/user/pic_upload'] = 'DashboardController/user_pic_upload';
+
+$route['api/comment/get'] = 'DashboardController/comment_get';
+$route['api/comment/update'] = 'DashboardController/comment_update';
+$route['api/comment/delete'] = 'DashboardController/comment_delete';
+
+
+
+
+
+
+
 
 
 

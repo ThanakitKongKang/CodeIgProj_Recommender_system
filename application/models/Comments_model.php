@@ -47,4 +47,32 @@ class Comments_model extends BaseModel
         $this->db->set('content', $content);
         $this->db->update($this->table);
     }
+
+    public function get_by_id($id)
+    {
+        $this->db->where('username', $id);
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->row()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function getAll()
+    {
+        $this->db->select('*');
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
 }

@@ -110,6 +110,7 @@ class DashboardController extends CI_Controller
         $books = $this->books_model->getAll();
         echo json_encode($books);
     }
+
     public function book_update()
     {
         $book_id = $this->input->post('book_id');
@@ -240,5 +241,48 @@ class DashboardController extends CI_Controller
     {
         $book_id = $this->input->post('book_id');
         echo $this->comments_enabling_model->isEnabled($book_id);
+    }
+
+    // USER api
+    public function user_get()
+    {
+        $users = $this->users_model->getAll();
+        echo json_encode($users);
+    }
+
+    public function user_update()
+    {
+        $old_username = $this->input->post('old_username');
+        $post_data = array(
+            'username' => $this->input->post('username'),
+            'first_name' =>  $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+        );
+
+        $this->users_model->book_update($old_username, $post_data);
+    }
+
+    public function user_delete()
+    {
+        $username = $this->input->post('username');
+
+        $this->users_model->user_delete($username);
+    }
+
+    public function isUsernameExists()
+    {
+        $username = $this->input->post('username');
+        $row = $this->users_model->get_by_id($username);
+
+        if ($row != FALSE) {
+            echo "true";
+        }
+    }
+
+    // COMMENT api
+    public function comment_get()
+    {
+        $comments = $this->comments_model->getAll();
+        echo json_encode($comments);
     }
 }

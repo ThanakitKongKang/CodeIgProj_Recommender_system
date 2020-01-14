@@ -15,11 +15,11 @@
         <div class="nav nav-pills font-arial collection_wrapper_mobile" id="collection_wrapper" style="display:none">
             <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?>" href="<?= base_url() ?>saved">All saved</a>
             <?php if (($collection_name != FALSE)) {
-                    foreach ($collection_name as $cl) { ?>
+                foreach ($collection_name as $cl) { ?>
                     <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?>" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>"><?= $cl["collection_name"] ?></a>
 
             <?php }
-                } ?>
+            } ?>
             <a id='create_collection_saved' class='nav-item nav-link text-secondary position-relative' href data-toggle='modal' data-target='#create_collection_modal_saved'><i class='fas fa-plus-circle'></i> Create Collection</a>
         </div>
 
@@ -28,7 +28,7 @@
                 <div class="nav nav-pills font-arial flex-column" id="collection_wrapper">
                     <a class="nav-item nav-link <?php if (isset($all_saved)) echo $all_saved; ?> position-relative" href="<?= base_url() ?>saved"><span>All saved</span>
                         <span class="count_all_saved_list badge  <?php if (isset($all_saved)) echo "badge-light";
-                                                                        else echo "badge-secondary"; ?>" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;"><?= $this->session->userdata('count_all_saved_list') ?>
+                                                                    else echo "badge-secondary"; ?>" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;"><?= $this->session->userdata('count_all_saved_list') ?>
                         </span>
                     </a>
                     <?php if (($collection_name != FALSE)) { ?>
@@ -37,7 +37,7 @@
                             <a class="nav-item nav-link <?= strtolower(ucwords(str_replace(" ", "-", $cl["collection_name"]))) ?> position-relative" href="<?= base_url() ?>saved?collection=<?= $cl["collection_name"] ?>" id="nav_<?= $cl["collection_name"] ?>"><span><?= $cl["collection_name"] ?></span><span class="badge badge-secondary" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;" id="<?= $cl["collection_name"] ?>"><?= $cl["count_this_collection"] ?></span></a>
 
                     <?php }
-                        } ?>
+                    } ?>
                     <a id='create_collection_saved' class='btn btn-outline-secondary nav-item nav-link position-relative mt-3' href data-toggle='modal' data-target='#create_collection_modal_saved'><i class='fas fa-plus-circle'></i> Create Collection</a>
                 </div>
             </div>
@@ -48,7 +48,7 @@
 
             <?php if (($saved_list != FALSE)) {
                 foreach ($saved_list as $saved) { ?>
-                    <div class="row bg-light py-3 book_detail_content_saved mt-3" style="border-radius:1rem;border:1px solid #0000000d"  data-aos="fade-up">
+                    <div class="row bg-light py-3 book_detail_content_saved mt-3" style="border-radius:1rem;border:1px solid #0000000d" data-aos="fade-up">
                         <div class="col-sm pl-4 mx-auto" style="max-width:11rem;">
                             <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>">
                                 <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $saved['book_id'] ?>.PNG">
@@ -98,8 +98,8 @@
                         </div>
                     </div>
                 <?php $i++;
-                    }
-                    if ($num_rows == 5 &&  $this->session->userdata('count_all_saved_list') != $i) { ?>
+                }
+                if ($num_rows == 5 &&  $this->session->userdata('count_all_saved_list') != $i) { ?>
                     <div class="load-more text-center justify-content-center my-5" lastID="<?php echo $i; ?>" style="display: none;">
                         <!-- <img src="<?php echo base_url('assets/img/loading.gif'); ?>" /> -->
 
@@ -243,8 +243,16 @@
         });
 
         function appendCollectionName(collection_name) {
-            var string_html = '<a class="nav-item nav-link" href="<?= base_url() ?>saved?collection=' + collection_name + '">' + collection_name + ' <span class="badge badge-secondary float-right" style="font-size:1em" id="' + collection_name + '">0</span></a>';
-            $("#collection_wrapper .nav-item:last").before(string_html);
+            if (isMobile_index) {
+                var string_html = '<a class="nav-item nav-link" href="<?= base_url() ?>saved?collection=' + collection_name + '">' + collection_name + ' <span class="badge badge-secondary float-right" style="font-size:1em" id="' + collection_name + '">0</span></a>';
+                $("#collection_wrapper .nav-item:last").before(string_html);
+
+            } else {
+                var string_html = '<a class="nav-item nav-link position-relative" href="<?= base_url() ?>saved?collection=' + collection_name + '"><span>' + collection_name + '</span><span class="badge badge-secondary" style="font-size:1em;position: absolute;right: 0.5rem;top: 0.5rem;" id="' + collection_name + '">0</span></a>';
+            }
+            $("#collection_col_wrapper .nav-item:last").before(string_html);
+
+
         }
 
         function checkTypingLength_collection_name_saved(typing) {

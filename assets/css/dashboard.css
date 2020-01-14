@@ -186,7 +186,8 @@ a:focus {
 	padding-left: 5rem;
 }
 
-#tbodyData_book>tr.selected {
+#tbodyData_book>tr.selected,
+#tbodyData_user>tr.selected {
 	color: #fff;
 	background: linear-gradient(to left, #0062E6, #33AEFF);
 }
@@ -195,6 +196,10 @@ a:focus {
 #tbodyData_book tr td:nth-child(4),
 #tbodyData_book tr td:nth-child(5),
 #tbodyData_book tr td:nth-child(6) {
+	text-align: center;
+}
+
+#tbodyData_user tr td:nth-child(1) {
 	text-align: center;
 }
 

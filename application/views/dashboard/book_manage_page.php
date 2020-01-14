@@ -8,12 +8,12 @@
     <table class="table table-bordered table-compact table-hover font-apple" id="books">
         <thead class="">
             <tr>
-                <th class="align-middle text-center">book_id</th>
-                <th class="align-middle text-center">book_name</th>
-                <th class="align-middle text-center">author</th>
-                <th class="align-middle text-center">book_type</th>
-                <th class="align-middle text-center">b_rate</th>
-                <th class="align-middle text-center">count_rate</th>
+                <th class="align-middle text-center">ID</th>
+                <th class="align-middle text-center">Title</th>
+                <th class="align-middle text-center">Author</th>
+                <th class="align-middle text-center">Category</th>
+                <th class="align-middle text-center">Rating</th>
+                <th class="align-middle text-center">Rater</th>
             </tr>
         </thead>
 
@@ -592,7 +592,13 @@
 
         $('#book_edit_modal').on('hidden.bs.modal', function() {
             $('#tbodyData_book tr.selected').removeClass("selected");
-            $('.comment_toggle').html("")
+            $('.comment_toggle').html("");
+            
+            $('#book_name').removeClass("bg-danger");
+            $('#book_name').removeClass("text-white");
+            $('#name_exists_error').hide();
+            isNameExists = false;
+
             if (isCoverChanged) {
                 $('#preview_upload_wrapper').croppie('bind', {
                     url: "<?= base_url() ?>assets/img/no_img.png",
