@@ -195,7 +195,6 @@ $route['api/user/name_exists'] = 'DashboardController/isUsernameExists';
 // $route['api/user/pic_upload'] = 'DashboardController/user_pic_upload';
 
 $route['api/comment/get'] = 'DashboardController/comment_get';
-$route['api/comment/update'] = 'DashboardController/comment_update';
 $route['api/comment/delete'] = 'DashboardController/comment_delete';
 
 

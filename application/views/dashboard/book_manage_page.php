@@ -41,7 +41,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book id</span>
                                 </div>
-                                <input type="text" class="form-control style_cursor_not_allowed" style="max-width: 8rem;" id="book_id" readonly title="Book'is can't be changed">
+                                <input type="text" class="form-control style_cursor_not_allowed" style="max-width: 8rem;" id="book_id" readonly title="Book's id can't be changed">
                                 <div class="switch-box is-info comment_toggle position-relative ml-5" title="enable/disable comment" style="top: 0.9rem;left: 1rem;">
 
                                 </div>
@@ -248,7 +248,7 @@
 
         // edit modal popup caller
         var flag_multi_delete = false;
-        $('#books tbody').on('click', 'tr', function() {
+        $('#books tbody').on('click', 'tr:not(:has(.dataTables_empty))', function() {
             var isChecked = $('.delete_toggle #info').prop("checked");
             if (isChecked) {
                 $(this).toggleClass('selected');
@@ -281,7 +281,7 @@
                     if (result.value) {
                         var tmp_book_id;
                         for (var i = 0; i < count_row; i++) {
-                            data = table.row('.selected').data();
+                            data = table.rows('.selected').data()[i];
                             // table.row('.selected').draw(false);
 
                             if (Number(data["book_id"]) > tmp_book_id) {
@@ -593,7 +593,7 @@
         $('#book_edit_modal').on('hidden.bs.modal', function() {
             $('#tbodyData_book tr.selected').removeClass("selected");
             $('.comment_toggle').html("");
-            
+
             $('#book_name').removeClass("bg-danger");
             $('#book_name').removeClass("text-white");
             $('#name_exists_error').hide();

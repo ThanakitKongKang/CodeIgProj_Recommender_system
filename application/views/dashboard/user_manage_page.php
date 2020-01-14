@@ -31,7 +31,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="old_username" id="old_username">
-                <button class="btn btn-danger delete_this_book_alert" title="Delete this book" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
+                <button class="btn btn-danger delete_this_book_alert" title="Delete this user" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
                 <table class="modal_user_info w-100 m-5">
                     <tr>
                         <td>
@@ -146,7 +146,7 @@
 
         // edit modal popup caller
         var flag_multi_delete = false;
-        $('#users tbody').on('click', 'tr', function() {
+        $('#users tbody').on('click', 'tr:not(:has(.dataTables_empty))', function() {
             var isChecked = $('.delete_toggle #info').prop("checked");
             if (isChecked) {
                 $(this).toggleClass('selected');
@@ -178,7 +178,7 @@
                 }).then((result) => {
                     if (result.value) {
                         for (var i = 0; i < count_row; i++) {
-                            data = table.row('.selected').data();
+                            data = table.rows('.selected').data()[i];
                             // table.row('.selected').draw(false);
 
                             var username = {

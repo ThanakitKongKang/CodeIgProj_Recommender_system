@@ -285,4 +285,13 @@ class DashboardController extends CI_Controller
         $comments = $this->comments_model->getAll();
         echo json_encode($comments);
     }
+
+    public function comment_delete()
+    {
+        $cid = $this->input->post('id');
+        $book_id = $this->input->post('book_id');
+        // delete from comment and comment liking
+        $this->comments_liking_model->delete_related_comment($book_id, $cid);
+        $this->comments_model->delete_comment($book_id, $cid);
+    }
 }
