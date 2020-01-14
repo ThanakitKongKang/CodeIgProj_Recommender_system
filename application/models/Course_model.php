@@ -8,6 +8,20 @@ class Course_model extends BaseModel
         parent::__construct();
     }
 
+    public function getAll()
+    {
+        $this->db->select('*');
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function get_course_by_id($id)
     {
         $this->db->select('*');
@@ -72,5 +86,11 @@ class Course_model extends BaseModel
         } else {
             return FALSE;
         }
+    }
+
+    public function course_update($course_id, $data)
+    {
+        $this->db->where('course_id', $course_id);
+        $this->db->update($this->table, $data);
     }
 }

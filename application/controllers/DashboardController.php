@@ -7,7 +7,7 @@ class DashboardController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(array('form', 'url', 'file'));
         $this->load->model('books_model');
         $this->load->model('rate_model');
         $this->load->model('course_model');
@@ -17,6 +17,7 @@ class DashboardController extends CI_Controller
         $this->load->model('comments_liking_model');
         $this->load->model('registered_course_model');
         $this->load->model('users_model');
+
         $this->check_auth_admin("dashboard");
     }
 
@@ -70,7 +71,7 @@ class DashboardController extends CI_Controller
 
         $this->load->view('./header', $header);
         $this->load->view('dashboard/dashboard_sidenav', $data_nav);
-        $this->load->view('dashboard/user_manage_page', $data);
+        $this->load->view('dashboard/user_manage_page');
         $this->load->view('footer');
     }
 
@@ -84,7 +85,7 @@ class DashboardController extends CI_Controller
 
         $this->load->view('./header', $header);
         $this->load->view('dashboard/dashboard_sidenav', $data_nav);
-        $this->load->view('dashboard/user_comment_manage_page', $data);
+        $this->load->view('dashboard/user_comment_manage_page');
         $this->load->view('footer');
     }
 
@@ -100,7 +101,23 @@ class DashboardController extends CI_Controller
 
         $this->load->view('./header', $header);
         $this->load->view('dashboard/dashboard_sidenav', $data_nav);
-        $this->load->view('dashboard/course_manage_page', $data);
+        $this->load->view('dashboard/course_manage_page');
+        $this->load->view('footer');
+    }
+
+    public function course_insert_page()
+    {
+        // manage course detail
+        // manage course keyword
+        $header["title"] = "Dashboard";
+
+        // active
+        $header["dashboard"] = "active";
+        $data_nav["isInsertCourse"] = "active";
+
+        $this->load->view('./header', $header);
+        $this->load->view('dashboard/dashboard_sidenav', $data_nav);
+        $this->load->view('dashboard/course_insert_page');
         $this->load->view('footer');
     }
 
@@ -259,7 +276,7 @@ class DashboardController extends CI_Controller
             'last_name' => $this->input->post('last_name'),
         );
 
-        $this->users_model->book_update($old_username, $post_data);
+        $this->users_model->user_update($old_username, $post_data);
     }
 
     public function user_delete()
@@ -293,5 +310,129 @@ class DashboardController extends CI_Controller
         // delete from comment and comment liking
         $this->comments_liking_model->delete_related_comment($book_id, $cid);
         $this->comments_model->delete_comment($book_id, $cid);
+    }
+
+    // COURSE api
+    public function course_get()
+    {
+        $course = $this->course_model->getAll();
+        echo json_encode($course);
+    }
+
+    public function course_get_by_id()
+    {
+        $course_id = $this->input->post('course_id');
+
+        $file = base_url() . "assets/_etc/course_registered_keyword.json";
+        $jsonString = file_get_contents($file);
+        $courses = json_decode($jsonString, true);
+
+        $keywords = array();
+        foreach ($courses as $key => $course) {
+            if ($key == $course_id) {
+                $keywords[] = $course;
+            }
+        }
+        echo json_encode($keywords);
+    }
+
+    public function course_update()
+    {
+        $course_id = $this->input->post('course_id');
+
+        $post_data = array(
+            'course_name_th' =>  $this->input->post('course_name_th'),
+            'course_name_en' => $this->input->post('course_name_en'),
+        );
+
+        $this->course_model->course_update($course_id, $post_data);
+
+
+
+        // Update file
+        // if (!empty($this->input->post('addmore'))) {
+        //     foreach ($this->input->post('addmore') as $key => $value) {
+        //         $this->db->insert('tagslist', $value);
+        //     }
+        // }
+        // $file = base_url() . "assets/_etc/course_registered_keyword.json";
+
+        // $jsonString = file_get_contents($file);
+        // $data = json_decode($jsonString, true);
+
+        // foreach ($data as $key => $entry) {
+        //     if ($entry['activity_code'] == '1') {
+        //         $data[$key]['activity_name'] = "TENNIS";
+        //     }
+        // }
+
+        // $newJsonString = json_encode($data);
+        // file_put_contents($file, $newJsonString);
+
+        // $fp = fopen($file, 'w');
+        // fwrite($fp, json_encode($response));
+
+        // if (!write_file('./eur_countries_array.json', $arr)) {
+        //     echo 'Unable to write the file';
+        // } else {
+        //     echo 'file written';
+        // }
+    }
+
+    public function course_update_json()
+    {
+        $course_id = $this->input->post('course_id');
+
+        // Update file
+        print_r($_POST);
+
+        // if (!empty($this->input->post('addmore'))) {
+            foreach ($this->input->post('addmore') as $key => $value) {
+                echo $value;
+            }
+        // }
+        // $file = base_url() . "assets/_etc/course_registered_keyword.json";
+
+        // $jsonString = file_get_contents($file);
+        // $data = json_decode($jsonString, true);
+
+        // foreach ($data as $key => $entry) {
+        //     if ($entry['activity_code'] == '1') {
+        //         $data[$key]['activity_name'] = "TENNIS";
+        //     }
+        // }
+
+        // $newJsonString = json_encode($data);
+        // file_put_contents($file, $newJsonString);
+
+        // $fp = fopen($file, 'w');
+        // fwrite($fp, json_encode($response));
+
+        // if (!write_file('./eur_countries_array.json', $arr)) {
+        //     echo 'Unable to write the file';
+        // } else {
+        //     echo 'file written';
+        // }
+    }
+
+    public function course_delete()
+    {
+        $course_id = $this->input->post('course_id');
+        // delete from keywords.json
+
+        $file = base_url() . "assets/_etc/course_registered_keyword.json";
+
+        $jsonString = file_get_contents($file);
+        $data = json_decode($jsonString, true);
+
+        foreach ($data as $key => $entry) {
+            if ($key == $course_id) {
+                unset($data[$key]);
+                // $data[$key]['activity_name'] = "TENNIS";
+            }
+        }
+
+        $newJsonString = json_encode($data);
+        file_put_contents($file, $newJsonString);
     }
 }

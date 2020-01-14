@@ -141,8 +141,6 @@
                     $(elm).addClass('selected');
                     $('.delete_this_book_alert').show();
                 }
-
-
             }
         });
 

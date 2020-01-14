@@ -279,14 +279,15 @@
                     if (result.value) {
                         // update info
                         var userArray = {
+                            old_username: old_username,
                             username: $('#username').val(),
-                            first_name: $('#last_name').val(),
+                            first_name: $('#first_name').val(),
                             last_name: $('[name="last_name"]').val(),
                         };
 
                         $.ajax({
                             type: 'POST',
-                            url: '<?= base_url() ?>/api/book/update',
+                            url: '<?= base_url() ?>/api/user/update',
                             data: userArray,
                             success: function(data) {
                                 $('#user_edit_modal').modal('hide');

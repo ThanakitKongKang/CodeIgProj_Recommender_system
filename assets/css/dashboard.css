@@ -188,7 +188,8 @@ a:focus {
 
 #tbodyData_book>tr.selected,
 #tbodyData_user>tr.selected,
-#tbodyData_comment>tr.selected {
+#tbodyData_comment>tr.selected,
+#tbodyData_course>tr.selected {
 	color: #fff;
 	background: linear-gradient(to left, #0062E6, #33AEFF);
 }
@@ -209,6 +210,10 @@ a:focus {
 #tbodyData_comment tr td:nth-child(5),
 #tbodyData_comment tr td:nth-child(6),
 #tbodyData_comment tr td:nth-child(7) {
+	text-align: center;
+}
+
+#tbodyData_course tr td:nth-child(1) {
 	text-align: center;
 }
 

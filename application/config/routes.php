@@ -177,6 +177,8 @@ $route['dashboard/user/manage'] = 'DashboardController/user_manage_page';
 $route['dashboard/user/comment_manage'] = 'DashboardController/user_comment_manage_page';
 
 $route['dashboard/course/manage'] = 'DashboardController/course_manage_page';
+$route['dashboard/course/insert'] = 'DashboardController/course_insert_page';
+
 
 // API
 $route['api/book/get'] = 'DashboardController/book_get';
@@ -196,6 +198,18 @@ $route['api/user/name_exists'] = 'DashboardController/isUsernameExists';
 
 $route['api/comment/get'] = 'DashboardController/comment_get';
 $route['api/comment/delete'] = 'DashboardController/comment_delete';
+
+$route['api/course/get'] = 'DashboardController/course_get';
+$route['api/course/get_one'] = 'DashboardController/course_get_by_id';
+$route['api/course/update'] = 'DashboardController/course_update';
+$route['api/course/update_json'] = 'DashboardController/course_update_json';
+
+$route['api/course/delete'] = 'DashboardController/course_delete';
+
+
+
+
+
 
 
 

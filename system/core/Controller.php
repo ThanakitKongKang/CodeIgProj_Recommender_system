@@ -206,33 +206,36 @@ class CI_Controller
 			$transformer->transform($data['tf_no_stopwords2']);
 
 			// course_registered_keyword sets
-			$data['course_registered_keyword'] = array(
-				'SC312002' => array(
-					'human' => 1,
-					'computer' => 1,
-					'interaction' => 1,
-					'interactive' => 1,
-					'design' => 1,
-					'designing' => 1,
-					'ux' => 1,
-					'ui' => 1,
-					'user interface' => 1,
-					'user experience' => 1,
-					'user experiences' => 1,
-					'ux/ui' => 1,
-				),
+			// $data['course_registered_keyword'] = array(
+			// 	'SC312002' => array(
+			// 		'human' => 1,
+			// 		'computer' => 1,
+			// 		'interaction' => 1,
+			// 		'interactive' => 1,
+			// 		'design' => 1,
+			// 		'designing' => 1,
+			// 		'ux' => 1,
+			// 		'ui' => 1,
+			// 		'interface' => 1,
+			// 		'experience' => 1,
+			// 		'experiences' => 1,
+			// 		'ux/ui' => 1,
+			// 	),
 
-				'SC312006' => array(
-					'analysis' => 1,
-					'algorithm' => 1,
-					'algorithms' => 1,
-				),
+			// 	'SC312006' => array(
+			// 		'analysis' => 1,
+			// 		'algorithm' => 1,
+			// 		'algorithms' => 1,
+			// 	),
 
-				'000101' => array(
-					'english' => 1,
-					'language' => 1,
-				),
-			);
+			// 	'000101' => array(
+			// 		'english' => 1,
+			// 		'language' => 1,
+			// 	),
+			// );
+
+			$file = base_url() . "assets/_etc/course_registered_keyword.json";
+			$data['course_registered_keyword'] = json_decode(file_get_contents($file), true);
 
 
 			// get course keywords by user's registered courses's id

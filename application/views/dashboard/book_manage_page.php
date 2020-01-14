@@ -78,7 +78,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Category</span>
                                 </div>
-                                <select class="custom-select" id="book_type">
+                                <select class="custom-select" id="book_type" name="book_type">
                                     <?php foreach ($category_list as $category) { ?>
                                         <option value="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></option>
                                     <?php } ?>
@@ -469,6 +469,7 @@
                             author: $('#author').val(),
                             book_type: $('[name="book_type"]').val(),
                         };
+
                         $.ajax({
                             type: 'POST',
                             url: '<?= base_url() ?>/api/book/update',
@@ -478,6 +479,7 @@
 
                             }
                         })
+                        console.log(booksArray)
 
                         if (isCoverChanged) {
                             // update cover

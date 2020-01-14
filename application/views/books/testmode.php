@@ -50,49 +50,8 @@
     // echo "</div>";
     ?>
 
-    <?php
-    foreach ($recommend_list_detail_course as $rec_course) { ?>
-        <div class="center bg-light m-5 p-5 text-center" data-slick='{"slidesToShow": 5, "slidesToScroll": 5}'>
-            <?php foreach ($rec_course as $sub_rec_course) {
-            ?>
-                <div class="h-100">
-                    <h5 class='m-2 bg-white'><?= $sub_rec_course["book_name"] ?></h5>
-                </div>
-            <?php } ?>
-        </div>
-    <?php } ?>
-
     <script>
         $(document).ready(function() {
-            $('.center').each(function(index) {
-                var randomSpeed = 1000 * (index + 1);
-                $(this).slick({
-                    lazyLoad: 'ondemand',
-                    centerMode: true,
-                    centerPadding: '60px',
-                    slidesToShow: 5,
-                    autoplay: true,
-                    autoplaySpeed: randomSpeed,
-                    responsive: [{
-                            breakpoint: 768,
-                            settings: {
-                                arrows: false,
-                                centerMode: true,
-                                centerPadding: '40px',
-                                slidesToShow: 3
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                arrows: false,
-                                centerMode: true,
-                                centerPadding: '40px',
-                                slidesToShow: 1
-                            }
-                        }
-                    ]
-                });
-            });
+
         });
     </script>
