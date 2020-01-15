@@ -24,7 +24,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="course_edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit course's info</h5>
@@ -32,11 +32,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <button class="btn btn-danger delete_this_book_alert" title="Delete this course" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
-                <form id="the_form">
+            <form id="the_form">
+                <div class="modal-body">
+                    <button class="btn btn-danger delete_this_book_alert" title="Delete this course" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
                     <table class="modal_course_info w-100 m-5" id="dynamic_field">
-
                         <tr>
                             <td>
                                 <div class="input-group mb-3 w-25">
@@ -68,10 +67,9 @@
                             </td>
                         </tr>
 
-                        <input type="hidden" class="form-control" id="course_id_2">
                         <tr>
                             <td>
-                                <div class="w-25 input-group-text text-center d-inline-block">
+                                <div class="w-25 input-group-text text-center d-inline-block mb-1">
                                     Keywords
                                 </div>
                             </td>
@@ -79,8 +77,8 @@
 
                         <tr id="start_dynamic">
                             <td>
-                                <div class="input-group mb-1 w-50">
-                                    <input type="text" name="addmore[keyword][]" placeholder="Enter course keyword" class="form-control w-75  first_addmore" required="" style="display:inline-block" />
+                                <div class="input-group mb-1 w-50 ml-2">
+                                    <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore first_addmore" required="" style="display:inline-block" />
                                     <div class="input-group-append">
                                         <span class="input-group-text px-2 py-0"> <button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
                                         </span>
@@ -90,9 +88,10 @@
                         </tr>
 
 
+
                     </table>
-                </form>
-            </div>
+                </div>
+            </form>
             <div class="edit_footer modal-footer">
                 <button type="button" onclick="" id="footer-submit" class="edit_this_course_alert btn btn-primary text-white" data-dismiss="modal">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -205,7 +204,6 @@
                     if (result.value) {
                         for (var i = 0; i < count_row; i++) {
                             data = table.rows('.selected').data()[i];
-                            // table.row('.selected').draw(false);
 
                             var course_id = {
                                 course_id: data["course_id"],
@@ -214,15 +212,14 @@
                             $.ajax({
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/course/delete',
-                                data: username,
-                                async: false,
+                                data: course_id,
                                 success: function(data) {
                                     Toast.fire({
                                         title: 'Success !',
                                         text: 'Saved changes',
                                         type: 'success',
                                     })
-                                    table.row('.selected').remove().draw(false);
+
                                     multiple_delete_trigger_refresh_count();
                                 }
                             })
@@ -251,7 +248,7 @@
         }
 
         function editModalCaller(elm) {
-
+            resetDynamicInput();
             var data = table.row(elm).data();
             if ($(elm).hasClass('selected')) {
                 $(elm).removeClass('selected');
@@ -263,7 +260,7 @@
             $('.modal_course_info tbody tr:nth-child(2) td div input#course_name_th').val(data["course_name_th"]);
             $('.modal_course_info tbody tr:nth-child(3) td div input#course_name_en').val(data["course_name_en"]);
 
-            $('[name="addmore[keyword][]"]').val("");
+            $('[name="addmore[]"]').val("");
             $('#course_id_2').val(data["course_id"]);
 
             var postData = {
@@ -274,21 +271,29 @@
                 type: 'POST',
                 url: '<?= base_url() ?>/api/course/get_one',
                 data: postData,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
                 success: function(data) {
                     var response = JSON.parse(data);
                     var html;
                     var count;
                     response.forEach(function(keyword, i) {
                         for (var key in keyword) {
-                            html = '<tr id="row' + i + '" class="dynamic-added"><td><div class="input-group mb-1 w-50"><input type="text" id="' + i + '" name="addmore[keyword][]" placeholder="Enter course keyword" class="form-control w-75" required="" style="display:inline-block" value="' + key + '"/><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
+                            html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" value="' + key + '"/><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
                             $(html).insertBefore('#start_dynamic');
+                            // $('#dynamic_field').append(html);
                             i++;
                         }
                     });
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                    $('#course_edit_modal').modal('show');
                 }
             })
-
-            $('#course_edit_modal').modal('show');
         }
 
         $('.edit_this_course_alert').on('click', function(e) {
@@ -327,38 +332,24 @@
                         course_name_en: $('#course_name_en').val(),
                     };
 
-                    // var fdata = new FormData();
-                    // var addmore[keyword][] = $('.addmore[keyword][]').serialize();
-
-                    // fdata.append('addmore[keyword][]', addmore[keyword][]);
-                    // fdata.append('course_id', $('#course_id').val());
-
-                    var paramsToSend = {};
-                    var i = 1;
-                    $('#dynamic_field').find('input.addmore').each(function() {
-                        paramsToSend[i] = $(this).val();
-                        i++;
-                    });
-
-                    var what = document.querySelectorAll('.addmore');
-                    console.log($(document).find('#0').val());
-                    console.log($(document).find('#1').val());
-                    console.log($('input#0').val())
-
+                    var formData = new FormData($('#the_form')[0]);
+                    formData.append('course_id', $('#course_id').val());
                     $.ajax({
                         type: 'POST',
                         url: '<?= base_url() ?>/api/course/update',
                         data: courseArray,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
                         success: function(data) {
                             $.ajax({
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/course/update_json',
-                                data: {
-                                    params: JSON.stringify(paramsToSend)
-                                },
-                                contentType: false,
-                                cache: false,
+                                data: formData,
                                 processData: false,
+                                contentType: false,
                                 success: function(data) {
                                     $('#course_edit_modal').modal('hide');
                                     Toast.fire({
@@ -366,12 +357,18 @@
                                         text: 'Saved changes',
                                         type: 'success',
                                     })
-                                    $('[name="addmore[keyword][]"]').val("");
+                                    document.getElementById("the_form").reset();
+                                    $('[name="addmore[]"]').val("");
                                     table.ajax.reload();
+                                    $(document.body).css({
+                                        'cursor': 'default'
+                                    });
                                 }
                             })
                         }
                     })
+
+
                 } else {
                     $('#course_edit_modal').modal('show');
                 }
@@ -400,14 +397,21 @@
                         type: 'POST',
                         url: '<?= base_url() ?>/api/course/delete',
                         data: course_id,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
                         success: function(data) {
                             Toast.fire({
                                 title: 'Success !',
                                 text: 'Saved changes',
                                 type: 'success',
                             })
+                            $(document.body).css({
+                                'cursor': 'default'
+                            });
                             table.ajax.reload();
-
                         }
                     })
 
@@ -419,17 +423,16 @@
 
         $('#course_edit_modal').on('hidden.bs.modal', function() {
             $('#tbodyData_course tr.selected').removeClass("selected");
-            resetDynamicInput();
         })
 
         function resetDynamicInput() {
-            $('[id^=row]').remove();
+            $('.dynamic-added').remove();
         }
 
         var i = 1;
         $('#add').click(function() {
             i++;
-            var html = '<tr id="row' + i + '" class="dynamic-added"><td><div class="input-group mb-1 w-50"><input type="text" name="addmore[keyword][]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
+            var html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
 
             $('#dynamic_field').append(html);
         });

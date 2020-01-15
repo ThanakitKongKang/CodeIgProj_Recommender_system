@@ -179,6 +179,11 @@
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/comment/delete',
                                 data: dataArray,
+                                beforeSend: function() {
+                                    $(document.body).css({
+                                        'cursor': 'wait'
+                                    });
+                                },
                                 success: function(data) {
                                     Toast.fire({
                                         title: 'Success !',
@@ -187,6 +192,9 @@
                                     })
                                     table.row('.selected').remove().draw(false);
                                     multiple_delete_trigger_refresh_count();
+                                    $(document.body).css({
+                                        'cursor': 'default'
+                                    });
                                 }
                             })
                         }
@@ -251,6 +259,11 @@
                         type: 'POST',
                         url: '<?= base_url() ?>/api/comment/delete',
                         data: dataArray,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
                         success: function(data) {
                             Toast.fire({
                                 title: 'Success !',
@@ -258,7 +271,9 @@
                                 type: 'success',
                             })
                             table.ajax.reload();
-
+                            $(document.body).css({
+                                'cursor': 'default'
+                            });
                         }
                     })
 

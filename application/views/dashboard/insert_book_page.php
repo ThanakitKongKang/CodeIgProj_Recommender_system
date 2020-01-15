@@ -195,7 +195,7 @@
 
                     var image = {
                         image: response,
-                        is_new : true,
+                        is_new: true,
                     };
 
                     var file_data = $('#inputGroupFile02').prop('files')[0];
@@ -207,6 +207,11 @@
                         type: 'POST',
                         url: '<?= base_url() ?>api/book/insert',
                         data: booksArray,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
                         success: function(data) {
                             $.ajax({
                                 type: 'POST',
@@ -231,7 +236,10 @@
                                             $('#inputGroupFile01').next('.label_cover').html("Choose file");
                                             $('#inputGroupFile02').next('.label_file').html("Choose file");
                                             $('.upload_msg').show();
-                                            upload_crop.croppie('destroy')
+                                            upload_crop.croppie('destroy');
+                                            $(document.body).css({
+                                                'cursor': 'default'
+                                            });
                                         }
                                     })
                                 }

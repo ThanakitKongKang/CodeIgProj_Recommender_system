@@ -22,11 +22,11 @@ class Course_model extends BaseModel
         }
     }
 
-    public function get_course_by_id($id)
+    public function get_course_by_id($course_id)
     {
         $this->db->select('*');
         $this->db->from($this->table);
-        $this->db->where('course_id', $id);
+        $this->db->where('course_id', $course_id);
         $this->db->limit(1);
 
         $qry =  $this->db->get();
@@ -92,5 +92,11 @@ class Course_model extends BaseModel
     {
         $this->db->where('course_id', $course_id);
         $this->db->update($this->table, $data);
+    }
+
+    public function course_delete($course_id)
+    {
+        $this->db->where('course_id', $course_id);
+        $this->db->delete($this->table);
     }
 }

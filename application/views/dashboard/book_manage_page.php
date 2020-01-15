@@ -282,7 +282,6 @@
                         var tmp_book_id;
                         for (var i = 0; i < count_row; i++) {
                             data = table.rows('.selected').data()[i];
-                            // table.row('.selected').draw(false);
 
                             if (Number(data["book_id"]) > tmp_book_id) {
                                 var book_id = {
@@ -300,15 +299,21 @@
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/book/delete',
                                 data: book_id,
-                                async: false,
+                                beforeSend: function() {
+                                    $(document.body).css({
+                                        'cursor': 'wait'
+                                    });
+                                },
                                 success: function(data) {
                                     Toast.fire({
                                         title: 'Success !',
                                         text: 'Saved changes',
                                         type: 'success',
                                     })
-                                    table.row('.selected').remove().draw(false);
                                     multiple_delete_trigger_refresh_count();
+                                    $(document.body).css({
+                                        'cursor': 'default'
+                                    });
                                 }
                             })
 
@@ -399,6 +404,11 @@
                 type: 'POST',
                 url: '<?= base_url() ?>/api/book/is_comment_enable',
                 data: postData,
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
                 success: function(data) {
                     if (data) {
                         $('.comment_toggle').append('<input id="comment" class="switch-box-input" type="checkbox" checked="checked"/><label for="comment" class="switch-box-slider mr-2"></label><label for="comment" class="switch-box-label small font-arial text-muted delete_toggle_label">Toggle comment function</label>')
@@ -409,7 +419,9 @@
                         // $('.comment_toggle #comment').attr('checked', false);
 
                     }
-
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
                     $('#book_edit_modal').modal('show');
                 }
             })
@@ -490,7 +502,6 @@
                                 url: '<?= base_url() ?>api/book/cover_upload',
                                 data: image,
                                 success: function(data) {
-
                                     $('#inputGroupFile01').next('.label_cover').html("Choose file");
                                     $('#inputGroupFile01').val('');
                                     $('.upload_msg').show();
@@ -575,12 +586,20 @@
                         type: 'POST',
                         url: '<?= base_url() ?>/api/book/delete',
                         data: formData,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
                         success: function(data) {
                             Toast.fire({
                                 title: 'Success !',
                                 text: 'Saved changes',
                                 type: 'success',
                             })
+                            $(document.body).css({
+                                'cursor': 'default'
+                            });
                             table.ajax.reload();
 
                         }

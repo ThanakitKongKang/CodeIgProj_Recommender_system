@@ -346,93 +346,88 @@ class DashboardController extends CI_Controller
         );
 
         $this->course_model->course_update($course_id, $post_data);
-
-
-
-        // Update file
-        // if (!empty($this->input->post('addmore'))) {
-        //     foreach ($this->input->post('addmore') as $key => $value) {
-        //         $this->db->insert('tagslist', $value);
-        //     }
-        // }
-        // $file = base_url() . "assets/_etc/course_registered_keyword.json";
-
-        // $jsonString = file_get_contents($file);
-        // $data = json_decode($jsonString, true);
-
-        // foreach ($data as $key => $entry) {
-        //     if ($entry['activity_code'] == '1') {
-        //         $data[$key]['activity_name'] = "TENNIS";
-        //     }
-        // }
-
-        // $newJsonString = json_encode($data);
-        // file_put_contents($file, $newJsonString);
-
-        // $fp = fopen($file, 'w');
-        // fwrite($fp, json_encode($response));
-
-        // if (!write_file('./eur_countries_array.json', $arr)) {
-        //     echo 'Unable to write the file';
-        // } else {
-        //     echo 'file written';
-        // }
     }
 
     public function course_update_json()
     {
         $course_id = $this->input->post('course_id');
-
         // Update file
-        print_r($_POST);
+        // print_r($_POST);
 
-        // if (!empty($this->input->post('addmore'))) {
-            foreach ($this->input->post('addmore') as $key => $value) {
-                echo $value;
+        if (!empty($this->input->post('addmore'))) {
+            $file = base_url() . "assets/_etc/course_registered_keyword.json";
+
+            $jsonString = file_get_contents($file);
+            $data = json_decode($jsonString, true);
+            $replacementData = $data;
+            // reset keyword to get new one
+            unset($replacementData[$course_id]);
+
+            foreach ($this->input->post('addmore') as $post_key => $post_value) {
+                if (!empty($post_value)) {
+                    $replacementData[$course_id][$post_value] = "1";
+                }
             }
-        // }
-        // $file = base_url() . "assets/_etc/course_registered_keyword.json";
 
-        // $jsonString = file_get_contents($file);
-        // $data = json_decode($jsonString, true);
-
-        // foreach ($data as $key => $entry) {
-        //     if ($entry['activity_code'] == '1') {
-        //         $data[$key]['activity_name'] = "TENNIS";
-        //     }
-        // }
-
-        // $newJsonString = json_encode($data);
-        // file_put_contents($file, $newJsonString);
-
-        // $fp = fopen($file, 'w');
-        // fwrite($fp, json_encode($response));
-
-        // if (!write_file('./eur_countries_array.json', $arr)) {
-        //     echo 'Unable to write the file';
-        // } else {
-        //     echo 'file written';
-        // }
+            $file_document_root = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/_etc/course_registered_keyword.json";
+            $newJsonString = json_encode($replacementData);
+            $writable = (is_writable($file_document_root)) ? TRUE : chmod($file, 0777);
+            if ($writable) {
+                echo "writable";
+                if (file_put_contents($file_document_root, $newJsonString, 2)) {
+                    print_r($newJsonString);
+                }
+            } else {
+                echo "unwritable " . $file_document_root;
+            }
+        }
     }
 
     public function course_delete()
     {
         $course_id = $this->input->post('course_id');
         // delete from keywords.json
+        $this->course_model->course_delete($course_id);
 
         $file = base_url() . "assets/_etc/course_registered_keyword.json";
 
         $jsonString = file_get_contents($file);
         $data = json_decode($jsonString, true);
-
-        foreach ($data as $key => $entry) {
-            if ($key == $course_id) {
-                unset($data[$key]);
-                // $data[$key]['activity_name'] = "TENNIS";
+        $replacementData = $data;
+        // reset keyword to get new one
+        unset($replacementData[$course_id]);
+        $file_document_root = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/_etc/course_registered_keyword.json";
+        $newJsonString = json_encode($replacementData);
+        $writable = (is_writable($file_document_root)) ? TRUE : chmod($file, 0777);
+        if ($writable) {
+            echo "writable";
+            if (file_put_contents($file_document_root, $newJsonString, 2)) {
+                print_r($newJsonString);
             }
+        } else {
+            echo "unwritable " . $file_document_root;
+        }
+    }
+
+    public function isCourseIdExists()
+    {
+        $course_id = $this->input->post('course_id');
+        $row = $this->course_model->get_course_by_id($course_id);
+
+        if ($row != FALSE) {
+            echo "true";
         }
 
-        $newJsonString = json_encode($data);
-        file_put_contents($file, $newJsonString);
+    }
+
+    public function course_insert()
+    {
+        $post_data = array(
+            'course_id' => $this->input->post('course_id'),
+            'course_name_th' =>  $this->input->post('course_name_th'),
+            'course_name_en' => $this->input->post('course_name_en'),
+        );
+
+        $this->course_model->insert($post_data);
     }
 }

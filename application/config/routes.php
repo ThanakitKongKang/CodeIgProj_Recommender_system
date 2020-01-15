@@ -203,8 +203,11 @@ $route['api/course/get'] = 'DashboardController/course_get';
 $route['api/course/get_one'] = 'DashboardController/course_get_by_id';
 $route['api/course/update'] = 'DashboardController/course_update';
 $route['api/course/update_json'] = 'DashboardController/course_update_json';
-
 $route['api/course/delete'] = 'DashboardController/course_delete';
+$route['api/course/id_exists'] = 'DashboardController/isCourseIdExists';
+$route['api/course/insert'] = 'DashboardController/course_insert';
+
+
 
 
 

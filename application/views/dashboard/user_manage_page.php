@@ -289,15 +289,22 @@
                             type: 'POST',
                             url: '<?= base_url() ?>/api/user/update',
                             data: userArray,
+                            beforeSend: function() {
+                                $(document.body).css({
+                                    'cursor': 'wait'
+                                });
+                            },
                             success: function(data) {
+                                Toast.fire({
+                                    title: 'Success !',
+                                    text: 'Saved changes',
+                                    type: 'success',
+                                })
                                 $('#user_edit_modal').modal('hide');
+                                $(document.body).css({
+                                    'cursor': 'default'
+                                });
                             }
-                        })
-
-                        Toast.fire({
-                            title: 'Success !',
-                            text: 'Saved changes',
-                            type: 'success',
                         })
 
                         table.ajax.reload();
@@ -342,6 +349,11 @@
                         type: 'POST',
                         url: '<?= base_url() ?>/api/user/delete',
                         data: formData,
+                        beforeSend: function() {
+                            $(document.body).css({
+                                'cursor': 'wait'
+                            });
+                        },
                         success: function(data) {
                             Toast.fire({
                                 title: 'Success !',
@@ -349,7 +361,9 @@
                                 type: 'success',
                             })
                             table.ajax.reload();
-
+                            $(document.body).css({
+                                'cursor': 'default'
+                            });
                         }
                     })
 
