@@ -248,3 +248,8 @@ thead tr {
 	top: -7px;
 	position: relative;
 }
+
+.cr-boundary {
+	margin-top: 50px !important;
+	margin-bottom: 50px !important;
+}

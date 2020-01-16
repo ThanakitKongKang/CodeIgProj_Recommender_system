@@ -5,7 +5,7 @@
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" autocomplete="off" required class="form-control" name="book_name" id="book_name" placeholder="Book title..">
+                    <input type="text" autocomplete="off" required class="form-control" name="book_name" id="book_name" placeholder="Book title.." title="Book title can't be null">
                     <span class="small pl-3 text-danger" style="display:none" id="name_exists_error">Book name already taken</span>
                 </div>
             </div>
@@ -13,7 +13,7 @@
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Author</label>
                 <div class="col-sm-6">
-                    <input type="text" autocomplete="off" required class="form-control" name="author" id="author" placeholder="Author..">
+                    <input type="text" autocomplete="off" required class="form-control" name="author" id="author" placeholder="Author.." title="Author field can't be null" >
                 </div>
             </div>
 
@@ -32,18 +32,6 @@
 
             </div>
 
-            <!-- <div class="form-group row">
-                <label for="price" class="col-sm-2 col-form-label">ราคา</label>
-                <div class="col-sm-3">
-                    <input type="number" required step=0.01 min="1" class="form-control" name="product_price" id="product_price" placeholder="ราคาขายปลีก">
-                </div>
-                <div class="col-sm-3">
-                    <input type="number" required step=0.01 min="1" class="form-control" name="product_price_discount" id="product_price_discount" placeholder="ราคาขาย(ยอด 5,000 ขึ้น)">
-                </div>
-                <div class="col-sm-3">
-                    <input type="number" required step=0.01 min="1" class="form-control" name="product_cost" id="product_cost" placeholder="ราคาทุน/หน่วย">
-                </div>
-            </div> -->
             <div class="form-group row">
                 <label for="inputGroupFileAddon02" class="col-sm-2 col-form-label">Book file</label>
                 <div class="col-sm-9 input-group">
@@ -95,7 +83,7 @@
             tmp_booktype = $('#book_type').html();
             $('#book_type').remove();
             $('#addCategory').remove();
-            $('.toggle_addcategory').append("<input type='text' autocomplete='off' required class='form-control' name='book_type' id='book_type2' placeholder='Category..'>");
+            $('.toggle_addcategory').append("<input type='text' autocomplete='off' required class='form-control' name='book_type' id='book_type2' title='English charachers or numbers only' pattern='[a-zA-Z0-9\\s]+' placeholder='Category..'>");
             $('.toggle_addcategory').append("<a class='small pl-3' href='#' id='cancelAddCategory'>Cancel add category</a>")
         })
 

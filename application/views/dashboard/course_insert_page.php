@@ -5,7 +5,7 @@
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Course ID</label>
                 <div class="col-sm-2">
-                    <input type="text" autocomplete="off" required class="form-control" name="course_id" id="course_id" placeholder="Course ID..">
+                    <input type="text" autocomplete="off" required class="form-control" name="course_id" id="course_id" placeholder="Course ID.." pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title="6 letters of numbers. Starts with english letter is optional">
                 </div>
                 <div class="col-sm-4 mt-2">
                     <span class="small px-0 text-danger font-arial" style="display:none" id="course_id_exists_error">Course ID already exists</span>
@@ -15,14 +15,14 @@
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Thai Title</label>
                 <div class="col-sm-9">
-                    <input type="text" autocomplete="off" required class="form-control" name="course_name_th" id="course_name_th" placeholder="Thai course title..">
+                    <input type="text" autocomplete="off" required class="form-control" name="course_name_th" id="course_name_th" placeholder="Thai course title.." pattern='[ก-๏\s0-9]+' title="Must be thai characters.">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">English Title</label>
                 <div class="col-sm-9">
-                    <input type="text" autocomplete="off" required class="form-control" name="course_name_en" id="course_name_en" placeholder="English course title..">
+                    <input type="text" autocomplete="off" required class="form-control" name="course_name_en" id="course_name_en" placeholder="English course title.." pattern='[a-zA-Z0-9\s]+' title="Must be english characters.">
                 </div>
             </div>
             <div class="w-25 input-group-text text-center d-inline-block mb-1">
@@ -33,7 +33,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Keyword</span>
                     </div>
-                    <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore first_addmore" style="display:inline-block" />
+                    <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore first_addmore" style="display:inline-block" pattern="[^\s]+" title="Keyword must not contains spaces" />
                     <div class="input-group-append">
                         <span class="input-group-text px-2 py-0"> <button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
                         </span>

@@ -39,7 +39,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Username</span>
                                 </div>
-                                <input type="text" class="form-control" id="username" name="username">
+                                <input type="text" class="form-control" id="username" name="username" title="Must be English charaters or numbers" pattern='[a-zA-Z0-9\s]{3,24}$' required>
                             </div>
                             <span class="ml-5 small pl-5 text-danger" style="display:none" id="name_exists_error">Username already taken</span>
                         </td>
@@ -50,7 +50,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Firstname</span>
                                 </div>
-                                <input type="text" class="form-control" id="first_name" name="first_name">
+                                <input type="text" class="form-control" id="first_name" name="first_name" required>
                             </div>
                         </td>
                     </tr>
@@ -60,7 +60,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Lastname</span>
                                 </div>
-                                <input type="text" class="form-control" id="last_name" name="last_name">
+                                <input type="text" class="form-control" id="last_name" name="last_name" required>
                             </div>
                         </td>
                     </tr>
@@ -265,55 +265,82 @@
         });
 
         function swalEditUserConfirm() {
+            formCheckValid();
             if (!isNameExists) {
-                Swal.fire({
-                    title: 'Confirm ?',
-                    html: "",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#a0a0a0',
-                    confirmButtonText: 'Save',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.value) {
-                        // update info
-                        var userArray = {
-                            old_username: old_username,
-                            username: $('#username').val(),
-                            first_name: $('#first_name').val(),
-                            last_name: $('[name="last_name"]').val(),
-                        };
+                if (isValid) {
+                    Swal.fire({
+                        title: 'Confirm ?',
+                        html: "",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#a0a0a0',
+                        confirmButtonText: 'Save',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.value) {
+                            // update info
+                            var userArray = {
+                                old_username: old_username,
+                                username: $('#username').val(),
+                                first_name: $('#first_name').val(),
+                                last_name: $('[name="last_name"]').val(),
+                            };
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>/api/user/update',
-                            data: userArray,
-                            beforeSend: function() {
-                                $(document.body).css({
-                                    'cursor': 'wait'
-                                });
-                            },
-                            success: function(data) {
-                                Toast.fire({
-                                    title: 'Success !',
-                                    text: 'Saved changes',
-                                    type: 'success',
-                                })
-                                $('#user_edit_modal').modal('hide');
-                                $(document.body).css({
-                                    'cursor': 'default'
-                                });
-                            }
-                        })
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>/api/user/update',
+                                data: userArray,
+                                beforeSend: function() {
+                                    $(document.body).css({
+                                        'cursor': 'wait'
+                                    });
+                                },
+                                success: function(data) {
+                                    Toast.fire({
+                                        title: 'Success !',
+                                        text: 'Saved changes',
+                                        type: 'success',
+                                    })
+                                    $('#user_edit_modal').modal('hide');
+                                    $(document.body).css({
+                                        'cursor': 'default'
+                                    });
+                                }
+                            })
 
-                        table.ajax.reload();
+                            table.ajax.reload();
 
-                    } else {
-                        $('#user_edit_modal').modal('show');
+                        } else {
+                            $('#user_edit_modal').modal('show');
+                        }
+                    })
+                } else {
+                    var username = document.querySelector("#username");
+                    var first_name = document.querySelector("#first_name");
+                    var last_name = document.querySelector("#last_name");
+                    var html = "";
+                    if (!username.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>Username must contains 3 to 24 english characters or numbers</pre>";
                     }
-                })
+                    if (!first_name.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>First name can't be empty</pre>";
+                    }
+                    if (!last_name.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>Last name can't be empty</pre>";
+                    }
+                    $('#user_edit_modal').modal('show');
 
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        html: html,
+                        onClose: () => {
+                            $('#user_edit_modal').modal('show');
+                            $('#username').focus();
+                        }
+                    })
+                }
             } else {
                 Swal.fire({
                     type: 'error',
@@ -322,6 +349,8 @@
                     onClose: () => {
                         $('#user_edit_modal').modal('show');
                         $('#username').focus();
+                        usernameCheck();
+
                     }
                 })
             }
@@ -381,9 +410,19 @@
             isNameExists = false;
 
         })
+        var isValid = false;
+        function formCheckValid() {
+            var username = document.querySelector("#username");
+            var first_name = document.querySelector("#first_name");
+            var last_name = document.querySelector("#last_name");
+
+            isValid = username.checkValidity() & first_name.checkValidity() & last_name.checkValidity();
+        }
+
 
         var isNameExists = false;
-        $('#username').on('keyup', function() {
+
+        function usernameCheck() {
             var username = {
                 username: $('[name ="username"]').val(),
             };
@@ -407,7 +446,9 @@
                     }
                 })
             }
-
+        }
+        $('#username').on('keyup', function() {
+            usernameCheck();
         });
 
     });

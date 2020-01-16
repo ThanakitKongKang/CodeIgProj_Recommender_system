@@ -32,11 +32,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <button class="btn btn-danger delete_this_book_alert" title="Delete this book" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
-                <table class="modal_book_info w-100">
+            <div class="modal-body pt-4">
+                <button class="btn btn-danger delete_this_book_alert mb-3" title="Delete this book" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
+                <table class="modal_book_info w-100 mt-5">
                     <tr>
-                        <td>
+                        <td class="w-50">
+                            <div class="text-center mr-2">
+                                <img src="" id="old_img" style="max-width:15rem">
+                            </div>
+                            <div class="text-center small text-muted">(current cover image)</div>
+                        </td>
+                        <td class="w-50">
+                            <div class="text-center ml-2" id="preview_upload_wrapper">
+                                <div class="mx-auto upload_msg">
+                                    Upload a new book cover to start cropping
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book id</span>
@@ -51,29 +66,29 @@
                     </tr>
 
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book name</span>
                                 </div>
-                                <input type="text" class="form-control" id="book_name" name="book_name">
+                                <input type="text" class="form-control" autocomplete='off' id="book_name" name="book_name" pattern=".{1,}" title="Book title can't be null" required>
 
                             </div>
-                            <span class="ml-5 small pl-5 text-danger" style="display:none" id="name_exists_error">Book name already taken</span>
+                            <span class=" ml-5 small pl-5 text-danger" style="display:none" id="name_exists_error">Book name already taken</span>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="input-group mb-3 mt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Author</span>
                                 </div>
-                                <input type="text" class="form-control" id="author">
+                                <input type="text" class="form-control" id="author" name="author" pattern=".{1,}" title="Author field can't be null" required>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="input-group mb-3 toggle_addcategory">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Category</span>
@@ -83,12 +98,12 @@
                                         <option value="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></option>
                                     <?php } ?>
                                 </select>
-                                <a class="small pl-5 w-100 ml-5" style="display:block" href="#" id="addCategory">Add category ?</a>
+                                <a class="small pl-5 w-100 ml-5 font-arial pt-1" style="display:block" href="#" id="addCategory">Add category</a>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Book file</span>
@@ -97,12 +112,14 @@
                                     <input type="file" class="custom-file-input" required id="inputGroupFile02" name="book_file" aria-describedby="inputGroupFileAddon02" accept="application/pdf">
                                     <label class="custom-file-label label_file" for="inputGroupFile02">Choose file</label>
                                 </div>
+                                <a class="small pl-5 ml-5 w-100 font-arial pt-1" id="current_book_file" href="" target="_blank">Current book file</a>
+
                             </div>
                         </td>
                     </tr>
 
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Cover Image</span>
@@ -114,20 +131,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="text-center">
-                                <img src="" id="old_img" style="max-width:10rem">
-                            </div>
-                            <div class="text-center small text-muted">(current cover image)</div>
 
-                        </td>
-                    </tr>
-                    <div class="text-center" id="preview_upload_wrapper">
-                        <div class="mx-auto upload_msg">
-                            Upload a new book cover to start cropping
-                        </div>
-                    </div>
                 </table>
             </div>
             <div class="edit_footer modal-footer">
@@ -210,7 +214,7 @@
             tmp_old_booktype = $('[name="book_type"]').val();
             $('#book_type').remove();
             $('#addCategory').remove();
-            $('.toggle_addcategory').append("<input type='text' autocomplete='off' required class='form-control' name='book_type' id='book_type2' placeholder='Category..'>");
+            $('.toggle_addcategory').append("<input type='text' autocomplete='off' required class='form-control' name='book_type' id='book_type2' pattern='[a-zA-Z0-9\\s]+' placeholder='Category..'>");
             $('.toggle_addcategory').append("<a class='small pl-5 w-100 ml-5' style='display:block' href='#' id='cancelAddCategory'>Cancel add category</a>")
         })
 
@@ -382,14 +386,16 @@
                 $(elm).addClass('selected');
             }
             old_book_name = data["book_name"];
-
-            $('.modal_book_info tbody tr:nth-child(1) td div input').val(data["book_id"]);
-            $('.modal_book_info tbody tr:nth-child(2) td div input').val(data["book_name"]);
-            $('.modal_book_info tbody tr:nth-child(3) td div input').val(data["author"]);
-            $('.modal_book_info tbody tr:nth-child(4) td div input').val(data["book_type"]);
+            $('#exampleModalLabel').html("Edit book : " + data["book_name"]);
+            $('.modal_book_info tbody tr:nth-child(2) td div input').val(data["book_id"]);
+            $('.modal_book_info tbody tr:nth-child(3) td div input').val(data["book_name"]);
+            $('.modal_book_info tbody tr:nth-child(4) td div input').val(data["author"]);
+            $('.modal_book_info tbody tr:nth-child(5) td div input').val(data["book_type"]);
 
             $("#old_img").attr("src", "<?= base_url() ?>/assets/book_covers/" + data["book_id"] + ".PNG?" + new Date().getTime());
             $('#book_type').val(data["book_type"]);
+
+            $('#current_book_file').attr("href", "<?= base_url() ?>assets/book_files/" + data["book_name"] + ".pdf");
 
             $('#inputGroupFile01').next('.label_cover').html("Choose file");
             $('#inputGroupFile01').val('');
@@ -448,6 +454,7 @@
         });
 
         function swalEditBookConfirm() {
+            formCheckValid();
             if (!isNameExists) {
                 var image;
                 if (isCoverChanged) {
@@ -462,95 +469,119 @@
                         };
                     })
                 }
+                if (isValid) {
+                    Swal.fire({
+                        title: 'Confirm ?',
+                        html: "",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#a0a0a0',
+                        confirmButtonText: 'Save',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.value) {
+                            // update info
+                            var booksArray = {
+                                book_id: Number($('#book_id').val()),
+                                book_name: $('#book_name').val(),
+                                author: $('#author').val(),
+                                book_type: $('[name="book_type"]').val(),
+                            };
 
-                Swal.fire({
-                    title: 'Confirm ?',
-                    html: "",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#a0a0a0',
-                    confirmButtonText: 'Save',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.value) {
-                        // update info
-                        var booksArray = {
-                            book_id: Number($('#book_id').val()),
-                            book_name: $('#book_name').val(),
-                            author: $('#author').val(),
-                            book_type: $('[name="book_type"]').val(),
-                        };
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>/api/book/update',
+                                data: booksArray,
+                                success: function(data) {
+                                    $('#book_edit_modal').modal('hide');
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '<?= base_url() ?>/api/book/update',
-                            data: booksArray,
-                            success: function(data) {
-                                $('#book_edit_modal').modal('hide');
+                                }
+                            })
+
+                            if (isCoverChanged) {
+                                // update cover
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '<?= base_url() ?>api/book/cover_upload',
+                                    data: image,
+                                    success: function(data) {
+                                        $('#inputGroupFile01').next('.label_cover').html("Choose file");
+                                        $('#inputGroupFile01').val('');
+                                        $('.upload_msg').show();
+                                        upload_crop.croppie('destroy')
+                                        isInit = false;
+                                        $('#book_edit_modal').modal('hide');
+
+                                    }
+                                })
 
                             }
-                        })
-                        console.log(booksArray)
 
-                        if (isCoverChanged) {
-                            // update cover
+                            if (isFileChanged) {
+                                // update file
+                                var file_data = $('#inputGroupFile02').prop('files')[0];
+                                var form_data = new FormData();
+                                form_data.append('file', file_data);
+                                form_data.append('name', $('#book_name').val());
 
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '<?= base_url() ?>api/book/cover_upload',
-                                data: image,
-                                success: function(data) {
-                                    $('#inputGroupFile01').next('.label_cover').html("Choose file");
-                                    $('#inputGroupFile01').val('');
-                                    $('.upload_msg').show();
-                                    upload_crop.croppie('destroy')
-                                    isInit = false;
-                                    $('#book_edit_modal').modal('hide');
-
-                                }
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '<?= base_url() ?>api/book/file_upload',
+                                    data: form_data,
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    dataType: 'text',
+                                    success: function(data) {
+                                        $('#inputGroupFile02').next('.label_file').html("Choose file");
+                                        $('#inputGroupFile02').val('');
+                                        $('#book_edit_modal').modal('hide');
+                                    }
+                                })
+                            }
+                            Toast.fire({
+                                title: 'Success !',
+                                text: 'Saved changes',
+                                type: 'success',
                             })
 
+                            table.ajax.reload();
+
+                        } else {
+                            $('#book_edit_modal').modal('show');
                         }
+                    })
+                } else {
+                    var book_name = document.querySelector("#book_name");
+                    var author = document.querySelector("#author");
+                    var addCategory = document.querySelector("#book_type2");
 
-                        if (isFileChanged) {
-                            // update file
-                            var file_data = $('#inputGroupFile02').prop('files')[0];
-                            var form_data = new FormData();
-                            form_data.append('file', file_data);
-                            form_data.append('name', $('#book_name').val());
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '<?= base_url() ?>api/book/file_upload',
-                                data: form_data,
-                                contentType: false,
-                                cache: false,
-                                processData: false,
-                                dataType: 'text',
-                                success: function(data) {
-                                    $('#inputGroupFile02').next('.label_file').html("Choose file");
-                                    $('#inputGroupFile02').val('');
-                                    $('#book_edit_modal').modal('hide');
-
-                                }
-                            })
-                        }
-
-                        Toast.fire({
-                            title: 'Success !',
-                            text: 'Saved changes',
-                            type: 'success',
-                        })
-
-                        table.ajax.reload();
-
-                    } else {
-                        $('#book_edit_modal').modal('show');
+                    var html = "";
+                    if (!book_name.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>Book name can't be empty</pre>";
                     }
-                })
+                    if (!author.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>Author can't be empty</pre>";
+                    }
+                    if (addCategory != null) {
+                        if (!addCategory.checkValidity()) {
+                            html += "<pre class='small text-muted font-apple'>Category can't be empty and must be English characters</pre>";
+                        }
+                    }
 
+                    $('#book_edit_modal').modal('show');
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Book name already taken!',
+                        html: html,
+                        onClose: () => {
+                            $('#book_edit_modal').modal('show');
+                            $('#book_name').focus();
+                        }
+                    })
+                }
             } else {
                 Swal.fire({
                     type: 'error',
@@ -559,6 +590,7 @@
                     onClose: () => {
                         $('#book_edit_modal').modal('show');
                         $('#book_name').focus();
+                        checkNameExists();
                     }
                 })
             }
@@ -619,17 +651,18 @@
             $('#book_name').removeClass("text-white");
             $('#name_exists_error').hide();
             isNameExists = false;
-
+            isValid = false;
             if (isCoverChanged) {
-                $('#preview_upload_wrapper').croppie('bind', {
-                    url: "<?= base_url() ?>assets/img/no_img.png",
-                    points: [77, 469, 280, 739]
-                });
+                isInit = false;
             }
         })
 
         var isNameExists = false;
         $('#book_name').on('keyup', function() {
+            checkNameExists();
+        });
+
+        function checkNameExists() {
             var book_name = {
                 book_name: $('[name ="book_name"]').val(),
             };
@@ -653,8 +686,23 @@
                     }
                 })
             }
+        }
 
-        });
+        var isValid = false;
+
+        function formCheckValid() {
+            var book_name = document.querySelector("#book_name");
+            var author = document.querySelector("#author");
+
+            var addCategory = document.querySelector("#book_type2");
+            if (addCategory != null) {
+                if (addCategory.checkValidity() != null) {
+                    isValid = book_name.checkValidity() & author.checkValidity() & addCategory.checkValidity();
+                }
+            } else {
+                isValid = book_name.checkValidity() & author.checkValidity();
+            }
+        }
 
         $('#inputGroupFile01').on('change', function() {
             //get the file name
@@ -682,12 +730,12 @@
                 if (!isInit) {
                     upload_crop = $('#preview_upload_wrapper').croppie({
                         viewport: {
-                            width: 312.5,
-                            height: 412.5
+                            width: 250,
+                            height: 330
                         },
                         boundary: {
-                            width: 500,
-                            height: 500
+                            width: 312,
+                            height: 425
                         },
                     });
                     isInit = true;

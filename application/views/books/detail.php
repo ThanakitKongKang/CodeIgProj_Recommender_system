@@ -53,8 +53,8 @@
 
                         <!-- bookmark trigger -->
                         <div class="position-absolute w-100 text-center" style="bottom:1rem;padding-right:1.75rem;">
-                            <hr class="mb-2">
-                            <button class="btn btn-primary bookmark_trigger mt-2">
+                            <hr class="mb-3">
+                            <button class="btn btn-primary bookmark_trigger btn-sm ">
                                 <?php if ($bookmark == TRUE) { ?>
                                     <i class="fas fa-bookmark" id="bookmark_icon"></i>
                                 <?php echo "<span class='save_text font-arial'> unsave book</span>";
@@ -64,11 +64,14 @@
                                 } ?></button>
 
                             <?php if ($this->session->userdata('logged_in')) { ?>
-                                <button class="btn btn-warning rate_modal_trigger popup_menu_item mt-2" id="detail_rate_mobile" style="display:none" data-toggle="modal" data-target="#rate_modal">
+                                <button class="btn btn-warning rate_modal_trigger popup_menu_item btn-sm" id="detail_rate_mobile" style="display:none" data-toggle="modal" data-target="#rate_modal">
 
                                 </button>
-                            <?php } ?>
 
+                            <?php } ?>
+                            <a class="btn btn-outline-success btn-sm" href="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf" download="<?= $book_detail['book_name'] ?>.pdf">
+                                <i class="fas fa-file-download pr-2"></i>Download
+                            </a>
                         </div>
 
                     </div>

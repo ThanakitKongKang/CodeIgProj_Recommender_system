@@ -52,7 +52,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Course Title(TH)</span>
                                     </div>
-                                    <input type="text" class="form-control" id="course_name_th" name="course_name_th">
+                                    <input type="text" class="form-control" id="course_name_th" name="course_name_th" pattern='[ก-๏\s0-9]+' required>
                                 </div>
                             </td>
                         </tr>
@@ -62,7 +62,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Course Title(EN)</span>
                                     </div>
-                                    <input type="text" class="form-control" id="course_name_en" name="course_name_en">
+                                    <input type="text" class="form-control" id="course_name_en" name="course_name_en" pattern='[a-zA-Z0-9\s]+' required>
                                 </div>
                             </td>
                         </tr>
@@ -298,12 +298,12 @@
 
         $('.edit_this_course_alert').on('click', function(e) {
             event.preventDefault();
-            swalEditUserConfirm();
+            swalEditCourseConfirm();
         })
 
         $('.delete_this_book_alert').on('click', function(e) {
             event.preventDefault();
-            swalDeleteUserConfirm();
+            swalDeleteCourseConfirm();
         })
 
         const Toast = Swal.mixin({
@@ -313,69 +313,93 @@
             timer: 3000
         });
 
-        function swalEditUserConfirm() {
-            Swal.fire({
-                title: 'Confirm ?',
-                html: "",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#a0a0a0',
-                confirmButtonText: 'Save',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.value) {
-                    // update info
-                    var courseArray = {
-                        course_id: $('#course_id').val(),
-                        course_name_th: $('#course_name_th').val(),
-                        course_name_en: $('#course_name_en').val(),
-                    };
+        function swalEditCourseConfirm() {
+            formCheckValid();
+            if (isValid) {
+                Swal.fire({
+                    title: 'Confirm ?',
+                    html: "",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#a0a0a0',
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.value) {
+                        // update info
+                        var courseArray = {
+                            course_id: $('#course_id').val(),
+                            course_name_th: $('#course_name_th').val(),
+                            course_name_en: $('#course_name_en').val(),
+                        };
 
-                    var formData = new FormData($('#the_form')[0]);
-                    formData.append('course_id', $('#course_id').val());
-                    $.ajax({
-                        type: 'POST',
-                        url: '<?= base_url() ?>/api/course/update',
-                        data: courseArray,
-                        beforeSend: function() {
-                            $(document.body).css({
-                                'cursor': 'wait'
-                            });
-                        },
-                        success: function(data) {
-                            $.ajax({
-                                type: 'POST',
-                                url: '<?= base_url() ?>/api/course/update_json',
-                                data: formData,
-                                processData: false,
-                                contentType: false,
-                                success: function(data) {
-                                    $('#course_edit_modal').modal('hide');
-                                    Toast.fire({
-                                        title: 'Success !',
-                                        text: 'Saved changes',
-                                        type: 'success',
-                                    })
-                                    document.getElementById("the_form").reset();
-                                    $('[name="addmore[]"]').val("");
-                                    table.ajax.reload();
-                                    $(document.body).css({
-                                        'cursor': 'default'
-                                    });
-                                }
-                            })
-                        }
-                    })
+                        var formData = new FormData($('#the_form')[0]);
+                        formData.append('course_id', $('#course_id').val());
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>/api/course/update',
+                            data: courseArray,
+                            beforeSend: function() {
+                                $(document.body).css({
+                                    'cursor': 'wait'
+                                });
+                            },
+                            success: function(data) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '<?= base_url() ?>/api/course/update_json',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data) {
+                                        $('#course_edit_modal').modal('hide');
+                                        Toast.fire({
+                                            title: 'Success !',
+                                            text: 'Saved changes',
+                                            type: 'success',
+                                        })
+                                        document.getElementById("the_form").reset();
+                                        $('[name="addmore[]"]').val("");
+                                        table.ajax.reload();
+                                        $(document.body).css({
+                                            'cursor': 'default'
+                                        });
+                                    }
+                                })
+                            }
+                        })
 
-
-                } else {
-                    $('#course_edit_modal').modal('show');
+                    } else {
+                        $('#course_edit_modal').modal('show');
+                    }
+                })
+            } else {
+                var course_name_th = document.querySelector("#course_name_th");
+                var course_name_en = document.querySelector("#course_name_en");
+                var html = "";
+                if (!course_name_th.checkValidity()) {
+                    html += "<pre class='small text-muted font-apple'>Thai course title must be thai characters.</pre>";
                 }
-            })
+                if (!course_name_en.checkValidity()) {
+                    html += "<pre class='small text-muted font-apple'>English course title must be english characters</pre>";
+                }
+
+                $('#course_edit_modal').modal('show');
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    html: html,
+                    onClose: () => {
+                        $('#course_edit_modal').modal('show');
+                        $('#course_name_th').focus();
+                    }
+                })
+            }
         }
 
-        function swalDeleteUserConfirm() {
+        function swalDeleteCourseConfirm() {
             var course_id = {
                 course_id: Number($('#course_id').val()),
             };
@@ -424,6 +448,15 @@
         $('#course_edit_modal').on('hidden.bs.modal', function() {
             $('#tbodyData_course tr.selected').removeClass("selected");
         })
+
+        var isValid = false;
+
+        function formCheckValid() {
+            var course_name_th = document.querySelector("#course_name_th");
+            var course_name_en = document.querySelector("#course_name_en");
+
+            isValid = course_name_th.checkValidity() & course_name_en.checkValidity();
+        }
 
         function resetDynamicInput() {
             $('.dynamic-added').remove();

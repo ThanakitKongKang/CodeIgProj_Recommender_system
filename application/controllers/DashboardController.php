@@ -131,11 +131,24 @@ class DashboardController extends CI_Controller
     public function book_update()
     {
         $book_id = $this->input->post('book_id');
+
+        if (empty($this->input->post('book_type'))) {
+            $book_type = "Unknown";
+        } else {
+            $book_type = $this->input->post('book_type');
+        }
+
         $post_data = array(
             'book_name' => $this->input->post('book_name'),
             'author' =>  $this->input->post('author'),
-            'book_type' => $this->input->post('book_type'),
+            'book_type' => $book_type,
         );
+
+        $old_book_name =  $this->books_model->get_by_id($book_id);
+
+        $old = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/book_files/" . $old_book_name["book_name"] . ".pdf";
+        $new = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/book_files/" . $this->input->post('book_name') . ".pdf";
+        rename($old, $new);
 
         $this->books_model->book_update($book_id, $post_data);
     }
@@ -177,10 +190,15 @@ class DashboardController extends CI_Controller
 
     public function book_insert()
     {
+        if (empty($this->input->post('book_type'))) {
+            $book_type = "Unknown";
+        } else {
+            $book_type = $this->input->post('book_type');
+        }
         $post_data = array(
             'book_name' => $this->input->post('book_name'),
             'author' =>  $this->input->post('author'),
-            'book_type' => $this->input->post('book_type'),
+            'book_type' => $book_type,
         );
 
         $this->books_model->insert($post_data);
@@ -417,7 +435,6 @@ class DashboardController extends CI_Controller
         if ($row != FALSE) {
             echo "true";
         }
-
     }
 
     public function course_insert()
