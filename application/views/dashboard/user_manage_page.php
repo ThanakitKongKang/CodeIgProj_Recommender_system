@@ -5,6 +5,8 @@
         <label for="info" class="switch-box-label small font-arial delete_toggle_label text-muted">Multiple delete</label>
         <input id="multiple_delete_trigger" class="btn btn-secondary delete_toggle_label text-muted btn-sm" type="button" style="opacity:0;cursor:default" value="Multiple delete (0)">
     </div>
+    <button class="btn btn-danger delete_this_book_alert btn-sm" style="display:none;position: absolute;left: 16rem;top: 0.5rem;" title="Delete selected comment"><i class="far fa-trash-alt pr-2"></i>Delete</button>
+
     <table class="table table-bordered table-compact table-hover font-apple" id="users">
         <thead class="">
             <tr>
@@ -124,7 +126,6 @@
             $('.delete_toggle_label').toggleClass("text-muted");
             // update row cont
             var count_row = table.rows('.selected').data().length;
-            multiple_delete_trigger_refresh_count();
             // toggle opacity
             if ($('#multiple_delete_trigger').css('opacity') === '0') {
                 $('#multiple_delete_trigger').css('opacity', '1', );
@@ -134,6 +135,7 @@
                 $('#multiple_delete_trigger').css('opacity', '0', );
                 $('#multiple_delete_trigger').removeClass("style_cursor_not_allowed");
             }
+            $('.delete_this_book_alert').hide();
 
             if (count_row > 0) {
                 table.$('tr.selected').removeClass('selected');
@@ -141,6 +143,8 @@
                 $('#multiple_delete_trigger').addClass("btn-secondary");
                 $('#multiple_delete_trigger').removeClass("btn-danger");
             }
+            multiple_delete_trigger_refresh_count();
+
             flag_multi_delete = false;
         });
 
@@ -154,7 +158,16 @@
 
             } else {
                 var elm = this;
-                editModalCaller(elm);
+                var data = table.row(elm).data();
+                if ($(elm).hasClass('selected')) {
+                    $(elm).removeClass('selected');
+                    $('.delete_this_book_alert').hide();
+
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(elm).addClass('selected');
+                    $('.delete_this_book_alert').show();
+                }
             }
         });
 
@@ -411,6 +424,7 @@
 
         })
         var isValid = false;
+
         function formCheckValid() {
             var username = document.querySelector("#username");
             var first_name = document.querySelector("#first_name");
