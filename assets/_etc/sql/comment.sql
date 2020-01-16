@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2020 at 06:03 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Jan 16, 2020 at 06:33 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,6 +32,7 @@ CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `upvote_count` int(11) NOT NULL,
   `fullname` varchar(255) COLLATE utf8_unicode_ci NOT NULL
