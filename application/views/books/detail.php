@@ -256,6 +256,11 @@
                             data: data,
                             success: function() {
                                 success();
+                                generalToast.fire({
+                                    title: 'Success !',
+                                    text: 'Deleted comment',
+                                    type: 'success',
+                                })
                             },
                             error: error
                         });

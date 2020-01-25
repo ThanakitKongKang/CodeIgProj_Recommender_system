@@ -340,7 +340,103 @@ class BooksController extends CI_Controller
         }
 
         // start recommend by registered course
-        $data['recommend_list_detail_course'] = $this->getCourseRecommend();
+        // $data['recommend_list_detail_course'] = $this->getCourseRecommend();
+        // rec course
+        // start recommend by registered course
+        $username = $this->session->userdata('user')['username'];
+        $data['course_registered'] = $this->course_model->get_course_registered($username);
+
+        if (!empty($data['course_registered'])) {
+            $data['books_name'] = $this->books_model->get_name_all();
+            // TF
+            $data['words_segment'] = array();
+            foreach ($data['books_name'] as $book_name) {
+                array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+            }
+
+            // Stop words removal
+            $stopWords = array_flip(self::$stopWords);
+            $data['tf_no_stopwords'] = array();
+            foreach ($data['words_segment'] as $word_segment) {
+                array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+                // print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+            }
+
+            // change key to lowercase
+            foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+                $data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+            }
+
+            // IDF
+            $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+            $transformer->transform($data['tf_no_stopwords2']);
+
+
+            $file = base_url() . "assets/_etc/course_registered_keyword.json";
+            $data['course_registered_keyword'] = json_decode(file_get_contents($file), true);
+
+
+            // get course keywords by user's registered courses's id
+            $data['item'] = array();
+            $i = 0;
+            foreach ($data['course_registered'] as $id_registered => $result_registered) {
+                foreach ($data['course_registered_keyword'] as $id_courses => $result_courses) {
+                    if ($result_registered['course_id'] == $id_courses) {
+                        foreach ($result_courses as $id => $result) {
+                            $data['item'][$id_courses][$id] = 1;
+                        }
+                        $i++;
+                    }
+                }
+            }
+            $data['course_count'] = $i;
+
+            // cosine similarity 
+            $data['cosineSim_course'] = array();
+            $k = 0;
+            foreach ($data['item'] as $item_key => $item) {
+                foreach ($data['books_name'] as $book_name) {
+                    $data['cosineSim_course'][$item_key][$k + 1] =  $this->cosine($data['item'][$item_key], $data['tf_no_stopwords2'][$k]);
+                    $k++;
+                }
+                $k = 0;
+            }
+
+            // remove 0 similarity from array 
+            // and
+            // get content based books detail
+            // get course detail
+            foreach ($data['cosineSim_course'] as $key => $cosineSim) {
+                $course_detail = $this->course_model->get_course_by_id($key);
+                $data['recommend_list_detail_course'][$key] = array("detail" => array(
+                    'course_id' => $course_detail[0]->course_id,
+                    'course_name_th' => $course_detail[0]->course_name_th,
+                    'course_name_en' => $course_detail[0]->course_name_en,
+                ));
+                foreach ($cosineSim as $subCosine_key => $subCosine) {
+                    if ($subCosine == 0 || is_nan($subCosine)) {
+                        unset($data['cosineSim_course'][$key][$subCosine_key]);
+                    } else {
+                        $data['recommend_list_detail_course'][$key][$subCosine_key] = $this->books_model->get_by_id($subCosine_key);
+                        $data['recommend_list_detail_course'][$key][$subCosine_key]['match'] = $subCosine;
+                    }
+                }
+            }
+
+            // sort by similarity score
+            // unset course that has no recommended book
+            foreach ($data['recommend_list_detail_course'] as $key => $value) {
+                $match = array_column($data['recommend_list_detail_course'][$key], 'match');
+                array_multisort($match, SORT_DESC, $data['recommend_list_detail_course'][$key]);
+
+                if (count($data['recommend_list_detail_course'][$key])  == 1) {
+                    unset($data['recommend_list_detail_course'][$key]);
+                }
+            }
+        } else {
+            $data['recommend_list_detail_course'] = false;
+        }
+        
 
         // chopping to get only 12 items
         // $data['recommend_list_detail_course'] = (array_slice($data['recommend_list_detail_course'], 0, 12));

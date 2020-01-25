@@ -3,8 +3,8 @@
     <form id="the_form">
         <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Course ID</label>
-                <div class="col-sm-2">
+                <label for="name" class="col-sm-3 col-lg-2 col-form-label">Course ID</label>
+                <div class="col-sm-4 col-lg-2">
                     <input type="text" autocomplete="off" required class="form-control" name="course_id" id="course_id" placeholder="Course ID.." pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title="6 letters of numbers. Starts with english letter is optional">
                 </div>
                 <div class="col-sm-4 mt-2">
@@ -13,14 +13,14 @@
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Thai Title</label>
+                <label for="name" class="col-sm-3 col-lg-2 col-form-label">Thai Title</label>
                 <div class="col-sm-9">
                     <input type="text" autocomplete="off" required class="form-control" name="course_name_th" id="course_name_th" placeholder="Thai course title.." pattern='[ก-๏\s0-9]+' title="Must be thai characters.">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">English Title</label>
+                <label for="name" class="col-sm-3 col-lg-2 col-form-label">English Title</label>
                 <div class="col-sm-9">
                     <input type="text" autocomplete="off" required class="form-control" name="course_name_en" id="course_name_en" placeholder="English course title.." pattern='[a-zA-Z0-9\s]+' title="Must be english characters.">
                 </div>
@@ -29,7 +29,7 @@
                 Keywords
             </div>
             <div id="addmore_wrapper">
-                <div class="input-group mb-1 w-50">
+                <div class="input-group mb-1 col-sm-10 col-lg-5">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Keyword</span>
                     </div>
@@ -167,7 +167,7 @@
         var i = 1;
         $('#add').click(function(e) {
             i++;
-            var html = '<div class="dynamic-added"><div class="input-group mb-1 w-50"><div class="input-group-prepend"><span class="input-group-text">Keyword</span></div><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></div>';
+            var html = '<div class="dynamic-added"><div class="input-group mb-1 col-sm-10 col-lg-5"><div class="input-group-prepend"><span class="input-group-text">Keyword</span></div><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></div>';
 
             $('#addmore_wrapper').append(html);
             triggerRequired();

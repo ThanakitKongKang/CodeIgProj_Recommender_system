@@ -35,10 +35,10 @@
             <form id="the_form">
                 <div class="modal-body">
                     <button class="btn btn-danger delete_this_book_alert" title="Delete this course" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
-                    <table class="modal_course_info w-100 m-5" id="dynamic_field">
+                    <table class="modal_course_info w-100 m-3" id="dynamic_field">
                         <tr>
                             <td>
-                                <div class="input-group mb-3 w-25">
+                                <div class="input-group mb-3 col-sm-4 col-md-6">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Course ID</span>
                                     </div>
@@ -48,7 +48,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="input-group mb-3 w-75">
+                                <div class="input-group mb-3 col-sm-11">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Course Title(TH)</span>
                                     </div>
@@ -58,7 +58,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="input-group mb-4 w-75">
+                                <div class="input-group mb-4 col-sm-11">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Course Title(EN)</span>
                                     </div>

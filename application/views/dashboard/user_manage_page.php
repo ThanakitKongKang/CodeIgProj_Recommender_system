@@ -318,6 +318,7 @@
                                         type: 'success',
                                     })
                                     $('#user_edit_modal').modal('hide');
+
                                     $(document.body).css({
                                         'cursor': 'default'
                                     });
@@ -372,14 +373,12 @@
         }
 
         function swalDeleteUserConfirm() {
-            var book_id = {
-                book_id: Number($('#book_id').val()),
-            };
-            $('#user_edit_modal').modal('hide');
 
+            $('#user_edit_modal').modal('hide');
+            data = table.row('.selected').data();
             Swal.fire({
-                title: 'Are you sure you want to permanently remove this item?',
-                html: "<div class='font-apple'>Book's related data will be removed, including : bookmarking, rating, commenting etc and <span class='text-danger'>you won't be able to revert this!</span></div>",
+                title: 'Are you sure you want to permanently remove this user?',
+                html: "<div class='font-apple'>User's related data will be removed, including : bookmarking, rating, commenting etc and <span class='text-danger'>you won't be able to revert this!</span></div>",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#cf3b3b',
@@ -388,11 +387,13 @@
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.value) {
-                    var formData = book_id
+                    var username = {
+                        username: data["username"],
+                    };
                     $.ajax({
                         type: 'POST',
                         url: '<?= base_url() ?>/api/user/delete',
-                        data: formData,
+                        data: username,
                         beforeSend: function() {
                             $(document.body).css({
                                 'cursor': 'wait'
@@ -405,6 +406,7 @@
                                 type: 'success',
                             })
                             table.ajax.reload();
+                            $('.delete_this_book_alert').hide();
                             $(document.body).css({
                                 'cursor': 'default'
                             });
@@ -412,7 +414,7 @@
                     })
 
                 } else {
-                    $('#user_edit_modal').modal('show');
+                    // $('#user_edit_modal').modal('show');
                 }
             })
         }
