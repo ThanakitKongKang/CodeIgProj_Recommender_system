@@ -314,18 +314,19 @@
                                         text: 'Saved changes',
                                         type: 'success',
                                     })
-                                    multiple_delete_trigger_refresh_count();
                                     $(document.body).css({
                                         'cursor': 'default'
                                     });
+                                    var interval = setInterval(function() {
+                                        multiple_delete_trigger_refresh_count();
+                                    }, 100);
                                 }
                             })
-
-
-
                         }
                         table.ajax.reload();
                     }
+
+
                 })
             }
         });
@@ -370,6 +371,8 @@
                 $('#multiple_delete_trigger').addClass("btn-secondary");
                 flag_multi_delete = false;
             }
+
+            console.log(count_row)
 
         }
         var old_book_name;

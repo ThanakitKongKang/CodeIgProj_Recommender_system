@@ -210,7 +210,9 @@
                                         type: 'success',
                                     })
                                     table.row('.selected').remove().draw(false);
-                                    multiple_delete_trigger_refresh_count();
+                                    var interval = setInterval(function() {
+                                        multiple_delete_trigger_refresh_count();
+                                    }, 100);
                                 }
                             })
                         }
