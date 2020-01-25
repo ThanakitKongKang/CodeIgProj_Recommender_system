@@ -167,8 +167,8 @@ class SessionController extends CI_Controller
             $this->users_model->insert($post_data);
             $sessionArr = array(
                 'username' => $post_data['username'],
-                'firstname' => $post_data['first_name'],
-                'lastname' => $post_data['last_name']
+                'first_name' => $post_data['first_name'],
+                'last_name' => $post_data['last_name']
             );
             $this->session->set_userdata('user', $sessionArr);
             $this->session->set_userdata('logged_in', TRUE);
@@ -187,6 +187,81 @@ class SessionController extends CI_Controller
             return FALSE;
         } else if ($username_exists == FALSE) {
             return TRUE;
+        }
+    }
+
+    public function user_get_one()
+    {
+        $data = array(
+            'username' => $this->session->userdata('user')['username'],
+            'first_name' =>  $this->session->userdata('user')['first_name'],
+            'last_name' => $this->session->userdata('user')['last_name'],
+        );
+
+        echo json_encode($data);
+    }
+
+    public function user_update_self()
+    {
+        $old_username = $this->input->post('old_username');
+        $post_data = array(
+            'username' => $this->input->post('username'),
+            'first_name' =>  $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+        );
+
+        $this->users_model->user_update($old_username, $post_data);
+
+        // Update session data
+        $this->session->unset_userdata('user');
+
+        $sessionArr = $this->users_model->get_by_id($this->input->post('username'));
+        $this->session->set_userdata('user', $sessionArr);
+    }
+
+
+    public function password_match()
+    {
+        $post_data = array(
+            'username' => $this->input->post('username'),
+            'password' => $this->input->post('password'),
+        );
+        $data = $this->users_model->login($post_data['username'], $post_data['password']);
+
+        if ($data != FALSE) {
+            echo "true";
+        } else {
+            echo "false";
+        }
+    }
+
+    public function isUsernameExists()
+    {
+        $username = $this->input->post('username');
+        $row = $this->users_model->get_by_id($username);
+
+        if ($row != FALSE) {
+            echo "true";
+        }
+    }
+
+    public function password_change()
+    {
+        $post_data = array(
+            'username' => $this->session->userdata('user')['username'],
+            'password' => $this->input->post('password'),
+        );
+
+        $data = $this->users_model->login($post_data['username'], $post_data['password']);
+
+        if ($data != FALSE) {
+            $username = $this->session->userdata('user')['username'];
+            $password  = $this->input->post('password');
+            $new_password = $this->input->post('new_password');
+
+            $this->users_model->user_password_change($username, $password, $new_password);
+        } else {
+            echo "false";
         }
     }
 }

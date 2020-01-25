@@ -107,4 +107,12 @@ class Users_model extends BaseModel
             $this->db->trans_commit();
         }
     }
+
+    public function user_password_change($username, $password, $new_password)
+    {
+        $this->db->where('username', $username);
+        $this->db->where('password', $password);
+        $this->db->set('password', $new_password);
+        $this->db->update($this->table);
+    }
 }

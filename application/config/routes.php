@@ -191,14 +191,19 @@ $route['api/book/file_upload'] = 'DashboardController/book_file_upload';
 $route['api/book/is_comment_enable'] = 'DashboardController/isCommentEnabled';
 
 $route['api/user/get'] = 'DashboardController/user_get';
+$route['api/user/get_one'] = 'SessionController/user_get_one';
 $route['api/user/update'] = 'DashboardController/user_update';
+$route['api/user/update_self'] = 'SessionController/user_update_self';
 $route['api/user/delete'] = 'DashboardController/user_delete';
-$route['api/user/name_exists'] = 'DashboardController/isUsernameExists';
+$route['api/user/name_exists'] = 'SessionController/isUsernameExists';
+$route['api/user/password_match'] = 'SessionController/password_match';
+$route['api/user/password_change'] = 'SessionController/password_change';
+
+
 // $route['api/user/pic_upload'] = 'DashboardController/user_pic_upload';
 
 $route['api/comment/get'] = 'DashboardController/comment_get';
 $route['api/comment/delete'] = 'DashboardController/comment_delete';
-
 $route['api/course/get'] = 'DashboardController/course_get';
 $route['api/course/get_one'] = 'DashboardController/course_get_by_id';
 $route['api/course/update'] = 'DashboardController/course_update';

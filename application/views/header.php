@@ -191,7 +191,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <h6 class="dropdown-header">Admin</h6>
                                             <a class="dropdown-item <?php if (isset($dashboard)) echo $dashboard; ?>" href="<?= base_url() ?>dashboard">Dashboard</a>
                                             <hr class="my-2">
-                                        <?php  } ?>
+                                        <?php  } else { ?>
+                                            <h6 class="dropdown-header">General Account Settings</h6>
+                                            <a class="dropdown-item <?php if (isset($accSetting)) echo $accSetting; ?>" data-target="#accSetting" data-toggle="modal" href="#accSetting">My Account</a>
+                                            <hr class="my-2">
+                                        <?php } ?>
                                         <a class="dropdown-item" href="https://drive.google.com/drive/u/1/folders/1Ko-rcBT1rPSri_Ph4-FYnA-cDXolZNAB?fbclid=IwAR3a77DeDMKYQo39VJAFEowWZTl-guMjsM0spsblyLZQ_Hx4JOEdeGeyjwI"><i class="fas fa-question-circle pr-2 color_secondary"></i>Help</a>
                                         <a class="dropdown-item" href="<?= base_url() ?>logout"><i class="fas fa-sign-out-alt pr-2 color_secondary"></i>Log Out</a>
                                     </div>
@@ -238,6 +242,110 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 
+    <!-- Account setting -->
+    <div class="modal fade" id="accSetting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">My Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="old_username" id="old_username">
+                    <table class="modal_user_info w-100 m-5">
+                        <tr>
+                            <td>
+                                <div class="input-group w-50">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Username</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="username_index" name="username_index" title="Must be English charaters or numbers" pattern='[a-zA-Z0-9\s]{3,24}$' required>
+                                </div>
+                                <span class="ml-5 small pl-5 text-danger" style="display:none" id="name_exists_error">Username already taken</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3 mt-3 w-75">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Firstname</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3 w-75">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Lastname</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="small pl-5 w-100 ml-5 font-arial pt-1" style="display:block" href="#" data-target="#changePassword" data-toggle="modal" href="#changePassword">Change Password?</a>
+                            </td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" onclick="" id="footer-submit" class="edit_user_index btn btn-primary text-white" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account setting -->
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="modal_user_password w-100 m-5">
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3 mt-3 w-75">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Current Password</span>
+                                    </div>
+                                    <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3 w-75">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">New Password</span>
+                                    </div>
+                                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" onclick="" id="footer-submit" class="edit_password_index btn btn-primary text-white" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="save_collection_menu" class="position-absolute bg-white slide-bottom" style="display:none;">
         <div class="load_collection_menu text-center justify-content-center py-3 px-4" style="display: none;">
             <div class="spinner-border text-primary mr-3" role="status">
@@ -253,8 +361,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/slick/slick.min.js"></script>
     <script type="text/javascript">
         AOS.init();
-
-
         var isLogged_in = false;
         var username = false;
         var isAdmin = false;
@@ -300,6 +406,311 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 return;
             }
         }
+
+        // User edit function
+        var old_username_index;
+        var current_password;
+        $('#accSetting').on('shown.bs.modal', function() {
+            $.ajax({
+                type: 'GET',
+                url: '<?= base_url() ?>api/user/get_one',
+                beforeSend: function() {
+                    $(document.body).css({
+                        'cursor': 'wait'
+                    });
+                },
+                success: function(data) {
+                    var json_response = JSON.parse(data);
+                    old_username_index = json_response["username"];
+                    $('input#old_username').val(json_response["username"]);
+                    $('#username_index').val(json_response["username"]);
+                    $('#first_name').val(json_response["first_name"]);
+                    $('#last_name').val(json_response["last_name"]);
+
+                    $(document.body).css({
+                        'cursor': 'default'
+                    });
+                }
+            })
+        })
+
+        const generalToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+        var isValid_index = false;
+
+        function formCheckValid_index() {
+            var username = document.querySelector("#username_index");
+            var first_name = document.querySelector("#first_name");
+            var last_name = document.querySelector("#last_name");
+
+            isValid_index = username.checkValidity() & first_name.checkValidity() & last_name.checkValidity();
+        }
+
+        var isNameExists_index = false;
+
+        function usernameCheck_index() {
+            var username = {
+                username: $('[name ="username_index"]').val(),
+            };
+            if (old_username_index != $('[name ="username_index"]').val()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>api/user/name_exists',
+                    data: username,
+                    success: function(data) {
+                        if (data == "true") {
+                            $('#username_index').addClass("bg-danger");
+                            $('#username_index').addClass("text-white");
+                            $('#name_exists_error').show();
+                            isNameExists_index = true;
+                        } else {
+                            $('#username_index').removeClass("bg-danger");
+                            $('#username_index').removeClass("text-white");
+                            $('#name_exists_error').hide();
+                            isNameExists_index = false;
+                        }
+                    }
+                })
+            }
+        }
+
+        $('#username_index').on('keyup', function() {
+            usernameCheck_index();
+        });
+
+        $('.edit_user_index').on('click', function(e) {
+            event.preventDefault();
+            swalEditUserConfirm_index();
+        })
+
+        function swalEditUserConfirm_index() {
+            formCheckValid_index();
+            if (!isNameExists_index) {
+                if (isValid_index) {
+                    var userArray = {
+                        old_username: old_username_index,
+                        username: $('#username_index').val(),
+                        first_name: $('#first_name').val(),
+                        last_name: $('[name="last_name"]').val(),
+                    };
+
+                    Swal.fire({
+                        title: 'Confirm your password?',
+                        html: "",
+                        type: 'warning',
+                        input: 'password',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#a0a0a0',
+                        confirmButtonText: 'Save',
+                        cancelButtonText: 'Cancel',
+                        showLoaderOnConfirm: true,
+                        inputPlaceholder: 'Confirm your password',
+                        allowOutsideClick: () => !Swal.isLoading(),
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Please confirm your password!'
+                            }
+                        },
+                        preConfirm: function() {
+                            return new Promise((resolve, reject) => {
+                                resolve({
+                                    username: old_username_index,
+                                    password: $('input[placeholder="Confirm your password"]').val()
+                                });
+                            });
+                        },
+                    }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?= base_url() ?>api/user/password_match',
+                                data: result.value,
+                                success: function(data) {
+                                    if (data == "false") {
+                                        generalToast.fire({
+                                            title: 'Error !',
+                                            text: 'Password does not match',
+                                            type: 'error',
+                                        })
+                                        $('#accSetting').modal('show');
+                                    } else {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '<?= base_url() ?>api/user/update_self',
+                                            data: userArray,
+                                            beforeSend: function() {
+                                                $(document.body).css({
+                                                    'cursor': 'wait'
+                                                });
+                                            },
+                                            success: function(data) {
+                                                generalToast.fire({
+                                                    title: 'Success !',
+                                                    text: 'Saved changes',
+                                                    type: 'success',
+                                                })
+                                                $('#accSetting').modal('hide');
+                                                $(document.body).css({
+                                                    'cursor': 'default'
+                                                });
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+
+                        } else {
+                            $('#accSetting').modal('show');
+                        }
+                    })
+                } else {
+                    var username = document.querySelector("#username_index");
+                    var first_name = document.querySelector("#first_name");
+                    var last_name = document.querySelector("#last_name");
+                    var html = "";
+                    if (!username.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>Username must contains 3 to 24 english characters or numbers</pre>";
+                    }
+                    if (!first_name.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>First name can't be empty</pre>";
+                    }
+                    if (!last_name.checkValidity()) {
+                        html += "<pre class='small text-muted font-apple'>Last name can't be empty</pre>";
+                    }
+                    $('#accSetting').modal('show');
+
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Error',
+                        html: html,
+                        onClose: () => {
+                            $('#accSetting').modal('show');
+                            $('#username_index').focus();
+                        }
+                    })
+                }
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Username already taken!',
+                    onClose: () => {
+                        $('#accSetting').modal('show');
+                        $('#username_index').focus();
+                        usernameCheck_index();
+
+                    }
+                })
+            }
+        }
+        // User edit function :end
+        // password change :start
+        $('#changePassword').on('shown.bs.modal', function() {
+            $('#accSetting').modal('hide');
+        })
+        $('#changePassword').on('hidden.bs.modal', function() {
+            $('#current_password').val("");
+            $('#new_password').val("");
+        })
+
+        $('.edit_password_index').on('click', function(e) {
+            event.preventDefault();
+            swalPasswordChange();
+        })
+
+        var isValid_pwd_index = false;
+
+        function formCheckValid_pwd_index() {
+            var current_password = document.querySelector("#current_password");
+            var new_password = document.querySelector("#new_password");
+
+            isValid_pwd_index = current_password.checkValidity() & new_password.checkValidity();
+        }
+
+        function swalPasswordChange() {
+            formCheckValid_pwd_index();
+            if (isValid_pwd_index) {
+                var pwdArr = {
+                    password: $('#current_password').val(),
+                    new_password: $('#new_password').val(),
+                };
+                Swal.fire({
+                    title: 'Confirm ?',
+                    html: "",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#a0a0a0',
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel',
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?= base_url() ?>api/user/password_change',
+                            data: pwdArr,
+                            beforeSend: function() {
+                                $(document.body).css({
+                                    'cursor': 'wait'
+                                });
+                            },
+                            success: function(data) {
+                                if (data == "false") {
+                                    generalToast.fire({
+                                        title: 'Error !',
+                                        text: 'Password does not match',
+                                        type: 'error',
+                                    })
+                                    $('#changePassword').modal('show');
+                                } else {
+                                    generalToast.fire({
+                                        title: 'Success !',
+                                        text: 'Saved changes',
+                                        type: 'success',
+                                    })
+                                    $('#changePassword').modal('hide');
+                                }
+                                $(document.body).css({
+                                    'cursor': 'default'
+                                });
+                            }
+                        })
+
+                    } else {
+                        $('#changePassword').modal('show');
+                    }
+                })
+            } else {
+                var current_password = document.querySelector("#current_password");
+                var new_password = document.querySelector("#new_password");
+                var html = "";
+                if (!current_password.checkValidity()) {
+                    html += "<pre class='small text-muted font-apple'>Current password can't be empty</pre>";
+                }
+                if (!new_password.checkValidity()) {
+                    html += "<pre class='small text-muted font-apple'>New password can't be empty</pre>";
+                }
+                $('#changePassword').modal('show');
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Error',
+                    html: html,
+                    onClose: () => {
+                        $('#changePassword').modal('show');
+                    }
+                })
+            }
+
+        }
+        // password change : end
+
 
         // on select live search
         $('#livesearch').on('click', ".live_search_result_option", function(e) {

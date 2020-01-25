@@ -285,6 +285,8 @@ class DashboardController extends CI_Controller
         echo json_encode($users);
     }
 
+
+
     public function user_update()
     {
         $old_username = $this->input->post('old_username');
@@ -295,6 +297,10 @@ class DashboardController extends CI_Controller
         );
 
         $this->users_model->user_update($old_username, $post_data);
+
+        // Update session data
+        $sessionArr = $this->users_model->get_by_id($this->input->post('username'));
+        $this->session->set_userdata('user', $sessionArr);
     }
 
     public function user_delete()
@@ -304,15 +310,6 @@ class DashboardController extends CI_Controller
         $this->users_model->user_delete($username);
     }
 
-    public function isUsernameExists()
-    {
-        $username = $this->input->post('username');
-        $row = $this->users_model->get_by_id($username);
-
-        if ($row != FALSE) {
-            echo "true";
-        }
-    }
 
     // COMMENT api
     public function comment_get()
