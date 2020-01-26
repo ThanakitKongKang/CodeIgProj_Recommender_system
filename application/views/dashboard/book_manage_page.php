@@ -38,7 +38,7 @@
                     <tr>
                         <td class="w-50">
                             <div class="text-center mr-2">
-                                <img src="" id="old_img" style="max-width:15rem">
+                                <img src="" id="old_img" style="max-width:15rem" alt="">
                             </div>
                             <div class="text-center small text-muted">(current cover image)</div>
                         </td>

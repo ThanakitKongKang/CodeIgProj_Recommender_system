@@ -4,7 +4,7 @@
         <div id="app_mid_title_browse" class="animation_enter text-center">
             <template>
                 <div class="position-relative row">
-                    <img :src="img_url" class="mr-4">
+                    <img :src="img_url" class="mr-4" alt="">
                     <h1 id="mid-title_browse" class="display-4 font-arial pt-5 text-uppercase">{{title}}</h1>
                 </div>
             </template>
@@ -56,7 +56,7 @@
                         <div class="py-3">
                             <div class="card card_hover_img">
                                 <a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" title="<?= $content['book_name'] ?>">
-                                    <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.PNG"></a>
+                                    <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $content['book_id'] ?>.PNG" alt=""></a>
                                 <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $content['book_id'] ?>" class="stretched-link"></a></div>
                                 <div class="card-body pb-0 pt-2" style="height:8rem;">
                                     <a class="card_body_type ctg" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $content["book_type"]))) ?>"><span><?= $content['book_type'] ?></span></a>

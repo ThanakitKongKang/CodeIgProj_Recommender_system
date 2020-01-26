@@ -3,7 +3,7 @@
         <div id="app_mid_title_search_result">
             <template>
                 <div class="position-relative row">
-                    <img :src="img_url">
+                    <img :src="img_url" alt="">
                     <h1 id="mid-title" class="display-4 font-arial pt-5 text-uppercase" style="left:4rem;">{{title}}</h1>
                 </div>
             </template>
@@ -92,7 +92,7 @@
                         <div class="py-3">
                             <div class="card card_hover_img">
                                 <a href="<?= base_url() ?>book/<?= $book->book_id ?>" title="<?= $book->book_name ?>">
-                                    <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.PNG"></a>
+                                    <img class="card_img" src="<?= base_url() ?>assets/book_covers/<?= $book->book_id ?>.PNG" alt=""></a>
                                 <div class="overlay_card"><a href="<?= base_url() ?>book/<?= $book->book_id ?>" class="stretched-link"></a></div>
                                 <div class="card-body pb-0 pt-2" style="height:8rem;">
                                     <a class="card_body_type ctg card_body_type_search_result" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book->book_type))) ?>"><span><?= $book->book_type ?></span></a>

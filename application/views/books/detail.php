@@ -12,7 +12,7 @@
             <div class="pl-5 col-sm position-relative detail_book_detail_section">
                 <div class="row">
                     <div class="col-sm pt-3">
-                        <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG">
+                        <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $book_detail['book_id'] ?>.PNG" alt="">
                     </div>
 
                     <div class="col-sm bg-light pt-3 book_detail_content" style="border-radius:1rem;height: 23rem;">
@@ -83,7 +83,7 @@
                             <?php foreach ($recommend_list_detail as $book) { ?>
                                 <div class="col-4 hover_img_similar_book_content">
                                     <div class="position-relative">
-                                        <img class="img-col-2 img_similar_book_content" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG">
+                                        <img class="img-col-2 img_similar_book_content" src="<?= base_url() ?>assets/book_covers/<?= $book['book_id'] ?>.PNG" alt="">
                                         <div class="overlay_similar"><a href="<?= base_url() ?>book/<?= $book['book_id'] ?>" class="stretched-link"></a></div>
                                     </div>
                                     <div class="hover_img_content_similar text-center">

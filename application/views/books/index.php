@@ -8,7 +8,7 @@
                 else { ?>
                     <div class="hover_img position-relative">
 
-                        <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.PNG">
+                        <img id="img-col-1" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[0]['book_id'] ?>.PNG" alt="">
 
                         <!-- <div id="text-col-1"></div> -->
 
@@ -63,7 +63,7 @@
                             <div class="row h-100">
                                 <div class="col-4 hover_img_col2" style="height: 7.875rem;">
 
-                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
+                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG" alt="">
 
 
                                     <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
@@ -102,7 +102,7 @@
                             <div class="row">
                                 <div class="col-4 hover_img_col2" style="height: 7.875rem;">
 
-                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG">
+                                    <img class="img-col-2" src="<?= base_url() ?>assets/book_covers/<?= $final_recommend_list[$i]['book_id'] ?>.PNG" alt="">
 
 
                                     <div class="overlay_col2"><a href="<?= base_url() ?>book/<?= $final_recommend_list[$i]['book_id'] ?>" class="stretched-link"></a></div>
@@ -153,7 +153,7 @@
                     <?php foreach ($rec_course as $key => $sub_rec_course) { ?>
                         <?php if ($key != "detail") { ?>
                             <div class="slick_wrapper_index">
-                                <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_course['book_id'] ?>.PNG" />
+                                <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_course['book_id'] ?>.PNG" alt="" />
                                 <a class="text-col-2-type ctg" style="font-size:0.75rem" data-ctg="<?= $sub_rec_course["book_type"] ?>"><span><?= $sub_rec_course['book_type'] ?></span></a>
                                 <div class="text-col-2-name name_slick" style="font-size:0.75rem"> <a href="<?= base_url() ?>book/<?= $sub_rec_course['book_id'] ?>" title="<?= $sub_rec_course['book_name'] ?>"><?= $sub_rec_course['book_name'] ?></a></div>
                             </div>
@@ -206,7 +206,7 @@
                 <template>
                     <div class="position-relative">
                         <h1 id="mid-title" class="display-4 font-arial text-center pt-5">{{title}}</h1>
-                        <img class="position-absolute" id="img_mid_title" :src="img_url">
+                        <img class="position-absolute" id="img_mid_title" :src="img_url" alt="">
                     </div>
                     <hr class="mb-5 w-25" style="border: 0;border-top: 3px solid #007bff;">
                     <div class="load-more justify-content-center my-5 text-center" style="display: none!important;">
@@ -227,7 +227,7 @@
                             <div class="col-4 mb-4 align-self-center">
                                 <div class="hover_img_mid position-relative">
                                     <span class="text-img-rate badge badge-primary"> <?php if ($top['count_rate'] != 0) echo number_format($top["b_rate"], 1); ?></span>
-                                    <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.PNG">
+                                    <img class="img-book hover_img" src="<?= base_url() ?>assets/book_covers/<?= $top['book_id'] ?>.PNG" alt="">
                                     <!-- <span class="text-img"><?= $top["book_name"] ?></span> -->
 
                                     <a class="overlay_mid" href="<?= base_url() ?>book/<?= $top['book_id'] ?>"></a>
@@ -266,7 +266,7 @@
                         <div class="col-4 mb-4 align-self-center" v-for="book in books">
                             <div class="hover_img_mid position-relative">
                                 <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
-                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" />
+                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" alt=""/>
                                 <!-- <span class="text-img"> {{ book.book_name }}</span> -->
 
                                 <a class="overlay_mid" v-bind:href="'<?= base_url() ?>book/'+book.book_id+''"></a>

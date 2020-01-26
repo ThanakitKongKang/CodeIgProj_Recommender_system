@@ -18,7 +18,7 @@
 
                     <div class="col pl-3" style="max-width: 9rem;">
                         <a href="<?= base_url() ?>book/<?= $rating_history['book_id'] ?>">
-                            <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $rating_history['book_id'] ?>.PNG">
+                            <img id="" style="width:100%;box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.25);" src="<?= base_url() ?>assets/book_covers/<?= $rating_history['book_id'] ?>.PNG" alt="">
                         </a>
                     </div>
                     <!-- BOOK detail section -->
