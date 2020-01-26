@@ -96,7 +96,7 @@
 
         $('#inputGroupFile01').on('change', function() {
             //get the file name
-            var fileName = $(this).val();
+            var fileName = $(this).val().replace(/C:\\fakepath\\/i, '');
             //replace the "Choose a file" label
             $(this).next('.label_cover').html(fileName);
             readFile(this);
@@ -104,7 +104,7 @@
 
 
         $('#inputGroupFile02').on('change', function() {
-            var fileName = $(this).val();
+            var fileName = $(this).val().replace(/C:\\fakepath\\/i, '');
             $(this).next('.label_file').html(fileName);
         })
 
