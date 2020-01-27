@@ -426,7 +426,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     $('#username_index').val(json_response["username"]);
                     $('#first_name').val(json_response["first_name"]);
                     $('#last_name').val(json_response["last_name"]);
-
+                    console.log(json_response)
                     $(document.body).css({
                         'cursor': 'default'
                     });

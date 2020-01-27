@@ -60,8 +60,8 @@ class SessionController extends CI_Controller
                 if ($data != FALSE) {
                     $sessionArr = array(
                         'username' => $data[0]->username,
-                        'firstname' => $data[0]->first_name,
-                        'lastname' => $data[0]->last_name
+                        'first_name' => $data[0]->first_name,
+                        'last_name' => $data[0]->last_name
                     );
                     $this->load->model('bookmark_model');
                     $this->load->model('rate_model');
