@@ -1,10 +1,29 @@
 <div class="container">
     <?php
     echo "<form action='testmode' class='mt-3 mb-3' method='post'>
-        <input type='number' name='cosineCheck1' class='form-control w-25' style='display:inline-block;' value='$cosineCheck1' required>
-        <input type='number' name='cosineCheck2' class='form-control w-25' style='display:inline-block;' value='$cosineCheck2' required>
-        <button type='submit' id='cosineSubmit' class='btn btn-outline-primary'>Cosine Check</button>
-    </form>";
+ <input type='text' name='cosineCheckCourse1' class='form-control w-25' style='display:inline-block;'  pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title='6 letters of numbers. Starts with english letter is optional e.g. SC312002' value='$cosineCheckCourse1' placeholder='course id e.g. SC312002,SC312006' required>
+ <input type='number' name='cosineCheckCourse2' class='form-control w-25' style='display:inline-block;' value='$cosineCheckCourse2'  placeholder='book id' required>
+ <button type='submit' id='cosineSubmit' class='btn btn-outline-success'>Cosine Check</button>
+</form>";
+
+    if (!empty($cosineCheckCourse1)) {
+        echo "<div class='container font-arial text-secondary'><h5>Dot product : $dot_product_string = <span class='text-primary'>" .  round($dotproductCourse, 4) . "</span></h5>";
+        echo "</div>";
+        echo "<div class='container font-arial text-secondary'><h5>Magnitude : (" . round($magnitude1, 4) . "*" . round($magnitude2, 4) . ") = <span class='text-primary'>" .  round($magnitudeCourse, 4) . "</span></h5>";
+        echo "</div>";
+        echo "<div class='container font-arial text-muted'><h4>cosine similarity between [$cosineCheckCourse1] and [$cosineCheckCourse2] is : " .  round($dotproductCourse, 4) . "/" .  round($magnitudeCourse, 4) . " = <span class='text-primary'>" . round($cosineSimCourse, 4) . "</span></h4>";
+        echo "</div>";
+
+        print("<pre class='text-primary'>[$cosineCheckCourse1] " . print_r($course_kwd[$cosineCheckCourse1], true) . "</pre>");
+        print("<pre class='text-primary'>[$cosineCheckCourse2] " . print_r($tf_idf2[$cosineCheckCourse2 - 1], true) . "</pre>");
+    }
+
+    // echo "<form action='testmode' class='mt-3 mb-3' method='post'>
+    //     <input type='number' name='cosineCheck1' class='form-control w-25' style='display:inline-block;' value='$cosineCheck1' required>
+    //     <input type='number' name='cosineCheck2' class='form-control w-25' style='display:inline-block;' value='$cosineCheck2' required>
+    //     <button type='submit' id='cosineSubmit' class='btn btn-outline-primary'>Cosine Check</button>
+    // </form>";
+
     if (!empty($cosineCheck1)) {
         echo "<div class='container font-arial'><h4>cosine similarity between [$cosineCheck1] and [$cosineCheck2] is : $cosineSim</h4>";
         echo "</div>";

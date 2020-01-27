@@ -327,16 +327,94 @@ class BooksController extends CI_Controller
         // cosine similarity
         $data['cosineCheck1'] = $this->input->post('cosineCheck1');
         $data['cosineCheck2'] = $this->input->post('cosineCheck2');
+        $data['tf_idf'] = $data['tf_no_stopwords2'];
 
         if (!empty($data['cosineCheck1']) && !empty($data['cosineCheck2'])) {
 
-            $data['cosineSim'] = $this->cosine($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]);
+            $data['cosineSim'] = $this->cosine($data['tf_idf'][$data['cosineCheck1'] - 1], $data['tf_idf'][$data['cosineCheck2'] - 1]);
 
             // debugger
-            $data['dotproduct'] = $this->dot_product($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1], $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]);
-            $data['tf_no_stopwords2'][$data['cosineCheck1'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1]);
-            $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]);
-            $data['magnitude'] = ($data['tf_no_stopwords2'][$data['cosineCheck1'] - 1]['MAGNITUDE'] *  $data['tf_no_stopwords2'][$data['cosineCheck2'] - 1]['MAGNITUDE']);
+            $data['dotproduct'] = $this->dot_product($data['tf_idf'][$data['cosineCheck1'] - 1], $data['tf_idf'][$data['cosineCheck2'] - 1]);
+            $data['tf_idf'][$data['cosineCheck1'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_idf'][$data['cosineCheck1'] - 1]);
+
+            $data['tf_idf'][$data['cosineCheck2'] - 1]['MAGNITUDE'] = $this->magnitude($data['tf_idf'][$data['cosineCheck2'] - 1]);
+            $data['magnitude'] = ($data['tf_idf'][$data['cosineCheck1'] - 1]['MAGNITUDE'] *  $data['tf_idf'][$data['cosineCheck2'] - 1]['MAGNITUDE']);
+        }
+        // 
+        // 
+        // 
+        // 
+        // cosine similarity course
+        $file = base_url() . "assets/_etc/course_registered_keyword.json";
+        $data['course_registered_keyword'] = json_decode(file_get_contents($file), true);
+        $data['course_kwd'] =  $data['course_registered_keyword'];
+        $data['cosineCheckCourse1'] = $this->input->post('cosineCheckCourse1');
+        $data['cosineCheckCourse2'] = $this->input->post('cosineCheckCourse2');
+
+        if (!empty($data['cosineCheckCourse1']) && !empty($data['cosineCheckCourse2'])) {
+            $data['tf_idf2'] = $data['tf_no_stopwords2'];
+            $data['cosineSimCourse'] = $this->cosine($data['course_kwd'][$data['cosineCheckCourse1']], $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]);
+
+            // debugger
+            $data['dotproductCourse'] = $this->dot_product($data['course_kwd'][$data['cosineCheckCourse1']], $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]);
+
+            // $dot_product_display = 0;
+            $cter_dpd = 1;
+            $data['dot_product_string'] = "";
+            foreach ($data['course_kwd'][$data['cosineCheckCourse1']] as $key_a => $value_a) {
+                if (array_key_exists($key_a, $data['tf_idf2'][$data['cosineCheckCourse2'] - 1])) {
+                    // $dot_product_display += $data['course_kwd'][$data['cosineCheckCourse1']][$key_a] * $data['tf_idf2'][$data['cosineCheckCourse2'] - 1][$key_a];
+
+
+                    if ($cter_dpd > 1) {
+                        $data['dot_product_string'] = $data['dot_product_string'] . " + ";
+                    }
+                    $data['dot_product_string'] = $data['dot_product_string'] . "(" . round($data['course_kwd'][$data['cosineCheckCourse1']][$key_a], 4) . "*" . round($data['tf_idf2'][$data['cosineCheckCourse2'] - 1][$key_a], 4) . ")";
+                    $cter_dpd++;
+                }
+            }
+
+            $cter = 0;
+            $len = count($data['course_kwd'][$data['cosineCheckCourse1']]);
+
+            foreach ($data['course_kwd'][$data['cosineCheckCourse1']] as $each) {
+
+                if ($cter == $len - 1) {
+                    // last
+                    $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] = $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] . "(" . round($each, 2) . "*" . round($each, 2) . "))";
+                } else {
+                    if ($cter == 0) {
+                        $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] = $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] . "sqrt(";
+                    }
+                    $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] = $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] . "(" . round($each, 2) . "*" . round($each, 2)  . ")+";
+                }
+                $cter++;
+            }
+
+            $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] = $data['course_kwd'][$data['cosineCheckCourse1']]['MAGNITUDE'] . " = " . round($this->magnitude($data['course_kwd'][$data['cosineCheckCourse1']]), 4);
+
+            $cter2 = 0;
+            $len2 = count($data['tf_idf2'][$data['cosineCheckCourse2'] - 1]);
+
+            foreach ($data['tf_idf2'][$data['cosineCheckCourse2'] - 1] as $each) {
+
+                if ($cter2 == $len2 - 1) {
+                    // last
+                    $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] = $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] . "(" . round($each, 2) . "*" . round($each, 2) . "))";
+                } else {
+                    if ($cter2 == 0) {
+                        $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] = $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] . "sqrt(";
+                    }
+                    $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] = $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] . "(" . round($each, 2) . "*" . round($each, 2)  . ")+";
+                }
+
+                $cter2++;
+            }
+
+            $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] = $data['tf_idf2'][$data['cosineCheckCourse2'] - 1]['MAGNITUDE'] . " = " . round($this->magnitude($data['tf_idf2'][$data['cosineCheckCourse2'] - 1]), 4);
+            $data['magnitude1'] = $this->magnitude($data['course_kwd'][$data['cosineCheckCourse1']]);
+            $data['magnitude2'] =  $this->magnitude($data['tf_idf2'][$data['cosineCheckCourse2'] - 1]);
+            $data['magnitudeCourse'] =   $data['magnitude1'] * $data['magnitude2'];
         }
 
         // start recommend by registered course
@@ -372,8 +450,7 @@ class BooksController extends CI_Controller
             $transformer->transform($data['tf_no_stopwords2']);
 
 
-            $file = base_url() . "assets/_etc/course_registered_keyword.json";
-            $data['course_registered_keyword'] = json_decode(file_get_contents($file), true);
+
 
 
             // get course keywords by user's registered courses's id
@@ -436,7 +513,7 @@ class BooksController extends CI_Controller
         } else {
             $data['recommend_list_detail_course'] = false;
         }
-        
+
 
         // chopping to get only 12 items
         // $data['recommend_list_detail_course'] = (array_slice($data['recommend_list_detail_course'], 0, 12));
