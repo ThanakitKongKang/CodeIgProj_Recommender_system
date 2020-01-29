@@ -181,7 +181,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
                                     </div>
                                     <div class="dropdown-menu" aria-labelledby="userDropdown" id="userDropdown_show">
-                                        <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your course</a>
+                                        <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your module</a>
                                         <a class="dropdown-item <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
                                         <a class="dropdown-item <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating history <span class="badge badge-secondary count_all_rating_history" id="count_all_rating_history"><?= $this->session->userdata('count_all_rating_history'); ?></span></a>
                                         <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->

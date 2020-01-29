@@ -5,7 +5,7 @@
         <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
     </nav>
 
-    <h1 class="display-4 page_title_header page_title_header_no_after">Your Course</h1>
+    <h1 class="display-4 page_title_header page_title_header_no_after">Your Module</h1>
     <div id="course_content" class="mt-4">
     
         <!-- content header -->
