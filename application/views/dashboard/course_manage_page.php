@@ -50,7 +50,7 @@
                             <td>
                                 <div class="input-group mb-3 col-sm-11">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Course Title(TH)</span>
+                                        <span class="input-group-text">Module Title (TH)</span>
                                     </div>
                                     <input type="text" class="form-control" id="course_name_th" name="course_name_th" pattern='[ก-๏\s0-9]+' required>
                                 </div>
@@ -60,7 +60,7 @@
                             <td>
                                 <div class="input-group mb-4 col-sm-11">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Module Title(EN)</span>
+                                        <span class="input-group-text">Module Title (EN)</span>
                                     </div>
                                     <input type="text" class="form-control" id="course_name_en" name="course_name_en" pattern='[a-zA-Z0-9\s]+' required>
                                 </div>
