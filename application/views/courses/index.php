@@ -1,6 +1,6 @@
 <div class="container">
     <nav class="nav nav-pills justify-content-end font-arial nav_user">
-        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
+        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Module</a>
         <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
         <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
     </nav>
@@ -13,7 +13,7 @@
             <div class="col-6"></div>
             <div class="col-6 align-self-center text-right font-arial">
                 <button class="btn btn-danger font-weight-bold text-white" style="display:none" id="delete_course"><i class="fas fa-trash pr-3 fa-xs"></i>Remove</button>
-                <button class="btn btn-light font-weight-bold text-primary" data-toggle="modal" data-target="#course_registeration" id="add_course_modal_trigger"><i class="fas fa-plus pr-3 fa-xs"></i>Add a course</button>
+                <button class="btn btn-light font-weight-bold text-primary" data-toggle="modal" data-target="#course_registeration" id="add_course_modal_trigger"><i class="fas fa-plus pr-3 fa-xs"></i>Add a Module</button>
             </div>
         </div>
         <!-- content -->
@@ -45,8 +45,8 @@
                     <!-- zero course added -->
                     <div class="text-center font-arial bg-light pb-5 mb-5 zero_course" style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
                         <img src="<?= base_url() ?>assets/img/clip-list-is-empty.png" style="max-width:45rem" alt="">
-                        <div class="font-weight-bold" style="color:#164d96">You haven't added any course </div>
-                        <div class="text-muted">Add a course to get started!</div>
+                        <div class="font-weight-bold" style="color:#164d96">You haven't added any module </div>
+                        <div class="text-muted">Add a module to get started!</div>
                     </div>
                 <?php } ?>
 
@@ -63,7 +63,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_label">Add a course</h5>
+                <h5 class="modal-title" id="modal_label">Add a module</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -344,7 +344,7 @@
                 $("#content_to_append").append('<div class="text-center font-arial bg-light pb-5 mb-5 zero_course" style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">' +
                     '<img src="<?= base_url() ?>assets/img/clip-list-is-empty.png" style="max-width:45rem" alt="">' +
                     '<div class="font-weight-bold" style="color:#164d96">You haven\'t added any course </div>' +
-                    '<div class="text-muted">Add a course to get started!</div>' +
+                    '<div class="text-muted">Add a module to get started!</div>' +
                     '</div>');
             }
         }

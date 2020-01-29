@@ -43,12 +43,12 @@
         </li>
     </ul>
     <ul id="nav_dashboard_courses">
-        <li><i class="fas fa-book-reader nav_header_icon"></i><span class="nav_header text-muted">Course</span></li>
+        <li><i class="fas fa-book-reader nav_header_icon"></i><span class="nav_header text-muted">Module</span></li>
         <li class="nav_dashboard <?php if (isset($isCourse)) echo $isCourse; ?>">
             <a href="<?= base_url() ?>dashboard/course/manage">
                 <i class="fas fadb fa-book fa-2x"></i>
                 <span class="nav_dashboard-text">
-                    Manage Course
+                    Manage Module
                 </span>
             </a>
         </li>
@@ -56,7 +56,7 @@
             <a href="<?= base_url() ?>dashboard/course/insert">
                 <i class="far fadb fa-plus-square fa-2x"></i>
                 <span class="nav_dashboard-text">
-                    Insert Course
+                    Insert Module
                 </span>
             </a>
         </li>

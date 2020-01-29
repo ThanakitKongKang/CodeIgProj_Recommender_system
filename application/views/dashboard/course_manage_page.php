@@ -8,8 +8,8 @@
     <table class="table table-bordered table-compact table-hover font-apple" id="courses">
         <thead class="">
             <tr>
-                <th rowspan="2" class="align-middle text-center">Course ID</th>
-                <th colspan="2" class="align-middle text-center">Course Title</th>
+                <th rowspan="2" class="align-middle text-center">Module ID</th>
+                <th colspan="2" class="align-middle text-center">Module Title</th>
             </tr>
             <tr>
                 <th class="align-middle text-center">THAI</th>
@@ -27,22 +27,22 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit course's info</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit module's info</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form id="the_form">
                 <div class="modal-body">
-                    <button class="btn btn-danger delete_this_book_alert" title="Delete this course" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
+                    <button class="btn btn-danger delete_this_book_alert" title="Delete this module" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
                     <table class="modal_course_info w-100 m-3" id="dynamic_field">
                         <tr>
                             <td>
                                 <div class="input-group mb-3 col-sm-4 col-md-6">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Course ID</span>
+                                        <span class="input-group-text">Module ID</span>
                                     </div>
-                                    <input type="text" class="form-control style_cursor_not_allowed" id="course_id" readonly title="Course's id can't be changed">
+                                    <input type="text" class="form-control style_cursor_not_allowed" id="course_id" readonly title="Module's id can't be changed">
                                 </div>
                             </td>
                         </tr>
@@ -60,7 +60,7 @@
                             <td>
                                 <div class="input-group mb-4 col-sm-11">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Course Title(EN)</span>
+                                        <span class="input-group-text">Module Title(EN)</span>
                                     </div>
                                     <input type="text" class="form-control" id="course_name_en" name="course_name_en" pattern='[a-zA-Z0-9\s]+' required>
                                 </div>
@@ -78,7 +78,7 @@
                         <tr id="start_dynamic">
                             <td>
                                 <div class="input-group mb-1 w-50 ml-2">
-                                    <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore first_addmore" required="" style="display:inline-block" />
+                                    <input type="text" name="addmore[]" placeholder="Enter module keyword" class="form-control w-75 addmore first_addmore" required="" style="display:inline-block" />
                                     <div class="input-group-append">
                                         <span class="input-group-text px-2 py-0"> <button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
                                         </span>
@@ -187,13 +187,13 @@
             if (flag_multi_delete) {
                 var count_row = table.rows('.selected').data().length;
                 var data;
-                var isMulti = "this course?";
+                var isMulti = "this module?";
                 if (count_row > 1) {
-                    isMulti = "these courses?"
+                    isMulti = "these modules?"
                 }
                 Swal.fire({
                     title: 'Are you sure you want to permanently remove ' + isMulti,
-                    html: "<div class='font-apple'>Course's related data will be removed, including : course keywords. <span class='text-danger'>you won't be able to revert this!</span></div>",
+                    html: "<div class='font-apple'>Module's related data will be removed, including : module keywords. <span class='text-danger'>you won't be able to revert this!</span></div>",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#cf3b3b',
@@ -284,7 +284,7 @@
                     var count;
                     response.forEach(function(keyword, i) {
                         for (var key in keyword) {
-                            html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" value="' + key + '"/><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
+                            html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter module keyword" class="form-control w-75 addmore" required="" style="display:inline-block" value="' + key + '"/><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
                             $(html).insertBefore('#start_dynamic');
                             // $('#dynamic_field').append(html);
                             i++;
@@ -381,10 +381,10 @@
                 var course_name_en = document.querySelector("#course_name_en");
                 var html = "";
                 if (!course_name_th.checkValidity()) {
-                    html += "<pre class='small text-muted font-apple'>Thai course title must be thai characters.</pre>";
+                    html += "<pre class='small text-muted font-apple'>Thai module title must be thai characters.</pre>";
                 }
                 if (!course_name_en.checkValidity()) {
-                    html += "<pre class='small text-muted font-apple'>English course title must be english characters</pre>";
+                    html += "<pre class='small text-muted font-apple'>English module title must be english characters</pre>";
                 }
 
                 $('#course_edit_modal').modal('show');
@@ -409,8 +409,8 @@
             $('#course_edit_modal').modal('hide');
 
             Swal.fire({
-                title: 'Are you sure you want to permanently remove this course?',
-                html: "<div class='font-apple'>Course's related data will be removed, including : course keywords. <span class='text-danger'>you won't be able to revert this!</span></div>",
+                title: 'Are you sure you want to permanently remove this module?',
+                html: "<div class='font-apple'>Module's related data will be removed, including : module keywords. <span class='text-danger'>you won't be able to revert this!</span></div>",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#cf3b3b',
@@ -467,7 +467,7 @@
         var i = 1;
         $('#add').click(function() {
             i++;
-            var html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
+            var html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter module keyword" class="form-control w-75 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
 
             $('#dynamic_field').append(html);
         });

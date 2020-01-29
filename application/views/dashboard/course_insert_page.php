@@ -1,28 +1,28 @@
 <div id="fullpage" class="container">
-    <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">Add Course</h2>
+    <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">Add Module</h2>
     <form id="the_form">
         <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
             <div class="form-group row">
-                <label for="name" class="col-sm-3 col-lg-2 col-form-label">Course ID</label>
+                <label for="name" class="col-sm-3 col-lg-2 col-form-label">Module ID</label>
                 <div class="col-sm-4 col-lg-2">
-                    <input type="text" autocomplete="off" required class="form-control" name="course_id" id="course_id" placeholder="Course ID.." pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title="6 letters of numbers. Starts with english letter is optional">
+                    <input type="text" autocomplete="off" required class="form-control" name="course_id" id="course_id" placeholder="Module ID.." pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title="6 letters of numbers. Starts with english letter is optional">
                 </div>
                 <div class="col-sm-4 mt-2">
-                    <span class="small px-0 text-danger font-arial" style="display:none" id="course_id_exists_error">Course ID already exists</span>
+                    <span class="small px-0 text-danger font-arial" style="display:none" id="course_id_exists_error">Module ID already exists</span>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="name" class="col-sm-3 col-lg-2 col-form-label">Thai Title</label>
                 <div class="col-sm-9">
-                    <input type="text" autocomplete="off" required class="form-control" name="course_name_th" id="course_name_th" placeholder="Thai course title.." pattern='[ก-๏\s0-9]+' title="Must be thai characters.">
+                    <input type="text" autocomplete="off" required class="form-control" name="course_name_th" id="course_name_th" placeholder="Thai module title.." pattern='[ก-๏\s0-9]+' title="Must be thai characters.">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="name" class="col-sm-3 col-lg-2 col-form-label">English Title</label>
                 <div class="col-sm-9">
-                    <input type="text" autocomplete="off" required class="form-control" name="course_name_en" id="course_name_en" placeholder="English course title.." pattern='[a-zA-Z0-9\s]+' title="Must be english characters.">
+                    <input type="text" autocomplete="off" required class="form-control" name="course_name_en" id="course_name_en" placeholder="English module title.." pattern='[a-zA-Z0-9\s]+' title="Must be english characters.">
                 </div>
             </div>
             <div class="w-25 input-group-text text-center d-inline-block mb-1">
@@ -33,7 +33,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Keyword</span>
                     </div>
-                    <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore first_addmore" style="display:inline-block" pattern="[^\s]+" title="Keyword must not contains spaces" />
+                    <input type="text" name="addmore[]" placeholder="Enter module keyword" class="form-control w-50 addmore first_addmore" style="display:inline-block" pattern="[^\s]+" title="Keyword must not contains spaces" />
                     <div class="input-group-append">
                         <span class="input-group-text px-2 py-0"> <button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
                         </span>
@@ -131,8 +131,8 @@
                 Swal.fire({
                     type: 'error',
                     title: 'Error',
-                    text: 'Course ID already exists!',
-                    footer: '<a href="<?= base_url() ?>dashboard/course/manage">Edit the course instead</a>',
+                    text: 'Module ID already exists!',
+                    footer: '<a href="<?= base_url() ?>dashboard/course/manage">Edit the module instead</a>',
                     onClose: () => {
                         var interval = setInterval(function() {
                             clearInterval(interval);
@@ -161,7 +161,6 @@
             } else {
                 $(".first_addmore").prop('required', false);
             }
-            console.log(i)
         }
 
         var i = 1;
