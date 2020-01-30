@@ -265,10 +265,14 @@
         });
 
         $('#delete_course').on("click", function(e) {
+            var string_html = "";
+            selected_course.forEach(function(entry) {
+                string_html += "<pre class='swal_alert_add_course text-center mx-5 font-arial text-primary'><span class='text-danger'>" + entry + "</span></pre>";
+            });
             Swal.fire({
                 title: 'Delete course?',
                 type: 'warning',
-                html: "<span class='text-muted font-arial'>Are you sure you want to delete?</span>",
+                html: string_html,
                 showCancelButton: true,
                 confirmButtonColor: '#dc3545',
                 cancelButtonColor: '#6c757d',
