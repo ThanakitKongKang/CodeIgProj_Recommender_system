@@ -1,11 +1,11 @@
 <div class="container">
     <nav class="nav nav-pills justify-content-end font-arial nav_user">
-        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Module</a>
+        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">My Module</a>
         <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
         <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
     </nav>
 
-    <h1 class="display-4 page_title_header page_title_header_no_after">Your Module</h1>
+    <h1 class="display-4 page_title_header page_title_header_no_after">My Module</h1>
     <div id="course_content" class="mt-4">
     
         <!-- content header -->
@@ -130,7 +130,7 @@
             templateResult: formatResult,
             templateSelection: formatResultSelection,
 
-            placeholder: 'course id, course name',
+            placeholder: 'module id, module name',
             allowClear: true,
             minimumInputLength: 1,
             maximumSelectionLength: 10,
