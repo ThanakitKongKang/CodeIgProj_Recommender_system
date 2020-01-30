@@ -7,7 +7,7 @@
 
     <h1 class="display-4 page_title_header page_title_header_no_after">Your Course</h1>
     <div id="course_content" class="mt-4">
-    
+
         <!-- content header -->
         <div class="row justify-content-end mx-0 w-100" style="height:5rem;position: relative;background: linear-gradient(to left, #0062E6, #33AEFF);">
             <div class="col-6"></div>
@@ -41,7 +41,7 @@
 
                         </div>
                     <?php endforeach;
-                    } else { ?>
+                } else { ?>
                     <!-- zero course added -->
                     <div class="text-center font-arial bg-light pb-5 mb-5 zero_course" style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
                         <img src="<?= base_url() ?>assets/img/clip-list-is-empty.png" style="max-width:45rem" alt="">
@@ -265,10 +265,16 @@
         });
 
         $('#delete_course').on("click", function(e) {
+            var string_html = "";
+            selected_course.forEach(function(entry) {
+                string_html += "<pre class='swal_alert_add_course text-center mx-5 font-arial text-primary'><span class='text-danger'>" + entry + "</span></pre>";
+            });
+
             Swal.fire({
                 title: 'Delete course?',
                 type: 'warning',
-                html: "<span class='text-muted font-arial'>Are you sure you want to delete?</span>",
+                html: string_html,
+
                 showCancelButton: true,
                 confirmButtonColor: '#dc3545',
                 cancelButtonColor: '#6c757d',
