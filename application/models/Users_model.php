@@ -58,6 +58,7 @@ class Users_model extends BaseModel
     public function getAll()
     {
         $this->db->select('*');
+        $this->db->where('username !=', 'admin');
 
         $query = $this->db->get($this->table);
 
