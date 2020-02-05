@@ -130,7 +130,7 @@
             templateResult: formatResult,
             templateSelection: formatResultSelection,
 
-            placeholder: 'module id, module name',
+            placeholder: 'module name..',
             allowClear: true,
             minimumInputLength: 1,
             maximumSelectionLength: 10,
