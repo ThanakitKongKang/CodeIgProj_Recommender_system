@@ -365,7 +365,7 @@
                 centerPadding: '60px',
                 slidesToShow: 5,
                 slidesToScroll: 3,
-                autoplay: false,
+                autoplay: true,
                 autoplaySpeed: randomSpeed,
                 infinite: true,
                 dots: true,
