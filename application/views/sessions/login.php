@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_768.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/responsive_style_450.css">
 
+
 </head>
 
 <body>
@@ -68,7 +69,7 @@
                                         </div> -->
 
                             <?php if (isset($feedback)) { ?> <div class="text-center errmsg text-danger mb-3"><i class="fas fa-times-circle"></i> <?= $feedback ?></div> <?php } ?>
-                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
+                            <button class="btn btn-lg bg_linear_theme btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Log in</button>
                             <div class="text-center">
                                 <!-- <a class="small" href="signup" style="text-decoration:none">Create account</a> -->
                                 <a class="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2 mt-1" href="<?= base_url('signup') ?>">Sign up</a>

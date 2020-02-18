@@ -36,7 +36,7 @@
         print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords2[$cosineCheck2 - 1], true) . "</pre>");
     }
     ?>
-    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
         คอร์สในระบบ
     </button>
     <!-- Modal -->
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_keyword_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_keyword_modal">
         คีย์เวิร์ดของคอร์สในระบบ 
     </button>
     <div class="modal fade" id="course_registered_keyword_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_keyword_user_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_keyword_user_modal">
         คีย์เวิร์ดของคอร์สที่ผู้ใช้ลงทะเบียน
     </button>
     <div class="modal fade" id="course_keyword_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#cosineSim_course_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#cosineSim_course_modal">
         หนังสือที่ตรงกับคอร์ส
     </button>
     <div class="modal fade" id="cosineSim_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#recommend_list_detail_course_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#recommend_list_detail_course_modal">
         รายละเอียดหนังสือที่ตรงกับคอร์ส
     </button>
     <div class="modal fade" id="recommend_list_detail_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

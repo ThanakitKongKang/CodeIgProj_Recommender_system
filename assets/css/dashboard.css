@@ -150,10 +150,6 @@ a:focus {
 	background: linear-gradient(to left, #0062E6, #33AEFF);
 }
 
-.bg_linear_theme {
-	background: linear-gradient(to left, #0062E6, #33AEFF);
-}
-
 .area {
 	float: left;
 	background: #e2e2e2;

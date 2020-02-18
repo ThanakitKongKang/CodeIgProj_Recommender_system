@@ -170,7 +170,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">LOG IN</button></a>
                                 </li>
                                 <li class="nav-item pl-2 mt-1">
-                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn btn-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">SIGN UP</button></a>
+                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn bg_linear_theme" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">SIGN UP</button></a>
                                 </li>
 
 

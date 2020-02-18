@@ -98,7 +98,7 @@
                             </div> -->
                             <!-- <?php echo validation_errors('<span class="errmsg text-center text-danger">', '</span><br>'); ?> -->
 
-                            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 mt-5" type="submit">Sign up</button>
+                            <button class="btn btn-lg bg_linear_theme btn-block btn-login text-uppercase font-weight-bold mb-2 mt-5" type="submit">Sign up</button>
                             <div class="text-center small ">
                                 Already a member?
                                 <a href="login" style="text-decoration:none">Log in</a></div>

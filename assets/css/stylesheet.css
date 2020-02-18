@@ -376,7 +376,7 @@ body {
 }
 
 .opacity {
-	opacity: 0.5;
+	opacity: 0.5 !important;
 }
 
 .text-col-2-author {
@@ -1116,8 +1116,11 @@ li.select2-results__option {
 	color: #004480b5;
 }
 
-.course_row:hover {
-	color: #007bff;
+.course_row:hover [class*="col-"] {
+	background: -webkit-linear-gradient(45deg, #0062cc, #2f9be3 70%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin: 0;
 }
 
 .course_row:not(:last-child) {
@@ -1647,7 +1650,24 @@ span.user_rated_this {
 	padding-left: 1rem;
 }
 
-.btn_linear_theme {
+.bg_linear_theme {
 	color: #fff;
 	background: linear-gradient(to left, #0062E6, #33AEFF);
+}
+
+.bg_linear_theme.btn {
+	border-color: #33AEFF;
+}
+
+.bg_linear_theme.btn:hover {
+	color: #fff;
+	background: linear-gradient(to left, #0062cc, #2f9be3);
+
+}
+
+.text_gradient_theme {
+	background: -webkit-linear-gradient(45deg, #0062cc, #2f9be3 80%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin: 0;
 }

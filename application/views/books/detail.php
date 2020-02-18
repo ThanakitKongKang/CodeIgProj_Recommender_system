@@ -132,7 +132,7 @@
             <div class="alert alert-secondary ">
                 SORRY, BUT THE PAGE YOU ARE LOOKING FOR DOES NOT EXIST, HAVE BEEN REMOVED, NAME CHANGED OR IS TEMPORARILY UNAVAILABLE
             </div>
-            <a href="<?= base_url() ?>" class="btn btn-primary">GO TO HOMEPAGE</a>
+            <a href="<?= base_url() ?>" class="btn bg_linear_theme">GO TO HOMEPAGE</a>
         </div>
     <?php } ?>
 </div>
