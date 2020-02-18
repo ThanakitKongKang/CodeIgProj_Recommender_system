@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="min-height:100vh">
     <?php
     echo "<form action='testmode' class='mt-3 mb-3' method='post'>
  <input type='text' name='cosineCheckCourse1' class='form-control w-25' style='display:inline-block;'  pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title='6 letters of numbers. Starts with english letter is optional e.g. SC312002' value='$cosineCheckCourse1' placeholder='course id e.g. SC312002,SC312006' required>
@@ -35,26 +35,128 @@
         print("<pre class='text-primary'>[$cosineCheck1] " . print_r($tf_no_stopwords2[$cosineCheck1 - 1], true) . "</pre>");
         print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords2[$cosineCheck2 - 1], true) . "</pre>");
     }
+    ?>
+    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
+        คอร์สในระบบ
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="course_registered_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">course_registered info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($course_registered, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    echo "<div class='container mt-5'><h4>course_registered</h4>";
-    print("<pre>" . print_r($course_registered, true) . "</pre>");
-    echo "</div>";
+    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_keyword_modal">
+        คีย์เวิร์ดของคอร์สในระบบ 
+    </button>
+    <div class="modal fade" id="course_registered_keyword_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">course_registered_keyword info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($course_registered_keyword, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    echo "<div class='container mt-5'><h4>course_registered_keyword</h4>";
-    print("<pre>" . print_r($course_registered_keyword, true) . "</pre>");
-    echo "</div>";
+    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_keyword_user_modal">
+        คีย์เวิร์ดของคอร์สที่ผู้ใช้ลงทะเบียน
+    </button>
+    <div class="modal fade" id="course_keyword_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">course keywords by user's registered courses's id</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($item, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    echo "<div class='container mt-5'><h4>course keywords by user's registered courses's id</h4>";
-    print("<pre>" . print_r($item, true) . "</pre>");
-    echo "</div>";
+    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#cosineSim_course_modal">
+        หนังสือที่ตรงกับคอร์ส
+    </button>
+    <div class="modal fade" id="cosineSim_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">cosineSim_course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($cosineSim_course, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    echo "<div class='container mt-5'><h4>cosineSim_course</h4>";
-    print("<pre>" . print_r($cosineSim_course, true) . "</pre>");
-    echo "</div>";
-
-    echo "<div class='container mt-5'><h4>recommend_list_detail_course</h4>";
-    print("<pre>" . print_r($recommend_list_detail_course, true) . "</pre>");
-    echo "</div>";
+    <button type="button" class="btn btn_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#recommend_list_detail_course_modal">
+        รายละเอียดหนังสือที่ตรงกับคอร์ส
+    </button>
+    <div class="modal fade" id="recommend_list_detail_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">recommend_list_detail_course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($recommend_list_detail_course, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
 
     // echo "<div class='container mt-5'><h4>books_name retrieving</h4>";
     // print("<pre>" . print_r($books_name, true) . "</pre>");

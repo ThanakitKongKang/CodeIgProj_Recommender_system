@@ -266,7 +266,7 @@
                         <div class="col-4 mb-4 align-self-center" v-for="book in books">
                             <div class="hover_img_mid position-relative">
                                 <span class="text-img-rate badge badge-primary" v-if="book.b_rate !== null"> {{ book.b_rate }}</span>
-                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" alt=""/>
+                                <img class="img-book hover_img" v-bind:src="'<?= base_url() ?>assets/book_covers/'+book.book_id+'.PNG'" alt="" />
                                 <!-- <span class="text-img"> {{ book.book_name }}</span> -->
 
                                 <a class="overlay_mid" v-bind:href="'<?= base_url() ?>book/'+book.book_id+''"></a>
@@ -365,7 +365,7 @@
                 centerPadding: '60px',
                 slidesToShow: 5,
                 slidesToScroll: 3,
-                autoplay: true,
+                autoplay: false,
                 autoplaySpeed: randomSpeed,
                 infinite: true,
                 dots: true,
@@ -376,10 +376,8 @@
                         settings: {
                             dots: false,
                             arrows: false,
-                            centerMode: true,
                             centerPadding: '40px',
                             slidesToShow: 3,
-
                         }
                     },
                     {
@@ -387,9 +385,9 @@
                         settings: {
                             dots: false,
                             arrows: false,
-                            centerMode: true,
                             centerPadding: '40px',
-                            slidesToShow: 1,
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
                         }
                     }
                 ]
@@ -446,6 +444,9 @@
         $('.ctg').click(function(e) {
             var category = ($(this).data('ctg'));
             get_items_by_category(category);
+            document.querySelector('#mid').scrollIntoView({
+                behavior: 'smooth'
+            });
         });
 
         $('.category').on("click", "a", function(event) {
