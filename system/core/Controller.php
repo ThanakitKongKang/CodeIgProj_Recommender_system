@@ -100,6 +100,8 @@ class CI_Controller
 		$this->load->library('session');
 	}
 
+
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -112,6 +114,8 @@ class CI_Controller
 	{
 		return self::$instance;
 	}
+
+
 
 	public function check_auth($page)
 	{
@@ -127,6 +131,121 @@ class CI_Controller
 		}
 	}
 
+	public function similarityDistance($preferences, $person1, $person2)
+	{
+		$similar = array();
+		$sum = 0;
+
+		foreach ($preferences[$person1] as $key => $value) {
+			if (array_key_exists($key, $preferences[$person2]))
+				$similar[$key] = 1;
+		}
+
+		if (count($similar) == 0)
+			return 0;
+
+		foreach ($preferences[$person1] as $key => $value) {
+			if (array_key_exists($key, $preferences[$person2])) {
+				$sum = $sum + pow($value - $preferences[$person2][$key], 2);
+			}
+		}
+
+		return  1 / (1 + sqrt($sum));
+	}
+
+
+	public function matchItems($preferences, $person)
+	{
+		$score = array();
+
+		foreach ($preferences as $otherPerson => $values) {
+
+			if ($otherPerson !== $person) {
+
+				$sim = $this->similarityDistance($preferences, $person, $otherPerson);
+
+				if ($sim > 0) {
+					$score[$otherPerson] = $sim;
+				}
+			}
+		}
+
+		array_multisort($score, SORT_DESC);
+		return $score;
+	}
+
+
+	public function transformPreferences($preferences)
+	{
+		$result = array();
+
+		foreach ($preferences as $otherPerson => $values) {
+			foreach ($values as $key => $value) {
+				$result[$key][$otherPerson] = $value;
+			}
+		}
+
+		return $result;
+	}
+
+	public function flip_array($data)
+	{
+		$arr = array();
+		$keys = array_keys($data);
+		$book_name = "";
+		$username = "";
+		for ($i = 0; $i < count($data); $i++) {
+
+			foreach ($data[$keys[$i]] as $key => $value) {
+				if ($key == "book_name") {
+					$book_name = $value;
+				} else if ($key == "username") {
+					$username = $value;
+				} else if ($key == "rate") {
+					$arr[$username][$book_name] = $value;
+				}
+			}
+		}
+		return $arr;
+	}
+
+	public function array_average($input)
+	{
+		$sum = array();
+		$repeat = array();
+		$result = array();
+		foreach ($input as $array) {
+			foreach ($array as $key => $value) {
+				if (array_key_exists($key, $sum)) {
+					$repeat[$key] = $repeat[$key] + 1;
+					$sum[$key] = $sum[$key] + $value;
+				} else {
+					$repeat[$key] = 1;
+					$sum[$key] = $value;
+				}
+			}
+		}
+		foreach ($sum as $key => $value) {
+			$result[][$key] = $value / $repeat[$key];
+		}
+		return $result;
+	}
+
+	public function array_flatten($array)
+	{
+		if (!is_array($array)) {
+			return FALSE;
+		}
+		$result = array();
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$result = array_merge($result, $this->array_flatten($value));
+			} else {
+				$result[$key] = $value;
+			}
+		}
+		return $result;
+	}
 	public function dot_product($a, $b)
 	{
 		$dot_product = 0;
@@ -274,7 +393,7 @@ class CI_Controller
 
 	public function activity_search($search_keyword)
 	{
-        $this->load->model('activity_model');
+		$this->load->model('activity_model');
 
 		$username = $this->session->userdata('user')['username'];
 		date_default_timezone_set('Asia/Bangkok');
@@ -286,5 +405,195 @@ class CI_Controller
 		);
 
 		$this->activity_model->insert_search($data);
+	}
+
+	public function getActivityRecommend_search()
+	{
+		$this->load->model('activity_model');
+
+		$username = $this->session->userdata('user')['username'];
+		// rec activity
+		// start recommend by registered activity
+		$data['recently_search'] = $this->activity_model->get_recently_search($username, "rows");
+		if (!empty($data['recently_search'])) {
+			$data['books_name'] = $this->books_model->get_name_all();
+			// TF
+			$data['words_segment'] = array();
+			foreach ($data['books_name'] as $book_name) {
+				array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+			}
+
+			// Stop words removal
+			$stopWords = array_flip(self::$stopWords);
+			$data['tf_no_stopwords'] = array();
+			foreach ($data['words_segment'] as $word_segment) {
+				array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+				// print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+			}
+
+			// change key to lowercase
+			foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+				$data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+			}
+
+			// IDF
+			$transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+			$transformer->transform($data['tf_no_stopwords2']);
+
+
+			// TF for search keyword
+			$data['words_segment_search'] = array();
+			foreach ($data['recently_search'] as $search) {
+				array_push($data['words_segment_search'], array_count_values(str_word_count($search['search_keyword'], 1)));
+			}
+
+			// change key to lowercase
+			$data['wsm_search_lower'] = array();
+			$i = 0;
+			foreach ($data['words_segment_search'] as $words_segment_search) {
+				$data['wsm_search_lower'][$i + 1] = array_change_key_case($words_segment_search, CASE_LOWER);
+				$i++;
+			}
+
+			// cosine similarity 
+			$data['cosineSim_activity'] = array();
+			$k = 0;
+			foreach ($data['wsm_search_lower'] as $item_key => $item) {
+				foreach ($data['books_name'] as $book_name) {
+					$data['cosineSim_activity'][$item_key][$k + 1] =  $this->cosine($data['wsm_search_lower'][$item_key], $data['tf_no_stopwords2'][$k]);
+					$k++;
+				}
+				$k = 0;
+			}
+			$data['recommend_averaged'] = $this->array_average($data['cosineSim_activity']);
+			$data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+			// remove 0 similarity from array 
+			// and
+			// get content based books detail
+			// get activity detail
+			$data['recommend_list_detail_activity'] = array();
+			foreach ($data['recommend_flattened'] as $key => $cosineSim) {
+				if ($cosineSim == 0 || is_nan($cosineSim)) {
+					unset($data['recommend_flattened'][$key]);
+				} else {
+					$data['recommend_list_detail_activity'][$key + 1] = $this->books_model->get_by_id($key + 1);
+					$data['recommend_list_detail_activity'][$key + 1]['match'] = $cosineSim;
+				}
+			}
+
+			// sort by similarity score
+			// unset activity that has no recommended book
+			foreach ($data['recommend_list_detail_activity'] as $key => $value) {
+				$match = array_column($data['recommend_list_detail_activity'], 'match');
+				array_multisort($match, SORT_DESC, $data['recommend_list_detail_activity']);
+
+				if (count($data['recommend_list_detail_activity'])  == 1) {
+					unset($data['recommend_list_detail_activity']);
+				}
+			}
+
+			shuffle($data['recommend_list_detail_activity']);
+		} else {
+			$data['recommend_list_detail_activity'] = false;
+		}
+		return  $data['recommend_list_detail_activity'];
+	}
+
+	public function getActivityRecommend_viewed()
+	{
+		$this->load->model('activity_model');
+
+		$username = $this->session->userdata('user')['username'];
+		// rec activity
+		// start recommend by registered activity
+		$data['recently_view'] = $this->activity_model->get_recently_view($username, "rows");
+		if (!empty($data['recently_view'])) {
+			$data['books_name'] = $this->books_model->get_name_all();
+			// TF
+			$data['words_segment'] = array();
+			foreach ($data['books_name'] as $book_name) {
+				array_push($data['words_segment'], array_count_values(str_word_count($book_name['book_name'], 1)));
+			}
+
+			// Stop words removal
+			$stopWords = array_flip(self::$stopWords);
+			$data['tf_no_stopwords'] = array();
+			foreach ($data['words_segment'] as $word_segment) {
+				array_push($data['tf_no_stopwords'], array_diff_key($word_segment, $stopWords));
+				// print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+			}
+
+			// change key to lowercase
+			foreach ($data['tf_no_stopwords'] as $tf_no_stopwords) {
+				$data['tf_no_stopwords2'][] = array_change_key_case($tf_no_stopwords, CASE_LOWER);
+			}
+
+			// IDF
+			$transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
+			$transformer->transform($data['tf_no_stopwords2']);
+
+			// TF - IDF for recently view items
+			// TF
+			$data['words_segment_view'] = array();
+			foreach ($data['recently_view'] as $book_name) {
+				array_push($data['words_segment_view'], array_count_values(str_word_count($book_name['book_name'], 1)));
+			}
+
+			// Stop words removal
+			$stopWords = array_flip(self::$stopWords);
+			$data['tf_no_stopwords_view'] = array();
+			foreach ($data['words_segment_view'] as $word_segment) {
+				array_push($data['tf_no_stopwords_view'], array_diff_key($word_segment, $stopWords));
+				// print("<pre> " . print_r(array_diff_key($word_segment, $stopWords), true) . "</pre>");
+			}
+
+			// change key to lowercase
+			foreach ($data['tf_no_stopwords_view'] as $tf_no_stopwords_view) {
+				$data['tf_no_stopwords2_view'][] = array_change_key_case($tf_no_stopwords_view, CASE_LOWER);
+			}
+
+			// IDF
+			$transformer = new TfIdfTransformer($data['tf_no_stopwords2_view']);
+			$transformer->transform($data['tf_no_stopwords2_view']);
+
+
+			// cosine similarity 
+			$data['cosineSim_activity'] = array();
+			$k = 0;
+			foreach ($data['tf_no_stopwords2_view'] as $item_key => $item) {
+				foreach ($data['books_name'] as $book_name) {
+					$data['cosineSim_activity'][$item_key][$k + 1] =  $this->cosine($data['tf_no_stopwords2_view'][$item_key], $data['tf_no_stopwords2'][$k]);
+					$k++;
+				}
+				$k = 0;
+			}
+			$data['recommend_averaged'] = $this->array_average($data['cosineSim_activity']);
+			$data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+			// remove 0 similarity from array 
+			// and
+			// get content based books detail
+			// get activity detail
+			foreach ($data['recently_view'] as $key => $book) {
+				// unset($data['recommend_list_detail_activity'][$book["book_id"]]);
+				$data['recommend_list_detail_activity'][$book["book_id"]]["match"] -= 0.5;
+			}
+
+			$data['recommend_list_detail_activity'] = array();
+			foreach ($data['recommend_flattened'] as $key => $cosineSim) {
+				if ($cosineSim <= 0.1 || is_nan($cosineSim)) {
+					unset($data['recommend_flattened'][$key]);
+				} else {
+					$data['recommend_list_detail_activity'][$key + 1] = $this->books_model->get_by_id($key + 1);
+					$data['recommend_list_detail_activity'][$key + 1]['match'] = $cosineSim;
+				}
+			}
+
+			shuffle($data['recommend_list_detail_activity']);
+		} else {
+			$data['recommend_list_detail_activity'] = false;
+		}
+		return  $data['recommend_list_detail_activity'];
 	}
 }

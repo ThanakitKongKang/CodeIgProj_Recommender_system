@@ -99,7 +99,9 @@ class BooksController extends CI_Controller
         $data['books'] = $this->books_model->get_all();
 
         $data['recommend_list_detail_course'] = $this->getCourseRecommend();
-
+        $data['getActivityRecommend_viewed'] = $this->getActivityRecommend_viewed();
+        $data['getActivityRecommend_search'] = $this->getActivityRecommend_search();
+        
         $header['home'] = 'active';
         $this->load->view('./header', $header);
         $this->load->view('books/index', $data);
@@ -229,8 +231,6 @@ class BooksController extends CI_Controller
             // chopping to get only 12 items
             $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
             $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
-
-     
         }
         $header["title"] = $data['book_detail']['book_name'];
         $this->load->view('./header', $header);
@@ -238,7 +238,7 @@ class BooksController extends CI_Controller
         $this->load->view('footer');
     }
 
-    
+
 
     /*
     | -------------------------------------------------------------------------
@@ -302,7 +302,7 @@ class BooksController extends CI_Controller
 
     public function testmode()
     {
-        $this->check_auth_admin('testmode');
+        // $this->check_auth_admin('testmode');
 
         $data['books_name'] = $this->books_model->get_name_all();
         // TF
@@ -454,10 +454,6 @@ class BooksController extends CI_Controller
             $transformer = new TfIdfTransformer($data['tf_no_stopwords2']);
             $transformer->transform($data['tf_no_stopwords2']);
 
-
-
-
-
             // get course keywords by user's registered courses's id
             $data['item'] = array();
             $i = 0;
@@ -522,7 +518,17 @@ class BooksController extends CI_Controller
 
         // chopping to get only 12 items
         // $data['recommend_list_detail_course'] = (array_slice($data['recommend_list_detail_course'], 0, 12));
+        $this->load->model('activity_model');
+        $username = $this->session->userdata('user')['username'];
+        $data['recently_search'] = $this->activity_model->get_recently_search($username, "rows");
+        $data['recently_view'] = $this->activity_model->get_recently_view($username, "rows");
 
+        $data['getActivityRecommend_viewed'] = $this->getActivityRecommend_viewed();
+        $data['getActivityRecommend_search'] = $this->getActivityRecommend_search();
+
+
+
+        $header["testmode"] = "active";
         $header["title"] = "Test mode";
         $this->load->view('./header', $header);
         $this->load->view('books/testmode', $data);
@@ -979,121 +985,15 @@ class BooksController extends CI_Controller
         $this->load->view('books/rating_history', $data);
     }
 
-
-
-    public function similarityDistance($preferences, $person1, $person2)
+    public function notfound_override()
     {
-        $similar = array();
-        $sum = 0;
-
-        foreach ($preferences[$person1] as $key => $value) {
-            if (array_key_exists($key, $preferences[$person2]))
-                $similar[$key] = 1;
-        }
-
-        if (count($similar) == 0)
-            return 0;
-
-        foreach ($preferences[$person1] as $key => $value) {
-            if (array_key_exists($key, $preferences[$person2])) {
-                $sum = $sum + pow($value - $preferences[$person2][$key], 2);
-            }
-        }
-
-        return  1 / (1 + sqrt($sum));
-    }
-
-
-    public function matchItems($preferences, $person)
-    {
-        $score = array();
-
-        foreach ($preferences as $otherPerson => $values) {
-
-            if ($otherPerson !== $person) {
-
-                $sim = $this->similarityDistance($preferences, $person, $otherPerson);
-
-                if ($sim > 0) {
-                    $score[$otherPerson] = $sim;
-                }
-            }
-        }
-
-        array_multisort($score, SORT_DESC);
-        return $score;
-    }
-
-
-    public function transformPreferences($preferences)
-    {
-        $result = array();
-
-        foreach ($preferences as $otherPerson => $values) {
-            foreach ($values as $key => $value) {
-                $result[$key][$otherPerson] = $value;
-            }
-        }
-
-        return $result;
-    }
-
-    public function flip_array($data)
-    {
-        $arr = array();
-        $keys = array_keys($data);
-        $book_name = "";
-        $username = "";
-        for ($i = 0; $i < count($data); $i++) {
-
-            foreach ($data[$keys[$i]] as $key => $value) {
-                if ($key == "book_name") {
-                    $book_name = $value;
-                } else if ($key == "username") {
-                    $username = $value;
-                } else if ($key == "rate") {
-                    $arr[$username][$book_name] = $value;
-                }
-            }
-        }
-        return $arr;
-    }
-
-    public function array_average($input)
-    {
-        $sum = array();
-        $repeat = array();
-        $result = array();
-        foreach ($input as $array) {
-            foreach ($array as $key => $value) {
-                if (array_key_exists($key, $sum)) {
-                    $repeat[$key] = $repeat[$key] + 1;
-                    $sum[$key] = $sum[$key] + $value;
-                } else {
-                    $repeat[$key] = 1;
-                    $sum[$key] = $value;
-                }
-            }
-        }
-        foreach ($sum as $key => $value) {
-            $result[][$key] = $value / $repeat[$key];
-        }
-        return $result;
-    }
-
-    public function array_flatten($array)
-    {
-        if (!is_array($array)) {
-            return FALSE;
-        }
-        $result = array();
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $result = array_merge($result, $this->array_flatten($value));
-            } else {
-                $result[$key] = $value;
-            }
-        }
-        return $result;
+        $data['all_num_rows'] = 0;
+        $data['page'] = "404-Page-Not-Found";
+        $data["title_mfy"] = "";
+        $data["title_main"] = "Page not found!";
+        $header["title"] = "Course - " . $data['get_url'];
+        $this->load->view('./header', $header);
+        $this->load->view('courses/seemore', $data);
+        $this->load->view('footer');
     }
 }

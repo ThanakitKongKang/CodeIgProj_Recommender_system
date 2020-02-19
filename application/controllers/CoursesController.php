@@ -34,10 +34,30 @@ class CoursesController extends CI_Controller
         $data["isCourseExists"] = $this->course_model->get_course_by_id($data['get_url']);
 
         if ($data['isCourseExists'] == FALSE) {
-            $data['all_num_rows'] = 0;
-            $data['page'] = "404-Page-Not-Found";
-            $data["title_mfy"] = "";
-            $data["title_main"] = "Page not found!";
+
+            if ($data['get_url'] == "rec_by_viewed") {
+                $data['isCourseExists'] = "TRUE";
+                $data['recommend_list_detail_course']['detail'] = "rec_by_viewed";
+                $data['recommend_list_detail_course'][] = $this->getActivityRecommend_viewed();
+                $data['page'] = "Based on your recently viewed";
+                $data["title_mfy"] = "Recommended by activity";
+                $data["title_main"] = "Based on your recently viewed";
+                $header["title"] = "Recommended by activity";
+            } else if ($data['get_url'] == "rec_by_search") {
+                $data['isCourseExists'] = "TRUE";
+                $data['recommend_list_detail_course']['detail'] = "rec_by_search";
+                $data['recommend_list_detail_course'][] = $this->getActivityRecommend_search();
+                $data['page'] = "Based on your recently searching";
+                $data["title_mfy"] = "Recommended by activity";
+                $data["title_main"] = "Based on recently searching";
+                $header["title"] = "Recommended by activity";
+            } else {
+                $data['all_num_rows'] = 0;
+                $data['page'] = "404-Page-Not-Found";
+                $data["title_mfy"] = "";
+                $data["title_main"] = "Page not found!";
+                $header["title"] = "404-Page-Not-Found";
+            }
         } else {
             $data['recommend_list_detail_course'] = $this->getCourseRecommend();
 
@@ -53,9 +73,9 @@ class CoursesController extends CI_Controller
                 $data["title_mfy"] = "";
                 $data["title_main"] = "Page not found!";
             }
+            $header["title"] = "Course - " . $data['get_url'];
         }
 
-        $header["title"] = "Course - " . $data['get_url'];
         $this->load->view('./header', $header);
         $this->load->view('courses/seemore', $data);
         $this->load->view('footer');

@@ -1,6 +1,13 @@
 <div class="container">
     <?php if ($book_detail != FALSE) { ?>
-        <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer"><i class="fas fa-arrow-left"></i> Back</div>
+        <div class="row">
+            <div class="col">
+                <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer"><i class="fas fa-arrow-left"></i> Back</div>
+                <a class="btn bg_linear_theme mb-3 font-arial float-right mr-3" target="_blank" href="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" style="cursor:pointer">open in new window<i class="fas fa-external-link-alt pl-2"></i></a>
+            </div>
+            <div class="col"></div>
+        </div>
+
         <div class="row">
             <!-- pdf -->
             <div class="d-inline-block col-sm p-0 detail_pdf_section" style="height: 90vh!important;width:40vw!important">
@@ -96,7 +103,7 @@
                                                 <!-- HARD CODE rater star -->
                                                 <div class="rating-container rating-xs rating-animate is-display-only">
                                                     <!-- <div class="rating-stars" v-bind:title="book.b_rate+' Stars'"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" v-bind:style="'width:'+(book.b_rate*20)+'%;'"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input v-bind:value="book.b_rate" class="rater_star rating-input" title=""></div> -->
-                                                    <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= $book['b_rate'] * 20 ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $book['b_rate'] ?>" class="rating-input" title=""></div>
+                                                    <div class="rating-stars" title="<?= $book['b_rate'] ?> Stars"><span class="empty-stars"><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span><span class="star"><i class="far fa-star"></i></span></span><span class="filled-stars" style="width:<?= ($book['b_rate'] * 20) ?>%;"><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span><span class="star"><i class="fas fa-star"></i></span></span><input value="<?= $book['b_rate'] ?>" class="rating-input" title=""></div>
                                                 </div>
                                                 <div class="small"><?= number_format($book['b_rate'], 1) ?>/5.0 rated by <?= $book['count_rate'] ?> user<?php if ($book['count_rate'] > 1) echo "s"; ?></div>
                                             <?php } ?>

@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'BooksController';
-$route['404_override'] = '';
+$route['404_override'] = 'BooksController/notfound_override';
 $route['translate_uri_dashes'] = FALSE;
 /*
 | -------------------------------------------------------------------------
@@ -214,6 +214,8 @@ $route['api/course/insert'] = 'DashboardController/course_insert';
 
 $route['api/activity_view/insert'] = 'ActivityController/activity_view';
 $route['api/activity_view/get_recently'] = 'ActivityController/get_recently_view';
+$route['api/activity_search/get_recently'] = 'ActivityController/get_recently_search';
+
 
 
 

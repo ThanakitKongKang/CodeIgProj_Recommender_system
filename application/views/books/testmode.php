@@ -1,6 +1,6 @@
 <div class="container" style="min-height:100vh">
     <?php
-    echo "<form action='testmode' class='mt-3 mb-3' method='post'>
+    echo "<form action='testmode' class='mt-3 mb-5' method='post'>
  <input type='text' name='cosineCheckCourse1' class='form-control w-25' style='display:inline-block;'  pattern='^[a-zA-Z]+[0-9]{6}|[0-9]{6}' title='6 letters of numbers. Starts with english letter is optional e.g. SC312002' value='$cosineCheckCourse1' placeholder='course id e.g. SC312002,SC312006' required>
  <input type='number' name='cosineCheckCourse2' class='form-control w-25' style='display:inline-block;' value='$cosineCheckCourse2'  placeholder='book id' required>
  <button type='submit' id='cosineSubmit' class='btn btn-outline-success'>Cosine Check</button>
@@ -36,7 +36,7 @@
         print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords2[$cosineCheck2 - 1], true) . "</pre>");
     }
     ?>
-    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
         คอร์สในระบบ
     </button>
     <!-- Modal -->
@@ -61,8 +61,8 @@
         </div>
     </div>
 
-    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_registered_keyword_modal">
-        คีย์เวิร์ดของคอร์สในระบบ 
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#course_registered_keyword_modal">
+        คีย์เวิร์ดของคอร์สในระบบ
     </button>
     <div class="modal fade" id="course_registered_keyword_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#course_keyword_user_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#course_keyword_user_modal">
         คีย์เวิร์ดของคอร์สที่ผู้ใช้ลงทะเบียน
     </button>
     <div class="modal fade" id="course_keyword_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#cosineSim_course_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#cosineSim_course_modal">
         หนังสือที่ตรงกับคอร์ส
     </button>
     <div class="modal fade" id="cosineSim_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn bg_linear_theme btn-primary btn-block mb-2 py-3" data-toggle="modal" data-target="#recommend_list_detail_course_modal">
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#recommend_list_detail_course_modal">
         รายละเอียดหนังสือที่ตรงกับคอร์ส
     </button>
     <div class="modal fade" id="recommend_list_detail_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -156,8 +156,69 @@
             </div>
         </div>
     </div>
-    <?php
+    <hr class="my-3 mb-4">
+    <button type="button" class="btn bg_linear_theme btn-primary mb-2 py-3" data-toggle="modal" data-target="#getActivityRecommend_viewed">
+        รายการที่แนะนำจากการ View
+    </button>
+    <div class="modal fade" id="getActivityRecommend_viewed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">getActivityRecommend_viewed</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <h4 class="display-4 text-center text_gradient_theme">การดูล่าสุด</h4>
+                    <?php
+                    print("<pre>" . print_r($recently_view, true) . "</pre>");
+                    ?>
+                    <hr class="my-3 mb-4">
 
+                    <h4 class="display-4 text-center text_gradient_theme">รายการแนะนำ</h4>
+                    <?php
+                    print("<pre>" . print_r($getActivityRecommend_viewed, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn bg_linear_theme btn-primary mb-2 py-3" data-toggle="modal" data-target="#getActivityRecommend_search">
+        รายการที่แนะนำจากการ Search
+    </button>
+    <div class="modal fade" id="getActivityRecommend_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">getActivityRecommend_search</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <h4 class="display-4 text-center text_gradient_theme">การ Search ล่าสุด</h4>
+                    <?php
+                    print("<pre>" . print_r($recently_search, true) . "</pre>");
+                    ?>
+                    <hr class="my-3 mb-4">
+
+                    <h4 class="display-4 text-center text_gradient_theme">รายการแนะนำ</h4>
+                    <?php
+                    print("<pre>" . print_r($getActivityRecommend_search, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
     // echo "<div class='container mt-5'><h4>books_name retrieving</h4>";
     // print("<pre>" . print_r($books_name, true) . "</pre>");
     // echo "</div>";
@@ -166,9 +227,6 @@
     // print("<pre>" . print_r($words_segment, true) . "</pre>");
     // echo "</div>";
 
-    // echo "<div class='container'><h4>tf_no_stopwords</h4>";
-    // print("<pre>" . print_r($tf_no_stopwords2, true) . "</pre>");
-    // echo "</div>";
     ?>
 
     <script>

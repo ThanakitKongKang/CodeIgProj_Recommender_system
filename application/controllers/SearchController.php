@@ -58,7 +58,7 @@ class SearchController extends CI_Controller
         else
             $data['search'] = "no-book-found";
 
-        if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in') && $query != "" && !is_numeric($query)) {
             $this->activity_search($query);
         }
 

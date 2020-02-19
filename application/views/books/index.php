@@ -164,6 +164,57 @@
             <?php } ?>
         </div>
     <?php } ?>
+
+    <!-- rec_by_view_activity -->
+    <?php if ($getActivityRecommend_viewed != FALSE) { ?>
+        <div id="rec_viewed" class="mt-5 container p-0">
+            <span class="anchor" id="slick_getActivityRecommend_viewed"></span>
+            <div class="slick_title_index font-arial text-muted font-weight-bold">
+                <a href="<?= base_url() ?>seemore/rec_by_viewed" class="link">
+                    Based on your recently viewed
+                    <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
+                    <span class="font-apple slick_more_text">See all</span>
+                </a>
+            </div>
+            <div class="slick_index pl-4 py-5 bg-light">
+                <?php foreach ($getActivityRecommend_viewed as $key => $sub_rec_view) { ?>
+                    <?php if ($key != "detail") { ?>
+                        <div class="slick_wrapper_index">
+                            <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_view['book_id'] ?>.PNG" alt="" />
+                            <a class="text-col-2-type ctg" style="font-size:0.75rem" data-ctg="<?= $sub_rec_view["book_type"] ?>"><span><?= $sub_rec_view['book_type'] ?></span></a>
+                            <div class="text-col-2-name name_slick" style="font-size:0.75rem"> <a href="<?= base_url() ?>book/<?= $sub_rec_view['book_id'] ?>" title="<?= $sub_rec_view['book_name'] ?>"><?= $sub_rec_view['book_name'] ?></a></div>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
+
+    <!-- rec_by_search_activity -->
+    <?php if ($getActivityRecommend_search != FALSE) { ?>
+        <div id="rec_search" class="container p-0">
+            <span class="anchor" id="slick_getActivityRecommend_search"></span>
+            <div class="slick_title_index font-arial text-muted font-weight-bold">
+                <a href="<?= base_url() ?>seemore/rec_by_search" class="link">
+                    Based on your recently searching
+                    <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
+                    <span class="font-apple slick_more_text">See all</span>
+                </a>
+            </div>
+            <div class="slick_index pl-4 py-5 bg-light">
+                <?php foreach ($getActivityRecommend_search as $key => $sub_rec_search) { ?>
+                    <?php if ($key != "detail") { ?>
+                        <div class="slick_wrapper_index">
+                            <img class="cover_rec_course" data-lazy="<?= base_url() ?>assets/book_covers/<?= $sub_rec_search['book_id'] ?>.PNG" alt="" />
+                            <a class="text-col-2-type ctg" style="font-size:0.75rem" data-ctg="<?= $sub_rec_search["book_type"] ?>"><span><?= $sub_rec_search['book_type'] ?></span></a>
+                            <div class="text-col-2-name name_slick" style="font-size:0.75rem"> <a href="<?= base_url() ?>book/<?= $sub_rec_search['book_id'] ?>" title="<?= $sub_rec_search['book_name'] ?>"><?= $sub_rec_search['book_name'] ?></a></div>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
+
     <span class="anchor" id="anchor_mid"></span>
     <div id="mid" class="mt-5">
         <div class="row">
@@ -313,6 +364,16 @@
             </a>
         <?php
         } ?>
+    <?php } ?>
+    <?php if ($getActivityRecommend_viewed != FALSE) { ?>
+        <a class="list-group-item list-group-item-action sidenav_index" href="#slick_getActivityRecommend_viewed">
+            <i class="fas fa-circle fa-xs"></i><span style="font-size:78%">Activity viewed</span>
+        </a>
+    <?php } ?>
+    <?php if ($getActivityRecommend_search != FALSE) { ?>
+        <a class="list-group-item list-group-item-action sidenav_index" href="#slick_getActivityRecommend_search">
+            <i class="fas fa-circle fa-xs"></i><span style="font-size:78%">Activity search</span>
+        </a>
     <?php } ?>
     <a class="list-group-item list-group-item-action" href="#anchor_mid"> <i class="fas fa-circle fa-xs"></i><span>Highlight</span></a>
 </div>

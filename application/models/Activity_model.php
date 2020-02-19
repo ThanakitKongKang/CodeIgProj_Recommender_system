@@ -24,7 +24,7 @@ class Activity_model extends BaseModel
     public function get_recently_view($username, $returnType)
     {
         $recently_count = 5;
-        $sql = "SELECT *,count(book_id) as count FROM `activity_view` WHERE username = ? group by book_id order by view_id desc limit ?";
+        $sql = "SELECT *,count(activity_view.book_id) as count FROM `activity_view`,book WHERE username = ? AND activity_view.book_id=book.book_id group by activity_view.book_id order by view_id desc limit ?";
         $query = $this->db->query($sql, array($username, $recently_count));
         $array = json_decode(json_encode($query->result()), True);
         if ($returnType == "rows") {

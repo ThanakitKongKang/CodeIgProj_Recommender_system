@@ -26,7 +26,6 @@
             <div class="row no-gutters col-12 mx-auto">
                 <?php
                 foreach ($recommend_list_detail_course as $rec_course) { ?>
-
                     <?php foreach ($rec_course as $key => $content) { ?>
                         <?php if ($key != "detail") { ?>
 

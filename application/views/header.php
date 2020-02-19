@@ -170,7 +170,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <a href="<?= base_url() ?>login" class="different_a"><button class="btn btn-outline-primary" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">LOG IN</button></a>
                                 </li>
                                 <li class="nav-item pl-2 mt-1">
-                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn bg_linear_theme" style="font-weight:600;padding-top: 8px;padding-bottom: 8px;">SIGN UP</button></a>
+                                    <a href="<?= base_url() ?>signup" class="different_a"><button class="btn bg_linear_theme" style="font-weight:600;padding-top: 9px;padding-bottom: 9px;">SIGN UP</button></a>
                                 </li>
 
 
@@ -190,6 +190,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php if ($this->session->userdata('user')['username'] == "admin") { ?>
                                             <h6 class="dropdown-header">Admin</h6>
                                             <a class="dropdown-item <?php if (isset($dashboard)) echo $dashboard; ?>" href="<?= base_url() ?>dashboard">Dashboard</a>
+                                            <a class="dropdown-item <?php if (isset($testmode)) echo $testmode; ?>" href="<?= base_url() ?>testmode">Debugger</a>
+
                                             <hr class="my-2">
                                         <?php  } else { ?>
                                             <h6 class="dropdown-header">General Account Settings</h6>
@@ -392,19 +394,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
 
         }
+        var search_history_html = "";
+        get_search_history();
 
         function checkTypingLength(typing) {
             if (typing.length == 0) {
-                document.getElementById("livesearch").innerHTML = "";
+
+                document.getElementById("livesearch").innerHTML = search_history_html;
                 document.getElementById("livesearch").style.border = "0px";
-                $('#livesearch').hide();
+                // $('#livesearch').hide();
                 // ประวัติการค้นหา show
-                return;
+                return true;
             } else {
                 $('#livesearch').show();
                 // ประวัติการค้นหา hide
-                return;
+                return false;
             }
+
         }
 
         // User edit function
@@ -747,6 +753,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         // in focus
         $('#input-search').focusin(function(e) {
+            checkTypingLength($('#input-search').val());
             $('#livesearch').show();
         });
 
@@ -766,24 +773,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
         // Live search
         $('#input-search').keyup(function(e) {
             var typing = $('#input-search').val();
-            checkTypingLength(typing);
-            var post_data = {
-                'typing': typing
-            };
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo base_url('search/liveSearch'); ?>',
-                data: post_data,
-                async: true,
-                beforeSend: function() {
-                    $('.live_search_loading').show();
-                },
-                success: function(html) {
-                    $('.live_search_loading').hide();
-                    $('#livesearch').html(html);
-                    // console.log(html);
-                }
-            });
+
+            if (!checkTypingLength(typing)) {
+                var post_data = {
+                    'typing': typing
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url('search/liveSearch'); ?>',
+                    data: post_data,
+                    async: true,
+                    beforeSend: function() {
+                        $('.live_search_loading').show();
+                    },
+                    success: function(html) {
+                        $('.live_search_loading').hide();
+                        $('#livesearch').html(html);
+                        // console.log(html);
+                    }
+                });
+            }
 
         });
 
@@ -1195,9 +1204,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 type: 'post',
                 url: "<?php echo base_url(); ?>api/activity_view/insert",
                 data: post_data,
-                success: function(data) {
-                },
+                success: function(data) {},
 
+            });
+        }
+
+        function get_search_history() {
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>api/activity_search/get_recently",
+                success: function(data) {
+                    search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Search history</div>";
+                    var response = JSON.parse(data);
+                    response.forEach(function(keyword, i) {
+
+                        search_history_html += "<a class='dropdown-item-search' href='<?= base_url() ?>search/result?q=" + keyword["search_keyword"] + "'>" + keyword["search_keyword"] + "</a>";
+                        i++;
+                    });
+                    search_history_html += "</div>";
+                }
             });
         }
     </script>
