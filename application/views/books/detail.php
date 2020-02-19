@@ -173,6 +173,7 @@
     }
 
     $(document).ready(function() {
+
         /*
          *   START OF COMMENT FUNCTION
          *
@@ -365,6 +366,22 @@
          *   END OF COMMENT FUNCTION
          *
          */
+
+        // Timer for activity_view
+        <?php if ($this->session->userdata('logged_in')) { ?>
+            $.ajax({
+                type: 'get',
+                url: "<?php echo base_url(); ?>api/activity_view/get_recently",
+                success: function(data) {},
+            });
+            var interval = setInterval(function() {
+                var book_id = arr[5];
+                activity_view(book_id);
+                clearInterval(interval);
+            }, 15000);
+
+        <?php } ?>
+
 
         // back button function
         $('.backbutton').on("click", function(e) {
@@ -607,6 +624,7 @@
                 }
             })
         }
+
         $("#similar_book_arrow_right").click(function(e) {
             var leftPos = $('#similar_book_detail').scrollLeft();
             $("#similar_book_detail").animate({
@@ -643,5 +661,7 @@
                 }
             });
         });
+
+
     });
 </script>

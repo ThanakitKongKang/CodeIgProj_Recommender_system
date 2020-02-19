@@ -58,6 +58,10 @@ class SearchController extends CI_Controller
         else
             $data['search'] = "no-book-found";
 
+        if ($this->session->userdata('logged_in')) {
+            $this->activity_search($query);
+        }
+
         $this->load->view('./header', $header);
         $this->load->view('books/search_result', $data);
         $this->load->view('footer');

@@ -1186,6 +1186,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             }
         }
+
+        function activity_view(book_id) {
+            var post_data = {
+                'book_id': book_id,
+            };
+            $.ajax({
+                type: 'post',
+                url: "<?php echo base_url(); ?>api/activity_view/insert",
+                data: post_data,
+                success: function(data) {
+                },
+
+            });
+        }
     </script>
 
 

@@ -212,6 +212,9 @@ $route['api/course/delete'] = 'DashboardController/course_delete';
 $route['api/course/id_exists'] = 'DashboardController/isCourseIdExists';
 $route['api/course/insert'] = 'DashboardController/course_insert';
 
+$route['api/activity_view/insert'] = 'ActivityController/activity_view';
+$route['api/activity_view/get_recently'] = 'ActivityController/get_recently_view';
+
 
 
 

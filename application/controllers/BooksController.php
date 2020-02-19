@@ -229,12 +229,16 @@ class BooksController extends CI_Controller
             // chopping to get only 12 items
             $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
             $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
+
+     
         }
         $header["title"] = $data['book_detail']['book_name'];
         $this->load->view('./header', $header);
         $this->load->view('books/detail', $data);
         $this->load->view('footer');
     }
+
+    
 
     /*
     | -------------------------------------------------------------------------
@@ -298,6 +302,7 @@ class BooksController extends CI_Controller
 
     public function testmode()
     {
+        $this->check_auth_admin('testmode');
 
         $data['books_name'] = $this->books_model->get_name_all();
         // TF

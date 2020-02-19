@@ -35,7 +35,6 @@ class Bookmark_model extends BaseModel
 
     public function get_saved_list($username, $returnType)
     {
-
         $sql = "SELECT * FROM `saved_book`,book WHERE username = ? AND book.book_id = saved_book.book_id";
         $query = $this->db->query($sql, array($username));
         $array = json_decode(json_encode($query->result()), True);
