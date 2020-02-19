@@ -40,7 +40,7 @@ class CoursesController extends CI_Controller
                 $data['recommend_list_detail_course']['detail'] = "rec_by_viewed";
                 $data['recommend_list_detail_course'][] = $this->getActivityRecommend_viewed();
                 $data['page'] = "Based on your recently viewed";
-                $data["title_mfy"] = "Recommended by activity";
+                $data["title_mfy"] = "<i class='fas fa-glasses pr-3'></i>Recommended by activity";
                 $data["title_main"] = "Based on your recently viewed";
                 $header["title"] = "Recommended by activity";
             } else if ($data['get_url'] == "rec_by_search") {
@@ -48,7 +48,7 @@ class CoursesController extends CI_Controller
                 $data['recommend_list_detail_course']['detail'] = "rec_by_search";
                 $data['recommend_list_detail_course'][] = $this->getActivityRecommend_search();
                 $data['page'] = "Based on your recently searching";
-                $data["title_mfy"] = "Recommended by activity";
+                $data["title_mfy"] = "<i class='fas fa-search fa-flip-horizontal pl-3'></i>Recommended by activity";
                 $data["title_main"] = "Based on recently searching";
                 $header["title"] = "Recommended by activity";
             } else {

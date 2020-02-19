@@ -171,7 +171,7 @@
             <span class="anchor" id="slick_getActivityRecommend_viewed"></span>
             <div class="slick_title_index font-arial text-muted font-weight-bold">
                 <a href="<?= base_url() ?>seemore/rec_by_viewed" class="link">
-                    Based on your recently viewed
+                <i class='fas fa-glasses pr-2'></i>Based on your recently viewed
                     <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
                     <span class="font-apple slick_more_text">See all</span>
                 </a>
@@ -196,7 +196,7 @@
             <span class="anchor" id="slick_getActivityRecommend_search"></span>
             <div class="slick_title_index font-arial text-muted font-weight-bold">
                 <a href="<?= base_url() ?>seemore/rec_by_search" class="link">
-                    Based on your recently searching
+                <i class='fas fa-search fa-flip-horizontal pl-2'></i>Based on your recently searching
                     <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
                     <span class="font-apple slick_more_text">See all</span>
                 </a>
