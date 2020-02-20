@@ -494,6 +494,10 @@ class CI_Controller
 			}
 
 			shuffle($data['recommend_list_detail_activity']);
+
+			// start at 1
+			array_unshift($data['recommend_list_detail_activity'], "");
+			unset($data['recommend_list_detail_activity'][0]);
 		} else {
 			$data['recommend_list_detail_activity'] = false;
 		}
@@ -507,7 +511,7 @@ class CI_Controller
 		$username = $this->session->userdata('user')['username'];
 		// rec activity
 		// start recommend by registered activity
-		$data['recently_view'] = $this->activity_model->get_recently_view($username, "rows");
+		$data['recently_view'] = $this->activity_model->get_recently_view($username, 5, "rows");
 		if (!empty($data['recently_view'])) {
 			$data['books_name'] = $this->books_model->get_name_all();
 			// TF
@@ -591,6 +595,46 @@ class CI_Controller
 			}
 
 			shuffle($data['recommend_list_detail_activity']);
+			// start at 1
+			array_unshift($data['recommend_list_detail_activity'], "");
+			unset($data['recommend_list_detail_activity'][0]);
+		} else {
+			$data['recommend_list_detail_activity'] = false;
+		}
+		return  $data['recommend_list_detail_activity'];
+	}
+
+	public function getActivity_viewAgain()
+	{
+		$this->load->model('activity_model');
+
+		$username = $this->session->userdata('user')['username'];
+		// rec activity
+		$data['recently_view'] = $this->activity_model->get_recently_view($username, 10, "rows");
+		if (!empty($data['recently_view'])) {
+			$data['recommend_list_detail_activity'] = $data['recently_view'];
+			// start at 1
+			array_unshift($data['recommend_list_detail_activity'], "");
+			unset($data['recommend_list_detail_activity'][0]);
+		} else {
+			$data['recommend_list_detail_activity'] = false;
+		}
+		return  $data['recommend_list_detail_activity'];
+	}
+
+	public function getActivity_popular()
+	{
+		$this->load->model('activity_model');
+
+		// rec activity
+		$data['popular_view'] = $this->activity_model->get_popular_view(7, "rows");
+		if (!empty($data['popular_view'])) {
+			// get top 10 popular
+			$data['recommend_list_detail_activity'] = (array_slice($data['popular_view'], 0, 10));
+
+			// start at 1
+			array_unshift($data['recommend_list_detail_activity'], "");
+			unset($data['recommend_list_detail_activity'][0]);
 		} else {
 			$data['recommend_list_detail_activity'] = false;
 		}

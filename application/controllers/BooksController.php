@@ -101,7 +101,10 @@ class BooksController extends CI_Controller
         $data['recommend_list_detail_course'] = $this->getCourseRecommend();
         $data['getActivityRecommend_viewed'] = $this->getActivityRecommend_viewed();
         $data['getActivityRecommend_search'] = $this->getActivityRecommend_search();
-        
+        $data['getActivity_viewAgain'] = $this->getActivity_viewAgain();
+        $data['getActivity_popular'] = $this->getActivity_popular();
+
+
         $header['home'] = 'active';
         $this->load->view('./header', $header);
         $this->load->view('books/index', $data);
@@ -521,12 +524,12 @@ class BooksController extends CI_Controller
         $this->load->model('activity_model');
         $username = $this->session->userdata('user')['username'];
         $data['recently_search'] = $this->activity_model->get_recently_search($username, "rows");
-        $data['recently_view'] = $this->activity_model->get_recently_view($username, "rows");
+        $data['recently_view'] = $this->activity_model->get_recently_view($username, 5, "rows");
 
         $data['getActivityRecommend_viewed'] = $this->getActivityRecommend_viewed();
         $data['getActivityRecommend_search'] = $this->getActivityRecommend_search();
-
-
+        $data['getActivity_viewAgain'] = $this->getActivity_viewAgain();
+        $data['getActivity_popular'] = $this->getActivity_popular();
 
         $header["testmode"] = "active";
         $header["title"] = "Test mode";

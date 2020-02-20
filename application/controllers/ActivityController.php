@@ -29,7 +29,7 @@ class ActivityController extends CI_Controller
     public function get_recently_view()
     {
         $username = $this->session->userdata('user')['username'];
-        echo json_encode($this->activity_model->get_recently_view($username, "rows"));
+        echo json_encode($this->activity_model->get_recently_view($username, 5, "rows"));
     }
 
     public function get_recently_search()

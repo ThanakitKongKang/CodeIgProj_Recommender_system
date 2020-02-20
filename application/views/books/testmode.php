@@ -37,7 +37,7 @@
     }
     ?>
     <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
-        คอร์สในระบบ
+        คอร์สที่ลงทะเบียน
     </button>
     <!-- Modal -->
     <div class="modal fade" id="course_registered_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -210,6 +210,56 @@
                     <h4 class="display-4 text-center text_gradient_theme">รายการแนะนำ</h4>
                     <?php
                     print("<pre>" . print_r($getActivityRecommend_search, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn bg_linear_theme btn-primary mb-2 py-3" data-toggle="modal" data-target="#getActivity_popular">
+        กำลังฮิต
+    </button>
+    <div class="modal fade" id="getActivity_popular" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">getActivity_popular</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <h4 class="display-4 text-center text_gradient_theme">กำลังฮิตในสัปดาห์</h4>
+                    <?php
+                    print("<pre>" . print_r($getActivity_popular, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn bg_linear_theme btn-primary mb-2 py-3" data-toggle="modal" data-target="#getActivity_viewAgain">
+        ดูอีกครั้ง
+    </button>
+    <div class="modal fade" id="getActivity_viewAgain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">getActivity_viewAgain</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <h4 class="display-4 text-center text_gradient_theme"> ดูอีกครั้ง</h4>
+                    <?php
+                    print("<pre>" . print_r($getActivity_viewAgain, true) . "</pre>");
                     ?>
                 </div>
                 <div class="edit_footer modal-footer">

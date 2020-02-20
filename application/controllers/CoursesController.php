@@ -51,6 +51,22 @@ class CoursesController extends CI_Controller
                 $data["title_mfy"] = "<i class='fas fa-search fa-flip-horizontal pl-3'></i>Recommended by activity";
                 $data["title_main"] = "Based on recently searching";
                 $header["title"] = "Recommended by activity";
+            } else if ($data['get_url'] == "popular") {
+                $data['isCourseExists'] = "TRUE";
+                $data['recommend_list_detail_course']['detail'] = "popular";
+                $data['recommend_list_detail_course'][] = $this->getActivity_popular();
+                $data['page'] = "popular";
+                $data["title_mfy"] = "<i class='fas fa-fire-alt pr-3'></i>Trending Now";
+                $data["title_main"] = "popular";
+                $header["title"] = "Trending Now";
+            } else if ($data['get_url'] == "view_again") {
+                $data['isCourseExists'] = "TRUE";
+                $data['recommend_list_detail_course']['detail'] = "view_again";
+                $data['recommend_list_detail_course'][] = $this->getActivity_viewAgain();
+                $data['page'] = "View it again";
+                $data["title_mfy"] = "<i class='fas fa-redo pr-3'></i>Recommended by activity";
+                $data["title_main"] = "View it again";
+                $header["title"] = "Recommended by activity";
             } else {
                 $data['all_num_rows'] = 0;
                 $data['page'] = "404-Page-Not-Found";
