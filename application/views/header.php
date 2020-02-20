@@ -1212,7 +1212,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function get_search_history() {
             $.ajax({
                 type: 'post',
-                url: "<?php echo base_url(); ?>api/activity_search/get_recently",
+                url: "<?php echo base_url(); ?>api/activity_search/get_recently_for_livesearch",
                 success: function(data) {
                     search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Search history</div>";
                     var response = JSON.parse(data);

@@ -37,4 +37,10 @@ class ActivityController extends CI_Controller
         $username = $this->session->userdata('user')['username'];
         echo json_encode($this->activity_model->get_recently_search($username, "rows"));
     }
+
+    public function get_recently_for_livesearch()
+    {
+        $username = $this->session->userdata('user')['username'];
+        echo json_encode($this->activity_model->get_recently_for_livesearch($username, "rows"));
+    }
 }

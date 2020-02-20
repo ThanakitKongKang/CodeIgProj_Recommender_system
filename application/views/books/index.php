@@ -143,7 +143,7 @@
                 <span class="anchor" id="slick_<?= $rec_course["detail"]["course_id"] ?>"></span>
                 <div class="slick_title_index font-arial text-muted font-weight-bold">
                     <a href="<?= base_url() ?>seemore/<?= $rec_course["detail"]["course_id"] ?>" class="link">
-                        <?= $rec_course["detail"]["course_name_en"] ?>
+                        <i class='fas fa-book pr-2'></i><?= $rec_course["detail"]["course_name_en"] ?>
                         <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
                         <span class="font-apple slick_more_text">See all</span>
                     </a>

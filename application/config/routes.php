@@ -215,6 +215,8 @@ $route['api/course/insert'] = 'DashboardController/course_insert';
 $route['api/activity_view/insert'] = 'ActivityController/activity_view';
 $route['api/activity_view/get_recently'] = 'ActivityController/get_recently_view';
 $route['api/activity_search/get_recently'] = 'ActivityController/get_recently_search';
+$route['api/activity_search/get_recently_for_livesearch'] = 'ActivityController/get_recently_for_livesearch';
+
 
 
 

@@ -51,6 +51,19 @@ class Activity_model extends BaseModel
         }
     }
 
+    public function get_recently_for_livesearch($username, $returnType)
+    {
+        $recently_count = 5;
+        $sql = "SELECT DISTINCT search_keyword,username FROM `activity_search` WHERE username = ? order by search_id desc limit ?";
+        $query = $this->db->query($sql, array($username, $recently_count));
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
     public function get_popular_view($interval, $returnType)
     {
         $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL 7 DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC";
