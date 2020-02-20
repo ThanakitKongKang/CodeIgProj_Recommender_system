@@ -179,6 +179,10 @@ $route['dashboard/user/comment_manage'] = 'DashboardController/user_comment_mana
 $route['dashboard/course/manage'] = 'DashboardController/course_manage_page';
 $route['dashboard/course/insert'] = 'DashboardController/course_insert_page';
 
+$route['dashboard/activity/view'] = 'DashboardController/activity_view_page';
+$route['dashboard/activity/search'] = 'DashboardController/activity_search_page';
+
+
 
 // API
 $route['api/book/get'] = 'DashboardController/book_get';
@@ -217,6 +221,8 @@ $route['api/activity_view/get_recently'] = 'ActivityController/get_recently_view
 $route['api/activity_search/get_recently'] = 'ActivityController/get_recently_search';
 $route['api/activity_search/get_recently_for_livesearch'] = 'ActivityController/get_recently_for_livesearch';
 
+
+$route['api/activity/get_dashboard_view'] = 'DashboardController/get_dashboard_view';
 
 
 

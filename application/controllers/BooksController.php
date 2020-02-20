@@ -994,7 +994,7 @@ class BooksController extends CI_Controller
         $data['page'] = "404-Page-Not-Found";
         $data["title_mfy"] = "";
         $data["title_main"] = "Page not found!";
-        $header["title"] = "Course - " . $data['get_url'];
+        $header["title"] = "Page not found";
         $this->load->view('./header', $header);
         $this->load->view('courses/seemore', $data);
         $this->load->view('footer');

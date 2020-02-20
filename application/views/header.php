@@ -102,9 +102,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/croppie.min.css" />
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/croppie.min.css.map" />
 
-
-
-
+    <!-- Chart -->
+    <script src="<?= base_url() ?>/assets/js/chart.js/Chart.min.js"></script>
 
 </head>
 
@@ -1214,7 +1213,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 type: 'post',
                 url: "<?php echo base_url(); ?>api/activity_search/get_recently_for_livesearch",
                 success: function(data) {
-                    search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Search history</div>";
+                    search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Recent searchs</div>";
                     var response = JSON.parse(data);
                     response.forEach(function(keyword, i) {
 

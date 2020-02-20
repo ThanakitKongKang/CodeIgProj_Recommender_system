@@ -444,4 +444,119 @@ class DashboardController extends CI_Controller
 
         $this->course_model->insert($post_data);
     }
+
+    public function activity_view_page()
+    {
+        // all books data
+        $data['category_list'] = $this->books_model->get_cateory_list();
+        $header["title"] = "Dashboard";
+        $data["api_url"] =  base_url() . "api/activity/get_dashboard_view";
+        $data["main_title"] = "Viewed Activity";
+        // active
+        $header["dashboard"] = "active";
+        $data_nav["isActivity_view"] = "active";
+
+        $this->load->view('./header', $header);
+        $this->load->view('dashboard/dashboard_sidenav', $data_nav);
+        $this->load->view('dashboard/activity_page', $data);
+        $this->load->view('footer');
+    }
+
+    public function get_dashboard_view()
+    {
+        // switch case by post data
+        // week
+        $arrLabels = array("6 Days ago", "5 Days ago", "4 Days ago", "3 Days ago", "2 Days ago", "Yesterday", "Today");
+        $arrDatasets = array(
+            array(
+                'label' => "Bookid1",
+                'fill' => 'false',
+                // 'fillColor' => "rgba(220,220,220,0.2)",
+                'borderColor' => "rgb(255, 99, 132)",
+                'strokeColor' => "rgb(255, 99, 132)",
+                'pointColor' => "rgb(255, 99, 132)",
+                'data' => array('5', '8', '8', '9', '8', '16', '20')
+            ),
+            array(
+                'label' => "Bookid2",
+                'fill' => 'false',
+                // 'fillColor' => "rgba(220,220,220,0.2)",
+                'borderColor' => "rgb(54, 162, 235)",
+                'strokeColor' => "rgb(54, 162, 235)",
+                'pointColor' => "rgb(54, 162, 235)",
+                'data' => array('10', '8', '7', '5', '10', '15', '16')
+            ),
+        );
+        $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
+
+
+        // // month
+        // $arrLabels = array("6 Months ago", "5 Months ago", "4 Months ago", "3 Months ago", "2 Months ago", "1 Month ago", "This month");
+        // $arrDatasets = array(
+        //     array(
+        //         'label' => "Bookid1",
+        //         'fill' => 'false',
+        //         // 'fillColor' => "rgba(220,220,220,0.2)",
+        //         'borderColor' => "rgb(255, 99, 132)",
+        //         'strokeColor' => "rgb(255, 99, 132)",
+        //         'pointColor' => "rgb(255, 99, 132)",
+        //         'data' => array('5', '8', '8', '9', '8', '16', '20')
+        //     ),
+        //     array(
+        //         'label' => "Bookid2",
+        //         'fill' => 'false',
+        //         // 'fillColor' => "rgba(220,220,220,0.2)",
+        //         'borderColor' => "rgb(54, 162, 235)",
+        //         'strokeColor' => "rgb(54, 162, 235)",
+        //         'pointColor' => "rgb(54, 162, 235)",
+        //         'data' => array('10', '8', '7', '5', '10', '15', '16')
+        //     ),
+        // );
+        // $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
+
+
+        // // alltime
+        // $arrLabels = array("book1", "book2", "book3", "book4", "book5", "book6", "book7");
+        // $arrDatasets = array(
+        //     array(
+        //         'label' => "All time views",
+        //         'fill' => 'false',
+        //         'fillColor' => "rgb(255, 99, 132)",
+        //         'borderColor' => "rgb(255, 99, 132)",
+        //         'strokeColor' => "rgb(255, 99, 132)",
+        //         'backgroundColor' => array(
+        //             'rgb(255, 99, 132)',
+        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
+        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
+        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
+        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
+        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
+        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF))
+        //         ),
+        //         'pointColor' => "rgb(255, 99, 132)",
+        //         'data' => array('100', '80', '70', '50', '40', '10', '5')
+        //     ),
+        // );
+        // $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
+
+
+        echo (json_encode($arrReturn[0]));
+    }
+
+    public function activity_search_page()
+    {
+        // all books data
+        $data['category_list'] = $this->books_model->get_cateory_list();
+        $header["title"] = "Dashboard";
+
+        $header["dashboard"] = "active";
+        // active
+        $data["main_title"] = "Search Activity";
+        $data_nav["isActivity_search"] = "active";
+
+        $this->load->view('./header', $header);
+        $this->load->view('dashboard/dashboard_sidenav', $data_nav);
+        $this->load->view('dashboard/activity_page', $data);
+        $this->load->view('footer');
+    }
 }

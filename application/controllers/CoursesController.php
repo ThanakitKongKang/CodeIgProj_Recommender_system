@@ -28,14 +28,13 @@ class CoursesController extends CI_Controller
 
     function seemore()
     {
-        $this->check_auth('seemore');
         $data['get_url'] = ($this->uri->segment(2)) ? $this->uri->segment(2) : "none";
         $page = $data['get_url'];
         $data["isCourseExists"] = $this->course_model->get_course_by_id($data['get_url']);
 
         if ($data['isCourseExists'] == FALSE) {
-
             if ($data['get_url'] == "rec_by_viewed") {
+                $this->check_auth('seemore');
                 $data['isCourseExists'] = "TRUE";
                 $data['recommend_list_detail_course']['detail'] = "rec_by_viewed";
                 $data['recommend_list_detail_course'][] = $this->getActivityRecommend_viewed();
@@ -44,6 +43,7 @@ class CoursesController extends CI_Controller
                 $data["title_main"] = "Based on your recently viewed";
                 $header["title"] = "Recommended by activity";
             } else if ($data['get_url'] == "rec_by_search") {
+                $this->check_auth('seemore');
                 $data['isCourseExists'] = "TRUE";
                 $data['recommend_list_detail_course']['detail'] = "rec_by_search";
                 $data['recommend_list_detail_course'][] = $this->getActivityRecommend_search();
@@ -60,6 +60,7 @@ class CoursesController extends CI_Controller
                 $data["title_main"] = "popular";
                 $header["title"] = "Trending Now";
             } else if ($data['get_url'] == "view_again") {
+                $this->check_auth('seemore');
                 $data['isCourseExists'] = "TRUE";
                 $data['recommend_list_detail_course']['detail'] = "view_again";
                 $data['recommend_list_detail_course'][] = $this->getActivity_viewAgain();
@@ -75,6 +76,7 @@ class CoursesController extends CI_Controller
                 $header["title"] = "404-Page-Not-Found";
             }
         } else {
+            $this->check_auth('seemore');
             $data['recommend_list_detail_course'] = $this->getCourseRecommend();
 
             // get only requested course
@@ -96,7 +98,6 @@ class CoursesController extends CI_Controller
         $this->load->view('courses/seemore', $data);
         $this->load->view('footer');
     }
-
 
     function select_search()
     {

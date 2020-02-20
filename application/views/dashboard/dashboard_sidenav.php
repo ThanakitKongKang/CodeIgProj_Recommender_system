@@ -61,5 +61,25 @@
             </a>
         </li>
     </ul>
+
+    <ul id="nav_dashboard_activity">
+        <li><i class="fas fa-chart-line nav_header_icon"></i><span class="nav_header text-muted">Activity</span></li>
+        <li class="nav_dashboard <?php if (isset($isActivity_view)) echo $isActivity_view; ?>">
+            <a href="<?= base_url() ?>dashboard/activity/view">
+                <i class="fas fadb fa-eye fa-2x"></i>
+                <span class="nav_dashboard-text">
+                    View Activity
+                </span>
+            </a>
+        </li>
+        <li class="nav_dashboard <?php if (isset($isActivity_search)) echo $isActivity_search; ?>">
+            <a href="<?= base_url() ?>dashboard/activity/search">
+                <i class="fas fadb fa-search fa-flip-horizontal fa-2x"></i>
+                <span class="nav_dashboard-text">
+                    Search Activity
+                </span>
+            </a>
+        </li>
+    </ul>
 </nav>
 <!-- end nav -->
