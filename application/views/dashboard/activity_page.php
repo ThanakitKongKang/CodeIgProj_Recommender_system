@@ -5,8 +5,8 @@
             <div class="col">
                 <canvas id="myChart" width="400" height="400"></canvas>
             </div>
-            <div class="col">
-
+            <div class="col border p-4" style="border-radius:0.25rem;">
+                รายการล่าสุด
             </div>
         </div>
     </div>
