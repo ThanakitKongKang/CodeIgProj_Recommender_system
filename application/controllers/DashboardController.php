@@ -504,10 +504,11 @@ class DashboardController extends CI_Controller
             foreach ($data['popular_view_month'] as $row_month) {
                 $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
                 $arrDatasets[0]['book_name'][] = $row_month["book_name"];
+                $arrDatasets[0]['book_id'][] = $row_month["book_id"];
                 $arrDatasets[0]['backgroundColor'][] = $color;
                 $arrDatasets[0]['pointColor'][] = $color;
                 $arrDatasets[0]['data'][] = $row_month['viewed_count'];
-                $arrLabels[] = $row_month["book_id"];
+                $arrLabels[] = $row_month["book_name"];
             }
             $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
         } else if ($_GET["mode"] == "a") {
@@ -520,10 +521,11 @@ class DashboardController extends CI_Controller
             foreach ($data['popular_view_alltime'] as $row_alltime) {
                 $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
                 $arrDatasets[0]['book_name'][] = $row_alltime["book_name"];
+                $arrDatasets[0]['book_id'][] = $row_alltime["book_id"];
                 $arrDatasets[0]['backgroundColor'][] = $color;
                 $arrDatasets[0]['pointColor'][] = $color;
                 $arrDatasets[0]['data'][] = $row_alltime['viewed_count'];
-                $arrLabels[] = $row_alltime["book_id"];
+                $arrLabels[] = $row_alltime["book_name"];
             }
             $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
         }

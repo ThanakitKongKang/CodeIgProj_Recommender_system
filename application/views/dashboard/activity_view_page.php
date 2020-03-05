@@ -85,7 +85,7 @@
                 },
                 {
                     "width": "30%",
-                    "targets": [0,1],
+                    "targets": [0, 1],
                 }
             ],
             search: {
@@ -163,6 +163,21 @@
 
                         }
                     },
+                    plugins: [{
+                        afterDraw: function(chart) {
+                            if (chart.data.datasets.length == 0) {
+                                let ctx = chart.chart.ctx;
+                                let width = chart.chart.width;
+                                let height = chart.chart.height;
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText('No data to display', width / 1.9, height / 2);
+                                ctx.restore();
+                            }
+                        }
+                    }]
 
                 });
             }
@@ -199,8 +214,8 @@
                             xAxes: [{
                                 display: true,
                                 scaleLabel: {
-                                    display: true,
-                                    labelString: 'book id'
+                                    display: false,
+                                    labelString: 'title'
                                 }
                             }],
                             yAxes: [{
@@ -214,7 +229,7 @@
                         onClick: function(c, i) {
                             e = i[0];
                             if (typeof e != 'undefined') {
-                                var x_value = this.data.labels[e._index];
+                                var x_value = this.data.datasets[0].book_id[e._index];
                                 // var y_value = this.data.datasets[0].data[e._index];
                                 window.open("<?= base_url() ?>book/" + x_value);
                             }
@@ -225,7 +240,6 @@
                                     return "Book ID : " + data['labels'][tooltipItem[0]['index']];
                                 },
                                 afterTitle: function(tooltipItem, data) {
-                                    console.log(tooltipItem)
 
                                     return "" + data['datasets'][0]['book_name'][tooltipItem[0]['index']];
                                 },
@@ -249,8 +263,30 @@
                             footerFontSize: 10,
                             borderWidth: 1,
                             borderColor: '#dee2e6',
+                        },
+                    },
+                    plugins: [{
+                        beforeInit: function(chart) {
+                            chart.data.labels.forEach(function(value, index, array) {
+                                var a = [];
+                                a.push(value.slice(0, 5) + "..");
+                                array[index] = a;
+                            })
+                        },
+                        afterDraw: function(chart) {
+                            if (chart.data.datasets.length == 0) {
+                                let ctx = chart.chart.ctx;
+                                let width = chart.chart.width;
+                                let height = chart.chart.height;
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText('No data to display', width / 1.9, height / 2);
+                                ctx.restore();
+                            }
                         }
-                    }
+                    }]
                 });
             }
         });
@@ -286,8 +322,8 @@
                             xAxes: [{
                                 display: true,
                                 scaleLabel: {
-                                    display: true,
-                                    labelString: 'book id'
+                                    display: false,
+                                    labelString: 'title'
                                 }
                             }],
                             yAxes: [{
@@ -301,7 +337,7 @@
                         onClick: function(c, i) {
                             e = i[0];
                             if (typeof e != 'undefined') {
-                                var x_value = this.data.labels[e._index];
+                                var x_value = this.data.datasets[0].book_id[e._index];
                                 // var y_value = this.data.datasets[0].data[e._index];
                                 window.open("<?= base_url() ?>book/" + x_value);
                             }
@@ -333,8 +369,31 @@
                             footerFontSize: 10,
                             borderWidth: 1,
                             borderColor: '#dee2e6',
+                        },
+
+                    },
+                    plugins: [{
+                        beforeInit: function(chart) {
+                            chart.data.labels.forEach(function(value, index, array) {
+                                var a = [];
+                                a.push(value.slice(0, 5) + "..");
+                                array[index] = a;
+                            })
+                        },
+                        afterDraw: function(chart) {
+                            if (chart.data.datasets.length == 0) {
+                                let ctx = chart.chart.ctx;
+                                let width = chart.chart.width;
+                                let height = chart.chart.height;
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText('No data to display', width / 1.9, height / 2);
+                                ctx.restore();
+                            }
                         }
-                    }
+                    }]
                 });
             }
         });

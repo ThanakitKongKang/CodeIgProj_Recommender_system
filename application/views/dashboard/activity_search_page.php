@@ -154,6 +154,21 @@
 
                         }
                     },
+                    plugins: [{
+                        afterDraw: function(chart) {
+                            if (chart.data.datasets.length == 0) {
+                                let ctx = chart.chart.ctx;
+                                let width = chart.chart.width;
+                                let height = chart.chart.height;
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText('No data to display', width / 1.9, height / 2);
+                                ctx.restore();
+                            }
+                        }
+                    }]
 
                 });
             }
@@ -235,6 +250,19 @@
                                 a.push(value.slice(0, 5) + "..");
                                 array[index] = a;
                             })
+                        },
+                        afterDraw: function(chart) {
+                            if (chart.data.datasets.length == 0) {
+                                let ctx = chart.chart.ctx;
+                                let width = chart.chart.width;
+                                let height = chart.chart.height;
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText('No data to display', width / 1.9, height / 2);
+                                ctx.restore();
+                            }
                         }
                     }]
                 });
@@ -314,6 +342,19 @@
                                 a.push(value.slice(0, 5) + "..");
                                 array[index] = a;
                             })
+                        },
+                        afterDraw: function(chart) {
+                            if (chart.data.datasets.length == 0) {
+                                let ctx = chart.chart.ctx;
+                                let width = chart.chart.width;
+                                let height = chart.chart.height;
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText('No data to display', width / 1.9, height / 2);
+                                ctx.restore();
+                            }
                         }
                     }]
                 });
