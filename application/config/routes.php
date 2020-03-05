@@ -216,13 +216,17 @@ $route['api/course/delete'] = 'DashboardController/course_delete';
 $route['api/course/id_exists'] = 'DashboardController/isCourseIdExists';
 $route['api/course/insert'] = 'DashboardController/course_insert';
 
+$route['api/activity_view/get_log'] = 'ActivityController/get_view_log';
 $route['api/activity_view/insert'] = 'ActivityController/activity_view';
 $route['api/activity_view/get_recently'] = 'ActivityController/get_recently_view';
+
+$route['api/activity_search/get_log'] = 'ActivityController/get_search_log';
 $route['api/activity_search/get_recently'] = 'ActivityController/get_recently_search';
 $route['api/activity_search/get_recently_for_livesearch'] = 'ActivityController/get_recently_for_livesearch';
 
 
 $route['api/activity/get_dashboard_view'] = 'DashboardController/get_dashboard_view';
+$route['api/activity/get_dashboard_search'] = 'DashboardController/get_dashboard_search';
 
 
 

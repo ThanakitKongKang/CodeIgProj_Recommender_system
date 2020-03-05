@@ -33,6 +33,30 @@ class Activity_model extends BaseModel
         }
     }
 
+    public function get_view_log($returnType)
+    {
+        $sql = "SELECT *,count(activity_view.book_id) as count FROM `activity_view`,book WHERE activity_view.book_id=book.book_id group by activity_view.book_id order by view_id desc";
+        $query = $this->db->query($sql);
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_search_log($returnType)
+    {
+        $sql = "SELECT * FROM `activity_search` order by search_id desc";
+        $query = $this->db->query($sql);
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
     public function insert_search($data)
     {
         return $this->db->insert($this->table_search, $data);
@@ -67,6 +91,18 @@ class Activity_model extends BaseModel
     public function get_popular_view($interval, $returnType)
     {
         $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL ? DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC";
+        $query = $this->db->query($sql, array($interval));
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_popular_view_month($interval, $returnType)
+    {
+        $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL ? DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC LIMIT 10";
         $query = $this->db->query($sql, array($interval));
         $array = json_decode(json_encode($query->result()), True);
         if ($returnType == "rows") {
@@ -117,6 +153,51 @@ class Activity_model extends BaseModel
         group by activity_view.book_id 
         ORDER BY `viewed_count` DESC";
         $query = $this->db->query($sql, array($book_id, $interval));
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_popular_search($interval, $returnType)
+    {
+        if (isset($interval)) {
+            $sql = "SELECT *,count(activity_search.search_keyword) as search_count FROM `activity_search` WHERE date >= NOW() - INTERVAL ? DAY group by activity_search.search_keyword ORDER BY `search_count`  DESC LIMIT 10";
+            $query = $this->db->query($sql, array($interval));
+        } else {
+            $sql = "SELECT *,count(activity_search.search_keyword) as search_count FROM `activity_search` group by activity_search.search_keyword ORDER BY `search_count`  DESC LIMIT 10";
+            $query = $this->db->query($sql);
+        }
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_search_by_kw_day($interval, $returnType)
+    {
+        $sql = "SELECT *,count(activity_search.search_keyword) as search_count 
+        FROM `activity_search`
+        WHERE date(date) = CURDATE()-? 
+        group by activity_search.search_keyword 
+        ORDER BY `search_count` DESC";
+        $query = $this->db->query($sql, array($interval));
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_popular_search_alltime($returnType)
+    {
+        $sql = "SELECT *,count(activity_search.search_keyword) as search_count FROM `activity_search` group by activity_search.search_keyword ORDER BY `search_count`  DESC LIMIT 10";
+        $query = $this->db->query($sql);
         $array = json_decode(json_encode($query->result()), True);
         if ($returnType == "rows") {
             return $array;

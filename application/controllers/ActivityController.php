@@ -26,10 +26,20 @@ class ActivityController extends CI_Controller
         $this->activity_model->insert_view($data);
     }
 
+    public function get_view_log()
+    {
+        echo json_encode($this->activity_model->get_view_log("rows"));
+    }
+
     public function get_recently_view()
     {
         $username = $this->session->userdata('user')['username'];
         echo json_encode($this->activity_model->get_recently_view($username, 5, "rows"));
+    }
+
+    public function get_search_log()
+    {
+        echo json_encode($this->activity_model->get_search_log("rows"));
     }
 
     public function get_recently_search()

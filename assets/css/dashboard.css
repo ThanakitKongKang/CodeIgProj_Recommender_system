@@ -249,3 +249,8 @@ thead tr {
 	margin-top: 50px !important;
 	margin-bottom: 50px !important;
 }
+
+#tbodyData_act_search tr td:nth-child(2),
+#tbodyData_act_search tr td:nth-child(3) {
+	text-align: center;
+}

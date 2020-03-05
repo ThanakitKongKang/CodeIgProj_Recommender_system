@@ -448,7 +448,6 @@ class DashboardController extends CI_Controller
     public function activity_view_page()
     {
         // all books data
-        $data['category_list'] = $this->books_model->get_cateory_list();
         $header["title"] = "Dashboard";
         $data["api_url_week"] =  base_url() . "api/activity/get_dashboard_view?mode=w";
         $data["api_url_month"] =  base_url() . "api/activity/get_dashboard_view?mode=m";
@@ -461,7 +460,7 @@ class DashboardController extends CI_Controller
 
         $this->load->view('./header', $header);
         $this->load->view('dashboard/dashboard_sidenav', $data_nav);
-        $this->load->view('dashboard/activity_page', $data);
+        $this->load->view('dashboard/activity_view_page', $data);
         $this->load->view('footer');
     }
 
@@ -479,8 +478,9 @@ class DashboardController extends CI_Controller
                 $arr['label'] = $row_week['book_id'];
                 $arr['fill'] = 'false';
                 $arr['borderColor'] = $color;
-                $arr['strokeColor'] = $color;
                 $arr['pointColor'] = $color;
+                $arr['backgroundColor'] = $color;
+
                 for ($j = 0; $j < 7; $j++) {
                     $views = $this->activity_model->get_views_by_id_day($row_week['book_id'], $j, "rows");
                     if ($views[0]['viewed_count'] == null) {
@@ -497,13 +497,13 @@ class DashboardController extends CI_Controller
             $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
         } else if ($_GET["mode"] == "m") {
             // get views by date and book_id
-            $data['popular_view_month'] = $this->activity_model->get_popular_view(30, "rows");
+            $data['popular_view_month'] = $this->activity_model->get_popular_view_month(30, "rows");
             $arrDatasets = array();
-            $arrDatasets[0]['label'] = "Monthly popular";
             $arrDatasets[0]['fill'] = "false";
 
             foreach ($data['popular_view_month'] as $row_month) {
                 $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arrDatasets[0]['book_name'][] = $row_month["book_name"];
                 $arrDatasets[0]['backgroundColor'][] = $color;
                 $arrDatasets[0]['pointColor'][] = $color;
                 $arrDatasets[0]['data'][] = $row_month['viewed_count'];
@@ -514,11 +514,12 @@ class DashboardController extends CI_Controller
             // get views by date and book_id
             $data['popular_view_alltime'] = $this->activity_model->get_popular_view_alltime("rows");
             $arrDatasets = array();
-            $arrDatasets[0]['label'] = "Alltime popular";
+            $arrDatasets[0]['label'] = "All time popular";
             $arrDatasets[0]['fill'] = "false";
 
             foreach ($data['popular_view_alltime'] as $row_alltime) {
                 $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arrDatasets[0]['book_name'][] = $row_alltime["book_name"];
                 $arrDatasets[0]['backgroundColor'][] = $color;
                 $arrDatasets[0]['pointColor'][] = $color;
                 $arrDatasets[0]['data'][] = $row_alltime['viewed_count'];
@@ -533,17 +534,82 @@ class DashboardController extends CI_Controller
     public function activity_search_page()
     {
         // all books data
-        $data['category_list'] = $this->books_model->get_cateory_list();
         $header["title"] = "Dashboard";
+        $data["api_url_week"] =  base_url() . "api/activity/get_dashboard_search?mode=w";
+        $data["api_url_month"] =  base_url() . "api/activity/get_dashboard_search?mode=m";
+        $data["api_url_alltime"] =  base_url() . "api/activity/get_dashboard_search?mode=a";
 
-        $header["dashboard"] = "active";
-        // active
         $data["main_title"] = "Search Activity";
+        // active
+        $header["dashboard"] = "active";
         $data_nav["isActivity_search"] = "active";
 
         $this->load->view('./header', $header);
         $this->load->view('dashboard/dashboard_sidenav', $data_nav);
-        $this->load->view('dashboard/activity_page', $data);
+        $this->load->view('dashboard/activity_search_page', $data);
         $this->load->view('footer');
+    }
+
+    public function get_dashboard_search()
+    {
+        // switch case by post data
+        // week
+        if ($_GET["mode"] == "w") {
+            $data['popular_search_week'] = $this->activity_model->get_popular_search(7, "rows");
+            $arrDatasets = array();
+            foreach ($data['popular_search_week'] as $row_week) {
+                $arr = array();
+                $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arr['label'] = $row_week["search_keyword"];
+                $arr['fill'] = 'false';
+                $arr['borderColor'] = $color;
+                $arr['pointColor'] = $color;
+                $arr['backgroundColor'] = $color;
+
+                for ($j = 0; $j < 7; $j++) {
+                    $search = $this->activity_model->get_search_by_kw_day($j, "rows");
+                    if ($search[0]['search_count'] == null) {
+                        $arr['data'][] = "0";
+                    } else {
+                        $arr['data'][] = $search[0]['search_count'];
+                    }
+                }
+                $arr['data'] = array_reverse($arr['data']);
+                $arrDatasets[] = $arr;
+            }
+
+            $arrLabels = array("6 Days ago", "5 Days ago", "4 Days ago", "3 Days ago", "2 Days ago", "Yesterday", "Today");
+            $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
+        } else if ($_GET["mode"] == "m") {
+            $data['popular_search_month'] = $this->activity_model->get_popular_search(30, "rows");
+            $arrDatasets = array();
+            $arrDatasets[0]['fill'] = "false";
+            foreach ($data['popular_search_month'] as $row_month) {
+                $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arrDatasets[0]['search_keyword'][] = $row_month["search_keyword"];
+                $arrDatasets[0]['backgroundColor'][] = $color;
+                $arrDatasets[0]['pointColor'][] = $color;
+                $arrDatasets[0]['data'][] = $row_month['search_count'];
+                $arrLabels[] = $row_month["search_keyword"];
+            }
+            $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
+        } else if ($_GET["mode"] == "a") {
+            $data['popular_search_alltime'] = $this->activity_model->get_popular_search_alltime("rows");
+            $arrDatasets = array();
+            $arrDatasets[0]['label'] = "All time popular";
+            $arrDatasets[0]['fill'] = "false";
+
+            foreach ($data['popular_search_alltime'] as $row_alltime) {
+                $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arrDatasets[0]['search_keyword'][] = $row_alltime["search_keyword"];
+                $arrDatasets[0]['backgroundColor'][] = $color;
+                $arrDatasets[0]['pointColor'][] = $color;
+                $arrDatasets[0]['data'][] = $row_alltime['search_count'];
+                $arrLabels[] = $row_alltime["search_keyword"];
+            }
+            $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
+        }
+
+        echo (json_encode($arrReturn[0]));
     }
 }
