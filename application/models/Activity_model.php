@@ -66,8 +66,57 @@ class Activity_model extends BaseModel
 
     public function get_popular_view($interval, $returnType)
     {
-        $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL 7 DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC";
+        $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL ? DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC";
         $query = $this->db->query($sql, array($interval));
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_popular_view_alltime($returnType)
+    {
+        $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id group by activity_view.book_id ORDER BY `viewed_count`  DESC LIMIT 10";
+        $query = $this->db->query($sql);
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_views_by_id_day($book_id, $interval, $returnType)
+    {
+        $sql = "SELECT *,count(activity_view.book_id) as viewed_count 
+        FROM `activity_view`,book 
+        WHERE activity_view.book_id = book.book_id 
+        AND activity_view.book_id = ?
+        AND date(date) = CURDATE()-? 
+        group by activity_view.book_id 
+        ORDER BY `viewed_count` DESC";
+        $query = $this->db->query($sql, array($book_id, $interval));
+        $array = json_decode(json_encode($query->result()), True);
+        if ($returnType == "rows") {
+            return $array;
+        } else if ($returnType == "count") {
+            return $query->num_rows();
+        }
+    }
+
+    public function get_views_by_id_month($book_id, $interval, $returnType)
+    {
+        $sql = "SELECT *,count(activity_view.book_id) as viewed_count 
+        FROM `activity_view`,book 
+        WHERE activity_view.book_id = book.book_id 
+        AND activity_view.book_id = ?
+        AND MONTH(date) = MONTH(CURDATE())-?
+		AND YEAR(date) = YEAR(CURRENT_DATE())
+        group by activity_view.book_id 
+        ORDER BY `viewed_count` DESC";
+        $query = $this->db->query($sql, array($book_id, $interval));
         $array = json_decode(json_encode($query->result()), True);
         if ($returnType == "rows") {
             return $array;

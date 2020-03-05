@@ -17,7 +17,7 @@ class DashboardController extends CI_Controller
         $this->load->model('comments_liking_model');
         $this->load->model('registered_course_model');
         $this->load->model('users_model');
-
+        $this->load->model('activity_model');
         $this->check_auth_admin("dashboard");
     }
 
@@ -158,8 +158,8 @@ class DashboardController extends CI_Controller
         $book_id = $this->input->post('book_id');
         $book_name = $this->books_model->get_by_id($book_id);
         // save data and delete
-
         // delete in book, 3 comments, rate, saved_book
+        // delete activity view
         // update book.book_id
         // update comment.book_id
         // update comment_enabling.book_id
@@ -450,7 +450,10 @@ class DashboardController extends CI_Controller
         // all books data
         $data['category_list'] = $this->books_model->get_cateory_list();
         $header["title"] = "Dashboard";
-        $data["api_url"] =  base_url() . "api/activity/get_dashboard_view";
+        $data["api_url_week"] =  base_url() . "api/activity/get_dashboard_view?mode=w";
+        $data["api_url_month"] =  base_url() . "api/activity/get_dashboard_view?mode=m";
+        $data["api_url_alltime"] =  base_url() . "api/activity/get_dashboard_view?mode=a";
+
         $data["main_title"] = "Viewed Activity";
         // active
         $header["dashboard"] = "active";
@@ -466,79 +469,63 @@ class DashboardController extends CI_Controller
     {
         // switch case by post data
         // week
-        $arrLabels = array("6 Days ago", "5 Days ago", "4 Days ago", "3 Days ago", "2 Days ago", "Yesterday", "Today");
-        $arrDatasets = array(
-            array(
-                'label' => "Bookid1",
-                'fill' => 'false',
-                // 'fillColor' => "rgba(220,220,220,0.2)",
-                'borderColor' => "rgb(255, 99, 132)",
-                'strokeColor' => "rgb(255, 99, 132)",
-                'pointColor' => "rgb(255, 99, 132)",
-                'data' => array('5', '8', '8', '9', '8', '16', '20')
-            ),
-            array(
-                'label' => "Bookid2",
-                'fill' => 'false',
-                // 'fillColor' => "rgba(220,220,220,0.2)",
-                'borderColor' => "rgb(54, 162, 235)",
-                'strokeColor' => "rgb(54, 162, 235)",
-                'pointColor' => "rgb(54, 162, 235)",
-                'data' => array('10', '8', '7', '5', '10', '15', '16')
-            ),
-        );
-        $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
+        if ($_GET["mode"] == "w") {
+            // get views by date and book_id
+            $data['popular_view_week'] = $this->activity_model->get_popular_view(7, "rows");
+            $arrDatasets = array();
+            foreach ($data['popular_view_week'] as $row_week) {
+                $arr = array();
+                $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arr['label'] = $row_week['book_id'];
+                $arr['fill'] = 'false';
+                $arr['borderColor'] = $color;
+                $arr['strokeColor'] = $color;
+                $arr['pointColor'] = $color;
+                for ($j = 0; $j < 7; $j++) {
+                    $views = $this->activity_model->get_views_by_id_day($row_week['book_id'], $j, "rows");
+                    if ($views[0]['viewed_count'] == null) {
+                        $arr['data'][] = "0";
+                    } else {
+                        $arr['data'][] = $views[0]['viewed_count'];
+                    }
+                }
+                $arr['data'] = array_reverse($arr['data']);
+                $arrDatasets[] = $arr;
+            }
 
+            $arrLabels = array("6 Days ago", "5 Days ago", "4 Days ago", "3 Days ago", "2 Days ago", "Yesterday", "Today");
+            $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
+        } else if ($_GET["mode"] == "m") {
+            // get views by date and book_id
+            $data['popular_view_month'] = $this->activity_model->get_popular_view(30, "rows");
+            $arrDatasets = array();
+            $arrDatasets[0]['label'] = "Monthly popular";
+            $arrDatasets[0]['fill'] = "false";
 
-        // // month
-        // $arrLabels = array("6 Months ago", "5 Months ago", "4 Months ago", "3 Months ago", "2 Months ago", "1 Month ago", "This month");
-        // $arrDatasets = array(
-        //     array(
-        //         'label' => "Bookid1",
-        //         'fill' => 'false',
-        //         // 'fillColor' => "rgba(220,220,220,0.2)",
-        //         'borderColor' => "rgb(255, 99, 132)",
-        //         'strokeColor' => "rgb(255, 99, 132)",
-        //         'pointColor' => "rgb(255, 99, 132)",
-        //         'data' => array('5', '8', '8', '9', '8', '16', '20')
-        //     ),
-        //     array(
-        //         'label' => "Bookid2",
-        //         'fill' => 'false',
-        //         // 'fillColor' => "rgba(220,220,220,0.2)",
-        //         'borderColor' => "rgb(54, 162, 235)",
-        //         'strokeColor' => "rgb(54, 162, 235)",
-        //         'pointColor' => "rgb(54, 162, 235)",
-        //         'data' => array('10', '8', '7', '5', '10', '15', '16')
-        //     ),
-        // );
-        // $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'line',));
+            foreach ($data['popular_view_month'] as $row_month) {
+                $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arrDatasets[0]['backgroundColor'][] = $color;
+                $arrDatasets[0]['pointColor'][] = $color;
+                $arrDatasets[0]['data'][] = $row_month['viewed_count'];
+                $arrLabels[] = $row_month["book_id"];
+            }
+            $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
+        } else if ($_GET["mode"] == "a") {
+            // get views by date and book_id
+            $data['popular_view_alltime'] = $this->activity_model->get_popular_view_alltime("rows");
+            $arrDatasets = array();
+            $arrDatasets[0]['label'] = "Alltime popular";
+            $arrDatasets[0]['fill'] = "false";
 
-
-        // // alltime
-        // $arrLabels = array("book1", "book2", "book3", "book4", "book5", "book6", "book7");
-        // $arrDatasets = array(
-        //     array(
-        //         'label' => "All time views",
-        //         'fill' => 'false',
-        //         'fillColor' => "rgb(255, 99, 132)",
-        //         'borderColor' => "rgb(255, 99, 132)",
-        //         'strokeColor' => "rgb(255, 99, 132)",
-        //         'backgroundColor' => array(
-        //             'rgb(255, 99, 132)',
-        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
-        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
-        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
-        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
-        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF)),
-        //             sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF))
-        //         ),
-        //         'pointColor' => "rgb(255, 99, 132)",
-        //         'data' => array('100', '80', '70', '50', '40', '10', '5')
-        //     ),
-        // );
-        // $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
-
+            foreach ($data['popular_view_alltime'] as $row_alltime) {
+                $color = sprintf('#%06X', mt_rand(0x000000, 0xFFFFFF));
+                $arrDatasets[0]['backgroundColor'][] = $color;
+                $arrDatasets[0]['pointColor'][] = $color;
+                $arrDatasets[0]['data'][] = $row_alltime['viewed_count'];
+                $arrLabels[] = $row_alltime["book_id"];
+            }
+            $arrReturn = array(array('labels' => $arrLabels, 'datasets' => $arrDatasets, 'type' => 'bar',));
+        }
 
         echo (json_encode($arrReturn[0]));
     }

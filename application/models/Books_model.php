@@ -380,6 +380,7 @@ class Books_model extends BaseModel
     {
         $book_id = (int) $id;
         // delete in book, 3 comments, rate, saved_book
+        // delete activity view
         $this->db->trans_begin();
 
         $this->db->where('book_id', $book_id);
@@ -399,6 +400,9 @@ class Books_model extends BaseModel
 
         $this->db->where('book_id', $book_id);
         $this->db->delete('saved_book');
+
+        $this->db->where('book_id', $book_id);
+        $this->db->delete('activity_view');
 
         $this->db->select('book_id');
         $this->db->where('book_id >', $book_id);
