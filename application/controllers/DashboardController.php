@@ -453,7 +453,7 @@ class DashboardController extends CI_Controller
         $data["api_url_month"] =  base_url() . "api/activity/get_dashboard_view?mode=m";
         $data["api_url_alltime"] =  base_url() . "api/activity/get_dashboard_view?mode=a";
 
-        $data["main_title"] = "Viewed Activity";
+        $data["main_title"] = "View Activity";
         // active
         $header["dashboard"] = "active";
         $data_nav["isActivity_view"] = "active";
@@ -569,7 +569,7 @@ class DashboardController extends CI_Controller
                 $arr['backgroundColor'] = $color;
 
                 for ($j = 0; $j < 7; $j++) {
-                    $search = $this->activity_model->get_search_by_kw_day($j, "rows");
+                    $search = $this->activity_model->get_search_by_kw_day($j, $row_week["search_keyword"], "rows");
                     if ($search[0]['search_count'] == null) {
                         $arr['data'][] = "0";
                     } else {

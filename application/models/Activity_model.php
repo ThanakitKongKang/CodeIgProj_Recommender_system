@@ -178,14 +178,15 @@ class Activity_model extends BaseModel
         }
     }
 
-    public function get_search_by_kw_day($interval, $returnType)
+    public function get_search_by_kw_day($interval, $keyword, $returnType)
     {
         $sql = "SELECT *,count(activity_search.search_keyword) as search_count 
         FROM `activity_search`
         WHERE date(date) = CURDATE()-? 
+        AND search_keyword = ?
         group by activity_search.search_keyword 
         ORDER BY `search_count` DESC";
-        $query = $this->db->query($sql, array($interval));
+        $query = $this->db->query($sql, array($interval, $keyword));
         $array = json_decode(json_encode($query->result()), True);
         if ($returnType == "rows") {
             return $array;

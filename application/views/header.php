@@ -1213,14 +1213,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 type: 'post',
                 url: "<?php echo base_url(); ?>api/activity_search/get_recently_for_livesearch",
                 success: function(data) {
-                    search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Recent searchs</div>";
-                    var response = JSON.parse(data);
-                    response.forEach(function(keyword, i) {
+                    if (data.length > 2) {
+                        search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Recent searchs</div>";
+                        var response = JSON.parse(data);
+                        response.forEach(function(keyword, i) {
 
-                        search_history_html += "<a class='dropdown-item-search' href='<?= base_url() ?>search/result?q=" + keyword["search_keyword"] + "'>" + keyword["search_keyword"] + "</a>";
-                        i++;
-                    });
-                    search_history_html += "</div>";
+                            search_history_html += "<a class='dropdown-item-search' href='<?= base_url() ?>search/result?q=" + keyword["search_keyword"] + "'>" + keyword["search_keyword"] + "</a>";
+                            i++;
+                        });
+                        search_history_html += "</div>";
+                    }
                 }
             });
         }

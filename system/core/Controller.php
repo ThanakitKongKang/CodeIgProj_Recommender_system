@@ -396,15 +396,17 @@ class CI_Controller
 		$this->load->model('activity_model');
 
 		$username = $this->session->userdata('user')['username'];
-		date_default_timezone_set('Asia/Bangkok');
-		$date = date('Y/m/d H:i:s', time());
-		$data = array(
-			'search_keyword' => $search_keyword,
-			'date' => $date,
-			'username' => $username,
-		);
+		if ($username != 'admin') {
+			date_default_timezone_set('Asia/Bangkok');
+			$date = date('Y/m/d H:i:s', time());
+			$data = array(
+				'search_keyword' => $search_keyword,
+				'date' => $date,
+				'username' => $username,
+			);
 
-		$this->activity_model->insert_search($data);
+			$this->activity_model->insert_search($data);
+		}
 	}
 
 	public function getActivityRecommend_search()

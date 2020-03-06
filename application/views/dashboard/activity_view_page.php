@@ -1,19 +1,19 @@
-<div id="fullpage" class="col-10 container">
+<div id="fullpage" class="col-12 container">
     <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white"><?= $main_title ?></h2>
     <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
         <div class="row">
-            <div class="col">
-                <canvas id="myChart_week" height="250"></canvas>
+            <div class="col-lg-6 col-sm-12">
+                <canvas id="myChart_week" height="200"></canvas>
             </div>
-            <div class="col">
-                <canvas id="myChart_month" height="250"></canvas>
+            <div class="col-lg-6 col-sm-12">
+                <canvas id="myChart_month" height="200"></canvas>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <canvas id="myChart_alltime" height="250" class="mt-5"></canvas>
             </div>
-            <div class="col border p-4 mt-5" style="border-radius:0.25rem;">
+            <div class="col p-4 mt-5" style="border-radius:0.25rem;">
                 <table class="table table-bordered table-compact font-apple" id="views_log">
                     <thead class="">
                         <tr>
@@ -137,6 +137,9 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: 'Views'
+                                },
+                                ticks: {
+                                    beginAtZero: true
                                 }
                             }]
                         },
@@ -223,6 +226,9 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: 'Views'
+                                },
+                                ticks: {
+                                    beginAtZero: true
                                 }
                             }]
                         },
@@ -237,11 +243,11 @@
                         tooltips: {
                             callbacks: {
                                 title: function(tooltipItem, data) {
-                                    return "Book ID : " + data['labels'][tooltipItem[0]['index']];
+                                    return "Book ID : " + data['datasets'][0]['book_id'][tooltipItem[0]['index']];
                                 },
                                 afterTitle: function(tooltipItem, data) {
 
-                                    return "" + data['datasets'][0]['book_name'][tooltipItem[0]['index']];
+                                    return " " + data['datasets'][0]['book_name'][tooltipItem[0]['index']];
                                 },
                                 label: function(tooltipItem, data) {
                                     return " " + data['datasets'][tooltipItem['datasetIndex']]['data'][tooltipItem['index']] + " views";
@@ -331,6 +337,9 @@
                                 scaleLabel: {
                                     display: true,
                                     labelString: 'Views'
+                                },
+                                ticks: {
+                                    beginAtZero: true
                                 }
                             }]
                         },
@@ -345,7 +354,7 @@
                         tooltips: {
                             callbacks: {
                                 title: function(tooltipItem, data) {
-                                    return "Book ID : " + data['labels'][tooltipItem[0]['index']];
+                                    return "Book ID : " + data['datasets'][0]['book_id'][tooltipItem[0]['index']];
                                 },
                                 afterTitle: function(tooltipItem, data) {
 

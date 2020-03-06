@@ -16,7 +16,9 @@
 	transition: .25s;
 	-webkit-transition-delay: .1s;
 	transition-delay: .1s;
-	color: #999;
+	background: -webkit-linear-gradient(-34deg, #017bff, #91d3ff 80%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 	left: 0rem;
 }
 
