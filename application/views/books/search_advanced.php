@@ -6,7 +6,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-lg-2 col-form-label">Search Term</label>
                     <div class="col-sm-8">
-                        <input type="text" autocomplete="off" class="form-control" name="q" id="q" placeholder="Search term..">
+                        <input type="text" autocomplete="off" class="form-control" name="q" id="q" placeholder="Search term.." value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                     </div>
                 </div>
                 <hr class="mt-4">

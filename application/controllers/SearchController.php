@@ -116,7 +116,7 @@ class SearchController extends CI_Controller
     {
         $data['category_list'] = $this->books_model->get_cateory_list();
         $data['author_list'] = $this->books_model->get_authors();
-
+        $header['previous_query_string'] = $this->input->get('q');
         $data["query"] = "what";
         $header['title'] = "Advance Search";
         $this->load->view('./header', $header);

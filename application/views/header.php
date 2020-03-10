@@ -143,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </form>
                     </div>
-                    <a class="btn-sm" href="<?=base_url()?>search/advanced" style="width:12rem">Advanced Search <i class="fas fa-search-plus"></i></a>
+                    <a class="pl-3 small link advs_anchor" style="width:12rem">Advanced Search <i class="fas fa-search-plus"></i></a>
 
                     <div class="" id="nav_right_header">
                         <ul class="navbar-nav ml-auto nav-menu">
@@ -1227,6 +1227,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 }
             });
         }
+
+        $('.advs_anchor').click(function(e) {
+            let query = $('#input-search').val() ? $('#input-search').val() : "";
+            window.location.href = '<?= base_url() ?>search/advanced?q=' + query;
+        });
     </script>
 
 
