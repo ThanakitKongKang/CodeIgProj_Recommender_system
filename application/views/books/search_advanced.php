@@ -6,7 +6,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-lg-2 col-form-label">Search Term</label>
                     <div class="col-sm-8">
-                        <input type="text" autocomplete="off" class="form-control" name="q" id="q" placeholder="Search term.." value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
+                        <input type="text" autocomplete="off" class="form-control" name="q" id="q" placeholder="Book Title.." value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                     </div>
                 </div>
                 <hr class="mt-4">
@@ -99,12 +99,13 @@
 
         $('.select_author').select2({
             placeholder: 'Author name..',
+            allowClear: true,
             tags: true,
         });
 
         $('.select_category').select2({
             placeholder: 'Category..',
-
+            allowClear: true,
             tags: true,
         });
 

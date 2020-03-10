@@ -58,14 +58,14 @@
                     <?php } ?>
                     <!-- Filter clear -->
                     <div class="btn-group pr-2 float-right">
-                        <button type="button" class="btn btn-outline-danger" id="filter_clear" style="display:none">
+                        <button type="button" class="btn btn-outline-secondary" id="filter_clear" style="display:none">
                             <i class="fas fa-times"></i> <span>Clear</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Sort rate -->
-                <div class="text-right col-sm-2">
+                <div class="text-right col-sm-2 search_sort">
 
                     <div class="btn-group">
                         <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_sort">
@@ -203,7 +203,7 @@
             $('#' + category2).addClass("active");
             $('#category_text').html($('#' + category2).html());
             $('#category_text').removeClass("btn-outline-secondary");
-            $('#category_text').addClass("btn-secondary");
+            $('#category_text').addClass("bg_linear_theme");
         }
 
         // author active
@@ -215,7 +215,7 @@
         if (author2 != "-" && author2 != "all") {
             $('#filter_author_text').html(author);
             $('#filter_author_text').removeClass("btn-outline-secondary");
-            $('#filter_author_text').addClass("btn-secondary");
+            $('#filter_author_text').addClass("bg_linear_theme");
         }
 
         //sort_rate active
@@ -224,7 +224,7 @@
             $('#sort_' + sort_rate).addClass("active");
             $('#sort_rating_text').html($('#sort_' + sort_rate).html());
             $('#filter_sort').removeClass("btn-outline-secondary");
-            $('#filter_sort').addClass("btn-secondary");
+            $('#filter_sort').addClass("bg_linear_theme");
         }
 
         // show clear button

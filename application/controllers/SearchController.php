@@ -23,6 +23,8 @@ class SearchController extends CI_Controller
         $author = $this->input->get('author');
         $not_rated = $this->input->get('notrated');
         $not_saved = $this->input->get('notsaved');
+        $rating = $this->input->get('rating');
+
 
 
         $data['query'] = $query;
@@ -30,7 +32,7 @@ class SearchController extends CI_Controller
 
         $config = array();
         $config["base_url"] = base_url() . "search/result";
-        $config["total_rows"] = $this->books_model->search_books_get_count($query, $sort, $category, $author, $not_rated, $not_saved);
+        $config["total_rows"] = $this->books_model->search_books_get_count($query, $sort, $category, $author, $not_rated, $not_saved, $rating);
         $config["per_page"] = 9;
         //config this NUMBER when path changed
         $config["uri_segment"] = 3;
@@ -45,14 +47,14 @@ class SearchController extends CI_Controller
         $data["links"] = $this->pagination->create_links();
 
 
-        $data['books'] = $this->books_model->search_books($config["per_page"], $page, $query, $sort, $category, $author, $not_rated, $not_saved);
-        $data['author_list'] = $this->books_model->search_books_get_author($query, $sort, $category, $not_rated, $not_saved);
+        $data['books'] = $this->books_model->search_books($config["per_page"], $page, $query, $sort, $category, $author, $not_rated, $not_saved, $rating);
+        $data['author_list'] = $this->books_model->search_books_get_author($query, $sort, $category, $not_rated, $not_saved, $rating);
 
 
 
         $data['page'] = $page;
         $data['total_rows'] = $config["total_rows"];
-        $data['category_list'] = $this->books_model->search_books_get_category($query, $sort, $not_rated, $not_saved);
+        $data['category_list'] = $this->books_model->search_books_get_category($query, $sort, $not_rated, $not_saved, $rating);
         $header['title'] = 'Search result';
 
 

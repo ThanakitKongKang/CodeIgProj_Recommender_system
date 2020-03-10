@@ -24,7 +24,7 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
-    public function search_books($limit, $start, $query, $sort, $category, $author, $not_rated, $not_saved)
+    public function search_books($limit, $start, $query, $sort, $category, $author, $not_rated, $not_saved, $rating)
     {
         $start = ($start == 0) ? 0 : ($limit * ($start - 1));
         $this->db->like('book_name', $query, 'both');
@@ -55,6 +55,10 @@ class Books_model extends BaseModel
             $this->db->where_in('book_id', $array);
         }
 
+        if (!empty($rating)) {
+            $this->db->where('b_rate>=', $rating);
+        }
+
         if (!empty($category)) {
             if ($category != "all")
                 $this->db->where('book_type', $category);
@@ -80,7 +84,7 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
-    public function search_books_get_count($query, $sort, $category, $author, $not_rated, $not_saved)
+    public function search_books_get_count($query, $sort, $category, $author, $not_rated, $not_saved, $rating)
     {
         $this->db->like('book_name', $query, 'both');
 
@@ -120,7 +124,9 @@ class Books_model extends BaseModel
             $array = explode(",", $book);
             $this->db->where_in('book_id', $array);
         }
-
+        if (!empty($rating)) {
+            $this->db->where('b_rate>=', $rating);
+        }
         if (!empty($category)) {
             if ($category != "all")
                 $this->db->where('book_type', $category);
@@ -134,7 +140,7 @@ class Books_model extends BaseModel
         return $query->num_rows();
     }
 
-    public function search_books_get_author($query, $sort, $category, $not_rated, $not_saved)
+    public function search_books_get_author($query, $sort, $category, $not_rated, $not_saved, $rating)
     {
         $this->db->select('author');
         $this->db->distinct();
@@ -176,7 +182,9 @@ class Books_model extends BaseModel
             $array = explode(",", $book);
             $this->db->where_in('book_id', $array);
         }
-
+        if (!empty($rating)) {
+            $this->db->where('b_rate>=', $rating);
+        }
         if (!empty($sort)) {
             $this->db->order_by('b_rate', $sort);
         }
@@ -188,7 +196,7 @@ class Books_model extends BaseModel
 
         return $query->result();
     }
-    public function search_books_get_category($query, $sort, $not_rated, $not_saved)
+    public function search_books_get_category($query, $sort, $not_rated, $not_saved, $rating)
     {
         $this->db->select('book_type');
         $this->db->distinct();
@@ -230,7 +238,9 @@ class Books_model extends BaseModel
             $array = explode(",", $book);
             $this->db->where_in('book_id', $array);
         }
-
+        if (!empty($rating)) {
+            $this->db->where('b_rate>=', $rating);
+        }
         if (!empty($sort)) {
             $this->db->order_by('b_rate', $sort);
         }
