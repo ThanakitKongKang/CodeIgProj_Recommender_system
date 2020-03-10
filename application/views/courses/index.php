@@ -70,8 +70,9 @@
             </div>
 
 
-            <div class="modal-body text-center px-5">
-                <select class="js-select-course" multiple="multiple">
+            <div class="modal-body  text-center px-5">
+                <select class="js-select-course form-control" multiple="multiple">
+
                 </select>
 
             </div>

@@ -18,16 +18,19 @@ class SearchController extends CI_Controller
     public function search()
     {
         $query = $this->input->get('q');
-        $sort_rate = $this->input->get('sort_rate');
+        $sort = $this->input->get('sort');
         $category = $this->input->get('category');
         $author = $this->input->get('author');
+        $not_rated = $this->input->get('notrated');
+        $not_saved = $this->input->get('notsaved');
+
 
         $data['query'] = $query;
         $header['previous_query_string'] = $query;
 
         $config = array();
         $config["base_url"] = base_url() . "search/result";
-        $config["total_rows"] = $this->books_model->search_books_get_count($query, $sort_rate, $category, $author);
+        $config["total_rows"] = $this->books_model->search_books_get_count($query, $sort, $category, $author, $not_rated, $not_saved);
         $config["per_page"] = 9;
         //config this NUMBER when path changed
         $config["uri_segment"] = 3;
@@ -42,14 +45,14 @@ class SearchController extends CI_Controller
         $data["links"] = $this->pagination->create_links();
 
 
-        $data['books'] = $this->books_model->search_books($config["per_page"], $page, $query, $sort_rate, $category, $author);
-        $data['author_list'] = $this->books_model->search_books_get_author($query, $sort_rate, $category);
+        $data['books'] = $this->books_model->search_books($config["per_page"], $page, $query, $sort, $category, $author, $not_rated, $not_saved);
+        $data['author_list'] = $this->books_model->search_books_get_author($query, $sort, $category, $not_rated, $not_saved);
 
 
 
         $data['page'] = $page;
         $data['total_rows'] = $config["total_rows"];
-        $data['category_list'] = $this->books_model->search_books_get_category($query, $sort_rate);
+        $data['category_list'] = $this->books_model->search_books_get_category($query, $sort, $not_rated, $not_saved);
         $header['title'] = 'Search result';
 
 
@@ -107,5 +110,17 @@ class SearchController extends CI_Controller
 
         echo "<a class='dropdown-item live_search_result_all' href>all results for \"" . $typing . "\"</a>";
         echo "</div>";
+    }
+
+    public function advanced_search()
+    {
+        $data['category_list'] = $this->books_model->get_cateory_list();
+        $data['author_list'] = $this->books_model->get_authors();
+
+        $data["query"] = "what";
+        $header['title'] = "Advance Search";
+        $this->load->view('./header', $header);
+        $this->load->view('books/search_advanced', $data);
+        $this->load->view('footer');
     }
 }

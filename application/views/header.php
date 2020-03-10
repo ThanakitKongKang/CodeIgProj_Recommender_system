@@ -133,9 +133,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <!-- Search -->
-                    <div class="mx-auto navbar_search">
+                    <div class="ml-auto navbar_search">
                         <form class="form-inline" id="search_form" style="margin:0rem;" action="<?= base_url() ?>search/result">
-                            <input class="form-control mr-sm-1" style="width:100%" type="search" name="q" autocomplete="off" placeholder="Search" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
+                            <input class="form-control mr-sm-1" type="search" name="q" autocomplete="off" placeholder="Search" aria-label="Search" id="input-search" value="<?php if (!empty($previous_query_string)) echo $previous_query_string; ?>">
                             <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search p-1"></i></button> -->
                             <div class="text-center justify-content-center live_search_loading position-relative w-100" style="display:none;">
                                 <div class="spinner-border text-primary mr-3 position-absolute" role="status" style="width: 1.25rem;height: 1.25rem;border: .1em solid currentColor;border-right-color: transparent;right: -0.045rem;top: -2.25rem;">
@@ -143,6 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </form>
                     </div>
+                    <a class="btn-sm" href="<?=base_url()?>search/advanced" style="width:12rem">Advanced Search <i class="fas fa-search-plus"></i></a>
 
                     <div class="" id="nav_right_header">
                         <ul class="navbar-nav ml-auto nav-menu">

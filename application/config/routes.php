@@ -122,6 +122,8 @@ $route['search'] = 'SearchController/search';
 $route['search/result'] = 'SearchController/search';
 $route['search/result/(:num)'] = 'SearchController/search';
 $route['search/liveSearch'] = 'SearchController/liveSearch';
+
+$route['search/advanced'] = 'SearchController/advanced_search';
 /*
 | -------------------------------------------------------------------------
 | COURSE

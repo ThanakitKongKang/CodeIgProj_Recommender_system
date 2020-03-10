@@ -15,7 +15,7 @@
                 <!-- Search result total -->
                 <div class="col-sm-4 pt-2 the_border_right">
                     <div class="query_text">
-                        <?= $total_rows ?> item<?php if ($total_rows > 1) echo "s"; ?> found for "<?= $query ?>"
+                        <?= $total_rows ?> item<?php if ($total_rows > 1) echo "s"; ?> found <?php if (isset($query) && $query != "") { ?>for "<?= $query ?>"<?php } ?>
                     </div>
                 </div>
 
@@ -31,7 +31,7 @@
 
                             <?php
                             foreach ($category_list as $category) {
-                                ?>
+                            ?>
                                 <a class="dropdown-item search_option_category" href="#" id="<?= ucwords(str_replace(" ", "-", $category['book_type'])) ?>" data-search="<?= $category["book_type"] ?>"><?= $category["book_type"] ?></a>
                             <?php
                             }
@@ -47,12 +47,12 @@
                             <div class="dropdown-menu" style="max-height:25rem;overflow-y:auto;">
                                 <a class="dropdown-item search_option_author" href="#" id="author_all" data-search="all">All</a>
                                 <?php
-                                    foreach ($author_list as $author) {
-                                        ?>
+                                foreach ($author_list as $author) {
+                                ?>
                                     <a class="dropdown-item search_option_author" href="#" id="<?= ucwords(str_replace(" ", "-", $author->author)) ?>" data-search="<?= $author->author ?>"><?= $author->author ?></a>
                                 <?php
-                                    }
-                                    ?>
+                                }
+                                ?>
                             </div>
                         </div>
                     <?php } ?>
@@ -68,12 +68,16 @@
                 <div class="text-right col-sm-2">
 
                     <div class="btn-group">
-                        <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_sort_rate">
+                        <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_sort">
                             <span id="sort_rating_text" class="small">Sort by rating</span>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item search_option_sort" href="#" id="sort_rate_desc" data-search="desc">Rate high to low</a>
-                            <a class="dropdown-item search_option_sort" href="#" id="sort_rate_asc" data-search="asc">Rate low to high</a>
+                            <a class="dropdown-item search_option_sort" href="#" id="sort_relevant" data-search="">Most Relevant</a>
+                            <a class="dropdown-item search_option_sort" href="#" id="sort_rate_desc" data-search="rate_desc">Rate high to low</a>
+                            <a class="dropdown-item search_option_sort" href="#" id="sort_rate_asc" data-search="rate_asc">Rate low to high</a>
+                            <a class="dropdown-item search_option_sort" href="#" id="sort_title_asc" data-search="title_asc">Book Title A-Z</a>
+                            <a class="dropdown-item search_option_sort" href="#" id="sort_title_desc" data-search="title_desc">Book Title Z-A</a>
+
                         </div>
                     </div>
 
@@ -119,7 +123,7 @@
         <?php } else { ?>
             <div class="position:relative text-center">
                 <?php $rand = rand(1, 2);
-                    if ($rand == 1) { ?>
+                if ($rand == 1) { ?>
                     <img src="<?= base_url() ?>assets/img/fogg-page-not-found-1.png" style="max-width:65rem" alt="">
                 <?php } else if ($rand == 2) { ?>
                     <img src="<?= base_url() ?>assets/img/fogg-page-not-found.png" style="max-width:65rem" alt="">
@@ -215,12 +219,12 @@
         }
 
         //sort_rate active
-        var sort_rate = url.searchParams.get("sort_rate") ? url.searchParams.get("sort_rate") : " ";
+        var sort_rate = url.searchParams.get("sort") ? url.searchParams.get("sort") : " ";
         if (sort_rate != " ") {
-            $('#sort_rate_' + sort_rate).addClass("active");
-            $('#sort_rating_text').html($('#sort_rate_' + sort_rate).html());
-            $('#filter_sort_rate').removeClass("btn-outline-secondary");
-            $('#filter_sort_rate').addClass("btn-secondary");
+            $('#sort_' + sort_rate).addClass("active");
+            $('#sort_rating_text').html($('#sort_' + sort_rate).html());
+            $('#filter_sort').removeClass("btn-outline-secondary");
+            $('#filter_sort').addClass("btn-secondary");
         }
 
         // show clear button
@@ -243,14 +247,15 @@
         // rate sort
         $('.search_option_sort').click(function(e) {
             e.preventDefault();
-            var search_option = "&sort_rate=" + $(this).data('search');
+            var search_option = "&sort=" + $(this).data('search');
             var q = url.searchParams.get("q");
+            var rating = url.searchParams.get("rating") ? "&rating=" + url.searchParams.get("rating") : "";
 
             // current search options
             var category = url.searchParams.get("category") ? "&category=" + url.searchParams.get("category") : "";
             var author = url.searchParams.get("author") ? "&author=" + url.searchParams.get("author") : "";
 
-            window.location = "<?= base_url() ?>search/result?q=" + q + search_option + category + author;
+            window.location = "<?= base_url() ?>search/result?q=" + q + search_option + category + author + rating;
         })
 
         // filter category
@@ -258,12 +263,13 @@
             e.preventDefault();
             var search_option = "&category=" + $(this).data('search');
             var q = url.searchParams.get("q");
+            var rating = url.searchParams.get("rating") ? "&rating=" + url.searchParams.get("rating") : "";
 
             // current search options
-            var sort_rate = url.searchParams.get("sort_rate") ? "&sort_rate=" + url.searchParams.get("sort_rate") : "";
+            var sort = url.searchParams.get("sort") ? "&sort=" + url.searchParams.get("sort") : "";
             var author = url.searchParams.get("author") ? "&author=" + url.searchParams.get("author") : "";
 
-            window.location = "<?= base_url() ?>search/result?q=" + q + sort_rate + search_option + author;
+            window.location = "<?= base_url() ?>search/result?q=" + q + sort + search_option + author + rating;
         })
 
         // filter author
@@ -271,12 +277,13 @@
             e.preventDefault();
             var search_option = "&author=" + $(this).data('search');
             var q = url.searchParams.get("q");
+            var rating = url.searchParams.get("rating") ? "&rating=" + url.searchParams.get("rating") : "";
 
             // current search options
             var sort_rate = url.searchParams.get("sort_rate") ? "&sort_rate=" + url.searchParams.get("sort_rate") : "";
             var category = url.searchParams.get("category") ? "&category=" + url.searchParams.get("category") : "";
 
-            window.location = "<?= base_url() ?>search/result?q=" + q + sort_rate + category + search_option;
+            window.location = "<?= base_url() ?>search/result?q=" + q + sort_rate + category + search_option + rating;
         })
 
         /*

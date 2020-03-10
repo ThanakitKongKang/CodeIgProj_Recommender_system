@@ -2,7 +2,7 @@
     <?php if ($book_detail != FALSE) { ?>
         <div class="row">
             <div class="col">
-                <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer"><i class="fas fa-arrow-left"></i> Back</div>
+                <div class="btn btn-outline-secondary mb-3 backbutton" style="cursor:pointer;display:none"><i class="fas fa-arrow-left"></i> Back</div>
                 <a class="btn bg_linear_theme mb-3 font-arial float-right mr-3" target="_blank" href="<?= base_url() ?>assets/book_files/<?= str_replace("#", "sharp", $book_detail['book_name']) ?>.pdf#view=Fit&pagemode=bookmarks" style="cursor:pointer">open in new window<i class="fas fa-external-link-alt pl-2"></i></a>
             </div>
             <div class="col"></div>
@@ -55,7 +55,7 @@
                             <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                             <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>" id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
                             <div class="book_detail_text pt-1"><span class="">Category : </span><a class="link " href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
-                            <div class="book_detail_text pt-1">Author : <?= $book_detail['author'] ?></div>
+                            <div class="book_detail_text pt-1">Author : <a class="link" href="<?=base_url()?>search/result?q=&author=<?= $book_detail['author'] ?>"><?= $book_detail['author'] ?></a></div>
                         </div>
 
                         <!-- bookmark trigger -->
@@ -403,10 +403,10 @@
         });
 
         if (document.referrer == "") {
-            $('.backbutton').css('cursor', 'not-allowed');
-            $('.backbutton').css('opacity', .65);
+            // $('.backbutton').css('cursor', 'not-allowed');
             $('.backbutton').unbind("click");
         } else {
+            $('.backbutton').css('display', 'inline-block');
             $('.backbutton').attr('title', document.referrer);
         }
 

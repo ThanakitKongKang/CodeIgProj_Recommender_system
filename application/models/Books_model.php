@@ -24,14 +24,37 @@ class Books_model extends BaseModel
         return $query->result();
     }
 
-    public function search_books($limit, $start, $query, $sort_rate, $category, $author)
+    public function search_books($limit, $start, $query, $sort, $category, $author, $not_rated, $not_saved)
     {
         $start = ($start == 0) ? 0 : ($limit * ($start - 1));
         $this->db->like('book_name', $query, 'both');
 
-        if (!empty($sort_rate)) {
-            $this->db->order_by('b_rate', $sort_rate);
+        if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
         }
+
+        if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
         if (!empty($category)) {
             if ($category != "all")
                 $this->db->where('book_type', $category);
@@ -40,19 +63,64 @@ class Books_model extends BaseModel
             if ($author != "all")
                 $this->db->where('author', $author);
         }
+
+        if (!empty($sort)) {
+            if ($sort == "rate_desc")
+                $this->db->order_by('b_rate', "desc");
+            else if ($sort == "rate_asc")
+                $this->db->order_by('b_rate', "asc");
+            else if ($sort == "title_asc")
+                $this->db->order_by('book_name', "asc");
+            else if ($sort == "title_desc")
+                $this->db->order_by('book_name', "desc");
+        }
         $this->db->limit($limit, $start);
         $query = $this->db->get($this->table);
 
         return $query->result();
     }
 
-    public function search_books_get_count($query, $sort_rate, $category, $author)
+    public function search_books_get_count($query, $sort, $category, $author, $not_rated, $not_saved)
     {
         $this->db->like('book_name', $query, 'both');
 
-        if (!empty($sort_rate)) {
-            $this->db->order_by('b_rate', $sort_rate);
+        if (!empty($sort)) {
+            if ($sort == "rate_desc")
+                $this->db->order_by('b_rate', "desc");
+            else if ($sort == "rate_asc")
+                $this->db->order_by('b_rate', "asc");
+            else if ($sort == "title_asc")
+                $this->db->order_by('book_name', "asc");
+            else if ($sort == "title_desc")
+                $this->db->order_by('book_name', "desc");
         }
+
+        if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
+        if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
         if (!empty($category)) {
             if ($category != "all")
                 $this->db->where('book_type', $category);
@@ -66,14 +134,51 @@ class Books_model extends BaseModel
         return $query->num_rows();
     }
 
-    public function search_books_get_author($query, $sort_rate, $category)
+    public function search_books_get_author($query, $sort, $category, $not_rated, $not_saved)
     {
         $this->db->select('author');
         $this->db->distinct();
         $this->db->like('book_name', $query, 'both');
 
-        if (!empty($sort_rate)) {
-            $this->db->order_by('b_rate', $sort_rate);
+        if (!empty($sort)) {
+            if ($sort == "rate_desc")
+                $this->db->order_by('b_rate', "desc");
+            else if ($sort == "rate_asc")
+                $this->db->order_by('b_rate', "asc");
+            else if ($sort == "title_asc")
+                $this->db->order_by('book_name', "asc");
+            else if ($sort == "title_desc")
+                $this->db->order_by('book_name', "desc");
+        }
+
+        if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
+        if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
+        if (!empty($sort)) {
+            $this->db->order_by('b_rate', $sort);
         }
         if (!empty($category)) {
             if ($category != "all")
@@ -83,14 +188,51 @@ class Books_model extends BaseModel
 
         return $query->result();
     }
-    public function search_books_get_category($query, $sort_rate)
+    public function search_books_get_category($query, $sort, $not_rated, $not_saved)
     {
         $this->db->select('book_type');
         $this->db->distinct();
         $this->db->like('book_name', $query, 'both');
 
-        if (!empty($sort_rate)) {
-            $this->db->order_by('b_rate', $sort_rate);
+        if (!empty($sort)) {
+            if ($sort == "rate_desc")
+                $this->db->order_by('b_rate', "desc");
+            else if ($sort == "rate_asc")
+                $this->db->order_by('b_rate', "asc");
+            else if ($sort == "title_asc")
+                $this->db->order_by('book_name', "asc");
+            else if ($sort == "title_desc")
+                $this->db->order_by('book_name', "desc");
+        }
+
+        if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
+        if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
+            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
+            $query_result = $subquery->result();
+            $book_id = array();
+            foreach ($query_result as $row) {
+                $book_id[] = $row->book_id;
+            }
+            $book = implode(",", $book_id);
+            $array = explode(",", $book);
+            $this->db->where_in('book_id', $array);
+        }
+
+        if (!empty($sort)) {
+            $this->db->order_by('b_rate', $sort);
         }
         $query = $this->db->get($this->table);
 
@@ -496,5 +638,21 @@ class Books_model extends BaseModel
         $query = $this->db->get($this->table);
         $last_book_id = json_decode(json_encode($query->row()), True);
         return $last_book_id;
+    }
+
+    public function get_authors()
+    {
+        $this->db->select('author');
+        $this->db->distinct();
+        $this->db->order_by('author', 'asc');
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
     }
 }
