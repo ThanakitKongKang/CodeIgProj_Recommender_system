@@ -30,7 +30,7 @@ class Books_model extends BaseModel
         $this->db->like('book_name', $query, 'both');
 
         if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -43,7 +43,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -100,7 +100,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -113,7 +113,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -158,7 +158,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -171,7 +171,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -214,7 +214,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_rated) && $not_rated == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from rate where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -227,7 +227,7 @@ class Books_model extends BaseModel
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM `book` where book_id not IN (select book_id from saved_book where username =? )";
+            $sql = "SELECT book_id FROM rate WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();

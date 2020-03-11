@@ -55,7 +55,7 @@
                             <input id="book_id" type="hidden" value="<?= $book_detail['book_id'] ?>">
                             <div class="mb-2 font-arial font-weight-bolder" title="<?= $book_detail['book_name'] ?>" id="book_detail_section_name"> <?= $book_detail['book_name'] ?></div>
                             <div class="book_detail_text pt-1"><span class="">Category : </span><a class="link " href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $book_detail["book_type"]))) ?>"><span><?= $book_detail['book_type'] ?></span></a></div>
-                            <div class="book_detail_text pt-1">Author : <a class="link" href="<?=base_url()?>search/result?q=&author=<?= $book_detail['author'] ?>"><?= $book_detail['author'] ?></a></div>
+                            <div class="book_detail_text pt-1">Author : <a class="link" href="<?= base_url() ?>search/result?q=&author=<?= $book_detail['author'] ?>"><?= $book_detail['author'] ?></a></div>
                         </div>
 
                         <!-- bookmark trigger -->
@@ -206,7 +206,7 @@
         function enablingCommentfunction(param) {
             if (param) {
                 $('#comments-container').comments({
-                    // profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                    profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
                     // ajax get admin and logged_in status
                     defaultNavigationSortKey: 'popularity',
                     enableNavigation: true,
@@ -224,6 +224,20 @@
                     timeFormatter: function(time) {
                         return moment(time).fromNow();
                     },
+                    getUsers: function(success, error) {
+                        $.ajax({
+                            type: 'post',
+                            url: "<?php echo base_url(); ?>comment/get_user",
+                            data: {
+                                "book_id": arr[5],
+                            },
+                            success: function(usersArray) {
+                                console.log(usersArray)
+                                success(JSON.parse(usersArray));
+                            },
+                            error: error
+                        });
+                    },
                     getComments: function(success, error) {
                         $.ajax({
                             type: 'get',
@@ -231,8 +245,6 @@
                             data: book_id,
                             success: function(commentsArray) {
                                 if (commentsArray != "nocm") {
-                                    console.log(JSON.parse(commentsArray))
-
                                     success(JSON.parse(commentsArray));
                                 } else {
                                     success([]);
@@ -573,7 +585,7 @@
                 success: function(data) {
                     const Toast = Swal.mixin({
                         toast: true,
-                        position: 'top-end',
+                        position: 'bottom-end',
                         showConfirmButton: false,
                         timer: 3000
                     });

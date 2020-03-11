@@ -23,11 +23,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="book_edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="book_edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel_book" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit book's info</h5>
+                <h5 class="modal-title" id="exampleModalLabel_book">Edit book's info</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -35,21 +35,31 @@
             <div class="modal-body pt-4">
                 <button class="btn btn-danger delete_this_book_alert mb-3" title="Delete this book" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
                 <table class="modal_book_info w-100 mt-5">
-                    <tr>
-                        <td class="w-50">
+                    <div class="row">
+                        <div class="col-lg-5 h-100 my-auto">
+
                             <div class="text-center mr-2">
                                 <img src="" id="old_img" style="max-width:15rem" alt="">
                             </div>
+
                             <div class="text-center small text-muted">(current cover image)</div>
-                        </td>
-                        <td class="w-50">
-                            <div class="text-center ml-2" id="preview_upload_wrapper">
-                                <div class="mx-auto upload_msg">
-                                    Upload a new book cover to start cropping
-                                </div>
+                        </div>
+
+                        <div class="text-center ml-2 col-lg-6" id="preview_upload_wrapper">
+                            <div class="mx-auto upload_msg">
+                                Upload a new book cover to start cropping
                             </div>
+                        </div>
+                    </div>
+
+
+                    <tr>
+                        <td class="col-6">
+                        </td>
+                        <td class="col-6">
                         </td>
                     </tr>
+
                     <tr>
                         <td colspan="2">
                             <div class="input-group mb-3">
@@ -387,7 +397,7 @@
                 $(elm).addClass('selected');
             }
             old_book_name = data["book_name"];
-            $('#exampleModalLabel').html("Edit book : " + data["book_name"]);
+            $('#exampleModalLabel_book').html("Edit book : " + data["book_name"]);
             $('.modal_book_info tbody tr:nth-child(2) td div input').val(data["book_id"]);
             $('.modal_book_info tbody tr:nth-child(3) td div input').val(data["book_name"]);
             $('.modal_book_info tbody tr:nth-child(4) td div input').val(data["author"]);
@@ -449,7 +459,7 @@
         // table.draw();
         const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: 'bottom-end',
             showConfirmButton: false,
             timer: 3000
         });
@@ -513,7 +523,7 @@
                                         upload_crop.croppie('destroy')
                                         isInit = false;
                                         $('#book_edit_modal').modal('hide');
-
+                                        isCoverChanged = false;
                                     }
                                 })
 

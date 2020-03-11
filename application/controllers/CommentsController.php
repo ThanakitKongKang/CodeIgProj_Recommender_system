@@ -53,6 +53,13 @@ class CommentsController extends CI_Controller
             $commentsArray[$i]["created_by_admin"] = false;
             $commentsArray[$i]["user_has_upvoted"] = false;
 
+            $profile_pic = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/{$sub_cm["fullname"]}.PNG";
+            if (file_exists($profile_pic)) {
+                $commentsArray[$i]["profile_picture_url"] = base_url() . "assets/user_profile_pic/" . $sub_cm["fullname"] . ".PNG";
+            } else {
+                $commentsArray[$i]["profile_picture_url"] = false;
+            }
+
             // is current user
             if ($sub_cm["fullname"] ==  $username) {
                 $commentsArray[$i]["created_by_current_user"] = true;
@@ -76,7 +83,26 @@ class CommentsController extends CI_Controller
             echo json_encode($commentsArray);
         }
     }
-    
+
+    public function get_user()
+    {
+        $bookid = $this->input->get('book_id');
+        $usersArray = $this->comments_model->get_users_of_book($bookid);
+        $i = 0;
+        foreach ($usersArray  as $key => $sub_u) {
+            $usersArray[$i]["id"] = $sub_u["username"];
+            $usersArray[$i]["fullname"] = $sub_u["first_name"] . " " . $sub_u["last_name"];
+            $usersArray[$i]["profile_picture_url"] = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/{$sub_u["username"]}.PNG";
+            $i++;
+        }
+
+        if ($usersArray == FALSE) {
+            echo "nou";
+        } else {
+            echo json_encode($usersArray);
+        }
+    }
+
     public function post()
     {
         $username = $this->session->userdata('user')['username'];

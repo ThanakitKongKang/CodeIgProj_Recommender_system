@@ -65,6 +65,15 @@ class SessionController extends CI_Controller
                     );
                     $this->load->model('bookmark_model');
                     $this->load->model('rate_model');
+                    $profile_pic = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/{$data[0]->username}.PNG";
+
+                    // Use unlink() function to delete a file  
+                    if (file_exists($profile_pic)) {
+                        $this->session->set_userdata('profile_pic', TRUE);
+                    }
+                    else{
+                        $this->session->set_userdata('profile_pic', FALSE);
+                    }
 
                     $this->session->set_userdata('count_all_saved_list', $this->bookmark_model->get_saved_list($data[0]->username, "count"));
                     $this->session->set_userdata('count_all_rating_history', $this->rate_model->get_all_num_rows_username($data[0]->username));
@@ -263,5 +272,32 @@ class SessionController extends CI_Controller
         } else {
             echo "false";
         }
+    }
+
+    public function user_profile_upload()
+    {
+        $username = $this->input->post('username');
+        $encodedstring = $this->input->post('image');
+        $data = $encodedstring;
+
+        if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
+            $data = substr($data, strpos($data, ',') + 1);
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            if (!in_array($type, ['jpg', 'jpeg', 'png'])) {
+                throw new \Exception('invalid image type');
+            }
+
+            $data = base64_decode($data);
+
+            if ($data === false) {
+                throw new \Exception('base64_decode failed');
+            }
+        } else {
+            throw new \Exception('did not match data URI with image data ' . $data);
+        }
+        $this->load->library('session');
+        file_put_contents("assets/user_profile_pic/{$username}.PNG", $data);
+        $this->session->set_userdata('profile_pic', TRUE);
     }
 }

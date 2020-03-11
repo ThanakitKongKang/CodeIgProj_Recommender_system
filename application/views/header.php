@@ -143,8 +143,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                         </form>
                     </div>
-                    <div class="mb-2 col-sm-2">
-                        <a class="small advs_anchor text_gradient_theme text_gradient_theme_hoverable" href="" >Advanced Search <i class="fas fa-search-plus"></i></a>
+                    <div class="mb-2 col-lg-2">
+                        <a class="small advs_anchor text_gradient_theme text_gradient_theme_hoverable" href="">Advanced Search <i class="fas fa-search-plus"></i></a>
 
                     </div>
 
@@ -181,7 +181,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             } else { ?>
                                 <li class="nav-item dropdown custom_dropleft">
                                     <div class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-user-circle"></i> <?= $this->session->userdata('user')['username']; ?>
+                                        <?php
+                                        if ($this->session->userdata('profile_pic')) { ?>
+                                            <img src="<?= base_url() ?>assets/user_profile_pic/<?= $this->session->userdata('user')['username']; ?>.PNG" class="profile_pic_header" width="25"> <?= $this->session->userdata('user')['username']; ?>
+                                        <?php } else { ?>
+                                            <i class="fas fa-user-circle profile_pic_header"></i> <?= $this->session->userdata('user')['username']; ?>
+                                        <?php } ?>
+
                                     </div>
                                     <div class="dropdown-menu" aria-labelledby="userDropdown" id="userDropdown_show">
                                         <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your course</a>
@@ -192,6 +198,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <hr class="my-2">
                                         <?php if ($this->session->userdata('user')['username'] == "admin") { ?>
                                             <h6 class="dropdown-header">Admin</h6>
+                                            <a class="dropdown-item <?php if (isset($accSetting)) echo $accSetting; ?>" data-target="#accSetting" data-toggle="modal" href="#accSetting">My Account</a>
+
                                             <a class="dropdown-item <?php if (isset($dashboard)) echo $dashboard; ?>" href="<?= base_url() ?>dashboard">Dashboard</a>
                                             <a class="dropdown-item <?php if (isset($testmode)) echo $testmode; ?>" href="<?= base_url() ?>testmode">Debugger</a>
 
@@ -259,10 +267,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="old_username" id="old_username">
-                    <table class="modal_user_info w-100 m-5">
+                    <table class="modal_user_info w-100 m-lg-5">
+                        <div class="text-center">
+                            <img class="" id="old_pfp" src="" alt="">
+
+                            <div id="preview_upload_wrapper_pfpic">
+                            </div>
+                            <div class="input-group mb-3 mx-auto col-lg-6">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Profile Picture</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input profile_pic_input" id="profile_pic_input" aria-describedby="profile_pic_input" accept="image/jpeg, image/png">
+                                    <label class="custom-file-label label_cover text-left" for="profile_pic_input">Update</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="mt-lg-5 my-4">
                         <tr>
                             <td>
-                                <div class="input-group w-50">
+                                <div class="input-group col-lg-6 col-md-9">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Username</span>
                                     </div>
@@ -273,7 +298,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </tr>
                         <tr>
                             <td>
-                                <div class="input-group mb-3 mt-3 w-75">
+                                <div class="input-group mb-3 mt-3 col-lg-9">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Firstname</span>
                                     </div>
@@ -283,7 +308,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </tr>
                         <tr>
                             <td>
-                                <div class="input-group mb-3 w-75">
+                                <div class="input-group mb-3 col-lg-9">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Lastname</span>
                                     </div>
@@ -293,7 +318,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </tr>
                         <tr>
                             <td>
-                                <a class="small pl-5 w-100 ml-5 font-arial pt-1" style="display:block" href="#" data-target="#changePassword" data-toggle="modal" href="#changePassword">Change Password?</a>
+                                <a class="small pl-5 w-100 ml-5 font-arial pt-1" style="display:block" href="#" data-target="#changePassword" data-toggle="modal" href="#changePassword">Change Password</a>
                             </td>
                         </tr>
 
@@ -363,6 +388,59 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        var isProfilePicChange = false;
+
+        $('#profile_pic_input').on('change', function() {
+            var fileName = $(this).val().replace(/C:\\fakepath\\/i, '');
+            $(this).next('.label_cover').html(fileName);
+            readFile_profilepic(this);
+            isProfilePicChange = true;
+        })
+
+        var upload_pfp;
+        var is_pfp_Init = false;
+
+        function readFile_profilepic(input) {
+            if (input.files && input.files[0]) {
+                var reader_pfp = new FileReader();
+                if (!is_pfp_Init) {
+                    upload_pfp = $('#preview_upload_wrapper_pfpic').croppie({
+                        viewport: {
+                            width: 250,
+                            height: 250,
+                            type: 'circle'
+                        },
+                        boundary: {
+                            width: "100%",
+                            height: "20rem",
+
+                        },
+                    });
+                    is_pfp_Init = true;
+                }
+
+                reader_pfp.onload = function(e) {
+                    $('#preview_upload_wrapper_pfpic').croppie('bind', {
+                        url: e.target.result
+                    });
+                    $('#old_pfp').hide();
+                }
+                reader_pfp.readAsDataURL(input.files[0]);
+            }
+        }
+        var image_pfp;
+        $('#accSetting').on('hidden.bs.modal', function() {
+            if (isProfilePicChange) {
+                isProfilePicChange = false;
+                is_pfp_Init = false;
+                $('#old_pfp').show();
+                $('#profile_pic_input').val('');
+                upload_pfp.croppie('destroy');
+            }
+        });
+    </script>
+
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/slick/slick.min.js"></script>
     <script type="text/javascript">
         AOS.init();
@@ -438,13 +516,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     $(document.body).css({
                         'cursor': 'default'
                     });
+
+                    $("#old_pfp").attr("src", "<?= base_url() ?>/assets/user_profile_pic/" + old_username_index + ".PNG?" + new Date().getTime());
+
                 }
             })
         })
 
         const generalToast = Swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: 'bottom-end',
             showConfirmButton: false,
             timer: 3000
         });
@@ -491,8 +572,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
             usernameCheck_index();
         });
 
+        var flag_allow_profile_update = false;
         $('.edit_user_index').on('click', function(e) {
             event.preventDefault();
+            if (isProfilePicChange) {
+                upload_pfp.croppie('result', {
+                    type: 'canvas',
+                    size: 'viewport'
+                }).then(function(response) {
+                    image_pfp = {
+                        image: response,
+                        username: $('#username_index').val(),
+                    };
+                })
+                flag_allow_profile_update = true;
+            }
             swalEditUserConfirm_index();
         })
 
@@ -548,6 +642,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         })
                                         $('#accSetting').modal('show');
                                     } else {
+                                        // password matched
+                                        if (flag_allow_profile_update) {
+                                            // update cover
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '<?= base_url() ?>api/user/user_profile_upload',
+                                                data: image_pfp,
+                                                success: function(data) {
+                                                    flag_allow_profile_update = false;
+                                                    $(".profile_pic_header").attr("src", "<?= base_url() ?>assets/user_profile_pic/" + old_username_index + ".PNG?" + new Date().getTime());
+                                                    $("i.profile_pic_header").parent().prepend("<img src='<?= base_url() ?>assets/user_profile_pic/" + old_username_index + ".PNG?" + new Date().getTime() + "' class='profile_pic_header' width='25'>");
+                                                    var interval = setInterval(function() {
+                                                        $("i.profile_pic_header").remove();
+                                                        clearInterval(interval);
+                                                    }, 50);
+                                                }
+                                            })
+
+                                        }
+
                                         $.ajax({
                                             type: 'POST',
                                             url: '<?= base_url() ?>api/user/update_self',
@@ -805,7 +919,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -820,7 +934,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -833,7 +947,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         if ($this->session->userdata('flash_logout')) { ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -847,7 +961,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         if ($this->session->userdata('already_logged_in')) { ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -887,7 +1001,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         if (data < 10) {
                             const Toast = Swal.mixin({
                                 toast: true,
-                                position: 'top-end',
+                                position: 'bottom-end',
                                 showConfirmButton: false,
                                 timer: 3000
                             });
@@ -931,7 +1045,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastBookmarkSaved(book_id) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000,
                 onOpen: () => {
@@ -962,7 +1076,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastBookmarkUnsaved() {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -976,7 +1090,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastSavedToCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -990,7 +1104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastCreateCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1004,7 +1118,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastEditCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1018,7 +1132,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastDeleteCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 1000
             });
@@ -1046,7 +1160,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastRemoveFromCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });

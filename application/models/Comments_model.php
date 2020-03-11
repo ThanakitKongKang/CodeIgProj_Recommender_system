@@ -23,6 +23,22 @@ class Comments_model extends BaseModel
         }
     }
 
+    public function get_users_of_book($bookid)
+    {
+        $this->db->select('book_id,username,first_name,last_name');
+        $this->db->where('book_id', $bookid);
+        $this->db->where('username', 'fullname');
+        $this->db->from('comment,user');
+
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            $array = json_decode(json_encode($query->result()), True);
+            return $array;
+        } else {
+            return FALSE;
+        }
+    }
+
     public function delete_comment($book_id, $comment_id)
     {
         $this->db->where('id', $comment_id);

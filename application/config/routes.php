@@ -161,6 +161,7 @@ $route['books/delete_collection'] = 'BooksController/delete_collection';
 | -------------------------------------------------------------------------
 */
 $route['comment/get'] = 'CommentsController/get';
+$route['comment/get_user'] = 'CommentsController/get_user';
 $route['comment/post'] = 'CommentsController/post';
 $route['comment/delete'] = 'CommentsController/delete';
 $route['comment/upvote'] = 'CommentsController/upvote';
@@ -229,6 +230,9 @@ $route['api/activity_search/get_recently_for_livesearch'] = 'ActivityController/
 
 $route['api/activity/get_dashboard_view'] = 'DashboardController/get_dashboard_view';
 $route['api/activity/get_dashboard_search'] = 'DashboardController/get_dashboard_search';
+
+$route['api/user/user_profile_upload'] = 'SessionController/user_profile_upload';
+
 
 
 

@@ -246,7 +246,7 @@ $('.edit-footer').on("click", ".edit-button", function (event) {
 
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -381,7 +381,7 @@ $('#modal-delete').on("click", function (event) {
                     if (data == 2) {
                         const Toast = Swal.mixin({
                             toast: true,
-                            position: 'top-end',
+                            position: 'bottom-end',
                             showConfirmButton: false,
                             timer: 3000
                         });
