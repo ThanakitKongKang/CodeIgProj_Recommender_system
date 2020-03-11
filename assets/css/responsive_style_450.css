@@ -1,4 +1,21 @@
 @media only screen and (max-width: 450px) {
+	i.profile-picture {
+		transform: scale(0.6);
+	}
+	
+	.profile-picture {
+		margin-top: 0.5rem;
+	}
+	
+	.jquery-comments .profile-picture {
+		width: 3rem !important;
+		height: 3rem !important;
+	}
+	
+	.jquery-comments i.profile-picture {
+		font-size: 3em;
+	}
+
 	.card_img {
 		height: 8rem;
 	}

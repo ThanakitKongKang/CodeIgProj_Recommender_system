@@ -183,9 +183,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="nav-link dropdown-toggle text-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <?php
                                         if ($this->session->userdata('profile_pic')) { ?>
-                                            <img src="<?= base_url() ?>assets/user_profile_pic/<?= $this->session->userdata('user')['username']; ?>.PNG" class="profile_pic_header" width="25"> <?= $this->session->userdata('user')['username']; ?>
+                                            <img src="<?= base_url() ?>assets/user_profile_pic/<?= $this->session->userdata('user')['username']; ?>.PNG" class="profile_pic_header" width="25"> <span id="global_username"><?= $this->session->userdata('user')['username']; ?></span>
                                         <?php } else { ?>
-                                            <i class="fas fa-user-circle profile_pic_header"></i> <?= $this->session->userdata('user')['username']; ?>
+                                            <i class="fas fa-user-circle profile_pic_header"></i> <span id="global_username"><?= $this->session->userdata('user')['username']; ?></span>
                                         <?php } ?>
 
                                     </div>

@@ -203,10 +203,19 @@
             $('.comment_toggle #info').attr('checked', false);
         }
 
+        var profilePicPath = false;
+
+        function getProfilePicPath() {
+            if ($('img.profile_pic_header').length > 0) {
+                profilePicPath = "<?= base_url() ?>assets/user_profile_pic/" + $('#global_username').html() + ".PNG";
+            }
+        }
+
         function enablingCommentfunction(param) {
             if (param) {
+                getProfilePicPath();
                 $('#comments-container').comments({
-                    profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                    profilePictureURL: profilePicPath,
                     // ajax get admin and logged_in status
                     defaultNavigationSortKey: 'popularity',
                     enableNavigation: true,
@@ -232,7 +241,6 @@
                                 "book_id": arr[5],
                             },
                             success: function(usersArray) {
-                                console.log(usersArray)
                                 success(JSON.parse(usersArray));
                             },
                             error: error

@@ -1616,9 +1616,26 @@ span.user_rated_this {
 	padding-bottom: 0.8rem;
 }
 
-.profile-picture {
+i.profile-picture {
 	transform: scale(0.6);
+}
+
+.profile-picture {
 	margin-top: 0.5rem;
+}
+
+.jquery-comments .profile-picture {
+	width: 4rem !important;
+	height: 4rem !important;
+	max-width: 75px !important;
+	max-height: 75px !important;
+}
+
+.jquery-comments i.profile-picture {
+	background: -webkit-linear-gradient(45deg, #0062cc, #2f9be3 80%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 4em;
 }
 
 .comment-wrapper .actions>.edit {
