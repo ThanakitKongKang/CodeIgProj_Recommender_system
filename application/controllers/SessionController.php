@@ -48,7 +48,7 @@ class SessionController extends CI_Controller
             $this->form_validation->set_error_delimiters('', '');
 
             if ($this->form_validation->run() == FALSE) {
-                $header['title'] = "Login";
+                $header['title'] = "Login - CS Book";
                 $this->load->view('sessions/login', $header);
             } else {
                 $post_data = array(
@@ -164,7 +164,7 @@ class SessionController extends CI_Controller
         $this->form_validation->set_rules($rules);
         $this->form_validation->set_error_delimiters('', '');
         if ($this->form_validation->run() == FALSE) {
-            $header['title'] = "Sign Up";
+            $header['title'] = "Sign Up - CS Book";
             $this->load->view('sessions/signup', $header);
         } else {
             $post_data = array(

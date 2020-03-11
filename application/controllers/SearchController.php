@@ -55,7 +55,7 @@ class SearchController extends CI_Controller
         $data['page'] = $page;
         $data['total_rows'] = $config["total_rows"];
         $data['category_list'] = $this->books_model->search_books_get_category($query, $sort, $not_rated, $not_saved, $rating);
-        $header['title'] = 'Search result';
+        $header['title'] = 'Search result - CS Book';
 
 
         if ($config["total_rows"] > 0)
@@ -120,7 +120,7 @@ class SearchController extends CI_Controller
         $data['author_list'] = $this->books_model->get_authors();
         $header['previous_query_string'] = $this->input->get('q');
         $data["query"] = "what";
-        $header['title'] = "Advance Search";
+        $header['title'] = "Advance Search - CS Book";
         $this->load->view('./header', $header);
         $this->load->view('books/search_advanced', $data);
         $this->load->view('footer');

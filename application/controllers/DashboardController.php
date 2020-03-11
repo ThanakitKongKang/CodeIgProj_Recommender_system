@@ -30,7 +30,7 @@ class DashboardController extends CI_Controller
         // on/off comment
         // edit book detail
         // edit course keywords
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
 
         // active
         $header["dashboard"] = "active";
@@ -46,7 +46,7 @@ class DashboardController extends CI_Controller
     {
         $data['category_list'] = $this->books_model->get_cateory_list();
 
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
 
         // active
         $header["dashboard"] = "active";
@@ -63,7 +63,7 @@ class DashboardController extends CI_Controller
     public function user_manage_page()
     {
         $this->check_auth("dashboard");
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
 
         // active
         $header["dashboard"] = "active";
@@ -77,7 +77,7 @@ class DashboardController extends CI_Controller
 
     public function user_comment_manage_page()
     {
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
 
         // active
         $header["dashboard"] = "active";
@@ -93,7 +93,7 @@ class DashboardController extends CI_Controller
     {
         // manage course detail
         // manage course keyword
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
 
         // active
         $header["dashboard"] = "active";
@@ -109,7 +109,7 @@ class DashboardController extends CI_Controller
     {
         // manage course detail
         // manage course keyword
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
 
         // active
         $header["dashboard"] = "active";
@@ -448,7 +448,7 @@ class DashboardController extends CI_Controller
     public function activity_view_page()
     {
         // all books data
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
         $data["api_url_week"] =  base_url() . "api/activity/get_dashboard_view?mode=w";
         $data["api_url_month"] =  base_url() . "api/activity/get_dashboard_view?mode=m";
         $data["api_url_alltime"] =  base_url() . "api/activity/get_dashboard_view?mode=a";
@@ -536,7 +536,7 @@ class DashboardController extends CI_Controller
     public function activity_search_page()
     {
         // all books data
-        $header["title"] = "Dashboard";
+        $header["title"] = "Dashboard - CS Book";
         $data["api_url_week"] =  base_url() . "api/activity/get_dashboard_search?mode=w";
         $data["api_url_month"] =  base_url() . "api/activity/get_dashboard_search?mode=m";
         $data["api_url_alltime"] =  base_url() . "api/activity/get_dashboard_search?mode=a";

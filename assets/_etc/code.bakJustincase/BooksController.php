@@ -31,7 +31,7 @@ class BooksController extends CI_Controller
 
         $data['books'] = $this->books_model->get_books($config["per_page"], $page);
 
-        $header['title'] = 'Book Recommendation';
+        $header['title'] = 'Book Recommendation - CS Book';
 
         $this->load->view('./header', $header);
         $this->load->view('books/index', $data);
@@ -114,7 +114,7 @@ class BooksController extends CI_Controller
         }
 
 
-        $header['title'] = 'Recommendation test';
+        $header['title'] = 'Recommendation test - CS Book';
 
         $this->load->view('./header', $header);
         $this->load->view('recommend_test', $data);

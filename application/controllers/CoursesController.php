@@ -18,7 +18,7 @@ class CoursesController extends CI_Controller
         $this->check_auth('courses/index');
         $username = $this->session->userdata('user')['username'];
         $data['course_registered'] = $this->course_model->get_course_registered($username);
-        $header["title"] = "Your course";
+        $header["title"] = "Your course - CS Book";
         $header["yourcourse"] = "active";
 
         $this->load->view('./header', $header);
@@ -41,7 +41,7 @@ class CoursesController extends CI_Controller
                 $data['page'] = "Based on your recently viewed";
                 $data["title_mfy"] = "<i class='fas fa-glasses pr-3'></i>Recommended by activity";
                 $data["title_main"] = "Based on your recently viewed";
-                $header["title"] = "Recommended by activity";
+                $header["title"] = "Recommended by activity - CS Book";
             } else if ($data['get_url'] == "rec_by_search") {
                 $this->check_auth('seemore');
                 $data['isCourseExists'] = "TRUE";
@@ -50,7 +50,7 @@ class CoursesController extends CI_Controller
                 $data['page'] = "Based on your recently searching";
                 $data["title_mfy"] = "<i class='fas fa-search fa-flip-horizontal pl-3'></i>Recommended by activity";
                 $data["title_main"] = "Based on recently searching";
-                $header["title"] = "Recommended by activity";
+                $header["title"] = "Recommended by activity - CS Book";
             } else if ($data['get_url'] == "popular") {
                 $data['isCourseExists'] = "TRUE";
                 $data['recommend_list_detail_course']['detail'] = "popular";
@@ -58,7 +58,7 @@ class CoursesController extends CI_Controller
                 $data['page'] = "popular";
                 $data["title_mfy"] = "<i class='fas fa-fire-alt pr-3'></i>Trending Now";
                 $data["title_main"] = "popular";
-                $header["title"] = "Trending Now";
+                $header["title"] = "Trending Now - CS Book";
             } else if ($data['get_url'] == "view_again") {
                 $this->check_auth('seemore');
                 $data['isCourseExists'] = "TRUE";
@@ -67,13 +67,13 @@ class CoursesController extends CI_Controller
                 $data['page'] = "View it again";
                 $data["title_mfy"] = "<i class='fas fa-redo pr-3'></i>Recommended by activity";
                 $data["title_main"] = "View it again";
-                $header["title"] = "Recommended by activity";
+                $header["title"] = "Recommended by activity - CS Book";
             } else {
                 $data['all_num_rows'] = 0;
                 $data['page'] = "404-Page-Not-Found";
                 $data["title_mfy"] = "";
                 $data["title_main"] = "Page not found!";
-                $header["title"] = "404-Page-Not-Found";
+                $header["title"] = "404-Page-Not-Found - CS Book";
             }
         } else {
             $this->check_auth('seemore');
@@ -91,7 +91,7 @@ class CoursesController extends CI_Controller
                 $data["title_mfy"] = "";
                 $data["title_main"] = "Page not found!";
             }
-            $header["title"] = "Course - " . $data['get_url'];
+            $header["title"] = "Course - " . $data['get_url']." - CS Book";
         }
 
         $this->load->view('./header', $header);

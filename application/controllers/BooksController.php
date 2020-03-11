@@ -95,7 +95,7 @@ class BooksController extends CI_Controller
         $data['top_rated'] = $this->books_model->get_top_rated();
         $data['category_list'] = $this->books_model->get_cateory_list();
 
-        $header['title'] = 'Book Recommendation';
+        $header['title'] = 'Book Recommendation - CS Book';
         $data['books'] = $this->books_model->get_all();
 
         $data['recommend_list_detail_course'] = $this->getCourseRecommend();
@@ -132,7 +132,7 @@ class BooksController extends CI_Controller
             $data['page'] = "404-Page-Not-Found";
         }
 
-        $header["title"] = "Browse - " . $data['page'];
+        $header["title"] = "Browse - " . $data['page'] ." - CS Book";
         $header['browse_all'] = 'active';
         $this->load->view('./header', $header);
         $this->load->view('books/browse', $data);
@@ -235,7 +235,7 @@ class BooksController extends CI_Controller
             $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
             $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
         }
-        $header["title"] = $data['book_detail']['book_name'];
+        $header["title"] = $data['book_detail']['book_name']." - CS Book";
         $this->load->view('./header', $header);
         $this->load->view('books/detail', $data);
         $this->load->view('footer');
@@ -262,7 +262,7 @@ class BooksController extends CI_Controller
             $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count", $collection_get);
             $data['all_num_rows'] = $this->bookmark_model->get_saved_list_all_num_rows($username, $collection_get);
 
-            $header["title"] = "Saved items";
+            $header["title"] = "Saved items - CS Book";
             $header["saveditem"] = "active";
             $data['showheader'] = true;
             $data['i'] = 0;
@@ -275,7 +275,7 @@ class BooksController extends CI_Controller
             $this->load->view('books/saved', $data);
             $this->load->view('footer');
         } else {
-            $header["title"] = "Error";
+            $header["title"] = "Error - CS Book";
             $this->load->view('./header', $header);
             $this->load->view('sessions/landing_error_login');
             $this->load->view('footer');
@@ -532,7 +532,7 @@ class BooksController extends CI_Controller
         $data['getActivity_popular'] = $this->getActivity_popular();
 
         $header["testmode"] = "active";
-        $header["title"] = "Test mode";
+        $header["title"] = "Test mode - CS Book";
         $this->load->view('./header', $header);
         $this->load->view('books/testmode', $data);
         $this->load->view('footer');
@@ -793,7 +793,7 @@ class BooksController extends CI_Controller
         $data['top_rated'] = $this->books_model->get_top_rated();
         $data['category_list'] = $this->books_model->get_cateory_list();
 
-        $header['title'] = 'Book Recommendation';
+        $header['title'] = 'Book Recommendation - CS Book';
         $data['books'] = $this->books_model->get_all();
 
         $header['home'] = 'active';
@@ -825,7 +825,7 @@ class BooksController extends CI_Controller
 
         $data['books'] = $this->books_model->get_books($config["per_page"], $page);
 
-        $header['title'] = 'pagination';
+        $header['title'] = 'pagination - CS Book';
 
 
         $this->load->view('./header', $header);
@@ -939,7 +939,7 @@ class BooksController extends CI_Controller
             $data['final_recommend_list'] = false;
         }
 
-        $header['title'] = 'Recommendation test';
+        $header['title'] = 'Recommendation test - CS Book';
         $header['test'] = "active";
 
         $this->load->view('./header', $header);
@@ -965,7 +965,7 @@ class BooksController extends CI_Controller
         $data["showheader"] = true;
         $data['i'] = 0;
 
-        $header['title'] = 'Rating history';
+        $header['title'] = 'Rating history - CS Book';
         $header['ratinghistory'] = "active";
         $this->session->set_userdata('count_all_rating_history', $this->rate_model->get_all_num_rows_username($username));
 
@@ -994,7 +994,7 @@ class BooksController extends CI_Controller
         $data['page'] = "404-Page-Not-Found";
         $data["title_mfy"] = "";
         $data["title_main"] = "Page not found!";
-        $header["title"] = "Page not found";
+        $header["title"] = "Page not found - CS Book";
         $this->load->view('./header', $header);
         $this->load->view('courses/seemore', $data);
         $this->load->view('footer');
