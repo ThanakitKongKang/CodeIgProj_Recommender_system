@@ -60,16 +60,19 @@
                     </div>
                 </div>
 
-                <hr class="mt-4">
-                <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-lg-2 col-form-label">Other Options</label>
-                    <div class="col-sm-8">
-                        <div class="row ml-0 font-apple">
-                            <div class="mr-2 link oth_options"><input type="checkbox" name="notrated" class="mt-3 pr-2" style="z-index:-1" value="true"> not Rated</div>
-                            <div class="mr-2 link oth_options"><input type="checkbox" name="notsaved" class="mt-3 pr-2" style="z-index:-10" value="true"> not Saved</div>
+
+                <?php if ($this->session->userdata('logged_in')) { ?>
+                    <hr class="mt-4">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-lg-2 col-form-label">Other Options</label>
+                        <div class="col-sm-8">
+                            <div class="row ml-0 font-apple">
+                                <div class="mr-2 link oth_options"><input type="checkbox" name="notrated" class="mt-3 pr-2" style="z-index:-1" value="true"> not Rated</div>
+                                <div class="mr-2 link oth_options"><input type="checkbox" name="notsaved" class="mt-3 pr-2" style="z-index:-10" value="true"> not Saved</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
 
                 <div class="form-group row justify-content-center mt-5 mb-0">
                     <div class="col-lg-6">
@@ -84,7 +87,7 @@
 <script src="<?= base_url() ?>/assets/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-
+        $('.rating-input').rating("clear");
         $("input[type='checkbox']").hover(function() {
             $(this).addClass("hovered");
         }, function() {

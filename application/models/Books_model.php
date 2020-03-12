@@ -39,11 +39,11 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM rate WHERE username = ?";
+            $sql = "SELECT book_id FROM saved_book WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -52,7 +52,7 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
 
         if (!empty($rating)) {
@@ -109,11 +109,11 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM rate WHERE username = ?";
+            $sql = "SELECT book_id FROM saved_book WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -122,7 +122,7 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
         if (!empty($rating)) {
             $this->db->where('b_rate>=', $rating);
@@ -167,11 +167,11 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM rate WHERE username = ?";
+            $sql = "SELECT book_id FROM saved_book WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -180,7 +180,7 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
         if (!empty($rating)) {
             $this->db->where('b_rate>=', $rating);
@@ -223,11 +223,11 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
 
         if (!empty($not_saved) && $not_saved == "true" && $this->session->userdata('logged_in')) {
-            $sql = "SELECT book_id FROM rate WHERE username = ?";
+            $sql = "SELECT book_id FROM saved_book WHERE username = ?";
             $subquery = $this->db->query($sql, array($this->session->userdata('user')['username']));
             $query_result = $subquery->result();
             $book_id = array();
@@ -236,7 +236,7 @@ class Books_model extends BaseModel
             }
             $book = implode(",", $book_id);
             $array = explode(",", $book);
-            $this->db->where_in('book_id', $array);
+            $this->db->where_not_in('book_id', $array);
         }
         if (!empty($rating)) {
             $this->db->where('b_rate>=', $rating);
