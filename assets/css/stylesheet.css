@@ -1712,3 +1712,16 @@ i.profile-picture {
 .custom-file-label {
 	overflow: hidden;
 }
+
+.commenting-field .profile-picture {
+	margin-top: 0;
+}
+
+.close {
+	color: #fff;
+	text-shadow: 0 1px 0 #000;
+}
+
+.close:hover {
+	color: #fff;
+}
