@@ -93,7 +93,7 @@
                                     <span class="bookmark_trigger_text font-arial"> unsave book</span>
                                 </button>
 
-                                <span class="text-secondary small pt-3" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" title="<?= $saved['date'] ?>" style="float:right;cursor:default;"><?= $saved['date'] ?></span>
+                                <span class="text-secondary small pt-3 time_moment" data-time-format="time-ago" data-time-value="<?= $saved['date'] ?>" title="<?= $saved['date'] ?>" style="float:right;cursor:default;"><?= $saved['date'] ?></span>
                             </div>
                         </div>
                     </div>

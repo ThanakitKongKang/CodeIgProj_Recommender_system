@@ -37,7 +37,7 @@
                                 <div class="font-kanit"><?= $course['course_name_th'] ?></div>
                             </div>
                             <!-- monment js -->
-                            <div class="col-3 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $course['date'] ?>" title="<?= $course['date'] ?>"><?= $course['date'] ?></div>
+                            <div class="col-3 small align-self-center time_moment" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $course['date'] ?>" title="<?= $course['date'] ?>"><?= $course['date'] ?></div>
 
                         </div>
                     <?php endforeach;
@@ -236,7 +236,7 @@
                                     '<div>' + entry["course_name_en"] + '</div>' +
                                     '<div class="font-kanit">' + entry["course_name_th"] + '</div>' +
                                     '</div>' +
-                                    '<div class="col-3 small align-self-center" style="cursor:default" data-time-format="time-ago" data-time-value="' + dateTime + '" title="' + dateTime + '">' + dateTime + '</div>' +
+                                    '<div class="col-3 small align-self-center time_moment" style="cursor:default" data-time-format="time-ago" data-time-value="' + dateTime + '" title="' + dateTime + '">' + dateTime + '</div>' +
                                     '</div>';
                                 $("#content_to_append > div").first().after(string_html);
                                 refreshTime();

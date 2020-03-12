@@ -37,7 +37,7 @@
                     <!-- DATE section -->
                     <div class="col-3 text-right">
                         <!-- monment js -->
-                        <div class="small text-secondary" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $rating_history['date'] ?>" title="<?= $rating_history['date'] ?>"><?= $rating_history['date'] ?></div>
+                        <div class="small text-secondary time_moment" style="cursor:default" data-time-format="time-ago" data-time-value="<?= $rating_history['date'] ?>" title="<?= $rating_history['date'] ?>"><?= $rating_history['date'] ?></div>
                     </div>
 
                 </div>

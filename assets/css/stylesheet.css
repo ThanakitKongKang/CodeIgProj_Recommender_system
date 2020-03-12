@@ -1725,3 +1725,7 @@ i.profile-picture {
 .close:hover {
 	color: #fff;
 }
+
+.time_moment {
+	font-family: Arial, Helvetica, sans-serif;
+}

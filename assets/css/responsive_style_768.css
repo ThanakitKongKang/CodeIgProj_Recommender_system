@@ -243,8 +243,9 @@
 	}
 
 	#userDropdown_show {
-		width: 50%;
-		margin-left: 26%;
+		width: 60%;
+		margin-right: auto;
+		margin-left: auto;
 	}
 
 	#navbar {
