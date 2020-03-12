@@ -250,12 +250,15 @@
             var search_option = "&sort=" + $(this).data('search');
             var q = url.searchParams.get("q");
             var rating = url.searchParams.get("rating") ? "&rating=" + url.searchParams.get("rating") : "";
+            var oth_rated = url.searchParams.get("notrated") ? "&notrated=" + url.searchParams.get("notrated") : "";
+            var oth_saved = url.searchParams.get("notsaved") ? "&notsaved=" + url.searchParams.get("notsaved") : "";
+
 
             // current search options
             var category = url.searchParams.get("category") ? "&category=" + url.searchParams.get("category") : "";
             var author = url.searchParams.get("author") ? "&author=" + url.searchParams.get("author") : "";
 
-            window.location = "<?= base_url() ?>search/result?q=" + q + search_option + category + author + rating;
+            window.location = "<?= base_url() ?>search/result?q=" + q + search_option + category + author + rating + oth_rated + oth_saved;
         })
 
         // filter category
@@ -264,12 +267,14 @@
             var search_option = "&category=" + $(this).data('search');
             var q = url.searchParams.get("q");
             var rating = url.searchParams.get("rating") ? "&rating=" + url.searchParams.get("rating") : "";
+            var oth_rated = url.searchParams.get("notrated") ? "&notrated=" + url.searchParams.get("notrated") : "";
+            var oth_saved = url.searchParams.get("notsaved") ? "&notsaved=" + url.searchParams.get("notsaved") : "";
 
             // current search options
             var sort = url.searchParams.get("sort") ? "&sort=" + url.searchParams.get("sort") : "";
             var author = url.searchParams.get("author") ? "&author=" + url.searchParams.get("author") : "";
 
-            window.location = "<?= base_url() ?>search/result?q=" + q + sort + search_option + author + rating;
+            window.location = "<?= base_url() ?>search/result?q=" + q + sort + search_option + author + rating + oth_rated + oth_saved;
         })
 
         // filter author
@@ -278,12 +283,14 @@
             var search_option = "&author=" + $(this).data('search');
             var q = url.searchParams.get("q");
             var rating = url.searchParams.get("rating") ? "&rating=" + url.searchParams.get("rating") : "";
+            var oth_rated = url.searchParams.get("notrated") ? "&notrated=" + url.searchParams.get("notrated") : "";
+            var oth_saved = url.searchParams.get("notsaved") ? "&notsaved=" + url.searchParams.get("notsaved") : "";
 
             // current search options
             var sort_rate = url.searchParams.get("sort_rate") ? "&sort_rate=" + url.searchParams.get("sort_rate") : "";
             var category = url.searchParams.get("category") ? "&category=" + url.searchParams.get("category") : "";
 
-            window.location = "<?= base_url() ?>search/result?q=" + q + sort_rate + category + search_option + rating;
+            window.location = "<?= base_url() ?>search/result?q=" + q + sort_rate + category + search_option + rating + oth_rated + oth_saved;
         })
 
         /*
