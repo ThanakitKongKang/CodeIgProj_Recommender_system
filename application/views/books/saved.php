@@ -635,7 +635,7 @@
         var regex = new RegExp(" ", "g");
         var collection_name_param2 = collection_name_param.replace(regex, "-")
         if (collection_name_param2 != "-") {
-            $('.' + collection_name_param2.toLowerCase()).addClass("active");
+            $('.' + collection_name_param2.toLowerCase()).addClass("active shadow");
             $('#title_collection_name').html("<i class='fas fa-angle-double-right small'></i> " + collection_name_param);
             $('#title_collection_name').prop('title', collection_name_param);
             $('#title_collection_edit').html("<i class='fas fa-ellipsis-h'></i>");

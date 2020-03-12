@@ -141,7 +141,7 @@
         <div id="rec_course" class="mt-5 container p-0">
             <?php foreach ($recommend_list_detail_course as $rec_course) { ?>
                 <span class="anchor" id="slick_<?= $rec_course["detail"]["course_id"] ?>"></span>
-                <div class="slick_title_index font-arial text-muted font-weight-bold">
+                <div class="slick_title_index font-arial text-muted font-weight-bold ">
                     <a href="<?= base_url() ?>seemore/<?= $rec_course["detail"]["course_id"] ?>" class="link">
                         <i class='fas fa-book pr-2'></i><?= $rec_course["detail"]["course_name_en"] ?>
                         <span class="font-apple slick_more_text_icon ml-2"><i class="fas fa-chevron-right"></i></span>
@@ -149,7 +149,7 @@
                     </a>
                 </div>
 
-                <div class="slick_index pl-4 py-5 bg-light">
+                <div class="slick_index pl-4 py-5 bg-light book_detail_content">
                     <?php foreach ($rec_course as $key => $sub_rec_course) { ?>
                         <?php if ($key != "detail") { ?>
                             <div class="slick_wrapper_index">
@@ -176,7 +176,7 @@
                     <span class="font-apple slick_more_text">See all</span>
                 </a>
             </div>
-            <div class="slick_index pl-4 py-5 bg-light">
+            <div class="slick_index pl-4 py-5 bg-light book_detail_content">
                 <?php foreach ($getActivityRecommend_viewed as $key => $sub_rec_view) { ?>
                     <?php if ($key != "detail") { ?>
                         <div class="slick_wrapper_index">
@@ -201,7 +201,7 @@
                     <span class="font-apple slick_more_text">See all</span>
                 </a>
             </div>
-            <div class="slick_index pl-4 py-5 bg-light">
+            <div class="slick_index pl-4 py-5 bg-light book_detail_content">
                 <?php foreach ($getActivityRecommend_search as $key => $sub_rec_search) { ?>
                     <?php if ($key != "detail") { ?>
                         <div class="slick_wrapper_index">
@@ -226,7 +226,7 @@
                     <span class="font-apple slick_more_text">See all</span>
                 </a>
             </div>
-            <div class="slick_index pl-4 py-5 bg-light">
+            <div class="slick_index pl-4 py-5 bg-light book_detail_content">
                 <?php foreach ($getActivity_popular as $key => $sub_rec_pop) { ?>
                     <?php if ($key != "detail") { ?>
                         <div class="slick_wrapper_index">
@@ -251,7 +251,7 @@
                     <span class="font-apple slick_more_text">See all</span>
                 </a>
             </div>
-            <div class="slick_index pl-4 py-5 bg-light">
+            <div class="slick_index pl-4 py-5 bg-light book_detail_content">
                 <?php foreach ($getActivity_viewAgain as $key => $sub_rec_again) { ?>
                     <?php if ($key != "detail") { ?>
                         <div class="slick_wrapper_index">

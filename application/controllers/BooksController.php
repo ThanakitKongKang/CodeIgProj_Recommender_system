@@ -256,14 +256,14 @@ class BooksController extends CI_Controller
         if ($username != null) {
             $collection_get  = isset($_GET['collection']) ? $_GET['collection'] : NULL;
             if (!isset($_GET['collection'])) {
-                $data["all_saved"] = "active";
+                $data["all_saved"] = "active shadow";
             }
             $data['saved_list'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "rows", $collection_get);
             $data['num_rows'] = $this->bookmark_model->get_saved_list_dynamic($username, 5, 0, "count", $collection_get);
             $data['all_num_rows'] = $this->bookmark_model->get_saved_list_all_num_rows($username, $collection_get);
 
             $header["title"] = "Saved items - CS Book";
-            $header["saveditem"] = "active";
+            $header["saveditem"] = "active shadow";
             $data['showheader'] = true;
             $data['i'] = 0;
             $data['round_count'] = 1;
@@ -966,7 +966,7 @@ class BooksController extends CI_Controller
         $data['i'] = 0;
 
         $header['title'] = 'Rating history - CS Book';
-        $header['ratinghistory'] = "active";
+        $header['ratinghistory'] = "active shadow";
         $this->session->set_userdata('count_all_rating_history', $this->rate_model->get_all_num_rows_username($username));
 
         $this->load->view('./header', $header);

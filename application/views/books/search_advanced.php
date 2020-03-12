@@ -76,7 +76,7 @@
 
                 <div class="form-group row justify-content-center mt-5 mb-0">
                     <div class="col-lg-6">
-                        <button type="submit" class="btn bg_linear_theme mx-auto btn-lg w-100" id="advsubmit">Search</button>
+                        <button type="submit" class="btn bg_linear_theme mx-auto btn-lg w-100 shadow" id="advsubmit">Search</button>
                     </div>
                 </div>
             </div>
