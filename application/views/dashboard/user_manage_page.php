@@ -25,7 +25,7 @@
 <div class="modal fade" id="user_edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg_linear_theme">
                 <h5 class="modal-title" id="exampleModalLabel">Edit user's info</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -274,7 +274,7 @@
         // table.draw();
         const Toast = Swal.mixin({
             toast: true,
-            position: 'bottom-end',
+            position: 'top-end',
             showConfirmButton: false,
             timer: 3000
         });

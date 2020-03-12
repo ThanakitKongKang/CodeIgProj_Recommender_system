@@ -232,7 +232,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="modal fade slide-bottom" id="create_collection_modal" tabindex="-1" role="dialog" aria-labelledby="create_collection_modal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title">Create Collection</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -259,7 +259,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="modal fade" id="accSetting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">My Account</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -338,7 +338,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -525,7 +525,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         const generalToast = Swal.mixin({
             toast: true,
-            position: 'bottom-end',
+            position: 'top-end',
             showConfirmButton: false,
             timer: 3000
         });
@@ -919,7 +919,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -934,7 +934,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -947,7 +947,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         if ($this->session->userdata('flash_logout')) { ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -961,7 +961,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         if ($this->session->userdata('already_logged_in')) { ?>
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1001,7 +1001,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         if (data < 10) {
                             const Toast = Swal.mixin({
                                 toast: true,
-                                position: 'bottom-end',
+                                position: 'top-end',
                                 showConfirmButton: false,
                                 timer: 3000
                             });
@@ -1045,7 +1045,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastBookmarkSaved(book_id) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000,
                 onOpen: () => {
@@ -1076,7 +1076,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastBookmarkUnsaved() {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1090,7 +1090,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastSavedToCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1104,7 +1104,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastCreateCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1118,7 +1118,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastEditCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -1132,7 +1132,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastDeleteCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 1000
             });
@@ -1160,7 +1160,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function toastRemoveFromCollection(collection_name) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'bottom-end',
+                position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });

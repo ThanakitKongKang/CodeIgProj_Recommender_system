@@ -43,7 +43,7 @@
     <div class="modal fade" id="course_registered_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">course_registered info</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -67,7 +67,7 @@
     <div class="modal fade" id="course_registered_keyword_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">course_registered_keyword info</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -91,7 +91,7 @@
     <div class="modal fade" id="course_keyword_user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">course keywords by user's registered courses's id</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -115,7 +115,7 @@
     <div class="modal fade" id="cosineSim_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">cosineSim_course</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -139,7 +139,7 @@
     <div class="modal fade" id="recommend_list_detail_course_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">recommend_list_detail_course</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -163,7 +163,7 @@
     <div class="modal fade" id="getActivityRecommend_viewed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">getActivityRecommend_viewed</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -194,7 +194,7 @@
     <div class="modal fade" id="getActivityRecommend_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">getActivityRecommend_search</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -225,7 +225,7 @@
     <div class="modal fade" id="getActivity_popular" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">getActivity_popular</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -250,7 +250,7 @@
     <div class="modal fade" id="getActivity_viewAgain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title" id="exampleModalLabel">getActivity_viewAgain</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

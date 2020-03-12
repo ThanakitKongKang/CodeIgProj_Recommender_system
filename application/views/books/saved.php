@@ -137,7 +137,7 @@
     <div class="modal fade slide-bottom" id="create_collection_modal_saved" tabindex="-1" role="dialog" aria-labelledby="create_collection_modal_saved" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title">Create Collection</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -164,7 +164,7 @@
     <div class="modal fade slide-bottom" id="edit_collection_modal_saved" tabindex="-1" role="dialog" aria-labelledby="edit_collection_modal_saved" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg_linear_theme">
                     <h5 class="modal-title">Edit Collection</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

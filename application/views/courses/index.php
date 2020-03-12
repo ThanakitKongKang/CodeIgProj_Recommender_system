@@ -62,7 +62,7 @@
 <div class="modal fade slide-bottom" id="course_registeration" tabindex="-1" role="dialog" aria-labelledby="course_registeration" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg_linear_theme">
                 <h5 class="modal-title" id="modal_label">Add a course</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -246,7 +246,7 @@
                     });
                     const Toast = Swal.mixin({
                         toast: true,
-                        position: 'bottom-end',
+                        position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000
                     });
@@ -307,7 +307,7 @@
                     });
                     const Toast = Swal.mixin({
                         toast: true,
-                        position: 'bottom-end',
+                        position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000
                     });

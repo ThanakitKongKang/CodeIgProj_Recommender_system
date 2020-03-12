@@ -442,7 +442,7 @@
 <div class="modal fade slide-bottom" id="rate_modal" tabindex="-1" role="dialog" aria-labelledby="rate_modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg_linear_theme">
                 <h5 class="modal-title" id="modal_label"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -699,7 +699,7 @@
                 success: function(data) {
                     const Toast = Swal.mixin({
                         toast: true,
-                        position: 'bottom-end',
+                        position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000
                     });
