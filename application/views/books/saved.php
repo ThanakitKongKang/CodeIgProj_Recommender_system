@@ -80,7 +80,7 @@
                             <!-- BOOK detail section -->
                             <div class="my-2 font-arial font-weight-bolder book_detail_content_saved_name"> <a href="<?= base_url() ?>book/<?= $saved['book_id'] ?>" class="link"><?= $saved['book_name'] ?></a></div>
                             <div class="book_detail_text pt-1">Category : <a class="book_detail_text link" href="<?= base_url() ?>browse/<?= strtolower(ucwords(str_replace(" ", "-", $saved["book_type"]))) ?>"><span><?= $saved['book_type'] ?></span></a></div>
-                            <div class="book_detail_text pt-1 mb-3">Author : <?= $saved['author'] ?></div>
+                            <div class="book_detail_text pt-1 mb-3">Author : <a class="link" href="<?= base_url() ?>search/result?q=&author=<?= $saved['author'] ?>"><?= $saved['author'] ?></a></div>
                             <span class="removed_item text_gradient_theme position-absolute text-primary" style="top:9.5rem;left:16rem;"></span>
                             <?php if ($saved['collection_name'] != 'none') { ?>
                                 <span class="small font-arial text-secondary">Saved to </span><a href="<?= base_url() ?>saved?collection=<?= $saved['collection_name'] ?>" class="font-arial" style="background:#cde8ff;padding:0.25rem"><?= $saved['collection_name'] ?></a>
@@ -407,7 +407,7 @@
                 }
             })
         }
-        $('.move_to_another_collection').on('click', function(e) {
+        $(document).on('click', '#saved_list .book_detail_content_saved .move_to_another_collection', function(e) {
             e.preventDefault();
             var rect = $(this).offset();
             var book_id = $(this).data("book_id");
@@ -471,11 +471,11 @@
                 }
             })
         });
-
-        $('.move_to_another_collection').on('mouseover', function(e) {
+        $(document).on('mouseover', '#saved_list .book_detail_content_saved .move_to_another_collection', function(e) {
             $(this).addClass("hovered");
+
         });
-        $('.move_to_another_collection').on('mouseout', function(e) {
+        $(document).on('mouseout', '#saved_list .book_detail_content_saved .move_to_another_collection', function(e) {
             $(this).removeClass("hovered");
         });
     </script>

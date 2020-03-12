@@ -268,7 +268,7 @@ class BooksController extends CI_Controller
             $data['i'] = 0;
             $data['round_count'] = 1;
             $data["collection_get"] = $collection_get;
-            $this->session->set_userdata('count_all_saved_list', $data['all_num_rows']);
+            // $this->session->set_userdata('count_all_saved_list', $data['all_num_rows']);
 
             $data["collection_name"] = $this->bookmark_model->get_collection_by_username($username);
             $this->load->view('./header', $header);

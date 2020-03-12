@@ -388,7 +388,7 @@
                             // $('.rate_trigger').attr("data-book_id", "");
                             // $('.rate_trigger').attr("data-book_id", book_id);
 
-                            $('#modal_label').html('Rate <span class="text-primary">' + book_name + '</span>');
+                            $('#modal_label').html('Rate <span class="text-warning">' + book_name + '</span>');
 
                         }
                     })

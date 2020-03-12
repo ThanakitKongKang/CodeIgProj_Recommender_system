@@ -484,7 +484,7 @@
                                                 // $('.rate_trigger').attr("data-book_id", book_id);
 
                                                 $('#popup_menu_rate').html('<a class="dropdown-item rate_modal_trigger popup_menu_item" data-toggle="modal" data-target="#rate_modal"><div class="row"><div class="col-1"><i class="far fa-star popup_menu_icon"></i></div><div class="col">rate this</div></div></a>');
-                                                $('#modal_label').html('Rate <span class="text-primary">' + book_name + '</span>');
+                                                $('#modal_label').html('Rate <span class="text-warning">' + book_name + '</span>');
 
                                             }
                                         })
