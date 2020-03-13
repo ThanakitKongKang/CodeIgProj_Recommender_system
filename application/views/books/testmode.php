@@ -36,6 +36,105 @@
         print("<pre class='text-danger'>[$cosineCheck2] " . print_r($tf_no_stopwords2[$cosineCheck2 - 1], true) . "</pre>");
     }
     ?>
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#target_books" title="ผู้ใช้ได้ให้คะแนนสูงสุด">
+        หนังสือที่เป็นเป้าหมาย
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="target_books" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg_linear_theme">
+                    <h5 class="modal-title" id="exampleModalLabel">course_registered info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($target_books, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#raw_books" title="หนังสือที่ผู้ใช้แต่ละคนให้คะแนน">
+        การให้คะแนนทั้งหมดในระบบ
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="raw_books" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg_linear_theme">
+                    <h5 class="modal-title" id="exampleModalLabel">course_registered info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($books, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#recommend_matched" title="ผลลัพธ์ของการหา Similarity โดยใช้ Euclidean distance">
+        หนังสือที่แนะนำ (each of target book)
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="recommend_matched" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg_linear_theme">
+                    <h5 class="modal-title" id="exampleModalLabel">course_registered info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($recommend_matched, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#final_recommend_list" title="รายละเอียดของหนังสือที่แนะนำ">
+        ลิสต์หนังสือแนะนำ
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="final_recommend_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg_linear_theme">
+                    <h5 class="modal-title" id="exampleModalLabel">course_registered info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-4">
+                    <?php
+                    print("<pre>" . print_r($final_recommend_list, true) . "</pre>");
+                    ?>
+                </div>
+                <div class="edit_footer modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end collaborative -->
+    <hr class="my-3 mb-4">
+
     <button type="button" class="btn bg_linear_theme btn-primary   mb-2 py-3" data-toggle="modal" data-target="#course_registered_modal">
         คอร์สที่ลงทะเบียน
     </button>

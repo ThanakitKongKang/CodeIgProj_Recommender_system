@@ -132,7 +132,7 @@ class BooksController extends CI_Controller
             $data['page'] = "404-Page-Not-Found";
         }
 
-        $header["title"] = "Browse - " . $data['page'] ." - CS Book";
+        $header["title"] = "Browse - " . $data['page'] . " - CS Book";
         $header['browse_all'] = 'active';
         $this->load->view('./header', $header);
         $this->load->view('books/browse', $data);
@@ -235,7 +235,7 @@ class BooksController extends CI_Controller
             $data['recommend_list_detail'] = (array_slice($data['recommend_list_detail'], 0, 12));
             $data['isCommentEnabled'] = $this->comments_enabling_model->isEnabled($this->uri->segment(2));
         }
-        $header["title"] = $data['book_detail']['book_name']." - CS Book";
+        $header["title"] = $data['book_detail']['book_name'] . " - CS Book";
         $this->load->view('./header', $header);
         $this->load->view('books/detail', $data);
         $this->load->view('footer');
@@ -305,6 +305,73 @@ class BooksController extends CI_Controller
 
     public function testmode()
     {
+        // Collaborative-filtering
+        // array declaring
+        $data['recommend_matched'] = array();
+        $data['recommend_averaged'] = array();
+        $data['recommend_flattened'] = array();
+        $data['recommend_list'] = array();
+        $data['recommend_list_bookname'] = array();
+        $data['final_recommend_list'] = array();
+        $data['target_books'] = array();
+
+        //should be top rated by currently user
+        // $data['target_books'] = ['Certified Management Accountant (CMA), Part 2','Trading the Decentralization of the Financial Systems','High Performance Python (from Training at EuroPython 2011)','Red Tea Detox'];
+        $username = $this->session->userdata('user')['username'];
+        $data['raw_target_books'] = $this->rate_model->get_rate_by_username($username);
+
+        // get current user preferenced books
+        foreach ($data['raw_target_books'] as $user_book) {
+            $data['target_books'][] = $user_book['book_name'];
+        }
+
+        $data['raw_books'] = $this->rate_model->get_rate();
+        $data['books'] = $this->flip_array($data['raw_books']);
+        $result = $this->transformPreferences($data['books']);
+        foreach ($data['target_books'] as $user_book) {
+            array_push($data['recommend_matched'], $this->matchItems($result, $user_book));
+        }
+
+        $data['recommend_averaged'] = $this->array_average($data['recommend_matched']);
+        $data['recommend_flattened'] = $this->array_flatten($data['recommend_averaged']);
+
+        $data['target_books_flipped']  = array_flip($data['target_books']);
+        // remove items that user given a rate
+        $data['recommend_list'] = array_diff_key($data['recommend_flattened'], $data['target_books_flipped']);
+        //   sort by matching value desc
+        arsort($data['recommend_list']);
+
+        $data['recommend_list_bookname'] = array_keys($data['recommend_list']);
+        if (sizeof($data['recommend_list_bookname']) < 9) {
+            $data['full_list_bookname'] = array(9);
+            $size = sizeof($data['recommend_list_bookname']);
+            $need = 9 - $size;
+            $data['list_bookname_to_merge'] = $this->books_model->get_random_book($need, $data['recommend_list_bookname']);
+            $i = 0;
+            for ($size; $size < 9; $size++) {
+                $data['recommend_list_bookname'][$size] =  $data['list_bookname_to_merge'][$i]["book_name"];
+                $i++;
+            }
+        }
+
+        // get item details from their name
+        foreach ($data['recommend_list_bookname'] as $row_recommend) {
+            $data['recommend_list_detail'][] = $this->books_model->get_by_name($row_recommend);
+        }
+        if (!empty($data['recommend_list_detail'])) {
+            $data['final_recommend_list'] = json_decode(json_encode($data['recommend_list_detail']), True);
+
+            // push match score into result array
+            $i = 0;
+            foreach ($data['recommend_list'] as $row_recommend) {
+                $data['final_recommend_list'][$i]["match"] = $row_recommend;
+                $i++;
+            }
+        } else {
+            $data['final_recommend_list'] = false;
+        }
+        // end collaborative-filtering 
+
         // $this->check_auth_admin('testmode');
 
         $data['books_name'] = $this->books_model->get_name_all();
