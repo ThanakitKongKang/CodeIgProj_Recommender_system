@@ -1,7 +1,7 @@
 <div id="fullpage" class="container">
     <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">Add Book</h2>
     <form id="form_insert_book" method="post" enctype='multipart/form-data'>
-        <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
+        <div class="p-md-5 p-3 rounded shadow-lg mb-5 bg-white">
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-9">

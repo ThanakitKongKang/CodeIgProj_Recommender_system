@@ -1,6 +1,6 @@
 <div class="container">
     <h2 class="text-right shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">Advanced Search <i class="fas fa-search-plus"></i></h2>
-    <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
+    <div class="p-md-5 p-3 rounded shadow-lg mb-5 bg-white">
         <form id="the_form" action="<?= base_url() ?>search/result">
             <div class="">
                 <div class="form-group row">

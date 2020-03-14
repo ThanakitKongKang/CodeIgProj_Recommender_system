@@ -470,7 +470,7 @@ class DashboardController extends CI_Controller
         // week
         if ($_GET["mode"] == "w") {
             // get views by date and book_id
-            $data['popular_view_week'] = $this->activity_model->get_popular_view(7, "rows");
+            $data['popular_view_week'] = $this->activity_model->get_popular_view(7, 10, "rows");
             $arrDatasets = array();
             foreach ($data['popular_view_week'] as $row_week) {
                 $arr = array();
@@ -614,6 +614,4 @@ class DashboardController extends CI_Controller
 
         echo (json_encode($arrReturn[0]));
     }
-
-   
 }

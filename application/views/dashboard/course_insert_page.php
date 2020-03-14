@@ -1,7 +1,7 @@
 <div id="fullpage" class="container">
     <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white">Add Course</h2>
     <form id="the_form">
-        <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
+        <div class="p-md-5 p-3 rounded shadow-lg mb-5 bg-white">
             <div class="form-group row">
                 <label for="name" class="col-sm-3 col-lg-2 col-form-label">Course ID</label>
                 <div class="col-sm-4 col-lg-2">
@@ -25,14 +25,11 @@
                     <input type="text" autocomplete="off" required class="form-control" name="course_name_en" id="course_name_en" placeholder="English course title.." pattern='[a-zA-Z0-9\s]+' title="Must be english characters.">
                 </div>
             </div>
-            <div class="w-25 input-group-text text-center d-inline-block mb-1">
+            <div class="col-md-3 input-group-text text-center d-inline-block mb-1">
                 Keywords
             </div>
             <div id="addmore_wrapper">
                 <div class="input-group mb-1 col-sm-10 col-lg-5">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Keyword</span>
-                    </div>
                     <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore first_addmore" style="display:inline-block" pattern="[^\s]+" title="Keyword must not contains spaces" />
                     <div class="input-group-append">
                         <span class="input-group-text px-2 py-0"> <button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
@@ -167,7 +164,7 @@
         var i = 1;
         $('#add').click(function(e) {
             i++;
-            var html = '<div class="dynamic-added"><div class="input-group mb-1 col-sm-10 col-lg-5"><div class="input-group-prepend"><span class="input-group-text">Keyword</span></div><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></div>';
+            var html = '<div class="dynamic-added"><div class="input-group mb-1 col-sm-10 col-lg-5"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-50 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></div>';
 
             $('#addmore_wrapper').append(html);
             triggerRequired();

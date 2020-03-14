@@ -35,10 +35,10 @@
             <form id="the_form">
                 <div class="modal-body">
                     <button class="btn btn-danger delete_this_book_alert" title="Delete this course" style="position:absolute;right:1rem;top:1.5rem"><i class="far fa-trash-alt"></i></button>
-                    <table class="modal_course_info w-100 m-3" id="dynamic_field">
+                    <table class="modal_course_info w-100 m-lg-3 mt-5" id="dynamic_field">
                         <tr>
                             <td>
-                                <div class="input-group mb-3 col-sm-4 col-md-6">
+                                <div class="input-group mb-3 col-9 col-sm-4 col-md-6">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Course ID</span>
                                     </div>
@@ -69,7 +69,7 @@
 
                         <tr>
                             <td>
-                                <div class="w-25 input-group-text text-center d-inline-block mb-1">
+                                <div class="col-md-3 input-group-text text-center d-inline-block mb-1">
                                     Keywords
                                 </div>
                             </td>
@@ -77,7 +77,7 @@
 
                         <tr id="start_dynamic">
                             <td>
-                                <div class="input-group mb-1 w-50 ml-2">
+                                <div class="input-group mb-1 ml-2 col-md-6 col-10">
                                     <input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore first_addmore" required="" style="display:inline-block" />
                                     <div class="input-group-append">
                                         <span class="input-group-text px-2 py-0"> <button type="button" name="add" id="add" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
@@ -284,7 +284,7 @@
                     var count;
                     response.forEach(function(keyword, i) {
                         for (var key in keyword) {
-                            html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" value="' + key + '"/><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
+                            html = '<tr class="dynamic-added"><td><div class="input-group mb-1 ml-2 col-md-6 col-10"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" value="' + key + '"/><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
                             $(html).insertBefore('#start_dynamic');
                             // $('#dynamic_field').append(html);
                             i++;
@@ -467,7 +467,7 @@
         var i = 1;
         $('#add').click(function() {
             i++;
-            var html = '<tr class="dynamic-added"><td><div class="input-group mb-1 w-50 ml-2"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
+            var html = '<tr class="dynamic-added"><td><div class="input-group mb-1 ml-2 col-md-6 col-10"><input type="text" name="addmore[]" placeholder="Enter course keyword" class="form-control w-75 addmore" required="" style="display:inline-block" /><div class="input-group-append"><span class="input-group-text px-2 py-0"> <button type="button" name="remove" class="btn btn-danger btn_remove btn-sm"><i class="fas fa-minus"></i></button></span></div></div></td></tr>';
 
             $('#dynamic_field').append(html);
         });

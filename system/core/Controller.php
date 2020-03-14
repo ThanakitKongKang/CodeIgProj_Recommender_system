@@ -629,10 +629,10 @@ class CI_Controller
 		$this->load->model('activity_model');
 
 		// rec activity
-		$data['popular_view'] = $this->activity_model->get_popular_view(7, "rows");
-		if (!empty($data['popular_view'])) {
+		$data['recommend_list_detail_activity'] = $this->activity_model->get_popular_view(7, 10, "rows");
+		if (!empty($data['recommend_list_detail_activity'])) {
 			// get top 10 popular
-			$data['recommend_list_detail_activity'] = (array_slice($data['popular_view'], 0, 10));
+			// $data['recommend_list_detail_activity'] = (array_slice($data['popular_view'], 0, 10));
 
 			// start at 1
 			array_unshift($data['recommend_list_detail_activity'], "");

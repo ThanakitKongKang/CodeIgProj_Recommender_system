@@ -1,6 +1,6 @@
 <div id="fullpage" class="col-12 container">
     <h2 class="text-center shadow-sm p-3 mb-1 rounded bg_linear_theme text-white"><?= $main_title ?></h2>
-    <div class="bg-light p-5 rounded shadow-lg mb-5 bg-white">
+    <div class="bg-light p-md-5 rounded shadow-lg mb-5 bg-white">
         <div class="row">
             <div class="col-lg-6 col-sm-12">
                 <canvas id="myChart_week" height="200"></canvas>
@@ -38,6 +38,15 @@
 
 <script>
     $(document).ready(function() {
+        if (parseInt($(window).width()) < 400) {
+            $('#myChart_week').attr('height', 400);
+            $('#myChart_month').attr('height', 400);
+            $('#myChart_alltime').attr('height', 400);
+        } else if (parseInt($(window).width()) == 1024) {
+            $('#myChart_week').attr('height', 400);
+            $('#myChart_month').attr('height', 400);
+            $('#myChart_alltime').attr('height', 400);
+        }
         var table = $('#views_log').DataTable({
             scrollY: false,
             scrollX: false,

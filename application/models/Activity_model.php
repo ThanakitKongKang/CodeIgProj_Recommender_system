@@ -88,10 +88,10 @@ class Activity_model extends BaseModel
         }
     }
 
-    public function get_popular_view($interval, $returnType)
+    public function get_popular_view($interval, $limit, $returnType)
     {
-        $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL ? DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC";
-        $query = $this->db->query($sql, array($interval));
+        $sql = "SELECT *,count(activity_view.book_id) as viewed_count FROM `activity_view`,book WHERE activity_view.book_id = book.book_id AND date >= NOW() - INTERVAL ? DAY group by activity_view.book_id ORDER BY `viewed_count`  DESC LIMIT ?";
+        $query = $this->db->query($sql, array($interval, $limit));
         $array = json_decode(json_encode($query->result()), True);
         if ($returnType == "rows") {
             return $array;
