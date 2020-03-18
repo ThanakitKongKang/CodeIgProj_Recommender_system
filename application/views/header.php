@@ -1332,7 +1332,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 url: "<?php echo base_url(); ?>api/activity_search/get_recently_for_livesearch",
                 success: function(data) {
                     if (data.length > 2) {
-                        search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Recent searchs</div>";
+                        search_history_html += "<div id='live_search_result_container' class='bg-white position-absolute'><div class='live_search_panel font-arial'> Recent searches</div>";
                         var response = JSON.parse(data);
                         response.forEach(function(keyword, i) {
 
