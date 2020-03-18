@@ -18,7 +18,7 @@ class CoursesController extends CI_Controller
         $this->check_auth('courses/index');
         $username = $this->session->userdata('user')['username'];
         $data['course_registered'] = $this->course_model->get_course_registered($username);
-        $header["title"] = "Your course - CS Book";
+        $header["title"] = "My course - CS Book";
         $header["yourcourse"] = "active shadow";
 
         $this->load->view('./header', $header);

@@ -69,7 +69,7 @@
 
                     <div class="btn-group">
                         <button type="button" style="width:10rem" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filter_sort">
-                            <span id="sort_rating_text" class="small">Sort by rating</span>
+                            <span id="sort_rating_text" class="small">Sort</span>
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item search_option_sort" href="#" id="sort_relevant" data-search="">Most Relevant</a>

@@ -1,11 +1,11 @@
 <div class="container">
     <nav class="nav nav-pills justify-content-end font-arial nav_user">
-        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">Your Course</a>
+        <a class="nav-item nav-link <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course">My Course</a>
         <a class="nav-item nav-link <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved">Saved Item</a>
         <a class="nav-item nav-link <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory">Rating History</a>
     </nav>
 
-    <h1 class="display-4 page_title_header page_title_header_no_after">Your Course</h1>
+    <h1 class="display-4 page_title_header page_title_header_no_after">My Course</h1>
     <div id="course_content" class="mt-4">
 
         <!-- content header -->
