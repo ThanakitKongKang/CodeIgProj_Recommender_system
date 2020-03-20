@@ -149,7 +149,7 @@
                             <span class="input-group-text">Collection name</span>
                         </div>
                         <input type="text" id="collection_name_input_saved" autofocus class="form-control" placeholder="Give your collection a name...">
-                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 10rem;">Thai or English 1 - 60 characters (no space)</span>
+                        <span class="text-danger small position-absolute collection_name_input_pattern" style="display:none;top: 2.75rem;left: 10rem;">Thai or English 1 - 60 characters</span>
                     </div>
                 </div>
                 <div class="modal-footer">
