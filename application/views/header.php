@@ -114,7 +114,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <div class="custom_navbar_toggler">
                     <a class="navbar-brand" href="<?= base_url() ?>">
                         <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                        <span style="font-family:sans-serif;font-size:1.5rem">CS-Book</span>
+                        <span class="text_gradient_theme text_gradient_theme_hoverable" style="font-family:sans-serif;font-size:1.5rem">CS-Book</span>
 
                     </a>
                 </div>
@@ -127,7 +127,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="">
                         <a class="navbar-brand" href="<?= base_url() ?>">
                             <img src="<?= base_url() ?>/assets/_etc/library512x512.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                            <span style="font-family:sans-serif;font-size:1.5rem">CS-Book</span>
+                            <span class="text_gradient_theme text_gradient_theme_hoverable" style="font-family:sans-serif;font-size:1.5rem">CS-Book</span>
 
                         </a>
                     </div>
