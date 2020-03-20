@@ -213,6 +213,7 @@
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/course/delete',
                                 data: course_id,
+                                async: false,
                                 success: function(data) {
                                     Toast.fire({
                                         title: 'Success !',

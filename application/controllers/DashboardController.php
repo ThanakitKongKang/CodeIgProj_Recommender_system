@@ -308,6 +308,22 @@ class DashboardController extends CI_Controller
         $username = $this->input->post('username');
 
         $this->users_model->user_delete($username);
+        $this->load->helper("file");
+
+        // delete user picture
+        $user_profile_picture = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/$username.PNG";
+
+        // Use unlink() function to delete a file  
+        if (is_file($user_profile_picture)) {
+            chmod($user_profile_picture, 0777);
+            if (!unlink($user_profile_picture)) {
+                echo ("$username  file cannot be deleted due to an error");
+            } else {
+                echo ("$username file has been deleted");
+            }
+        } else {
+            echo "$username File does not exist";
+        }
     }
 
 

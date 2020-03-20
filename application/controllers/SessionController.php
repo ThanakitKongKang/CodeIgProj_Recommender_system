@@ -70,8 +70,7 @@ class SessionController extends CI_Controller
                     // Use unlink() function to delete a file  
                     if (file_exists($profile_pic)) {
                         $this->session->set_userdata('profile_pic', TRUE);
-                    }
-                    else{
+                    } else {
                         $this->session->set_userdata('profile_pic', FALSE);
                     }
 
@@ -124,7 +123,7 @@ class SessionController extends CI_Controller
         $rules = array(
             array(
                 'field' => 'username',
-                'rules' => 'required|min_length[3]|max_length[24]|callback_username_check',
+                'rules' => 'trim|required|min_length[3]|max_length[24]|callback_username_check',
                 'errors' => array(
                     'required' => 'username is required.',
                 ),
@@ -147,14 +146,14 @@ class SessionController extends CI_Controller
             ),
             array(
                 'field' => 'firstname',
-                'rules' => 'required',
+                'rules' => 'trim|required',
                 'errors' => array(
                     'required' => 'firsname is required.',
                 ),
             ),
             array(
                 'field' => 'lastname',
-                'rules' => 'required',
+                'rules' => 'trim|required',
                 'errors' => array(
                     'required' => 'lastname is required.',
                 ),
@@ -181,6 +180,7 @@ class SessionController extends CI_Controller
             );
             $this->session->set_userdata('user', $sessionArr);
             $this->session->set_userdata('logged_in', TRUE);
+            $this->session->set_userdata('profile_pic', FALSE);
             $this->session->set_flashdata('register_success', TRUE);
             redirect(base_url());
             // hci event
@@ -189,13 +189,22 @@ class SessionController extends CI_Controller
     }
     public function username_check($str)
     {
-        $username_exists = $this->users_model->check_exist($str);
 
-        if ($username_exists != FALSE) {
-            $this->form_validation->set_message('username_check', 'username already taken');
+        $pattern = '/ /';
+        $result = preg_match($pattern, $str);
+
+        if ($result) {
+            $this->form_validation->set_message('username_check', 'The %s field can not have a space');
             return FALSE;
-        } else if ($username_exists == FALSE) {
-            return TRUE;
+        } else {
+            $username_exists = $this->users_model->check_exist($str);
+
+            if ($username_exists != FALSE) {
+                $this->form_validation->set_message('username_check', 'username already taken');
+                return FALSE;
+            } else if ($username_exists == FALSE) {
+                return TRUE;
+            }
         }
     }
 
@@ -221,9 +230,29 @@ class SessionController extends CI_Controller
 
         $this->users_model->user_update($old_username, $post_data);
 
+        $old_profile_pic = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/{$this->input->post('old_username')}.PNG";
+        $new_profile_pic = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/{$this->input->post('username')}.PNG";
+        if (file_exists($new_profile_pic)) {
+            echo "Error While Renaming $old_profile_pic";
+        } else {
+            if (rename($old_profile_pic, $new_profile_pic)) {
+                echo "Successfully Renamed $old_profile_pic to $new_profile_pic";
+
+
+                $profile_pic = ($_SERVER['DOCUMENT_ROOT']) . "/CodeIgProj_Recommender_system" . "/assets/user_profile_pic/{$this->input->post('username')}.PNG";
+
+                // Use unlink() function to delete a file  
+                if (file_exists($profile_pic)) {
+                    $this->session->set_userdata('profile_pic', TRUE);
+                } else {
+                    $this->session->set_userdata('profile_pic', FALSE);
+                }
+            } else {
+                echo "A File With The Same Name Already Exists";
+            }
+        }
         // Update session data
         $this->session->unset_userdata('user');
-
         $sessionArr = $this->users_model->get_by_id($this->input->post('username'));
         $this->session->set_userdata('user', $sessionArr);
     }

@@ -190,16 +190,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                     </div>
                                     <div class="dropdown-menu" aria-labelledby="userDropdown" id="userDropdown_show">
-                                        <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course"><i class="fas fa-book-reader pr-2"></i>My course</a>
-                                        <a class="dropdown-item <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved"><i class="far fa-bookmark pr-2 mr-1"></i>Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
-                                        <a class="dropdown-item <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory"><i class="far fa-star pr-2"></i>Rating history <span class="badge badge-secondary count_all_rating_history" id="count_all_rating_history"><?= $this->session->userdata('count_all_rating_history'); ?></span></a>
-                                        <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->
-
-                                        <hr class="my-2">
+                                        <?php if ($this->session->userdata('user')['username'] != "admin") { ?>
+                                            <a class="dropdown-item <?php if (isset($yourcourse)) echo $yourcourse; ?>" href="<?= base_url() ?>course"><i class="fas fa-book-reader pr-2"></i>My course</a>
+                                            <a class="dropdown-item <?php if (isset($saveditem)) echo $saveditem; ?>" href="<?= base_url() ?>saved"><i class="far fa-bookmark pr-2 mr-1"></i>Saved items <span class="badge badge-secondary count_all_saved_list" id="count_all_saved_list"><?= $this->session->userdata('count_all_saved_list'); ?></span></a>
+                                            <a class="dropdown-item <?php if (isset($ratinghistory)) echo $ratinghistory; ?>" href="<?= base_url() ?>ratinghistory"><i class="far fa-star pr-2"></i>Rating history <span class="badge badge-secondary count_all_rating_history" id="count_all_rating_history"><?= $this->session->userdata('count_all_rating_history'); ?></span></a>
+                                            <!-- <a class="dropdown-item" href="<?= base_url() ?>test">How</a> -->
+                                            <hr class="my-2">
+                                        <?php  } ?>
                                         <?php if ($this->session->userdata('user')['username'] == "admin") { ?>
-                                            <h6 class="dropdown-header">Admin</h6>
-                                            <a class="dropdown-item <?php if (isset($accSetting)) echo $accSetting; ?>" data-target="#accSetting" data-toggle="modal" href="#accSetting"><i class="fas fa-user-cog pr-2"></i>My Account</a>
-
+                                            <h6 class="dropdown-header">Administration</h6>
                                             <a class="dropdown-item <?php if (isset($dashboard)) echo $dashboard; ?>" href="<?= base_url() ?>dashboard"><i class="far fa-chart-bar pr-2"></i>Dashboard</a>
                                             <a class="dropdown-item <?php if (isset($testmode)) echo $testmode; ?>" href="<?= base_url() ?>testmode"><i class="fas fa-bug pr-2"></i>Debugger</a>
 

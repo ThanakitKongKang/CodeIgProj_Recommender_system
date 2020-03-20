@@ -71,8 +71,48 @@ class Users_model extends BaseModel
 
     public function user_update($old_username, $data)
     {
+        $this->db->trans_begin();
+
         $this->db->where('username', $old_username);
         $this->db->update($this->table, $data);
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('activity_search');
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('activity_view');
+
+        $this->db->where('fullname', $old_username);
+        $this->db->set('fullname', $data["username"]);
+        $this->db->update('comment');
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('comment_liking');
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('rate');
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('registered_course');
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('saved_book');
+
+        $this->db->where('username', $old_username);
+        $this->db->set('username', $data["username"]);
+        $this->db->update('saved_book_collection');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+        } else {
+            $this->db->trans_commit();
+        }
     }
 
     public function user_delete($username)

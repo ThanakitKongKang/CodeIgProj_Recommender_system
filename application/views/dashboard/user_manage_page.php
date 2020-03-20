@@ -209,7 +209,6 @@
                                         text: 'Saved changes',
                                         type: 'success',
                                     })
-                                    table.row('.selected').remove().draw(false);
                                     var interval = setInterval(function() {
                                         multiple_delete_trigger_refresh_count();
                                     }, 100);

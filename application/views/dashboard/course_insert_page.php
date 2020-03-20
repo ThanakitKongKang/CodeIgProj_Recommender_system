@@ -158,7 +158,6 @@
             } else {
                 $(".first_addmore").prop('required', false);
             }
-            console.log(i)
         }
 
         var i = 1;

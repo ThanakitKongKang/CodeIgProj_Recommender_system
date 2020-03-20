@@ -312,6 +312,7 @@
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/book/delete',
                                 data: book_id,
+                                async: false,
                                 beforeSend: function() {
                                     $(document.body).css({
                                         'cursor': 'wait'

@@ -166,7 +166,6 @@
                         for (var i = 0; i < count_row; i++) {
 
                             data = table.rows('.selected').data()[i];
-                            console.log(data)
 
                             table.row('.selected').draw(false);
                             var dataArray = {
@@ -179,6 +178,7 @@
                                 type: 'POST',
                                 url: '<?= base_url() ?>/api/comment/delete',
                                 data: dataArray,
+                                async: false,
                                 beforeSend: function() {
                                     $(document.body).css({
                                         'cursor': 'wait'
@@ -190,7 +190,7 @@
                                         text: 'Comment deleted',
                                         type: 'success',
                                     })
-                                    table.row('.selected').remove().draw(false);
+                                    // table.row('.selected').remove().draw(false);
                                     var interval = setInterval(function() {
                                         multiple_delete_trigger_refresh_count();
                                     }, 100);
@@ -273,6 +273,7 @@
                                 type: 'success',
                             })
                             table.ajax.reload();
+                            $('.delete_this_book_alert').hide();
                             $(document.body).css({
                                 'cursor': 'default'
                             });
