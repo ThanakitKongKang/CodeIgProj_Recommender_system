@@ -7,7 +7,7 @@
 https://drive.google.com/open?id=1DzNykZ9JIZbXBWKpa2-fOLMdoTpZBpsH
 
 ## Demo
-	https://primx.online/CodeIgProj_Recommender_system
+https://primx.online/CodeIgProj_Recommender_system
 	(available until June 2020)
 
 - ##### User demo
