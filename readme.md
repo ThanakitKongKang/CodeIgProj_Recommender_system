@@ -7,8 +7,7 @@
 <a href="https://drive.google.com/open?id=1DzNykZ9JIZbXBWKpa2-fOLMdoTpZBpsH" target="_blank">คู่มือการใช้งาน</a>
 
 ## Demo
-<a href="https://primx.online/CodeIgProj_Recommender_system" target="_blank">E-Book Rec Demo</a>
-https://primx.online/CodeIgProj_Recommender_system
+<a href="https://primx.online/CodeIgProj_Recommender_system">E-Book Rec Demo</a>
 	(available until June 2020)
 
 - ##### User demo
