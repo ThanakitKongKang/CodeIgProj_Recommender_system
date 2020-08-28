@@ -17,7 +17,7 @@
 		username : admin
 		password : admin
 
-## Screenshot
+## Screenshots
 ##### Login
 <p align="center">
 <img src="https://user-images.githubusercontent.com/44811853/79031310-2608ad80-7bc8-11ea-9a45-a7c53098ee6a.jpg" width="500">
